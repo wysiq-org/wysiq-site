@@ -1,0 +1,51 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fenêtre Import files — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/import_files.txt</p><h1>Fenêtre Import files — Aide</h1><pre>Accès : fenêtre Main ▸ In/Out Data ▸ Import file.</pre><pre>La fenêtre Import files (« Imported files ») liste les fichiers sources déjà
+importés dans le workspace et lance les nouveaux imports. Elle reste ouverte
+pendant les imports et se met à jour à chaque table créée.</pre><pre>Processus type :
+  Fine load (ou Bulk load) → choisir le(s) fichier(s) → nettoyer / typer
+  (Check file) ou régler la table (Copy Table) → EXEC / Table → la table
+  apparaît dans la liste Main → clic sur son nom pour ouvrir le graphe.</pre><h2>COLONNES DE LA LISTE</h2><pre>  Full path   Chemin complet du fichier source.
+  Modified    Date de dernière modification du fichier source.
+  Rows        Nombre de lignes lors du dernier import.
+  Table(s)    Table(s) DuckDB créée(s) depuis ce fichier. Un classeur Excel à
+              plusieurs feuilles produit des tables NOM__FEUILLE.
+  Mask        Masque Check file enregistré pour ce fichier (vide si aucun).</pre><pre>Clic sur un en-tête : tri ; nouveau clic : ordre inverse.</pre><h2>BOUTONS DU HAUT</h2><pre>  Bulk load
+      Sélecteur multi-fichiers (Excel .xlsx/.xls, CSV, Parquet). Pour chaque
+      fichier, la fenêtre Copy Table / Export Table s&#x27;ouvre (modale) avec le nom
+      du fichier comme nom de table : vérifiez le nom et les options, puis EXEC
+      charge la table. Les fichiers sont traités l&#x27;un après l&#x27;autre ; une erreur
+      sur un fichier est signalée et n&#x27;arrête pas les suivants.
+      Voir l&#x27;aide « copy_table ».
+  Fine load
+      Ouvre la fenêtre Check file pour un seul fichier : aperçu brut, trimming
+      (Top / Bottom / Left / Right / Header), transposition, sélection et
+      renommage des colonnes, types, format de date, politique NaN, shrink,
+      masque réutilisable. La table est créée avec le nom choisi dans Check file.
+      Voir l&#x27;aide « import_check_window ».
+      Si une table du même nom existe déjà (ou des tables NOM__…), WysiQ demande :
+        Oui = écraser (les anciennes tables NOM et NOM__… sont supprimées) ;
+        Non = renommer automatiquement (NOM_1, NOM_2…) ;
+        Annuler = abandonner.
+      Une fenêtre de progression « Import file(s) » s&#x27;affiche pendant l&#x27;import.
+  ?   Ouvre cette aide.</pre><h2>BOUTONS DU BAS</h2><pre>  Reload selected
+      Relit les fichiers sources des lignes sélectionnées et recharge leurs
+      tables (même nom, même masque). Utile après modification du fichier sur
+      le disque. Sans sélection : message « Select one or more file rows first ».
+      Le double-clic sur une ligne fait la même chose.
+  Refresh
+      Resynchronise la liste avec le registre des fichiers importés (imports
+      faits ailleurs : SQL Assistant, Check file, Copy Table…).
+  Close
+      Ferme la fenêtre (les imports en cours ne sont pas annulés).</pre><pre>MENU CLIC DROIT (sur une ligne)</pre><pre>  → AI
+      Envoie le masque de la ligne (règles de nettoyage, sans les données) dans
+      l&#x27;AI Feed Stack. Disponible seulement si la ligne a un masque ; sinon
+      l&#x27;entrée « → AI (no mask) » est grisée.
+  Remove entry: &lt;fichier&gt;
+      Retire la ligne du registre des fichiers importés. Ne supprime ni la table
+      DuckDB, ni le fichier sur le disque.</pre><h2>BULK LOAD OU FINE LOAD ?</h2><pre>  Bulk load   plusieurs fichiers propres et homogènes, réglages de table
+              simples (nom, type, destination).
+  Fine load   un fichier avec en-têtes multiples, lignes ou colonnes parasites,
+              dates non standard, transposition, ou réduction du nombre de
+              lignes (shrink).</pre><pre>Le masque sauvegardé (colonne Mask) permet de réimporter le même fichier avec
+exactement les mêmes règles via Reload selected, sans repasser par Check file.</pre><h2>TEMPORAIRE / PERSISTANT</h2><pre>Un import crée une table persistante : fichier .parquet + définition .json
+dans workspace/tables/ et entrée dans le registre. Écraser une table existante
+remplace ses données (pas d&#x27;annulation). Remove entry ne touche qu&#x27;au registre.</pre></main></body></html>

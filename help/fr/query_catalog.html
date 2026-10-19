@@ -1,0 +1,88 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Catalogue des Queries — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/query_catalog.txt</p><h1>Catalogue des Queries</h1><pre>Accès : Main ▸ Query ▸ Catalog.</pre><pre>Le Catalogue des Queries liste toutes les Queries sauvegardées dans le
+workspace courant. Il permet de parcourir, filtrer, ouvrir, renommer et
+supprimer des Queries sans passer par l&#x27;arbre de la fenêtre principale.</pre><pre>Zoom texte : Ctrl + molette.</pre><h2>BARRE D&#x27;OUTILS</h2><pre>Refresh
+  Recharge la liste depuis le disque. À utiliser si des Queries ont été
+  sauvegardées ou supprimées pendant que le catalogue était ouvert.</pre><pre>Open
+  Ouvre la Query sélectionnée dans une fenêtre Graph. Équivalent au
+  double-clic sur la ligne (hors colonne Sel) ou à la touche Entrée.</pre><pre>→ AI
+  Envoie la définition de la Query sélectionnée (structure JSON, sans
+  données) dans l&#x27;AI Feed Stack.</pre><pre>Rename
+  Ouvre un dialogue pour renommer la Query (raccourci F2). Le fichier JSON
+  est renommé et son champ interne query_name mis à jour.</pre><pre>Delete
+  Supprime définitivement la Query sélectionnée (raccourci touche Suppr).
+  Un dialogue de confirmation est affiché avant toute action.</pre><pre>JSON
+  Ouvre le JSON brut de la Query sélectionnée dans une visionneuse de texte
+  en lecture seule. Utile pour inspecter la définition complète sans ouvrir
+  une fenêtre Graph. Supporte Ctrl + molette (zoom) et défilement horizontal.
+  Search (en bas à gauche) : taper un mot, &lt;&lt; / &gt;&gt; (ou Entrée / Maj+Entrée)
+  pour l&#x27;occurrence précédente / suivante, compteur n/N. Ctrl+F : champ de
+  recherche, Échap : effacer.</pre><pre>?
+  Ouvre cette fenêtre d&#x27;aide.</pre><h2>PANNEAU GAUCHE : FILTRES ET LISTE DES QUERIES</h2><pre>Catalog filters
+  Query like
+    Filtre la liste sur une sous-chaîne du nom de Query.</pre><pre>  Table like
+    Filtre la liste aux queries qui référencent une table dont le nom
+    contient le texte saisi.</pre><pre>  Les deux filtres sont cumulables.</pre><pre>Liste Queries
+  Colonne Sel
+    ✓      = la Query est visible dans l&#x27;arbre de la fenêtre principale.
+    (vide) = la Query est masquée de la fenêtre principale.</pre><pre>    Clic sur une ligne de la colonne Sel pour basculer la visibilité.
+    Clic sur l&#x27;en-tête Sel pour tout activer / tout masquer en une fois
+    (tout activer si au moins une query est masquée, sinon tout masquer).</pre><pre>    Le réglage est persisté dans params.json immédiatement. L&#x27;arbre de
+    la fenêtre principale est rafraîchi automatiquement après chaque
+    basculement.</pre><pre>  Tri
+    Clic sur le label d&#x27;en-tête « Queries [A-Z ▲] » pour cycler entre
+    quatre modes de tri : A-Z, Z-A, Date croissant, Date décroissant.</pre><pre>Liste Table (à droite de Queries)
+  Liste les tables distinctes référencées par les queries chargées.
+  Clic sur un nom de table pour filtrer la liste Queries sur cette table.
+  Clic sur « (all) » pour retirer le filtre table.</pre><pre>  Clic sur l&#x27;en-tête « Table ▲ » pour trier la liste table.</pre><pre>MENU CONTEXTUEL SUR UNE QUERY (clic droit)
+Le clic droit sur une ligne de query ouvre un menu contextuel :</pre><pre>  Open
+    Ouvre la query dans une fenêtre Graph.</pre><pre>  → AI
+    Envoie la définition de la query dans l&#x27;AI Feed Stack.</pre><pre>  Rename…
+    Renomme la query.</pre><pre>  Save metrics to catalog
+    Parcourt le JSON de la query à la recherche de séries virtuelles
+    (metrics / combo). Tout metric trouvé qui n&#x27;existe pas encore dans
+    le catalogue des metrics est créé (workspace/metrics/).
+    Les metrics déjà présents sont ignorés pour ne pas écraser l&#x27;existant.
+    Un dialogue de résumé indique combien de metrics ont été créés ou ignorés.
+    À utiliser quand une query contient des metrics qui n&#x27;ont jamais été
+    explicitement sauvegardés dans le catalogue.</pre><pre>  Delete
+    Supprime définitivement la query.</pre><h2>PANNEAU DROIT : DÉTAIL DE LA QUERY</h2><pre>En-tête Query
+  Query     Nom de la Query sélectionnée.
+  Owner     Propriétaire enregistré dans le JSON (si présent).
+  Table     Table de référence de la Query.
+  Modified  Horodatage de dernière modification stocké dans le JSON.</pre><pre>Liste Series
+  Affiche les séries (colonnes) définies dans la Query sélectionnée.
+  Pour une Query multi-tables, les séries sont préfixées par leur table
+  (Table.série).</pre><pre>  Colonnes :
+    @      Marqueur métrique. Affiché uniquement pour les séries
+           virtuelles (expr_type non vide) : @ pour une métrique standard,
+           ❄ pour une métrique figée (frozen).
+    Serie  Nom de colonne ou de métrique.
+    Axe    Axe : X pour l&#x27;axe X, Yl ou Yr pour l&#x27;axe Y gauche/droite.
+           Yl/Yr n&#x27;est affiché que pour les séries ayant G (Graph) actif.
+    G      ✓ si la série est tracée dans la vue graphe.
+    T      ✓ si la série apparaît dans la vue table.
+    A      ✓ si la série est active dans la vue area.
+    Coeff  Coefficient d&#x27;échelle appliqué à la série.</pre><pre>  Seules les séries ayant au moins un flag actif (G, T ou A) sont
+  affichées, plus toutes les métriques quel que soit leur état.</pre><pre>  Clic sur l&#x27;en-tête « Serie ▲ » pour trier les séries. La ligne X
+  reste toujours en tête de liste.</pre><pre>  Le double-clic sur une série metric (marqueur @ ou ❄) ouvre le Combo Editor
+  directement pour ce metric, sans avoir à ouvrir la query dans une fenêtre Graph.
+  Appuyer sur Entrée sur une ligne metric focalisée a le même effet.</pre><pre>Visionneuse JSON
+  Affiche le JSON brut de la Query sélectionnée. Lecture seule ; utiliser
+  Open pour modifier la query via la fenêtre Graph.
+  Ctrl + molette pour zoomer le texte.</pre><pre>AI Answers — Réponses AI
+  Les échanges AI de la query sélectionnée, du plus récent au plus ancien.
+  Ils viennent des AI Cases de la query (AI Command Center), plus les
+  anciennes réponses HTML s&#x27;il en reste.</pre><pre>  Colonnes :
+    Date         Date et heure locales.
+    AI profile   Profil qui a répondu.
+    Answer       Début de la réponse, ⚠ + message pour une erreur, ou
+                 📄 pour un rapport HTML.</pre><pre>  Une réponse et son rapport HTML partagent une ligne (📄 = rapport disponible).
+  Double-clic (ou Entrée) : les lignes 📄 s&#x27;ouvrent dans le navigateur ; les
+  autres ouvrent l&#x27;AI Case Center sur leur Case.
+  Open in browser  Comme le double-clic.
+  Open AI Case     Ouvre l&#x27;AI Case Center sur le Case de la ligne choisie.
+  L&#x27;icône 🤖 de la liste des queries signale les queries qui ont un AI Case.</pre><pre>RACCOURCIS CLAVIER (liste des Queries)
+  Entrée = Open · F2 = Rename · Suppr = Delete · double-clic = Open.</pre><h2>VISIBILITÉ DANS LA FENÊTRE PRINCIPALE</h2><pre>Le flag Sel du Query Catalog contrôle quelles queries apparaissent dans
+l&#x27;arbre de la fenêtre principale.</pre><pre>Les queries avec Sel = (vide) sont masquées de la fenêtre principale,
+même après un Refresh. Seules les queries avec Sel = ✓ sont listées.</pre><pre>Cela permet de garder la fenêtre principale lisible tout en conservant
+toutes les queries dans le catalogue pour un accès occasionnel.</pre><pre>Le réglage est stocké dans params.json sous la clé &quot;hidden_queries&quot;.</pre></main></body></html>

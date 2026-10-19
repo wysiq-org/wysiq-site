@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Expert Studio — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/expert_studio.txt</p><h1>Expert Studio — WysiQ</h1><pre>Note (current version): Expert Studio is no longer opened by any menu or
+button. Its main functions are taken over by the AI Command Center
+(🎚 Expert Config, 🗄 AI Feed Stack, prompt and ▶ Send). This page remains the
+reference for the former workshop.</pre><pre>The Expert Studio is the main working surface that orchestrates analytical
+exchanges with the AI. It no longer performs the transport itself: it feeds
+the independent Prompt window which drives the send to an AI profile, and
+responses come back to the HTML Viewer and Scenario window.</pre><pre>Overall architecture (WysiQ after the split):
+  Expert Studio      Configuration, recipes, JSON/data options, scenarios.
+  AI Session         Session management (create, archive, reopen).
+  AI Profile         AI profile management (create, connect, protocol).
+  Prompt             Independent window — prompt editing, Send button.
+  HTML Viewer        Chapter-based answers.
+  Scenario           Receives scenarios corrected by the AI.</pre><h2>REDUCED / FULL MODE</h2><pre>The &quot;Reduced&quot; checkbox in the top-right toggles the display. The window
+height auto-adjusts to fit content (no empty space that would hide the
+graph below).</pre><pre>  Reduced (default)
+    Only the action sections stay visible:
+      - Data &amp; session
+      - Scenario &amp; exchange
+      - Quality bar
+      - Footer (?, Settings, Close)
+    Useful once the role and recipe are picked — keeps the palette
+    compact above the graph.</pre><pre>  Full (Reduced unchecked)
+    Adds the configuration sections:
+      - Expert configuration (Recipe, Role, Context, Audience, Style,
+        Language)
+      - AI analysis options (Graph context, Tests, Signals, Correlations,
+        PCA)
+      - Run behavior</pre><h2>EXPERT CONFIGURATION</h2><pre>Recipe      Preconfigured analysis recipe. Changing a recipe reloads the
+            other fields.
+Role        Expert role the AI plays.
+Context     Analysis context.
+Audience    Target audience. Adjusts vocabulary.
+Style       Answer format.
+Language    Answer language.</pre><h2>AI ANALYSIS OPTIONS</h2><pre>Toggles that drive the analytical payload sent to the AI:
+  Graph context   Current graph context.
+  Tests           Statistics and tests computed in the Area palette.
+  Signals         Selected series.
+  Correlations    Correlation matrix.
+  PCA             Principal component analysis.</pre><h2>RUN BEHAVIOR</h2><pre>Attach cropped area only    Attach only the image cropped to Area.
+Hide AI console             Do not auto-open companion windows.
+Open HTML viewer            Open HTML Viewer when an answer arrives.
+Chapter HTML answers        Split answers into HTML chapters.</pre><h2>DATA &amp; SESSION</h2><pre>AI Session
+  Open the AI Session Center (session management: create, archive,
+  reopen).</pre><pre>AI Profiles
+  Open the AI Profile window (formerly &quot;AI Analyst&quot;), which manages
+  AI profile connections.</pre><pre>Build JSON
+  Rebuild the JSON payload (Analytics Feed) from the current graph
+  state and toggles.</pre><pre>Select Data…
+  Open the data selection dialog.</pre><pre>Prompt…
+  Open the independent Prompt window (the primary editing / sending
+  interface). Also opens automatically when Expert Studio opens
+  (unless Hide AI console is active).</pre><pre>Generate Expert Report
+  Assemble the full prompt (role, context, audience, style, language)
+  and push it to the Prompt window for review + send.</pre><h2>SCENARIO &amp; EXCHANGE</h2><pre>Open Scenario…
+  Open the Scenario palette of the current WysiQuery.</pre><pre>Send to AI…
+  Send the active scenario to the Prompt window (structured JSON,
+  kind=wysiq_scenario_response). The user reviews then clicks Send
+  in the Prompt window to actually send.</pre><pre>Receive from AI…
+  Retrieve a scenario returned by the AI and re-inject it into the
+  Scenario palette.</pre><h2>QUALITY / ESTIMATED PROMPT</h2><pre>The &quot;Quality&quot; bar and &quot;Estimated prompt&quot; text show the current prompt
+quality (0-100 %) and estimated character and token counts.</pre><h2>FOOTER</h2><pre>?         Show this help.
+Settings  Open WysiQ global preferences (Params).
+Close     Close Expert Studio. Companion windows (Prompt, AI Profile,
+          HTML Viewer) stay open independently.</pre><h2>WINDOW BEHAVIOUR</h2><pre>Expert Studio is treated like the other WysiQ floating palettes:
+persistent -topmost attribute on Windows, re-raises on activation.
+Clicking on the graph does not make it disappear behind.</pre></main></body></html>

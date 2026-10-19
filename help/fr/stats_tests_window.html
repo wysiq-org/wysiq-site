@@ -1,0 +1,225 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TESTS STATISTIQUES — Aide (fenêtre Statistical Tests) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/stats_tests_window.txt</p><h1>TESTS STATISTIQUES — Aide (fenêtre Statistical Tests)</h1><pre>Accès : bouton Tests dans l&#x27;en-tête de la fenêtre Graph (entre Area et
+Signals), ou rond Te de la Graph Remote. Les deux donnent accès à la même
+fenêtre Statistical Tests du graphe courant, distincte de la palette Area.</pre><h2>1. OBJECTIF</h2><pre>Atelier statistique pour les séries numériques du graphe courant :
+- tests par paire (séries A et B),
+- tests multi-séries (sélection G, case Group),
+- diagnostics de séries temporelles (chaque série cochée).</pre><pre>Processus type :
+  Selection (Area ou All) → cocher A / B / G dans la liste des séries →
+  choisir les tests (Quick tests, thèmes, cases) → Run (ou Auto insight)
+  → lire / trier les résultats → Export ou → AI.</pre><pre>1.1 Cadre Data
+- Selection : Area (points du rectangle Area) ou All (toutes les données).
+- Refresh : relit la liste des séries du graphe.
+- Clear : décoche toutes les séries.
+- Liste Series / A / B / G : clic sur une case pour la cocher ; clic sur
+  l&#x27;en-tête A, B ou G pour tout cocher / décocher la colonne ; clic sur
+  l&#x27;en-tête Series pour trier.</pre><pre>1.2 Cadre Test selection
+- p-adjust : BH, Holm ou Bonf (voir §4).
+- Quick tests : coche les tests rapides (les tests lents sont exclus, §9) ;
+  décoché = tout décocher.
+- Group : active les tests multi-séries (rétablit les tests de groupe rapides
+  par défaut) ; décoché = tests de groupe désactivés.
+- Theme on / Theme off : coche ou décoche tous les tests du thème choisi
+  dans « Themes / subgroups ».
+- All on / Clear : tous les tests cochés / aucun.
+- La zone de détail décrit le thème ou le test sélectionné ; une case par
+  test.</pre><pre>1.3 Barre des résultats
+- Run : exécute les tests cochés (fenêtre d&#x27;attente pendant le calcul).
+- Auto insight : exécute les mêmes tests et ajoute une synthèse
+  interprétée.
+- Best corr : ouvre la fenêtre Find Best Correlation (aide
+  « stats_best_correlation_window »).
+- Clear : vide les résultats.
+- Export : enregistre les résultats en .xlsx ou .txt.
+- → AI : envoie les résultats (sans données brutes) dans l&#x27;AI Feed Stack.
+- Params : ouvre Parameters ▸ Statistics (notebooks de tests, aide
+  « stats_notebooks »).
+- ? : cette aide.
+- Tableau : clic sur un en-tête pour trier ; Ctrl+C copie les lignes
+  sélectionnées.
+- Les réglages (sélection, tests, p-adjust, décimales) sont enregistrés avec
+  la query.</pre><h2>2. SÉLECTION DES DONNÉES</h2><pre>2.1 Scope = Area
+- n’utilise que les points restants dans la zone / le rectangle mémorisé
+  ;
+- si la zone est vide, aucune série exploitable n’est renvoyée.</pre><pre>2.2 Scope = All
+- utilise toute la plage de données disponible ;
+- l’éligibilité des séries dépend encore de la liste de séries exposée
+  par le contexte du graphe.</pre><pre>2.3 Nettoyage et alignement
+- conversion en float ;
+- suppression des NaN / +inf / -inf ;
+- les tests par paire alignent A et B sur la même longueur utile ;
+- le n affiché est la taille d’échantillon réellement exploitable après
+  filtrage et alignement.</pre><h2>3. VALEURS PAR DÉFAUT DE L’UI</h2><pre>Au démarrage :
+- Scope : Area
+- p-adjust : BH
+- Decimals : 3
+- max lag envoyé au moteur : 30</pre><pre>Quick tests :
+- sert à une exploration rapide ;
+- les tests lents sont volontairement exclus du preset rapide.</pre><h2>4. AJUSTEMENT DES P-VALUES</h2><pre>Appliqué à toutes les p-values numériques renvoyées.
+Méthodes disponibles :
+- BH   = Benjamini-Hochberg (contrôle FDR)
+- Holm = correction step-down familiale
+- Bonf = correction de Bonferroni</pre><pre>Si un test ne produit pas de p-value, p_adj reste vide.</pre><h2>5. ANNOTATIONS UTILISÉES DANS LE CHAMP NOTE</h2><pre>5.1 p_note(p, n)
+- p &lt;= 0.05 -&gt; Significant
+- p &gt; 0.05  -&gt; Not significant
+- si n &gt;= 1000, suffixe : &quot;large sample&quot;</pre><pre>5.2 effect_strength(d)
+- |d| &gt;= 0.8 -&gt; Large
+- |d| &gt;= 0.5 -&gt; Medium
+- |d| &gt;= 0.2 -&gt; Small
+- sinon       -&gt; Negligible</pre><pre>5.3 eta_strength(eta²)
+- &gt;= 0.14 -&gt; Large
+- &gt;= 0.06 -&gt; Medium
+- &gt;= 0.01 -&gt; Small
+- sinon   -&gt; Negligible</pre><pre>5.4 dw_note(dw)
+- dw &lt; 1.0  -&gt; Strong positive autocorr
+- dw &lt; 1.5  -&gt; Positive autocorr
+- 1.5..2.5  -&gt; No autocorr (OK)
+- 2.5..3.0  -&gt; Negative autocorr
+- &gt; 3.0     -&gt; Strong negative autocorr</pre><h2>6. TESTS PAR PAIRE (A/B)</h2><pre>6.1 Pearson
+- coefficient de corrélation linéaire r dans [-1, 1]
+- SciPy pearsonr si disponible, sinon fallback NumPy corrcoef</pre><pre>6.2 Spearman
+- corrélation monotone sur les rangs
+- plus robuste à la non-linéarité monotone et aux valeurs extrêmes</pre><pre>6.3 Kendall
+- mesure de concordance sur les rangs
+- utile sur petits échantillons ou en présence de nombreux ex aequo</pre><pre>6.4 Régression linéaire
+- modèle : y ~= intercept + slope * x
+- stat affichée = r
+- effect = r²
+- la note contient aussi slope, intercept, stderr si disponible, et R²
+  ajusté</pre><pre>6.5 t-test paired
+- comparaison paramétrique de moyennes appariées</pre><pre>6.6 t-test independent
+- t-test classique pour échantillons indépendants</pre><pre>6.7 Welch t-test
+- t-test indépendant sans hypothèse d’égalité des variances</pre><pre>6.8 Wilcoxon
+- comparaison appariée non paramétrique</pre><pre>6.9 Mann-Whitney
+- comparaison indépendante non paramétrique</pre><pre>6.10 Cohen d
+- taille d’effet poolée pour groupes indépendants
+- formule :
+  d = (mean(A) - mean(B)) / pooled_sd</pre><pre>6.11 Cohen d paired
+- taille d’effet sur les différences appariées
+- formule :
+  d = mean(A - B) / sd(A - B)</pre><pre>6.12 Best lag
+- scanne les retards entiers dans [-max_lag, +max_lag]
+- renvoie le lag avec la relation de Pearson absolue la plus forte
+- la note contient le meilleur lag et le nombre de lags scannés</pre><pre>6.13 Variation corr
+- corrélation sur les différences premières : diff(A), diff(B)
+- utile quand les niveaux dérivent mais que les co-mouvements locaux
+  importent
+- WysiQ calcule :
+  - Variation Pearson
+  - Variation Spearman</pre><pre>6.14 Partial corr
+- corrélation entre A et B en contrôlant une 3e série sélectionnée
+- nécessite au moins 3 séries sélectionnées
+- formule :
+  r_xy.z = (r_xy - r_xz*r_yz) / sqrt((1-r_xz²)(1-r_yz²))</pre><pre>6.15 Chi2 contingency
+- A et B sont discrétisées automatiquement en classes
+- puis un test du chi² d’indépendance est appliqué
+- la note contient le nombre de bins et les degrés de liberté</pre><pre>6.16 Distance corr (dCor)
+- détecte les dépendances linéaires et non linéaires
+- implémentation exacte en O(n²)
+- stat = distance correlation
+- la note rappelle le sens qualitatif</pre><pre>6.17 Mutual information
+- mesure de dépendance basée sur un histogramme joint
+- capture des relations non linéaires même quand Pearson est proche de
+  zéro
+- stat = MI en nats
+- effect = MI normalisée (quand les entropies sont positives)
+- la note contient le nombre de bins et la MI normalisée</pre><pre>6.18 Rolling corr
+- corrélation de Pearson glissante entre A et B
+- stat   = moyenne des corrélations glissantes
+- effect = plus forte corrélation glissante en valeur absolue
+- n      = nombre de fenêtres utilisées
+- la note contient taille de fenêtre, nombre de fenêtres, meilleur |r|
+  glissant, dernier r glissant</pre><pre>6.19 Granger causality
+- criblage de prédictibilité retardée, renvoyé dans les deux sens :
+  - A -&gt; B
+  - B -&gt; A
+- stat   = meilleure statistique F trouvée parmi les lags scannés
+- p      = p-value du test F si SciPy est disponible
+- effect = gain relatif de SSE du modèle non restreint
+- note   = meilleur lag
+- interprétation : c’est un indice de lead/lag prédictif, pas une preuve
+  de causalité réelle</pre><pre>6.20 Durbin-Watson
+- appliqué aux résidus de la régression linéaire A/B
+- formule :
+  DW = sum((e_t - e_{t-1})²) / sum(e_t²)
+- valeur cible proche de 2</pre><h2>7. TESTS GROUPE / MULTI-SÉRIES (G)</h2><pre>7.1 Shapiro
+- test de normalité par série sélectionnée
+- si une série dépasse 5000 points, WysiQ échantillonne 5000 valeurs
+  avec la graine fixe 42
+- la note indique cet échantillonnage quand il a lieu</pre><pre>7.2 Anderson-Darling
+- test de normalité avec valeurs critiques
+- la note contient le niveau de significativité et la valeur critique
+  utilisés</pre><pre>7.3 Jarque-Bera
+- normalité via skewness et kurtosis
+- formule :
+  JB = n/6 * (S² + (K-3)²/4)
+- la note contient la skewness et l’excess kurtosis</pre><pre>7.4 Levene
+- test d’homogénéité des variances, assez robuste à la non-normalité</pre><pre>7.5 Bartlett
+- test d’homogénéité des variances sous hypothèses de normalité plus
+  fortes</pre><pre>7.6 ANOVA
+- test paramétrique multi-groupes
+- effect = eta² calculé à partir des sommes de carrés inter-groupes et
+  totales</pre><pre>7.7 Kruskal-Wallis
+- alternative non paramétrique à l’ANOVA</pre><pre>7.8 Friedman
+- comparaison non paramétrique à mesures répétées
+- WysiQ tronque toutes les séries à la plus petite longueur
+  exploitable
+- la note explicite ce troncage</pre><pre>7.9 KS 2-sample
+- test d’égalité de distribution entre échantillons de type A/B
+- en mode groupe, le moteur reste piloté par les valeurs des séries
+  sélectionnées
+- note : H0 = même distribution</pre><h2>8. TESTS SÉRIE TEMPORELLE SUR CHAQUE SÉRIE</h2><pre>8.1 ACF
+- fonction d’autocorrélation pour les lags 1..min(20, max_lag)
+- stat = plus forte autocorrélation absolue trouvée
+- p    = p-value normale approximative quand disponible
+- effect = meilleur lag
+- n    = nombre de lags évalués
+- la note contient IC95 et les lags significatifs</pre><pre>8.2 Mann-Kendall
+- test de tendance monotone
+- stat = z-score
+- la note contient S et le sens de la tendance</pre><pre>8.3 ADF stationarity
+- implémentation légère de type Augmented Dickey-Fuller
+- H0 : racine unitaire / série non stationnaire
+- stat = statistique t du terme en niveau retardé
+- p    = approximation t bilatérale quand SciPy est disponible
+- la note contient le lag utilisé</pre><pre>8.4 KPSS stationarity
+- test KPSS de stationnarité de niveau
+- H0 : série stationnaire
+- stat = statistique KPSS
+- p    = p-value approximative issue des valeurs critiques KPSS usuelles
+- la note contient le lag Newey-West utilisé
+- usage pratique : complémentaire d’ADF</pre><pre>8.5 Change point
+- scanne un point de rupture unique sur la série
+- stat   = plus fort décalage de moyenne standardisé
+- p      = p-value de coupure de type Welch quand disponible
+- effect = indice de coupure
+- note   = moyennes des segments gauche et droit
+- il s’agit d’un indicateur de rupture dominante unique, pas d’un
+  framework complet de segmentation</pre><h2>9. TESTS LENTS</h2><pre>WysiQ marque ces tests comme lents et les exclut de Quick tests :
+- Best lag
+- Partial corr
+- Chi2 contingency
+- Distance corr
+- Rolling corr
+- Mutual information
+- Granger causality
+- Change point</pre><pre>Raisons principales :
+- scans répétés sur plusieurs lags ;
+- calculs de type distance en O(n²) ;
+- régressions répétées ;
+- grand nombre de coupures candidates.</pre><h2>10. LIMITES ET NOTES D’AUDIT</h2><pre>- corrélation n’est pas causalité ;
+- Granger mesure une causalité prédictive, pas structurelle ;
+- ADF et KPSS sont des implémentations logicielles simplifiées, pas un
+  substitut à un package économétrique complet ;
+- la mutual information dépend du binning automatique ;
+- change-point suppose une rupture dominante unique ;
+- les tests groupe peuvent comparer des séries de natures différentes si
+  l’utilisateur mélange des signaux hétérogènes ;
+- tous les résultats dépendent uniquement des données actuellement
+  filtrées et nettoyées.</pre><h2>11. REPRODUCTIBILITÉ</h2><pre>Les résultats sont déterministes pour les mêmes :
+- données d’entrée,
+- scope,
+- séries sélectionnées,
+- tests cochés,
+- méthode de p-adjust,
+- max lag.</pre><pre>La seule règle d’échantillonnage explicite est Shapiro &gt; 5000, qui reste
+  reproductible car WysiQ utilise une graine RNG fixe.</pre><pre>Acces aux tests : bouton Tests de la fenetre Graph, ou rond Te de Graph Remote.</pre></main></body></html>

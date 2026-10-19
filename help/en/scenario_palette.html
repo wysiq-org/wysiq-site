@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SCENARIO PALETTE — Manual target curves — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/scenario_palette.txt</p><h1>SCENARIO PALETTE — Manual target curves</h1><pre>Access: Scenario button of the graph window or Sc circle of the Graph Remote.</pre><pre>Role
+A Scenario is a manually edited target curve displayed above the current graph. It is used to test hypotheses quickly: draw a target, feed it from an existing series, change the interpolation type, then optionally convert it into a normal WysiQ series with → Series or send it to the AI with → AI. The source table and the SQL query are not modified.</pre><pre>Recommended workflow
+1. Type a scenario name, then use New.
+2. Enable DRAW and click/drag on the graph to add control points.
+3. Use MOVE to move existing points.
+4. Choose the Curve type and its parameter.
+5. Use COMPUTE to recompute the curve without a new Feed from the reference.
+6. Use → Series when the scenario must become a normal series usable by metrics, Areas, the AI feed and exports.
+7. Use → AI to drop the JSON of the active scenario into the AI Feed Stack (without converting it into a series).</pre><pre>Top controls
+Scenario name: name of the active scenario.
+New/Rename/Duplicate/Delete: scenario management (action drop-down
+list; also on right-click or Ctrl+click on the scenario list).
+Style: choice of the colour (swatches or More...), the size and the
+display of control points (&quot;Show points&quot; box); Close closes. The size thickens the line AND the control points. When a real series is created afterwards, it may inherit the scenario style, but the series stays editable in the Series palette.
+Import: opens the scenario catalogue.
+JSON: scenario JSON window — Copy, Paste, Apply (applies the edited JSON), Export, Import, Close.
+Save: saves the scenarios into the Query.
+Vars: opens the Variables window of the active query — push the refs to the extreme
+while DRAW/MOVE stays active; keep the picker open (Stay open) to compare
+the hypothesis across the whole graph.</pre><pre>Scenario list and SUM
+The list selects the active scenario. Only the active scenario receives DRAW/MOVE edits.
+SUM shows the live total of the Y values of the interpolated scenario over the X values of the current graph. The total applies the same Unit factor as the SUMs of the Table palette. If the graph X values are not available, WysiQ falls back to the sum of the control points.</pre><pre>Sample from and Feed
+Sample from chooses a plotted series, base or virtual, used by Feed and by SNAP_TO_TREND.
+Feed samples the reference series and replaces the scenario points with these sampled points. If no series is chosen, a &quot;Select reference series&quot; box asks for it (OK / Cancel). The &quot;Calc — &lt;series&gt;&quot; box then sets the sampling: Auto ≤ N pts, First N, Last N or Every N pt (with an optional Max limit); the estimated number of points is shown; Apply confirms, Cancel aborts. This is handy to start from a real series, then edit the hypothesis manually.
+Changing the Curve after a Feed is normal: the same sampled points can be interpreted as STEP, BEZIER, LEGENDRE, etc.</pre><pre>Toggles
+DISPLAY: shows/hides the scenario overlays.
+DRAW: adds/edits points by drawing on the graph.
+MOVE: moves the existing points of the scenario.
+Snap X: snaps the X positions of the points to the nearest graph X. Y stays the clicked/dragged value.
+Monotone: forces the points/curve to stay globally increasing or decreasing, to limit unwanted oscillations.</pre><pre>Curve types and parameter
+Curve list: LINEAR, STEP, PCHIP, SPLINE, BEZIER, EASE_INOUT, SCURVE, EXPONENTIAL, SNAP_TO_TREND, LEGENDRE.
+The slider changes name according to the selected Curve (the field next to it accepts typing, Enter to confirm). For most curves it is a continuous parameter (0..1); for LEGENDRE it is Degree (1..12).</pre><pre>LINEAR — parameter: Smoothing
+Linear interpolation between control points. Smoothing &gt; 0 applies a moving smoothing to the computed curve. Useful for simple targets and quick sketches.</pre><pre>PCHIP — parameter: Shape
+Shape-preserving piecewise cubic interpolation: it respects monotone intervals and avoids artificial overshoots near peaks or troughs. No extrapolation. Useful for realistic targets without oscillations.</pre><pre>SPLINE — parameter: Natural
+Natural cubic spline (C2 continuity) passing through every point; the full model (coefficients) is stored in the JSON. No extrapolation beyond the first / last point.</pre><pre>BEZIER — parameter: Tension
+Smooth spline passing through every control point. Tension 0 gives an almost linear rendering between points; Tension 1 gives a rounder curve. The curve always passes through the points. Useful for natural continuous targets.</pre><pre>STEP — parameter disabled
+Step interpolation. The value stays constant until the next point. Useful for thresholds, capacities, tariffs, regulatory dates or on/off changes. The slider is disabled because STEP has no continuous parameter.</pre><pre>EASE_INOUT — parameter: Tension
+Softened start and finish between points, with reduced speed near the segment bounds. Useful for progressive transitions, ramp-up/ramp-down and targets without abrupt breaks.</pre><pre>SCURVE — parameter: Steepness
+Logistic S-shaped transition between points. Low Steepness is close to linear; high Steepness concentrates the change in the middle of the segment. Useful for adoption/diffusion scenarios.</pre><pre>EXPONENTIAL — parameter: Exponent
+Exponential-shaped transition between points. Low Exponent is close to linear; high Exponent produces a stronger acceleration or deceleration at the end of the segment. Useful for growth or decay hypotheses.</pre><pre>SNAP_TO_TREND — parameter: Trend
+Starts by following the local slope of the Sample from series near the first control point, then gradually joins the drawn scenario. Trend 0 gives little influence to the real trend; Trend 1 keeps that influence longer. Requires a Sample from series.</pre><pre>LEGENDRE — parameter: Degree
+Fits a Legendre polynomial model by least squares on the control points, over the X range from the first to the last point. Degree (1..12) sets the order of the polynomial: low values = smooth global trend, high values = more detail but risk of oscillations with few points. Outside the X range of the control points: NaN (no extrapolation). Useful for smooth polynomial hypothesis curves with few handles.</pre><pre>Actions
+Undo: undoes the last scenario operation one step at a time: point added, point deleted, point moved, global move, Clear or Feed.
+Redo: reapplies the operation just undone. Any new edit empties the Redo stack.
+Clear: deletes the points of the current scenario.
+COMPUTE: applies the current parameters and recomputes the curve from the current points. It does not resample the reference.
+→ Series: turns the scenario into a normal WysiQ series. The series can then be used in metrics, Areas, AI sessions, tables and exports like any other series.
+→ AI: drops the JSON of the active scenario (same content as JSON / catalogue) into the AI Feed Stack. Does not create a series — use → Series for that.</pre><pre>Tips
+Use Feed to start from real data, then DRAW/MOVE to build the target hypothesis.
+Use BEZIER or EASE_INOUT for visual continuous targets.
+Use LEGENDRE for smooth polynomial trends with few points.
+Use STEP for administrative or capacity thresholds.
+Use SCURVE for adoption scenarios.
+Use EXPONENTIAL for acceleration/decay scenarios.
+Use SNAP_TO_TREND when the scenario must start consistently with the current real trend.</pre><pre>DRAW/MOVE performance
+While drawing and moving, WysiQ stays on the fast overlay/blit path: the full graph is not recomputed on every mouse movement. The full plot is kept for scenarios already converted into a real series, because the work table must then be resynchronised.</pre></main></body></html>

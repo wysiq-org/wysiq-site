@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Table palette — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/table_palette.txt</p><h1>Table palette — Help</h1><pre>Access: Table button of the graph window or Ta circle of the Graph Remote.</pre><pre>The Table palette shows the query data in tabular form: an aggregates area
+per series (nb, sum, avg, min, max, Δ) and a scrolling detail table. It
+shows the series ticked T in the Series palette; with several tables, names
+are prefixed by their table (Table.series).</pre><pre>Typical workflow:
+  tick T in Series → set rows / Dec / UF → filter (WHERE of a series,
+  Search of a column) → sort (Sort) → Export.</pre><h2>1) TOOLBAR</h2><pre>rows / total
+  Number of rows shown in the detail table (Enter to apply). The total,
+  after filters, is shown after &quot;/&quot;.
+Dec
+  Number of decimals shown (Enter or leaving the field).
+UF  (unit factor)
+  Multiplies values before display (e.g. 0.001 to go from Wh to kWh).
+Adj
+  Ticked: UF is also applied to the aggregates of the top area.
+Sort
+  Sort popup with at most 3 levels (one row per level):
+  - box right of the column: enables / disables the level without losing
+    the chosen column (immediate effect);
+  - ASC / DESC: clickable text, toggles the order;
+  - Apply applies and leaves the popup open; Clear removes all sorts;
+    Cancel closes.
+SQL
+  Shows the generated queries (DATA SELECT and AGGREGATES SELECT), with A− /
+  A+ (or Ctrl+wheel), Copy, Close and the option &quot;Include aggregates rows in
+  exported file&quot;.
+Export
+  Opens the export window of the work table (CSV / XLSX / Parquet file, or
+  new WysiQ table). See the &quot;copy_table&quot; help.
+WHERE  (box)
+  Enables / disables the global filter combining the WHERE of the series
+  (see 3).
+Row#  (box)
+  Shows / hides the row-number column.
+?
+  This help.
+Refresh
+  Rereads only the Table data (e.g. new Live rows), without PLOT or change
+  of the graph zoom.</pre><pre>2) AGGREGATES AREA (top)</pre><pre>One row per visible series: name | nb | sum | avg | min | max | Δ (max − min),
+computed on the retained rows (zoom, WHERE, ⚠• alerts).
+• Click a series name: WHERE editor of that series.
+• Click a heading: sort on that column.</pre><h2>3) GLOBAL WHERE</h2><pre>When the WHERE box is ticked, the active WHERE conditions of the series are
+combined and applied as a row filter to the detail table.
+The WHERE of a series remains a restriction on the whole data set of that
+series (graph included).</pre><pre>4) DETAIL TABLE (bottom)</pre><pre>• Frozen columns: Seq, Row and the active X column stay visible on the left
+  while scrolling horizontally.
+• Click a heading: ascending sort; click again: descending.
+• Drag the heading separators to resize the columns (including in the
+  frozen area).
+• Right-click a column title or a cell: Search popup on that column (same
+  editor as WHERE, but it only selects rows of this table). Several Search
+  popups can be open at the same time, even on the same column (title
+  &quot;Search: column #2&quot;…). A new right-click first reopens an existing search
+  of the column, otherwise creates one.
+  Apply only saves the search of its own popup and leaves it open; each
+  applied search is added to the previous ones according to its &quot;With other
+  cols&quot; (AND / OR). Clear only removes the search of its own popup.
+• Ctrl+C copies the selected rows (tab separator).
+• Wheel: vertical scrolling; Shift+wheel: horizontal.
+• The separator between aggregates and detail is saved with the query.</pre><pre>5) WHERE / SEARCH EDITOR (popup)</pre><pre>  Where ON / Search ON   enables the condition.
+  With other cols        NONE, AND or OR (combination with the others).
+  c1, join, c2           conditions; + shows a 3rd condition (c3).
+  Operators              =  !=  &lt;  &lt;=  &gt;  &gt;=  ~ (contains)  ^ (starts with)
+                         $ (ends with)  in
+  Value                  threshold, pattern or variable reference (&amp;1.4); for
+                         a date, a click opens the picker (OK / Cancel).
+  Apply / Clear / Cancel apply, clear, close.
+The filter applies to the raw values of the column, before the UF factor.
+A metric is filtered here like a normal series; the WHERE of the Metric
+Editor apply to the components of the metric.</pre><pre>Missing values: type NaN with = (missing values NaN / NULL / NaT) or
+!= (present values, zero included). NaN is not equal to 0; no missing row
+is invented.</pre><h2>⚠• ALERTS MODE</h2><pre>When the alert button of the Series palette is on ⚠•, the Table keeps only
+the alert instants: the rows where a series of the same table is in alert
+(all columns remain). Header statistics and Export apply to these rows.
+Switching back to △ or ⚠ restores all rows.</pre><pre>TIPS
+• Dec = 0 for integer data.
+• UF = 0.001 to show kWh when the data are in Wh.
+• Sort + Export quickly export a sorted subset.
+• The Table does not refresh by itself on Live packets: use Refresh.</pre></main></body></html>

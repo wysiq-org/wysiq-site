@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Connections — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/ai_analyst.txt</p><h1>AI Connections — WysiQ</h1><pre>Access: AI Command Center ▸ PANELS ▸ 👤 AI Connections (Ctrl+N in the
+Command Center).</pre><pre>The AI Connections window opens the AI Case of the query, chooses an AI
+profile and connects it. Sending (JSON feeds, data, questions) is then done
+in the AI Command Center: prompt, ▶ Send, &gt;&gt;AI Next, ⚡ Analyze graph. Each
+exchange is archived automatically in the active AI Case (see AI Case Center).</pre><pre>Typical workflow:
+  AI Case: (proposed name = query name) → Create → AI profile: → Connect
+  → back to the Command Center (one tab per connected profile) → send.</pre><h2>CONTROLS</h2><pre>  AI Case:      Name of the AI Case (editable field). Clicking the displayed
+                name lets you rename it.
+  Create        Creates the AI Case (shared by all profiles) or reopens it if
+                it already exists. An AI profile must be selected.
+  Close         Closes the panel (the connection and the Case stay active;
+                the Command Center can be closed or opened without cutting
+                the session).
+  ?             This help.
+  Last req:     Tokens of the last exchange (all profiles).
+  Session:      Cumulative token total of the active AI Case.
+  AI profile:   AI profile to use (list of the profiles of Parameters ▸ AI).
+  Connect       (enabled only when an AI Case has been created or opened)
+                Connects the current profile: sends the selected protocol
+                schemas and the query/Case context as a handshake. Does not
+                send the analytical payload. Once connected, the button
+                becomes Disconnect (the profile disconnects, the Case stays
+                open, the other profiles stay active).
+  AI Params     Opens Parameters ▸ AI (profiles, keys, models).
+  Open Nav      Opens the HTML answer viewer.
+  Connection log  Connection log (handshake, errors, tokens).</pre><h2>SINGLE MULTI-PROFILE AI CASE</h2><pre>A single AI Case groups all active AI profiles: same folder, same
+history, same displayed name.</pre><pre>  Main profile
+    The first connected profile becomes the main profile. Its questions
+    (JSON AI Feed, Data AI Feed, Send) are the reference events of the
+    Case, replayable on the other profiles.</pre><pre>  Secondary profiles
+    Any profile added afterwards is secondary. When it connects, it
+    automatically receives as a replay the questions already asked to the
+    main profile, to produce its own answer on the same analytical feed.
+    Each profile has its own tab in the Command Center.</pre><pre>  Switching tab (profile)
+    Selecting the tab of a profile in the Command Center switches to that
+    profile, its replay queue and its history; the Case does not change.</pre><h2>PROTOCOL</h2><pre>- The schemas sent by Connect are selected in AI Knowledge Setup (Send
+  column). Reset (recommended) restores the 3 ★ CORE schemas (000, 001,
+  002) if everything was unticked by mistake.
+- The other schemas (PCA, signals, stats…) go automatically with the
+  matching JSON feed of the AI Feed Stack.</pre><pre>PAYLOAD AND SENDING (in the Command Center)</pre><pre>- The feeds of the AI Feed Stack decide what the analysis JSON contains
+  (graph, Area, tests, signals, correlations, PCA, scenario).
+- Data samples are sent only on request; only their recipe is archived,
+  never the row values — a replay regenerates a fresh sample from the
+  active data.
+- ▶ Send sends the prompt question to the active profile (and to the
+  Broadcast targets).</pre><pre>  DATA INTEGRITY
+  The protocol schemas require the AI to use only the data received in the
+  WysiQ payloads. It must never invent, extrapolate or imagine values,
+  names, amounts or identifiers absent from the payload. If a piece of data
+  is missing, the AI must say so explicitly.</pre><h2>REPLAY</h2><pre>- &gt;&gt;AI Next (Command Center) walks through the queued steps for the active
+  profile. The queue can be prepared in the AI Case Center.
+- When a secondary profile is connected, the replay of the main profile&#x27;s
+  questions is triggered automatically.
+- Only the main profile&#x27;s questions are duplicated on the secondary
+  profiles; those asked directly to a secondary profile remain its own.</pre><h2>TOKEN COUNTERS</h2><pre>- &quot;Last req&quot;: tokens of the last exchange, all profiles together.
+- &quot;Session&quot;: cumulative total of the active AI Case; reset at each Create
+  and Close of the Case.
+- The counter under a profile&#x27;s tab (Command Center) shows the tokens of
+  its last request.</pre></main></body></html>

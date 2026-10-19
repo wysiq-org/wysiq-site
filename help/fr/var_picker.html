@@ -1,0 +1,59 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sélecteur de variables — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/var_picker.txt</p><h1>Sélecteur de variables — Aide</h1><pre>Liste compacte ouverte depuis les champs numériques des métriques (clic droit
+sur k, +/-, Min, Max, Δ, Fill, Lag, valeur WHERE…), ou par
+Rules &amp; params ▸ Rules &amp; Vars… dans la fenêtre graphique.</pre><pre>Boutons : Stay open, Vars series, PLOT, New…, Catalog (ouvre le Variables
+Catalog), ?, Save, Close. Double-clic ou Entrée sur une ligne = insérer la
+référence.</pre><h2>OUVERTURE / INSERTION</h2><pre>Clic droit sur un champ lié → ouvre ce sélecteur.
+Clic sur une ligne → insère &amp;ref dans le champ actif.
+« Stay open » laisse la fenêtre ouverte pendant l&#x27;édition du champ métrique.</pre><pre>Filtres Theme / Variable réduisent la liste (mémorisés pour la session).</pre><h2>CRÉER UNE VARIABLE</h2><pre>New… crée une variable sans passer par le Variables Catalog : thème, nom,
+valeur, unité, description. Un nom de thème inexistant crée le thème.
+Si un champ est ciblé (métrique, valeur WHERE…), la ref de la nouvelle
+variable y est insérée. Ouvert depuis Rules &amp; params ▸ Rules &amp; Vars… (sans champ
+ciblé), la variable est seulement créée et sélectionnée.
+Clic droit sur une ligne : Insert ref / Create… / Duplicate… / Rename / edit… / Delete.</pre><h2>IN QUERY / SHOW / VARS SERIES</h2><pre>IN
+  ✓ = variable utilisée par au moins une métrique de la requête ouverte
+      (combo k/+/−/Min/Max/Δ/Fill, WHERE, WHERE tableau…).</pre><pre>Show  (variables IN uniquement)
+  Active/désactive la variable dans l&#x27;aperçu.
+  Clic sur l&#x27;en-tête Show → tout ON / tout OFF.
+  Les cases G/T/A de la palette Series restent ; l&#x27;aperçu filtre seulement.</pre><pre>Vars series
+  • Liste limitée aux variables IN.
+  • La colonne Description est remplacée par des sliders (bornes entre la
+    valeur JSON et la valeur simulée courante).
+  • Les autres métriques sont masquées dans l&#x27;aperçu tant que Vars series
+    est coché.
+  • Survol / clic droit sur le nom Variable : liste des métriques inchangée.
+  • La fenêtre se réduit à ses sliders ; elle reprend sa taille en
+    décochant Vars series.</pre><pre>PLOT
+  Rafraîchit le graphe (comme PLOT de la palette Series) après un changement
+  de valeur.</pre><h2>MÉTRIQUES QUI UTILISENT CETTE VARIABLE</h2><pre>Survol colonne Variable (mode normal) ou nom Variable (Vars series) :
+  infobulle « Uses: … » (refs directes) et « Depends: … » (chaîne combo/alias).</pre><pre>Clic droit sur le nom Variable :
+  liste des métriques (lecture seule), puis Insert ref / Duplicate / Rename / Delete.</pre><pre>VALEUR — SIMULER vs ENREGISTRER</pre><pre>Clic sur la cellule Value (ou le libellé en mode Vars series) → édition directe.</pre><pre>Valeur simulée
+  Appliquée immédiatement aux métriques et à l&#x27;aperçu (Min/Max suivent la simu).
+  Affichée avec un * final (non enregistrée).</pre><pre>Save
+  Écrit toutes les valeurs simulées dans le JSON du thème sur disque.
+  Actif seulement s&#x27;il existe au moins une valeur *.
+  Dialogue de confirmation avant écriture.</pre><pre>Close sans Save
+  Annule toutes les valeurs simulées (*) et revient aux valeurs JSON.
+  Efface l&#x27;aperçu variables sur le graphe.</pre><h2>FENÊTRE</h2><pre>Taille par défaut élargie pour garder PLOT et ? visibles.
+Position et taille mémorisées par requête (comme les palettes Series / Table).</pre><pre>Redimensionnez ou déplacez la fenêtre — la géométrie est restaurée à la
+réouverture de cette query.</pre><pre>CHAMPS DES MÉTRIQUES (&amp;x.y)</pre><pre>Dans la Composition, une variable est affichée sous sa forme compacte &amp;x.y
+(x = n° de thème, y = n° de variable), ex. &amp;1.4.
+Survol du champ → infobulle : thème, nom, valeur, unité et description,
+ex. « &amp;1.4 = energie.min_nucl = 35000 MW ».
+Clic droit sur le champ → ouvre ce sélecteur.
+Les numéros &amp;x.y sont propres au workspace : la query enregistre la forme
+par nom (&amp;theme.variable), portable d&#x27;un workspace à l&#x27;autre.</pre><pre>TRI</pre><pre>Clic sur un en-tête (IN, Ref, Theme, Variable, Value, Description) : tri
+croissant ; nouveau clic : tri décroissant. Aucun marqueur dans l&#x27;en-tête.</pre><pre>?
+  Cette aide (langue définie dans Params de l&#x27;application).</pre><h2>DISPLAY SUR LE GRAPHE / STYLE</h2><pre>Show garde son comportement (sélection dans l&#x27;aperçu de la query).
+Display est distinct : coché, la variable est tracée directement sur le graphe
+comme un repère graphique, SANS texte (ni nom, ni valeur, ni unité). Une valeur
+numérique produit une ligne de référence horizontale ; une formule utilisant
+des séries produit une courbe si ses séries de dépendance sont disponibles.
+Display est OFF par défaut et ne modifie ni les séries, ni les métriques, ni le
+WHERE. En mode Vars series, chaque ligne a trois pastilles cliquables :
+Legend (texte de la légende), Display (repère graphique) et Style.
+Style ouvre le popup de style SANS Position : couleur (More...), profondeur
+(↓ ↑), Type, Marker, Size, Alpha et Blink. États Normal / Below / Above :
+Below et Above reprennent les valeurs de Normal tant qu&#x27;ils ne sont pas
+modifiés. Close ferme le popup. Les styles et Display sont enregistrés dans le
+JSON du thème. Voir aussi l&#x27;aide « variables_catalog » (types Line, Fill, Bar,
+Point, Both).</pre></main></body></html>

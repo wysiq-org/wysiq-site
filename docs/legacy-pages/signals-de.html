@@ -1,0 +1,1499 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to Use — Signals — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}article img{max-width:100%;height:auto}article table{border-collapse:collapse;max-width:100%;display:block;overflow-x:auto}article td,article th{border:1px solid #264158;padding:7px}article p{color:#d5e7f4}</style></head><body><header><nav class="nav"><a href="../fr.html">WysiQ FR</a><a href="../en.html">WysiQ EN</a><a href="../help/index.html">Help</a><a href="../how-to-use/index.html">How to Use</a><a href="../videos.html">WysiQ in 1 minute</a></nav></header><main><p><a href="../guides/WysiQ_Signals_Kurs_DE.odt">Download ODT</a> · Guide Signals, 32 pages, texte et illustrations</p><article><p>WysiQ — Modul Signals</p>
+<p>Benutzerhandbuch und Schulungskurs</p>
+<p>Dynamik, Rauigkeit und Zyklen einer Zeitreihe messen — 22 Metriken mit grafischen Beispielen erklärt</p>
+<p>Referenzversion: Build FIX35 · Oktober 2026 · Sprache: Deutsch</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Für wen ist dieser Kurs?</p>
+<p>Für WysiQ-Anwender, die bereits eine Tabelle laden, Reihen plotten und die Area-Palette nutzen können. Kenntnisse in Signalverarbeitung sind nicht erforderlich: Jede Metrik wird zuerst mit einem visuellen Beispiel, dann mit ihrer Formel und schließlich mit ihrer Interpretation eingeführt.</p>
+<p>Richtwert: 3 Stunden (Lektüre + Übungen). Empfohlener Weg: Kapitel 1 bis 4 (Stufe Basic), dann 5 (Advanced), dann 6 (Expert) sowie die Praxiskapitel 7 bis 10.</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="so-arbeiten-sie-mit-diesem-kurs"><span id="anchor"></span>0. So arbeiten Sie mit diesem Kurs</h1>
+<p>Das Modul Signals ergänzt WysiQ um eine Palette, die für jede aktive Reihe eine Reihe von <strong>Dynamikmetriken</strong> berechnet: wie stark sich die Kurve bewegt, wie schnell, wie regelmäßig und in welchen Zyklen. Dieses Dokument ist zugleich <strong>Bedienungsanleitung</strong> (Kapitel 2), <strong>Referenz</strong> (ein Steckbrief pro Metrik, Kapitel 4 bis 6) und <strong>Schulungsunterlage</strong> (geführte Übungen, Praxisfall und Quiz mit Lösungen).</p>
+<h2 id="aufbau"><span id="anchor-1"></span>Aufbau</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Kapitel</td>
+<td>Inhalt</td>
+<td>Stufe</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Warum Signals: was klassische Statistiken nicht sehen</td>
+<td>Alle</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Die Signal-Palette Schritt für Schritt</td>
+<td>Alle</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Notation und gemeinsame Berechnungsregeln aller Metriken</td>
+<td>Alle</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Basic-Metriken: nb, trans, TVAR, NTVAR, SIGN_CHG, PEAKS, VALLEYS, OSC_PERIOD</td>
+<td>Basic</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Advanced-Metriken: TVAR2, NTVAR2, SPIKE_RATIO, RAMP_CONC, ZERO_X, Steigungen, AUTOCORR_LAG1, SMOOTHNESS</td>
+<td>Advanced</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Expert-Metriken: HF_ENERGY und die vier FFT-Kennzahlen</td>
+<td>Expert</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>Signal → Reihe: eine Metrik in eine Kurve verwandeln</td>
+<td>Advanced</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Metriken gemeinsam lesen: Diagnoseraster</td>
+<td>Advanced</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Praxisfall: Kernkraft mit und ohne Solar</td>
+<td>Alle</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>Übungen und Lösungen</td>
+<td>Alle</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>Spickzettel der 22 Metriken</td>
+<td>Alle</td>
+</tr>
+</tbody>
+</table>
+<h2 id="konventionen"><span id="anchor-2"></span>Konventionen</h2>
+<blockquote>
+<p>• Metriknamen werden wie in WysiQ geschrieben, z. B. <em>TVAR</em> oder <em>FFT_PERIOD1</em>.</p>
+</blockquote>
+<blockquote>
+<p>• Oberflächenbeschriftungen sind wie in der Anwendung englisch: <strong>ReCalc</strong>, <strong>Use Area</strong>, <strong>Signals...</strong></p>
+</blockquote>
+<blockquote>
+<p>• Die Stufen <strong>Basic</strong>, <strong>Advanced</strong> und <strong>Expert</strong> entsprechen der Skala in Settings &gt; Signal (Spalte Level).</p>
+</blockquote>
+<blockquote>
+<p>• Alle Zahlen in den Abbildungen wurden mit der echten Rechenengine von WysiQ (<em>xiquery/signal/metrics.py</em>) berechnet: Wenn Sie die Beispiele nachbauen, erhalten Sie dieselben Werte.</p>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Kästen</p>
+<p>Blau: Tipp. Orange: Falle. Grün: Merksatz. Violett: Übung.</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="warum-signals"><span id="anchor-3"></span>1. Warum Signals?</h1>
+<p>Die Paletten Area und Stats beantworten die Frage „<strong>wie viel</strong>?“: Mittelwert (AVG), Summe (SUM), Differenz zwischen Anfang und Ende (DELTA), Spannweite (RANGE). Sie sagen nichts darüber, <strong>wie</strong> sich die Reihe zwischen zwei Punkten entwickelt. Zwei Kurven können exakt denselben Mittelwert und dieselbe Spannweite haben und dennoch völlig unterschiedliche Geschichten erzählen.</p>
+<p><img src="../../media-de/Pictures/10000001000003FF000001B4F58F56F4.png" style="width:6.4961in;height:2.7677in" /></p>
+<p>Abbildung 1 — Gleicher Mittelwert (50) und gleiche Spannweite (30 → 70), aber eine völlig andere Dynamik.</p>
+<p>In Abbildung 1 beträgt AVG für beide Reihen 50. Reihe B legt jedoch insgesamt <strong>1410</strong> Einheiten zurück, Reihe A nur <strong>157</strong> (<em>TVAR</em>), und sie wechselt <strong>98</strong>-mal die Richtung statt <strong>4</strong>-mal (<em>SIGN_CHG</em>). Genau das misst die Signal-Palette: die <strong>interne Bewegung</strong> einer Reihe über einen X-Bereich.</p>
+<h2 id="fragen-die-signals-beantwortet"><span id="anchor-4"></span>Fragen, die Signals beantwortet</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Fachliche Frage</td>
+<td>Relevante Metriken</td>
+</tr>
+<tr class="even">
+<td>Ist die Reihe in diesem Zeitraum unruhiger als in jenem?</td>
+<td>NTVAR, SMOOTHNESS, HF_ENERGY</td>
+</tr>
+<tr class="odd">
+<td>Sind die Bewegungen gleichmäßig oder bestehen sie aus wenigen großen Sprüngen?</td>
+<td>SPIKE_RATIO, RAMP_CONC, ABS_SLOPE_MAX</td>
+</tr>
+<tr class="even">
+<td>Wie oft steigt die Kurve und fällt wieder?</td>
+<td>PEAKS, VALLEYS, SIGN_CHG</td>
+</tr>
+<tr class="odd">
+<td>Gibt es einen Zyklus, und wie lang ist er?</td>
+<td>FFT_PERIOD1, OSC_PERIOD, FFT_POWER_LF</td>
+</tr>
+<tr class="even">
+<td>Ist die Reihe von einem Punkt zum nächsten vorhersagbar?</td>
+<td>AUTOCORR_LAG1</td>
+</tr>
+<tr class="odd">
+<td>Wechselt ein Saldo häufig das Vorzeichen?</td>
+<td>ZERO_X</td>
+</tr>
+</tbody>
+</table>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Typisches WysiQ-Beispiel</p>
+<p>Die Variabilität der Kernkraftproduktion in Zeiträumen mit viel und ohne Solarproduktion vergleichen. Der Mittelwert sinkt leicht, vor allem aber wird die Kurve „gesteuert“: tägliche Modulationen, Rampen, Mittagssenken. Dieser Fall wird in Kapitel 9 vollständig durchgearbeitet.</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="erste-schritte-mit-der-signal-palette"><span id="anchor-5"></span>2. Erste Schritte mit der Signal-Palette</h1>
+<h2 id="palette-öffnen"><span id="anchor-6"></span>2.1 Palette öffnen</h2>
+<blockquote>
+<p><strong>1.</strong> Öffnen Sie eine Query und plotten Sie mindestens eine Reihe im Grafikfenster.</p>
+</blockquote>
+<blockquote>
+<p><strong>2.</strong> Klicken Sie in der Schaltflächenleiste des Graphen auf <strong>Signals</strong> (neben Table, Area und Scenario). In der Paletten-Fernbedienung öffnet und schließt die Kurzwahl <strong>Si</strong> dieselbe Palette.</p>
+</blockquote>
+<blockquote>
+<p><strong>3.</strong> Das Fenster „Signal — &lt;Query-Name&gt;“ öffnet sich. Position, Größe und Sichtbarkeit werden mit der Query gespeichert und beim erneuten Öffnen wiederhergestellt.</p>
+</blockquote>
+<h2 id="welche-reihen-werden-analysiert"><span id="anchor-7"></span>2.2 Welche Reihen werden analysiert?</h2>
+<p>Die Palette analysiert alle Reihen, die in der <strong>Spalte A</strong> der Reihen-Palette aktiviert sind: Tabellenreihen, Metrics, virtuelle Reihen (Alias, Combo, festgeschriebenes Szenario) sowie A-Reihen, die zusätzlich in G geplottet werden. Ein eventueller Koeffizient (<em>coeff</em>) wird angewendet: Eine mit 0,001 multiplizierte Reihe erscheint als <em>Reihe*0.001</em>.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Keine Reihe?</p>
+<p>Zeigt die Tabellenüberschrift „Metric — no A-series active (check A column)“, ist keine Reihe in A aktiviert. Aktivieren Sie die Spalte A der zu analysierenden Reihen und klicken Sie auf <strong>ReCalc</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="x-bereich-wählen"><span id="anchor-8"></span>2.3 X-Bereich wählen</h2>
+<p>Die Metriken werden nur über die Punkte berechnet, deren X zwischen <strong>Xmin</strong> und <strong>Xmax</strong> liegt. Zwei Modi:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Modus</td>
+<td>Verhalten</td>
+</tr>
+<tr class="even">
+<td>Use Area aktiviert (Standard)</td>
+<td>Existiert ein gültiges Area-Rechteck im Graphen, werden Xmin/Xmax daraus übernommen. Ohne gültiges Rechteck zeigt Signal die sichtbaren X-Grenzen und analysiert alle Punkte.</td>
+</tr>
+<tr class="odd">
+<td>Use Area deaktiviert (manuell)</td>
+<td>Xmin und Xmax sind editierbar. Grenzen eingeben und mit Enter bestätigen (oder das Feld verlassen): Die Berechnung wird neu gestartet.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>• Datumsangaben in Xmin/Xmax folgen dem Format unter <strong>Params &gt; Core &gt; Date format (tables)</strong>.</p>
+</blockquote>
+<blockquote>
+<p>• X kann die Zeit, eine Rohreihe, eine Metric oder eine berechnete Reihe sein: Die Palette folgt der X-Achse des Graphen.</p>
+</blockquote>
+<blockquote>
+<p>• Die Felder rechnen nicht bei jedem Tastendruck neu: Nur Enter, das Verlassen des Feldes oder <strong>ReCalc</strong> lösen die Berechnung aus.</p>
+</blockquote>
+<h2 id="der-schwellwert-eps"><span id="anchor-9"></span>2.4 Der Schwellwert eps</h2>
+<p>Das Feld <strong>eps</strong> legt eine Amplitude fest, unterhalb derer eine Änderung als Rauschen gilt. Es wirkt auf die Zählmetriken: <em>SIGN_CHG</em>, <em>PEAKS</em>, <em>VALLEYS</em>, <em>OSC_PERIOD</em> (über die Extrema) und <em>ZERO_X</em>. TVAR, NTVAR, Steigungen und FFT bleiben unverändert. Standardwert: 0 (keine Filterung). Die Anwendung wird im Steckbrief SIGN_CHG (§ 4.5) erklärt.</p>
+<h2 id="aufbau-der-palette"><span id="anchor-10"></span>2.5 Aufbau der Palette</h2>
+<p><img src="../../media-de/Pictures/10000001000003EA000001F28EC2DC6A.png" style="width:6.4961in;height:3.228in" /></p>
+<p>Abbildung 2 — Schema der Signal-Palette (Normalansicht: eine Zeile pro Metrik, eine Spalte pro Reihe).</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Nr.</td>
+<td>Element</td>
+<td>Funktion</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Use Area</td>
+<td>Synchronisiert Xmin/Xmax mit dem Area-Rechteck (§ 2.3).</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Xmin / Xmax</td>
+<td>Grenzen des analysierten Bereichs; editierbar, wenn Use Area deaktiviert ist.</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>eps</td>
+<td>Rauschschwelle der Zählmetriken (§ 2.4).</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>ReCalc</td>
+<td>Berechnet alle Metriken neu und liest die X-Grenzen erneut ein.</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Transpose</td>
+<td>Wechselt zwischen Normalansicht (Metriken in Zeilen) und transponierter Ansicht (Reihen in Zeilen, Metriken in Spalten).</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Signals...</td>
+<td>Öffnet direkt den Reiter Settings &gt; Signal (Spaltenauswahl, HF-Fenster).</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>→ AI</td>
+<td>Schickt die berechnete Tabelle in den AI Feed (§ 2.8).</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>&gt; Serie</td>
+<td>Aktiviert den Sendemodus, um vektorielle Reihen zu erzeugen (Kapitel 7).</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Post-it ▾</td>
+<td>Post-it: eingefrorene gelbe Kopie der Tabelle. Hide/Show: blendet Post-its aus oder ein.</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>?</td>
+<td>Öffnet die integrierte Hilfe der Palette.</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>Spalte S</td>
+<td>● = die Metrik hat eine vektorielle Version; grünes ✓ = in dieser Sitzung bereits gesendet.</td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td>Reihenüberschriften</td>
+<td>Ein Klick sortiert die Tabelle; im Modus &gt; Serie wählt ein Klick die Reihe aus.</td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>Signals Description</td>
+<td>Name der Metrik mit Kurzbeschreibung.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="angezeigte-metriken-wählen-settings-signal"><span id="anchor-11"></span>2.6 Angezeigte Metriken wählen: Settings &gt; Signal</h2>
+<p>Die Schaltfläche <strong>Signals...</strong> öffnet den Reiter <strong>Signal</strong> im Settings-Fenster. Dort steht der Katalog der 22 Metriken mit fünf Spalten: <strong>Show</strong> (✓ wenn angezeigt), <strong>Signal</strong> (Name), <strong>Level</strong> (Basic, Advanced, Expert), <strong>Formula</strong> und <strong>Meaning</strong>.</p>
+<blockquote>
+<p>• Klicken Sie eine Zeile an, um die entsprechende Spalte in der Palette ein- oder auszublenden.</p>
+</blockquote>
+<blockquote>
+<p>• Klicken Sie die Überschrift <strong>Signal (n/22) all on/off</strong>, um alle ein- oder auszublenden.</p>
+</blockquote>
+<blockquote>
+<p>• Das Feld <strong>HF moving average window</strong> legt das Fenster des gleitenden Mittelwerts für HF_ENERGY und für alle gleitenden Umwandlungen von Signal → Reihe fest. Standard: 7. Gerade Werte werden auf die nächstkleinere ungerade Zahl abgerundet (8 → 7), damit das Fenster zentriert bleibt. Zulässiger Bereich: 3 bis 999.</p>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Schulungstipp</p>
+<p>Blenden Sie zu Beginn nur die Basic-Metriken ein. Fügen Sie Advanced und Expert im Laufe der Kapitel hinzu: Die Tabelle bleibt lesbar und jede neue Spalte hat eine Bedeutung.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="lesen-sortieren-transponieren-kopieren"><span id="anchor-12"></span>2.7 Lesen, sortieren, transponieren, kopieren</h2>
+<blockquote>
+<p>• <strong>Sortieren</strong>: Klicken Sie auf die Überschrift einer Reihe (Normalansicht) oder einer Metrik (transponierte Ansicht).</p>
+</blockquote>
+<blockquote>
+<p>• <strong>Transponieren</strong>: Die transponierte Ansicht ist praktischer bei vielen Reihen und wenigen Metriken.</p>
+</blockquote>
+<blockquote>
+<p>• <strong>Kopieren</strong>: Zeilen markieren und STRG+C; die Spaltenüberschriften werden mitkopiert (direkt in eine Tabellenkalkulation einfügbar).</p>
+</blockquote>
+<blockquote>
+<p>• <strong>Einfrieren</strong>: Post-it erzeugt eine gelbe Kopie der Tabelle. X-Bereich ändern, neu berechnen und alte und neue Tabelle nebeneinander vergleichen.</p>
+</blockquote>
+<blockquote>
+<p>• Die Anzahl der Dezimalstellen folgt der Dezimaleinstellung von WysiQ; die Spaltenbreiten werden gespeichert.</p>
+</blockquote>
+<h2 id="ergebnisse-an-die-ki-senden-ai"><span id="anchor-13"></span>2.8 Ergebnisse an die KI senden: → AI</h2>
+<p>Nach einer Berechnung legt <strong>→ AI</strong> die Signaltabelle im AI Feed der Query ab. Im AI Center bittet die vordefinierte Frage <strong>Signale interpretieren</strong> den Assistenten, die stärksten Signale zu benennen, Spitzen, Brüche, Zyklen oder Anomalien zu erklären, Datenartefakte von echten Ereignissen zu unterscheiden und nächste Prüfungen vorzuschlagen. Wurde noch nichts berechnet, fordert eine Meldung dazu auf, zuerst <strong>ReCalc</strong> auszuführen.</p>
+<h2 id="geführte-übung-nr.-1-erste-messung"><span id="anchor-14"></span>2.9 Geführte Übung Nr. 1 — erste Messung</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Ziel: zwei Wochen derselben Reihe vergleichen</p>
+<p>• Plotten Sie eine stündliche Reihe (z. B. einen Verbrauch) und aktivieren Sie sie in A.</p>
+<p>• Öffnen Sie die Signals-Palette. Lassen Sie Use Area aktiviert.</p>
+<p>• Zeichnen Sie in der Area-Palette ein Rechteck über eine erste Woche. Klicken Sie ReCalc.</p>
+<p>• Wählen Sie Post-it, um das Ergebnis einzufrieren.</p>
+<p>• Verschieben Sie das Rechteck auf eine zweite Woche, dann ReCalc.</p>
+<p>• Vergleichen Sie NTVAR und PEAKS zwischen Post-it und aktueller Tabelle. Welche Woche ist unruhiger?</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="notation-und-berechnungsregeln"><span id="anchor-15"></span>3. Notation und Berechnungsregeln</h1>
+<p>Alle Metriken teilen dieselbe Datenvorbereitung. Wer sie kennt, vermeidet die meisten Fehlinterpretationen.</p>
+<h2 id="gültige-punkte-und-übergänge"><span id="anchor-16"></span>3.1 Gültige Punkte und Übergänge</h2>
+<p>Nur Punkte, an denen X <strong>und</strong> Y endliche Zahlen sind, werden behalten; fehlende Werte (NaN) werden vor jeder Berechnung entfernt. Die verbleibenden Punkte heißen y0, y1, …, yn, die aufeinanderfolgenden Differenzen <strong>dy[i] = y[i+1] − y[i]</strong>.</p>
+<p><img src="../../media-de/Pictures/10000001000003ED00000160C783822A.png" style="width:6.4961in;height:2.2752in" /></p>
+<p>Abbildung 3 — Zwei fehlende Werte werden ignoriert: nb = 8 gültige Punkte, trans = 7 Übergänge.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Lücken werden „zusammengenäht“</p>
+<p>Wird ein NaN entfernt, werden der vorherige und der nächste Punkt benachbart: Der Übergang überspringt die Lücke. Bei Daten mit langen Ausfällen entsteht so ein künstlicher Sprung, der TVAR2, SPIKE_RATIO oder ABS_SLOPE_MAX aufbläht. Wählen Sie einen X-Bereich ohne große Lücken oder füllen Sie Lücken vorab.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="die-einheit-von-x-vorsicht-bei-datumswerten"><span id="anchor-17"></span>3.2 Die Einheit von X: Vorsicht bei Datumswerten</h2>
+<p>Ist die X-Achse ein Datum, rechnet WysiQ sie in <strong>Tage</strong> um (Matplotlib-Konvention). Alle X-abhängigen Metriken werden dann in Tagen ausgedrückt:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Metrik</td>
+<td>Einheit bei Datums-X</td>
+<td>Beispiel</td>
+</tr>
+<tr class="even">
+<td>ABS_SLOPE_AVG, ABS_SLOPE_MAX</td>
+<td>Y-Einheit pro Tag</td>
+<td>MW/Tag</td>
+</tr>
+<tr class="odd">
+<td>OSC_PERIOD, FFT_PERIOD1</td>
+<td>Tage</td>
+<td>1,0 = 24 h; 0,25 = 6 h; 7,0 = eine Woche</td>
+</tr>
+<tr class="even">
+<td>FFT_FREQ1</td>
+<td>Zyklen pro Tag</td>
+<td>1,0 = ein Zyklus pro Tag</td>
+</tr>
+</tbody>
+</table>
+<p>In den Beispielen dieses Kurses ist X oft in Stunden oder als Index angegeben, um einfache Zahlen zu erhalten: Teilen Sie durch 24, um den Wert zu erhalten, den WysiQ auf einer stündlichen Datumsachse anzeigt.</p>
+<h2 id="metriken-mit-und-ohne-einheit"><span id="anchor-18"></span>3.3 Metriken mit und ohne Einheit</h2>
+<p>Einige Metriken erben die Einheit von Y (TVAR, NTVAR, Steigungen …): Sie lassen sich nur zwischen Reihen <strong>gleicher Einheit und Größenordnung</strong> vergleichen. Andere sind <strong>dimensionslos</strong> (SPIKE_RATIO, RAMP_CONC, AUTOCORR_LAG1, FFT_POWER_HF/LF) oder <strong>Zählwerte</strong> (PEAKS, SIGN_CHG …): Sie sind zwischen beliebigen Reihen vergleichbar. Der Spickzettel in Kapitel 11 gibt diese Eigenschaft für jede Metrik an.</p>
+<h2 id="nan-werte"><span id="anchor-19"></span>3.4 nan-Werte</h2>
+<p>Eine Zelle „nan“ bedeutet, dass die Metrik für den gewählten Bereich nicht definiert ist: weniger als 2 Punkte (kein Übergang), weniger als 3 Punkte (Autokorrelation), weniger als 5 Punkte (HF_ENERGY), weniger als 8 Punkte (FFT), konstante Reihe (Autokorrelation) oder weniger als zwei Extrema (OSC_PERIOD). Das ist kein Fehler: Vergrößern Sie den X-Bereich.</p>
+<h1 id="metriken-der-stufe-basic"><span id="anchor-20"></span>4. Metriken der Stufe Basic</h1>
+<p>Die acht Basic-Metriken beruhen jeweils auf einer einzigen mechanischen Idee und sind auf einen Blick lesbar. Für die meisten alltäglichen Vergleiche reichen sie aus.</p>
+<h2 id="nb-anzahl-gültiger-punkte"><span id="anchor-21"></span>4.1 nb — Anzahl gültiger Punkte</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Basic</td>
+<td>nb = len(y)</td>
+<td>Punkte</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>Anzahl der Punkte, die nach Entfernen fehlender Werte und Filterung auf [Xmin, Xmax] tatsächlich verwendet werden. Dies ist die <strong>erste Spalte, die Sie prüfen sollten</strong>: Sie bestätigt den richtigen Bereich und zeigt eine unvollständige Reihe (nb kleiner als bei den anderen Reihen im selben Bereich).</p>
+<blockquote>
+<p>• Eine vollständige Stundenwoche ergibt nb = 168; ein Tag im Viertelstundenraster nb = 96.</p>
+</blockquote>
+<blockquote>
+<p>• Unterscheidet sich nb zwischen zwei Reihen im selben Bereich, hat eine davon Lücken: Summenmetriken (TVAR, TVAR2, HF_ENERGY) sind dann nicht direkt vergleichbar.</p>
+</blockquote>
+<h2 id="trans-anzahl-der-übergänge"><span id="anchor-22"></span>4.2 trans — Anzahl der Übergänge</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Basic</td>
+<td>trans = len(dy) = nb − 1</td>
+<td>Übergänge</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>Anzahl der Schritte zwischen aufeinanderfolgenden Punkten. Dient als Nenner der normierten Versionen NTVAR und NTVAR2. Ist er 0 (nur ein Punkt), sind alle Bewegungsmetriken nan.</p>
+<h2 id="tvar-totalvariation"><span id="anchor-23"></span>4.3 TVAR — Totalvariation</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Basic</td>
+<td>TVAR = Σ |dy[i]|</td>
+<td>Y-Einheit</td>
+<td>ja: Local variance</td>
+</tr>
+</tbody>
+</table>
+<p>TVAR summiert den Absolutbetrag jeder Bewegung: Anstiege und Rückgänge <strong>heben sich nicht auf</strong>. Es ist der „vertikal zurückgelegte Weg“ der Kurve, wie der Kilometerzähler eines Autos, das hin- und herfährt.</p>
+<p><img src="../../media-de/Pictures/10000001000003FB0000017B769AE81F.png" style="width:6.4961in;height:2.4177in" /></p>
+<p>Abbildung 4 — Gleiches DELTA (0 → 10), aber TVAR = 10 für den gleichmäßigen Anstieg und 42 für den Zickzack.</p>
+<h3 id="tvar-lesen">TVAR lesen</h3>
+<blockquote>
+<p>• TVAR = |DELTA|: Die Reihe hat sich monoton entwickelt (immer in dieselbe Richtung).</p>
+</blockquote>
+<blockquote>
+<p>• TVAR ≫ |DELTA|: Die Reihe ist viel hin und her gelaufen. Das Verhältnis TVAR / |DELTA| misst diesen „Umweg“.</p>
+</blockquote>
+<blockquote>
+<p>• TVAR hängt von der Punktanzahl ab: Für Bereiche unterschiedlicher Länge verwenden Sie NTVAR.</p>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Anwendung in WysiQ</p>
+<p>Bei einer regelbaren Erzeugung entspricht TVAR über einen Tag ungefähr dem kumulierten Modulationsvolumen (in MW) des Kraftwerksparks.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="ntvar-normierte-tvar"><span id="anchor-24"></span>4.4 NTVAR — normierte TVAR</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Basic</td>
+<td>NTVAR = TVAR / trans</td>
+<td>Y-Einheit pro Schritt</td>
+<td>ja: Local variance</td>
+</tr>
+</tbody>
+</table>
+<p>Mittlere absolute Bewegung <strong>pro Übergang</strong>. NTVAR erlaubt den Vergleich von Bereichen unterschiedlicher Länge, sofern die <strong>Abtastschrittweite</strong> gleich ist.</p>
+<p><img src="../../media-de/Pictures/10000001000003ED0000018DE4D5002F.png" style="width:6.4961in;height:2.5669in" /></p>
+<p>Abbildung 5 — Dieselbe Kurve mit 51 bzw. 201 Punkten abgetastet: TVAR bleibt ≈ 24, NTVAR sinkt aber von 0,479 auf 0,120.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Falle: die Abtastschrittweite</p>
+<p>Bei einer glatten Kurve gilt: Je mehr Punkte, desto kleiner jeder Schritt – NTVAR sinkt mechanisch. Vergleichen Sie NTVAR nur zwischen Reihen mit gleicher Schrittweite (stündlich mit stündlich). Für eine schrittweitenunabhängige Kennzahl verwenden Sie ABS_SLOPE_AVG (§ 5.6), das durch dx teilt.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="sign_chg-richtungswechsel"><span id="anchor-25"></span>4.5 SIGN_CHG — Richtungswechsel</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Basic</td>
+<td><p>SIGN_CHG = count(sign(dy[i]) ≠ sign(dy[i−1]))</p>
+<p>nach eps-Filterung</p></td>
+<td>Anzahl</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>Zählt, wie oft die Steigung ihr Vorzeichen wechselt, also wie oft die Kurve von „steigt“ zu „fällt“ wechselt oder umgekehrt. Nullschritte werden ignoriert, ebenso Schritte mit einer Amplitude unter <strong>eps</strong>.</p>
+<p><img src="../../media-de/Pictures/10000001000003FB0000019AA36B2A05.png" style="width:6.4961in;height:2.6142in" /></p>
+<p>Abbildung 6 — Ein Rauschen von ±0,15 erzeugt zusätzliche Richtungswechsel; eps = 0,5 entfernt sie (SIGN_CHG: 8 → 4).</p>
+<h3 id="eps-wählen">eps wählen</h3>
+<blockquote>
+<p><strong>1.</strong> Zoomen Sie auf einen „ruhigen“ Abschnitt der Reihe und schätzen Sie die typische Rauschamplitude von Punkt zu Punkt.</p>
+</blockquote>
+<blockquote>
+<p><strong>2.</strong> Tragen Sie in eps das 2- bis 3-Fache dieser Amplitude ein und drücken Sie Enter.</p>
+</blockquote>
+<blockquote>
+<p><strong>3.</strong> Prüfen Sie, dass SIGN_CHG, PEAKS und VALLEYS jetzt den mit bloßem Auge sichtbaren Schwingungen entsprechen.</p>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Merksatz</p>
+<p>eps wird in der Einheit von Y angegeben: Ein für MW passender Wert passt nicht für GW. Ohne eps messen die Zählwerte vor allem das Rauschen.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="peaks-und-valleys-lokale-spitzen-und-täler"><span id="anchor-26"></span>4.6 PEAKS und VALLEYS — lokale Spitzen und Täler</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Basic</td>
+<td><p>PEAKS: Steigung + dann −</p>
+<p>VALLEYS: Steigung − dann +</p></td>
+<td>Anzahl</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>PEAKS zählt die lokalen Maxima (die Kurve steigt und fällt wieder), VALLEYS die lokalen Minima. Plateaus (Steigung null oder unter eps) werden „durchquert“: Ein Plateau zwischen Anstieg und Abstieg zählt als eine einzige Spitze.</p>
+<p><img src="../../media-de/Pictures/100000010000040D000001B9B1B54327.png" style="width:6.4961in;height:2.7634in" /></p>
+<p>Abbildung 7 — Ein Signal mit zwei Komponenten: PEAKS = 11, VALLEYS = 11, SIGN_CHG = 22.</p>
+<blockquote>
+<p>• Ohne eps gilt fast immer SIGN_CHG ≈ PEAKS + VALLEYS.</p>
+</blockquote>
+<blockquote>
+<p>• |PEAKS − VALLEYS| ≤ 1: Spitzen und Täler wechseln sich zwangsläufig ab.</p>
+</blockquote>
+<blockquote>
+<p>• Bei einem Verbrauchstag steht PEAKS = 2 für die klassische Doppelspitze morgens/abends.</p>
+</blockquote>
+<h2 id="osc_period-mittlerer-abstand-zwischen-extrema"><span id="anchor-27"></span>4.7 OSC_PERIOD — mittlerer Abstand zwischen Extrema</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Basic</td>
+<td><p>OSC_PERIOD = Mittelwert der X-Abstände</p>
+<p>zwischen aufeinanderfolgenden Extrema</p></td>
+<td>X-Einheit</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>OSC_PERIOD sucht alle Spitzen und Täler (mit derselben eps-Filterung) und berechnet den mittleren X-Abstand zwischen zwei aufeinanderfolgenden Extrema.</p>
+<p><img src="../../media-de/Pictures/10000001000004130000018C68F9D9B9.png" style="width:6.4961in;height:2.465in" /></p>
+<p>Abbildung 8 — Sinus mit 24 h Periode: OSC_PERIOD = 12, FFT_PERIOD1 = 24.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Halbe Periode</p>
+<p>Gemessen wird der Abstand von einer Spitze zum nächsten Tal: Bei einer regelmäßigen Schwingung beträgt OSC_PERIOD daher die <strong>Hälfte</strong> der Zyklusperiode. Multiplizieren Sie mit 2, um mit FFT_PERIOD1 zu vergleichen. Gilt 2 × OSC_PERIOD ≈ FFT_PERIOD1, ist der erkannte Zyklus sauber; ist OSC_PERIOD viel kleiner, kommen Mikroschwankungen (Rauschen) hinzu: eps erhöhen.</p></td>
+</tr>
+</tbody>
+</table>
+<p>OSC_PERIOD ist nan, wenn im Bereich weniger als zwei Extrema liegen (monotone Reihe).</p>
+<h1 id="metriken-der-stufe-advanced"><span id="anchor-28"></span>5. Metriken der Stufe Advanced</h1>
+<p>Die Advanced-Metriken erfordern, mehrere Begriffe gleichzeitig im Kopf zu behalten: quadratische Energie, Konzentration der Bewegungen, Steigung, Trägheit. Sie unterscheiden Reihen, die die Basic-Metriken für ähnlich halten.</p>
+<h2 id="tvar2-dynamische-energie"><span id="anchor-29"></span>5.1 TVAR2 — dynamische Energie</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td>TVAR2 = Σ dy[i]²</td>
+<td>Y-Einheit zum Quadrat</td>
+<td>ja: Local variance</td>
+</tr>
+</tbody>
+</table>
+<p>TVAR2 quadriert jede Bewegung vor dem Summieren: Ein großer Sprung wiegt viel mehr als mehrere kleine Schritte mit gleicher Summe. Diese Metrik unterscheidet eine <strong>verteilte</strong> von einer <strong>konzentrierten</strong> Bewegung.</p>
+<p><img src="../../media-de/Pictures/10000001000003FB0000017B22D82CBC.png" style="width:6.4961in;height:2.4177in" /></p>
+<p>Abbildung 9 — Gleiches TVAR (10), aber TVAR2 = 10 für 10 Schritte von 1 und 100 für einen Sprung von 10.</p>
+<blockquote>
+<p>• TVAR2 reagiert stark auf Rampen und Spitzen.</p>
+</blockquote>
+<blockquote>
+<p>• Die Einheit ist das Quadrat der Y-Einheit: Der Rohwert ist wenig anschaulich; nutzen Sie ihn vor allem im Vergleich oder über SPIKE_RATIO und RAMP_CONC.</p>
+</blockquote>
+<h2 id="ntvar2-mittlere-energie-pro-übergang"><span id="anchor-30"></span>5.2 NTVAR2 — mittlere Energie pro Übergang</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td>NTVAR2 = TVAR2 / trans</td>
+<td>Y-Einheit zum Quadrat</td>
+<td>ja: Local variance</td>
+</tr>
+</tbody>
+</table>
+<p>Normierte Version von TVAR2, vergleichbar zwischen Bereichen unterschiedlicher Länge (bei gleicher Schrittweite). Ihre Quadratwurzel √NTVAR2 ist die quadratisch gemittelte Schrittamplitude in der Einheit von Y.</p>
+<h2 id="spike_ratio-dominanz-von-spitzen"><span id="anchor-31"></span>5.3 SPIKE_RATIO — Dominanz von Spitzen</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td>SPIKE_RATIO = NTVAR2 / NTVAR²</td>
+<td>dimensionslos, ≥ 1</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>SPIKE_RATIO vergleicht die mittlere quadratische Energie mit dem Quadrat der mittleren Bewegung. Es beträgt <strong>1</strong>, wenn alle Schritte gleich groß sind, und steigt, wenn wenige große Bewegungen dominieren. Als dimensionslose Zahl ist es zwischen Reihen jeder Größenordnung vergleichbar (MW, °C, € …).</p>
+<p><img src="../../media-de/Pictures/10000001000003FE0000018DC5717ED6.png" style="width:6.4961in;height:2.524in" /></p>
+<p>Abbildung 10 — Gleichmäßiges Rauschen: SPIKE_RATIO = 1,58; drei isolierte Spitzen auf ruhigem Grund: 16,44.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>SPIKE_RATIO</td>
+<td>Bedeutung</td>
+</tr>
+<tr class="even">
+<td>≈ 1</td>
+<td>Bewegungen homogener Größe (gleichmäßige Stufen, reine Alternierung).</td>
+</tr>
+<tr class="odd">
+<td>1,2 – 2</td>
+<td>Gewöhnliches Rauschen oder sanfte Schwingung: einige Schritte größer als andere.</td>
+</tr>
+<tr class="even">
+<td>2 – 5</td>
+<td>Rampen oder deutliche Ereignisse inmitten moderater Bewegungen.</td>
+</tr>
+<tr class="odd">
+<td>&gt; 5</td>
+<td>Wenige seltene Sprünge oder Spitzen tragen den Großteil der Bewegung.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Anwendung in WysiQ</p>
+<p>Ein hohes SPIKE_RATIO bei Spotpreisen zeigt Preisspitzen an; bei einem Sensor deutet es oft auf zu prüfende Ausreißer hin.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="ramp_conc-rampenkonzentration"><span id="anchor-32"></span>5.4 RAMP_CONC — Rampenkonzentration</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td>RAMP_CONC = √TVAR2 / TVAR</td>
+<td>dimensionslos, zwischen 1/√trans und 1</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>RAMP_CONC misst den Anteil der Gesamtbewegung, der von wenigen großen Bewegungen getragen wird. Es beträgt <strong>1</strong>, wenn ein einziger Schritt die gesamte Bewegung trägt, und sinkt gegen <strong>1/√trans</strong>, wenn alle Schritte gleich sind (völlig diffuse Bewegung).</p>
+<p><img src="../../media-de/Pictures/10000001000003FB0000018DB775CDB4.png" style="width:6.4961in;height:2.5315in" /></p>
+<p>Abbildung 11 — Kleine gleichmäßige Schritte: RAMP_CONC = 0,13 (= 1/√trans); eine einzige Rampe: 0,71.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Mit der Untergrenze vergleichen</p>
+<p>Die Untergrenze 1/√trans hängt von der Punktanzahl ab (0,08 bei 168 Punkten, 0,33 bei 10 Punkten). Für Bereiche unterschiedlicher Länge betrachten Sie besser SPIKE_RATIO oder vergleichen RAMP_CONC × √trans. SPIKE_RATIO und RAMP_CONC ergänzen sich: Ersteres fragt „dominieren Spitzen?“, Letzteres „wie viele Ereignisse tragen die Bewegung?“.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="zero_x-nulldurchgänge"><span id="anchor-33"></span>5.5 ZERO_X — Nulldurchgänge</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td>ZERO_X = count(sign(y[i]) ≠ sign(y[i−1]))</td>
+<td>Anzahl</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>Zählt, wie oft <strong>der Wert</strong> (nicht die Steigung) das Vorzeichen wechselt. Werte mit |y| &lt; eps gelten als null und werden ignoriert. ZERO_X ist nur für Reihen sinnvoll, die um 0 schwanken: Import-/Exportsaldo, Prognoseabweichung, negative Preise, Ableitung einer anderen Reihe.</p>
+<p><img src="../../media-de/Pictures/100000010000040D0000016E1CC7D5F6.png" style="width:6.4961in;height:2.2913in" /></p>
+<p>Abbildung 12 — ZERO_X = 6: Die Reihe wechselt sechsmal zwischen positiv und negativ.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Tipp</p>
+<p>Um Durchgänge um den Mittelwert statt um 0 zu zählen, erstellen Sie eine zentrierte Metric (Reihe − AVG) und analysieren diese.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="abs_slope_avg-und-abs_slope_max-absolute-steigungen"><span id="anchor-34"></span>5.6 ABS_SLOPE_AVG und ABS_SLOPE_MAX — absolute Steigungen</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td><p>ABS_SLOPE_AVG = mean(|dy/dx|)</p>
+<p>ABS_SLOPE_MAX = max(|dy/dx|)</p></td>
+<td>Y-Einheit pro X-Einheit</td>
+<td>ja: Derivative, Acceleration</td>
+</tr>
+</tbody>
+</table>
+<p>Die lokale Steigung |dy/dx| teilt jede Bewegung durch den zugehörigen X-Abstand. ABS_SLOPE_AVG liefert die mittlere Änderungsgeschwindigkeit, ABS_SLOPE_MAX die <strong>steilste Rampe</strong> des Bereichs. Anders als NTVAR hängt die Steigung nicht von der Abtastschrittweite ab und bleibt auch bei unregelmäßigem X-Schritt korrekt.</p>
+<p><img src="../../media-de/Pictures/10000001000004010000020204E3C13F.png" style="width:6.4961in;height:3.2559in" /></p>
+<p>Abbildung 13 — Oben die Reihe, unten ihre absolute Steigung: Mittel 1,44, Maximum 10,72 (Y pro Stunde).</p>
+<blockquote>
+<p>• Ist X ein Datum, wird die Steigung in Y-Einheit <strong>pro Tag</strong> angegeben: Eine Rampe von 1 000 MW in einer Stunde erscheint als 24 000 MW/Tag.</p>
+</blockquote>
+<blockquote>
+<p>• Bei regelmäßigem X mit Schrittweite 1 gilt ABS_SLOPE_AVG = NTVAR (vergleichen Sie beide Spalten, um die Regelmäßigkeit des Schritts zu prüfen).</p>
+</blockquote>
+<blockquote>
+<p>• ABS_SLOPE_MAX reagiert sehr empfindlich auf einen einzelnen Ausreißer: Prüfen Sie mit SPIKE_RATIO.</p>
+</blockquote>
+<h2 id="autocorr_lag1-trägheit-von-punkt-zu-punkt"><span id="anchor-35"></span>5.7 AUTOCORR_LAG1 — Trägheit von Punkt zu Punkt</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td>AUTOCORR_LAG1 = corr(y[:-1], y[1:])</td>
+<td>dimensionslos, −1 bis +1</td>
+<td>ja: Rolling correlation</td>
+</tr>
+</tbody>
+</table>
+<p>Korrelation der Reihe mit sich selbst, um einen Punkt verschoben. Sie beantwortet die Frage: „Lässt sich aus dem aktuellen Wert der nächste vorhersagen?“</p>
+<p><img src="../../media-de/Pictures/10000001000004190000018024639787.png" style="width:6.4961in;height:2.378in" /></p>
+<p>Abbildung 14 — Zufallsbewegung r1 = 0,97, weißes Rauschen r1 = 0,12, Alternierung r1 = -0,94.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Wert</td>
+<td>Bedeutung</td>
+</tr>
+<tr class="even">
+<td>nahe +1</td>
+<td>Persistentes, träges Signal: Jeder Punkt ähnelt dem vorherigen (Temperaturen, geglätteter Verbrauch, Füllstände).</td>
+</tr>
+<tr class="odd">
+<td>nahe 0</td>
+<td>Weißes Rauschen: Der nächste Punkt ist aus dem aktuellen nicht vorhersagbar.</td>
+</tr>
+<tr class="even">
+<td>negativ</td>
+<td>Alternierung: Auf einen Anstieg folgt ein Rückgang (Schwingung im Abtasttakt, systematische Korrektur).</td>
+</tr>
+</tbody>
+</table>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Trend und Trägheit</p>
+<p>Ein starker Trend (eine Rampe) ergibt ebenfalls eine Autokorrelation nahe 1, selbst wenn das Signal um den Trend stark verrauscht ist. Um das Rauschen zu isolieren, analysieren Sie eine trendbereinigte Reihe oder betrachten HF_ENERGY und FFT_POWER_HF. Bei einer konstanten Reihe ist die Autokorrelation nicht definiert (nan).</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="smoothness-glättekennzahl"><span id="anchor-36"></span>5.8 SMOOTHNESS — Glättekennzahl</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td>SMOOTHNESS = 1 / (1 + NTVAR)</td>
+<td>dimensionslos, zwischen 0 und 1</td>
+<td>ja: Local fractality</td>
+</tr>
+</tbody>
+</table>
+<p>Inverse Rauigkeitskennzahl: 1 für eine völlig flache Reihe, nahe 0 für eine sehr unruhige. Praktisch, um Reihen <strong>gleicher Einheit</strong> schnell von glatt bis rau zu ordnen.</p>
+<p><img src="../../media-de/Pictures/10000001000004390000018D9BB1E7A4.png" style="width:6.4961in;height:2.3858in" /></p>
+<p>Abbildung 15 — Dieselbe Kurve in MW (SMOOTHNESS = 0,007) und in GW (0,876).</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>SMOOTHNESS hängt von der Einheit ab</p>
+<p>Obwohl zwischen 0 und 1 begrenzt, wird SMOOTHNESS aus NTVAR berechnet, das die Einheit von Y trägt. Die Umrechnung von MW in GW verändert die Kennzahl völlig. Vergleichen Sie SMOOTHNESS nur zwischen Reihen gleicher Einheit und Größenordnung; für einheitenübergreifende Rangfolgen nutzen Sie AUTOCORR_LAG1 oder FFT_POWER_HF.</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="metriken-der-stufe-expert"><span id="anchor-37"></span>6. Metriken der Stufe Expert</h1>
+<p>Die Expert-Metriken richten sich an Anwender, die verstehen möchten, was hinter der Mathematik steckt. Sie beruhen auf zwei Werkzeugen: der <strong>Glättung durch gleitenden Mittelwert</strong> (HF_ENERGY) und der <strong>schnellen Fourier-Transformation</strong> (die vier FFT-Metriken).</p>
+<h2 id="hf_energy-hochfrequenzenergie"><span id="anchor-38"></span>6.1 HF_ENERGY — Hochfrequenzenergie</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Expert</td>
+<td><p>smooth = gleitender Mittelwert(y, w)</p>
+<p>HF_ENERGY = Σ (y − smooth)²</p></td>
+<td>Y-Einheit zum Quadrat</td>
+<td>ja: Local energy</td>
+</tr>
+</tbody>
+</table>
+<p>Die Reihe wird mit einem zentrierten gleitenden Mittelwert über w Punkte geglättet (Parameter <strong>HF moving average window</strong>, Standard 7); anschließend werden die quadrierten Abweichungen zwischen Reihe und geglätteter Version summiert. Was nach der Glättung übrig bleibt, sind die schnellen Bewegungen: Rauschen, kurze Schwingungen, kurzfristige Steuerung.</p>
+<p><img src="../../media-de/Pictures/10000001000003FF000001E3C3E23A3C.png" style="width:6.4961in;height:3.0669in" /></p>
+<p>Abbildung 16 — Oben das Signal und sein gleitender Mittelwert; unten die Residuen, deren Quadratsumme 46,9 beträgt. Dasselbe Signal mit weniger Rauschen: 3,6.</p>
+<h3 id="fenster-w-wählen">Fenster w wählen</h3>
+<blockquote>
+<p>• w muss kürzer sein als die Änderungen, die Sie als „Signal“ betrachten: Alles, was schneller als w Punkte schwankt, zählt als Hochfrequenz.</p>
+</blockquote>
+<blockquote>
+<p>• Stündliche Daten: w = 5 bis 7 isoliert schnelle untertägige Schwankungen; w = 25 würde auch den Tageszyklus der HF zuordnen.</p>
+</blockquote>
+<blockquote>
+<p>• Verwenden Sie ungerade Werte: Ein gerader Wert wird auf die nächstkleinere ungerade Zahl gesetzt.</p>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Bei gleicher Größenordnung vergleichen</p>
+<p>HF_ENERGY ist eine Summe: Sie hängt von der Punktanzahl und der Einheit von Y ab. Vergleichen Sie Bereiche gleicher Länge und Reihen gleicher Einheit.</p>
+<p>Versionshinweis (FIX35): Die Glättung an den Bereichsrändern wird mit Nullen aufgefüllt. Bei einer Reihe, deren Niveau weit von 0 entfernt ist (z. B. 40 000 MW), erzeugen der erste und letzte Punkt riesige Residuen, die die Summe dominieren. Bis zu einer Korrektur analysieren Sie eine zentrierte Reihe (Metric Reihe − AVG) oder nutzen die Umwandlung Local energy (Kapitel 7), die diesen Effekt nicht hat.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="die-fft-auf-einer-seite"><span id="anchor-39"></span>6.2 Die FFT auf einer Seite</h2>
+<p>Die Fourier-Transformation zerlegt eine Reihe in eine Summe von Sinuswellen unterschiedlicher Frequenzen. Das Ergebnis, das <strong>Spektrum</strong>, zeigt, welche Energie jede Frequenz trägt. Ein rohes Spektrum zu lesen erfordert Fachwissen: WysiQ extrahiert daher vier direkt nutzbare Zahlen.</p>
+<blockquote>
+<p>• <strong>Neuabtastung</strong>: Die Reihe wird zunächst linear auf ein regelmäßiges X-Raster mit gleicher Punktanzahl interpoliert. Die Metriken funktionieren daher auch bei unregelmäßigem Schritt (fehlende Daten, Lücken).</p>
+</blockquote>
+<blockquote>
+<p>• <strong>Mindestens 8</strong> gültige Punkte, sonst sind alle vier Metriken nan.</p>
+</blockquote>
+<blockquote>
+<p>• <strong>Gleichanteil ausgeschlossen</strong>: Der Mittelwert der Reihe (Frequenz 0) wird nie als dominante Frequenz gewählt.</p>
+</blockquote>
+<blockquote>
+<p>• <strong>Auflösung</strong>: Über einen Bereich der Dauer L kann die FFT nur die Perioden L, L/2, L/3, L/4 … erkennen. Über eine Woche (168 h) sind 168, 84, 56, 42, 33,6, 28, 24 h … möglich. Wählen Sie einen Bereich mit einer ganzen Zahl erwarteter Zyklen und mindestens 3 bis 4 Zyklen.</p>
+</blockquote>
+<h2 id="fft_freq1-und-fft_period1-dominanter-zyklus"><span id="anchor-40"></span>6.3 FFT_FREQ1 und FFT_PERIOD1 — dominanter Zyklus</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Expert</td>
+<td><p>FFT_FREQ1 = Frequenz des Maximums von |FFT|²</p>
+<p>(ohne Gleichanteil)</p>
+<p>FFT_PERIOD1 = 1 / FFT_FREQ1</p></td>
+<td><p>Zyklen pro X-Einheit;</p>
+<p>X-Einheit</p></td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>FFT_FREQ1 ist die Frequenz mit der meisten Energie; FFT_PERIOD1 die zugehörige Dauer in der Einheit von X. Das ist die direkte Antwort auf die Frage „Hat diese Reihe einen Zyklus, und welchen?“.</p>
+<p><img src="../../media-de/Pictures/1000000100000413000001C607B85323.png" style="width:6.4961in;height:2.8268in" /></p>
+<p>Abbildung 17 — Zwei Wochen stündlicher Daten: Das Spektrum zeigt ein klares Maximum bei 0,0417 Zyklen/Stunde, also FFT_PERIOD1 = 24,0 h.</p>
+<blockquote>
+<p>• Bei einer Datumsachse erscheint ein Tageszyklus als FFT_PERIOD1 ≈ 1,0 (Tag), ein Wochenzyklus als ≈ 7,0.</p>
+</blockquote>
+<blockquote>
+<p>• Gegenprobe: 2 × OSC_PERIOD ≈ FFT_PERIOD1 bestätigt, dass der Zyklus in der Kurve tatsächlich sichtbar ist.</p>
+</blockquote>
+<blockquote>
+<p>• Entspricht FFT_PERIOD1 der gesamten Bereichslänge, bedeutet das meist „kein Zyklus, nur ein Trend“.</p>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Die FFT antwortet immer</p>
+<p>Selbst bei reinem Rauschen liefert FFT_PERIOD1 einen Wert (beim weißen Rauschen aus Abbildung 14: 75). Bevor Sie an einen Zyklus glauben, prüfen Sie, dass FFT_POWER_LF hoch und AUTOCORR_LAG1 deutlich positiv ist.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="fft_power_hf-und-fft_power_lf-energieverteilung"><span id="anchor-41"></span>6.4 FFT_POWER_HF und FFT_POWER_LF — Energieverteilung</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit</td>
+<td>Signal → Reihe</td>
+</tr>
+<tr class="even">
+<td>Expert</td>
+<td><p>FFT_POWER_HF = Σ|FFT[f &gt; f_Median]|² / Σ|FFT[f &gt; 0]|²</p>
+<p>FFT_POWER_LF = 1 − FFT_POWER_HF</p></td>
+<td>dimensionslos, zwischen 0 und 1</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+<p>Das Spektrum (ohne Frequenz null) wird in zwei gleich breite Hälften geteilt. FFT_POWER_HF ist der Energieanteil der oberen, FFT_POWER_LF der der unteren Hälfte; ihre Summe ist immer 1.</p>
+<p><img src="../../media-de/Pictures/100000010000040F000001DB36AD1B4A.png" style="width:6.4961in;height:2.9685in" /></p>
+<p>Abbildung 18 — Langsamer Trend: FFT_POWER_HF = 0,01; starkes Rauschen: 0,44.</p>
+<blockquote>
+<p>• Die Grenze liegt bei einem Viertel der Abtastfrequenz, also bei Perioden von etwa <strong>4 Schritten</strong>. „HF“ bezeichnet daher Bewegungen auf der Skala weniger Punkte: Bei stündlichen Daten wird ein Tageszyklus vollständig der LF zugeordnet.</p>
+</blockquote>
+<blockquote>
+<p>• FFT_POWER_HF nahe 0,5: Kennzeichen von weißem Rauschen (gleichmäßig verteilte Energie).</p>
+</blockquote>
+<blockquote>
+<p>• FFT_POWER_HF nahe 1: schnelle Alternierung von Punkt zu Punkt (siehe „Alternierung“ in Abbildung 14: 0,98).</p>
+</blockquote>
+<blockquote>
+<p>• FFT_POWER_LF nahe 1: langsamer Trend oder dominante lange Zyklen. Als dimensionslose Zahl ist dieses Verhältnis zwischen allen Reihen vergleichbar.</p>
+</blockquote>
+<h1 id="signal-reihe-eine-metrik-in-eine-kurve-verwandeln"><span id="anchor-42"></span>7. Signal → Reihe: eine Metrik in eine Kurve verwandeln</h1>
+<p>Die Metriken der Tabelle sind <strong>skalar</strong>: eine Zahl pro Reihe und Bereich. Das Modul Signals bietet auch ihre <strong>vektoriellen</strong> Versionen: eine gleitende Berechnung, die für jeden X-Punkt einen Wert liefert. Das Ergebnis ist eine neue Reihe gleicher Länge wie die Quelle, die wie jede andere geplottet wird: Sie kann in Metrics, einer PCA, Areas verwendet oder an die KI gesendet werden.</p>
+<h2 id="die-sieben-umwandlungen"><span id="anchor-43"></span>7.1 Die sieben Umwandlungen</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>Umwandlung (Menü)</td>
+<td>Berechnung</td>
+<td>Fenster</td>
+<td>Angeboten bei</td>
+</tr>
+<tr class="even">
+<td>Rolling mean</td>
+<td>zentrierter gleitender Mittelwert</td>
+<td>w</td>
+<td>allen umwandelbaren Metriken</td>
+</tr>
+<tr class="odd">
+<td>Local variance</td>
+<td>zentrierte gleitende Varianz</td>
+<td>w</td>
+<td>TVAR, TVAR2, NTVAR, NTVAR2</td>
+</tr>
+<tr class="even">
+<td>Local energy</td>
+<td>gleitende Summe der Residuen² nach kurzer Glättung</td>
+<td>w</td>
+<td>HF_ENERGY</td>
+</tr>
+<tr class="odd">
+<td>Derivative</td>
+<td>dy/dx (Gradient)</td>
+<td>keins</td>
+<td>allen; ABS_SLOPE_AVG/MAX</td>
+</tr>
+<tr class="even">
+<td>Acceleration</td>
+<td>zweite Ableitung d²y/dx²</td>
+<td>keins</td>
+<td>ABS_SLOPE_AVG/MAX</td>
+</tr>
+<tr class="odd">
+<td>Rolling correlation</td>
+<td>gleitende Korrelation mit einer 2. Reihe</td>
+<td>w</td>
+<td>AUTOCORR_LAG1</td>
+</tr>
+<tr class="even">
+<td>Local fractality</td>
+<td>Weglänge / Abstand Anfang–Ende im Fenster</td>
+<td>w</td>
+<td>SMOOTHNESS</td>
+</tr>
+</tbody>
+</table>
+<p>Das Fenster w ist das des Feldes <strong>HF moving average window</strong> (Settings &gt; Signal): Es muss kein weiterer Parameter eingegeben werden. Ränder mit unvollständigem Fenster werden über die verfügbaren Punkte berechnet; nicht berechenbare Positionen erhalten NaN, sodass die Reihe punktgenau auf ihre Quelle ausgerichtet bleibt.</p>
+<h2 id="schnellmethode-rechtsklick-auf-eine-zelle"><span id="anchor-44"></span>7.2 Schnellmethode: Rechtsklick auf eine Zelle</h2>
+<blockquote>
+<p><strong>1.</strong> Berechnen Sie die Metriken (ReCalc).</p>
+</blockquote>
+<blockquote>
+<p><strong>2.</strong> Rechtsklicken Sie eine Zelle der Tabelle. In der Normalansicht ist die Zielreihe die der angeklickten Spalte, in der transponierten Ansicht die der Zeile. (macOS: Strg + Klick.)</p>
+</blockquote>
+<blockquote>
+<p><strong>3.</strong> Wählen Sie die Umwandlung im Menü „&lt;Reihe&gt; → Series“. Bei Rolling correlation fragt ein Untermenü nach der zweiten Reihe.</p>
+</blockquote>
+<blockquote>
+<p><strong>4.</strong> Die neue Reihe erscheint in der Reihen-Palette und im Graphen.</p>
+</blockquote>
+<h2 id="stapelmethode-schaltfläche-serie"><span id="anchor-45"></span>7.3 Stapelmethode: Schaltfläche &gt; Serie</h2>
+<blockquote>
+<p><strong>1.</strong> Klicken Sie auf <strong>&gt; Serie</strong>: Die Schaltfläche wird zu <strong>Send</strong>, und eine Schaltfläche <strong>Clear</strong> erscheint.</p>
+</blockquote>
+<blockquote>
+<p><strong>2.</strong> Rechtsklicken Sie einen Punkt <strong>●</strong> in Spalte S in der Zeile einer Metrik: Wählen Sie die für diese Metrik angebotene Transformation (sie ist nun „scharf geschaltet“).</p>
+</blockquote>
+<blockquote>
+<p><strong>3.</strong> Klicken Sie die Überschriften der zu transformierenden Reihen (der Klick wählt aus, statt zu sortieren).</p>
+</blockquote>
+<blockquote>
+<p><strong>4.</strong> Klicken Sie auf <strong>Send</strong>: Die Transformation wird auf jede ausgewählte Reihe angewendet. Bei Rolling correlation wird jede Reihe mit jeder anderen ausgewählten Reihe korreliert.</p>
+</blockquote>
+<blockquote>
+<p><strong>5.</strong> Der Punkt der Metrik wird für die Sitzung zum grünen ✓. <strong>Clear</strong> verwirft die aktuelle Auswahl.</p>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Sitzungsreihen</p>
+<p>Die erzeugten Reihen werden wie PCA-Reihen benannt, z. B. <em>Nucleaire_rolling_mean_w7</em>. Es sind Sitzungsreihen: auf den aktuellen X-Bereich ausgerichtet und <strong>nicht in der Query gespeichert</strong>. Nach einer Änderung des X-Filters starten Sie die Umwandlung erneut.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="grafische-beispiele"><span id="anchor-46"></span>7.4 Grafische Beispiele</h2>
+<h3 id="rolling-mean-local-variance-local-energy">Rolling mean, Local variance, Local energy</h3>
+<p><img src="../../media-de/Pictures/10000001000003FB00000266BD178565.png" style="width:6.4961in;height:3.9134in" /></p>
+<p>Abbildung 19 — Ein verrauschter Bereich (rosa hinterlegt): Der gleitende Mittelwert glättet ihn, lokale Varianz und lokale Energie lokalisieren ihn.</p>
+<p>Local variance und Local energy verwandeln einen visuellen Eindruck („hier ist es unruhiger“) in eine Kurve, die man mit einem Schwellwert versehen kann: etwa eine Metric <em>Local_variance &gt; 1</em>, um unruhige Zeiträume automatisch zu markieren.</p>
+<h3 id="derivative-und-acceleration">Derivative und Acceleration</h3>
+<p><img src="../../media-de/Pictures/10000001000004050000026E646A63B9.png" style="width:6.4961in;height:3.9252in" /></p>
+<p>Abbildung 20 — Die Ableitung zeigt die Anstiegsgeschwindigkeit; die Beschleunigung zeigt, wo die Rampe beginnt (positiv) und wo sie abbremst (negativ).</p>
+<p>Die Ableitung ist die punktweise Version von ABS_SLOPE_* (mit Vorzeichen). Ihr betragsmäßiges Maximum entspricht ABS_SLOPE_MAX. ZERO_X auf eine Derivative-Reihe anzuwenden bedeutet, die Richtungswechsel zu zählen.</p>
+<h3 id="rolling-correlation">Rolling correlation</h3>
+<p><img src="../../media-de/Pictures/100000010000041000000204DD365543.png" style="width:6.4961in;height:3.2248in" /></p>
+<p>Abbildung 21 — Zwei Reihen zunächst gleichphasig, dann gegenphasig: Die gleitende Korrelation kippt von +1 auf −1.</p>
+<p>Ideal, um den Moment zu erkennen, in dem sich die Beziehung zwischen zwei Reihen ändert (z. B. Erzeugung und Verbrauch oder ein Preis und eine Temperatur).</p>
+<h3 id="local-fractality">Local fractality</h3>
+<p><img src="../../media-de/Pictures/1000000100000406000001E719B6F060.png" style="width:6.4961in;height:3.0713in" /></p>
+<p>Abbildung 22 — Auf dem geradlinigen Abschnitt beträgt die lokale Fraktalität 1; auf dem verrauschten Abschnitt steigt sie auf 10–100 (logarithmische Skala).</p>
+<p>In jedem Fenster teilt die lokale Fraktalität die zurückgelegte Weglänge (Σ|dy|) durch den Abstand zwischen erstem und letztem Punkt. Sie beträgt 1 für ein gerades Segment und steigt mit der Rauigkeit. Haben Anfang und Ende des Fensters denselben Wert, ist das Verhältnis unendlich und wird durch NaN ersetzt, damit die Y-Skala nicht gesprengt wird.</p>
+<h1 id="metriken-gemeinsam-lesen"><span id="anchor-47"></span>8. Metriken gemeinsam lesen</h1>
+<p>Eine einzelne Metrik täuscht leicht; drei oder vier gemeinsam gelesene Metriken ergeben ein verlässliches Profil. Die folgende Tabelle zeigt die Signaturen der häufigsten Signalformen.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Profil</td>
+<td>AUTOCORR_LAG1</td>
+<td>SPIKE_RATIO</td>
+<td>FFT_POWER_HF</td>
+<td>Weitere Hinweise</td>
+</tr>
+<tr class="even">
+<td>Sauberer Zyklus</td>
+<td>≈ +1</td>
+<td>≈ 1,2</td>
+<td>≈ 0</td>
+<td>FFT_PERIOD1 = Periode; 2 × OSC_PERIOD ≈ FFT_PERIOD1</td>
+</tr>
+<tr class="odd">
+<td>Weißes Rauschen</td>
+<td>≈ 0</td>
+<td>≈ 1,5</td>
+<td>≈ 0,5</td>
+<td>SIGN_CHG ≈ 2/3 von trans; FFT_PERIOD1 bedeutungslos</td>
+</tr>
+<tr class="even">
+<td>Zufallsbewegung, Drift</td>
+<td>≈ +1</td>
+<td>≈ 1,5</td>
+<td>≈ 0</td>
+<td>FFT_PERIOD1 ≈ Bereichslänge</td>
+</tr>
+<tr class="odd">
+<td>Isolierte Spitzen</td>
+<td>≈ 0 bis gering</td>
+<td>≫ 2</td>
+<td>variabel</td>
+<td>ABS_SLOPE_MAX ≫ ABS_SLOPE_AVG</td>
+</tr>
+<tr class="even">
+<td>Einzelne Rampe / Sprung</td>
+<td>≈ +1</td>
+<td>≫ 2</td>
+<td>≈ 0</td>
+<td>RAMP_CONC hoch; PEAKS gering (mit eps)</td>
+</tr>
+<tr class="odd">
+<td>Schnelle Alternierung</td>
+<td>&lt; 0</td>
+<td>≈ 1</td>
+<td>≈ 1</td>
+<td>SIGN_CHG ≈ trans</td>
+</tr>
+</tbody>
+</table>
+<h2 id="diagnose-in-vier-fragen"><span id="anchor-48"></span>Diagnose in vier Fragen</h2>
+<blockquote>
+<p><strong>1.</strong> <strong>Stimmt der Bereich?</strong> Prüfen Sie nb und das Fehlen großer Lücken.</p>
+</blockquote>
+<blockquote>
+<p><strong>2.</strong> <strong>Wie viel Bewegung?</strong> NTVAR (oder ABS_SLOPE_AVG bei unregelmäßigem Schritt), verglichen zwischen Zeiträumen oder Reihen gleicher Einheit.</p>
+</blockquote>
+<blockquote>
+<p><strong>3.</strong> <strong>Welche Art von Bewegung?</strong> SPIKE_RATIO und RAMP_CONC (diffus oder konzentriert), AUTOCORR_LAG1 (träge oder sprunghaft).</p>
+</blockquote>
+<blockquote>
+<p><strong>4.</strong> <strong>Gibt es einen Rhythmus?</strong> FFT_PERIOD1 und OSC_PERIOD (mit eps), bestätigt durch FFT_POWER_LF.</p>
+</blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Reihen unterschiedlicher Einheiten vergleichen</p>
+<p>Verwenden Sie die dimensionslosen Metriken: SPIKE_RATIO, RAMP_CONC (bei gleicher Länge), AUTOCORR_LAG1, FFT_POWER_HF/LF, die Zählwerte (mit für jede Reihe passendem eps) und die Perioden. Vermeiden Sie TVAR, NTVAR, TVAR2, HF_ENERGY, SMOOTHNESS und die Steigungen.</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="praxisfall-kernkraft-mit-und-ohne-solar"><span id="anchor-49"></span>9. Praxisfall: Kernkraft mit und ohne Solar</h1>
+<p>Ziel: mit Zahlen belegen, dass die Kernkraftproduktion bei starker Solarproduktion „gesteuerter“ wird. Die Daten des Beispiels sind synthetisch, bilden aber das in den RTE-Daten beobachtete Verhalten nach.</p>
+<h2 id="vorbereitung"><span id="anchor-50"></span>9.1 Vorbereitung</h2>
+<blockquote>
+<p><strong>1.</strong> Öffnen Sie eine Query mit den Reihen Verbrauch, Kernkraft und Solar in stündlicher Auflösung.</p>
+</blockquote>
+<blockquote>
+<p><strong>2.</strong> Aktivieren Sie Kernkraft in A (aktivieren Sie auch die anderen, wenn Sie vergleichen möchten).</p>
+</blockquote>
+<blockquote>
+<p><strong>3.</strong> Öffnen Sie die Signals-Palette; blenden Sie mindestens NTVAR, PEAKS, SIGN_CHG, AUTOCORR_LAG1, SPIKE_RATIO, FFT_PERIOD1 und FFT_POWER_LF ein.</p>
+</blockquote>
+<h2 id="messung-über-zwei-zeiträume"><span id="anchor-51"></span>9.2 Messung über zwei Zeiträume</h2>
+<blockquote>
+<p><strong>1.</strong> Rahmen Sie mit der Area-Palette eine Winterwoche ein (wenig Solar). ReCalc, dann Post-it.</p>
+</blockquote>
+<blockquote>
+<p><strong>2.</strong> Verschieben Sie das Rechteck auf eine sonnige Sommerwoche. ReCalc.</p>
+</blockquote>
+<blockquote>
+<p><strong>3.</strong> Vergleichen Sie Post-it und aktuelle Tabelle.</p>
+</blockquote>
+<p><img src="../../media-de/Pictures/100000010000041A00000230FDAE7DBA.png" style="width:6.4961in;height:3.465in" /></p>
+<p>Abbildung 23 — Winterwoche (links) und Sommerwoche (rechts): Die Kernkraft (blau) moduliert spiegelbildlich zum Solar (violett).</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Metrik (Kernkraft)</td>
+<td>Winter</td>
+<td>Sommer</td>
+<td>Bedeutung</td>
+</tr>
+<tr class="even">
+<td>NTVAR (GW pro Stunde)</td>
+<td>0,048</td>
+<td>0,865</td>
+<td>≈ 18-mal mehr Bewegung im Sommer</td>
+</tr>
+<tr class="odd">
+<td>PEAKS (eps = 0)</td>
+<td>45</td>
+<td>33</td>
+<td>irreführend: Im Winter wird vor allem Rauschen gezählt</td>
+</tr>
+<tr class="even">
+<td>PEAKS (eps = 0,3)</td>
+<td>0</td>
+<td>24</td>
+<td>mit eps: Winter flach, Sommer schwingt</td>
+</tr>
+<tr class="odd">
+<td>SPIKE_RATIO</td>
+<td>1,54</td>
+<td>1,68</td>
+<td>keine isolierten Spitzen: regelmäßige Modulation</td>
+</tr>
+<tr class="even">
+<td>AUTOCORR_LAG1</td>
+<td>0,95</td>
+<td>0,94</td>
+<td>beide bleiben träge</td>
+</tr>
+<tr class="odd">
+<td>FFT_PERIOD1 (Stunden)</td>
+<td>168</td>
+<td>24</td>
+<td>Winter: langsame Drift; Sommer: 24-h-Zyklus</td>
+</tr>
+<tr class="even">
+<td>ABS_SLOPE_MAX (GW/h)</td>
+<td>0,17</td>
+<td>2,98</td>
+<td>deutlich steilere Rampen im Sommer</td>
+</tr>
+</tbody>
+</table>
+<h2 id="interpretation"><span id="anchor-52"></span>9.3 Interpretation</h2>
+<p>Im Winter ist die Kernkraft nahezu konstant: winziges NTVAR, nach Rauschfilterung keine Schwingung und ein dominanter „Zyklus“ gleich der ganzen Woche (168 h), also eine bloße Drift. Im Sommer moduliert dieselbe Reihe jeden Tag: NTVAR steigt fast um das Zwanzigfache, regelmäßige Spitzen und Täler erscheinen, und die FFT erkennt einen 24-h-Zyklus (1,0 Tag auf einer Datumsachse). Die Rampen erreichen fast 3 GW pro Stunde.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Weiterführend</p>
+<p>• Wandeln Sie Kernkraft in Local variance um (Rechtsklick) und legen Sie sie über Solar: Die Varianz steigt in den sonnenreichen Stunden.</p>
+<p>• Nutzen Sie Rolling correlation zwischen Kernkraft und Solar: Sie wird im Sommer deutlich negativ.</p>
+<p>• Senden Sie beide Tabellen an die KI (→ AI) mit der Frage „Signale interpretieren“.</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="übungen"><span id="anchor-53"></span>10. Übungen</h1>
+<h2 id="übung-1-kurven-und-metriken-zuordnen"><span id="anchor-54"></span>Übung 1 — Kurven und Metriken zuordnen</h2>
+<p><img src="../../media-de/Pictures/100000010000040F000001655F6974C3.png" style="width:6.4961in;height:2.2323in" /></p>
+<p>Abbildung 24 — Drei Kurven mit je 96 Punkten.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>Zeile</td>
+<td>AUTOCORR_LAG1</td>
+<td>SPIKE_RATIO</td>
+<td>RAMP_CONC</td>
+<td>FFT_PERIOD1</td>
+<td>FFT_POWER_HF</td>
+</tr>
+<tr class="even">
+<td>P</td>
+<td>0,98</td>
+<td>14,17</td>
+<td>0,39</td>
+<td>96,0</td>
+<td>0,02</td>
+</tr>
+<tr class="odd">
+<td>Q</td>
+<td>0,97</td>
+<td>1,23</td>
+<td>0,11</td>
+<td>24,0</td>
+<td>0,00</td>
+</tr>
+<tr class="even">
+<td>R</td>
+<td>-0,03</td>
+<td>1,66</td>
+<td>0,13</td>
+<td>2,2</td>
+<td>0,50</td>
+</tr>
+</tbody>
+</table>
+<p>Ordnen Sie jede Zeile P, Q, R der Kurve 1, 2 oder 3 zu und begründen Sie mit mindestens zwei Metriken.</p>
+<h2 id="übung-2-handrechnung"><span id="anchor-55"></span>Übung 2 — Handrechnung</h2>
+<p>Gegeben ist die Reihe y = [2, 5, 3, 3, 8, 6] (X = 0, 1, 2, 3, 4, 5). Berechnen Sie nb, trans, TVAR, TVAR2, NTVAR, SPIKE_RATIO, RAMP_CONC, SIGN_CHG, PEAKS und VALLEYS (eps = 0). Prüfen Sie anschließend in WysiQ, indem Sie diese sechs Werte importieren.</p>
+<h2 id="übung-3-perioden-interpretieren"><span id="anchor-56"></span>Übung 3 — Perioden interpretieren</h2>
+<p>Bei einer stündlichen Temperaturreihe mit Datumsachse zeigt die Palette FFT_PERIOD1 = 1,0 und OSC_PERIOD = 0,5. Was folgern Sie? Welche Werte hätten diese beiden Metriken, wenn die X-Achse ein einfacher Stundenindex wäre?</p>
+<h2 id="übung-4-einheiten"><span id="anchor-57"></span>Übung 4 — Einheiten</h2>
+<p>Sie vergleichen eine Erzeugung in MW mit einem Preis in €/MWh. Welche der folgenden Metriken können Sie direkt zwischen beiden Reihen vergleichen? TVAR, SPIKE_RATIO, SMOOTHNESS, AUTOCORR_LAG1, PEAKS, HF_ENERGY, FFT_POWER_LF.</p>
+<h2 id="übung-5-eps-einstellen"><span id="anchor-58"></span>Übung 5 — eps einstellen</h2>
+<p>Eine optisch flache Kernkraftreihe zeigt über eine Woche PEAKS = 45. Erklären Sie, warum, und beschreiben Sie das Vorgehen, um eine Zählung zu erhalten, die die echten Schwingungen widerspiegelt.</p>
+<h2 id="übung-6-workshop-signal-reihe"><span id="anchor-59"></span>Übung 6 — Workshop Signal → Reihe</h2>
+<p>Mit Ihren eigenen Daten: Erzeugen Sie die Local variance einer Reihe und dann eine Metric, die 1 ist, wenn diese Varianz einen Schwellwert überschreitet. Finden Sie damit die drei unruhigsten Zeiträume und berechnen Sie für jeden die Signal-Metriken.</p>
+<h1 id="lösungen"><span id="anchor-60"></span>Lösungen</h1>
+<h3 id="übung-1">Übung 1</h3>
+<blockquote>
+<p>• <strong>P = Kurve 3</strong> (einzelner Sprung): SPIKE_RATIO = 14,17 und RAMP_CONC = 0,39, sehr hoch; starke Trägheit (0,98).</p>
+</blockquote>
+<blockquote>
+<p>• <strong>Q = Kurve 1</strong> (sauberer Zyklus): FFT_PERIOD1 = 24,0, FFT_POWER_HF = 0,00, Autokorrelation 0,97.</p>
+</blockquote>
+<blockquote>
+<p>• <strong>R = Kurve 2</strong> (Rauschen): Autokorrelation ≈ 0 (-0,03), FFT_POWER_HF ≈ 0,5 (0,50); FFT_PERIOD1 = 2,2 hat keine physikalische Bedeutung.</p>
+</blockquote>
+<h3 id="übung-2">Übung 2</h3>
+<p>dy = [3, −2, 0, 5, −2]; nb = 6; trans = 5; TVAR = 12; TVAR2 = 9 + 4 + 0 + 25 + 4 = 42; NTVAR = 2,4; NTVAR2 = 8,4; SPIKE_RATIO = 8,4 / 2,4² = 1,46; RAMP_CONC = √42 / 12 = 0,54. Vorzeichen ungleich null: + − + − → SIGN_CHG = 3. Das Plateau 3 → 3 wird durchquert: Spitze bei 5, Tal auf dem Plateau 3, Spitze bei 8 → PEAKS = 2, VALLEYS = 1.</p>
+<h3 id="übung-3">Übung 3</h3>
+<p>Bei einer Datumsachse ist die X-Einheit der Tag: FFT_PERIOD1 = 1,0 bedeutet einen Tageszyklus. OSC_PERIOD = 0,5 Tage ist der mittlere Abstand Spitze → Tal, also eine halbe Periode: Der Zyklus ist sauber (2 × 0,5 = 1,0). Mit einem Stundenindex würde man FFT_PERIOD1 = 24 und OSC_PERIOD = 12 ablesen.</p>
+<h3 id="übung-4">Übung 4</h3>
+<p>Vergleichbar: SPIKE_RATIO, AUTOCORR_LAG1, FFT_POWER_LF (dimensionslos) und PEAKS (Zählwert, sofern für jede Reihe ein passendes eps gesetzt ist). Nicht vergleichbar: TVAR, HF_ENERGY (Y-Einheit bzw. ihr Quadrat) und SMOOTHNESS (über NTVAR einheitenabhängig).</p>
+<h3 id="übung-5">Übung 5</h3>
+<p>Mit eps = 0 erzeugt jede Mikroschwankung des Rauschens eine Spitze: Die Zählung misst das Rauschen, nicht die Steuerung. Vorgehen: Rauschamplitude von Punkt zu Punkt auf einem ruhigen Abschnitt schätzen, eps auf das 2- bis 3-Fache setzen, bestätigen und prüfen, dass PEAKS den sichtbaren Schwingungen entspricht. Im Fall aus Kapitel 9 senkt eps = 0,3 GW die Spitzen im Winter von 45 auf 0.</p>
+<h3 id="übung-6">Übung 6</h3>
+<p>Offene Übung. Kontrollpunkte: Die Local-variance-Reihe trägt das Fenster im Namen (…_rolling_var_w7); sie muss nach einer Änderung des X-Bereichs neu erzeugt werden; die über die unruhigen Zeiträume berechneten Metriken müssen ein deutlich höheres NTVAR und eine deutlich höhere HF_ENERGY zeigen als ruhige Zeiträume.</p>
+<h1 id="spickzettel-der-22-metriken"><span id="anchor-61"></span>11. Spickzettel der 22 Metriken</h1>
+<table>
+<tbody>
+<tr class="odd">
+<td>Metrik</td>
+<td>Stufe</td>
+<td>Formel</td>
+<td>Einheit / Bereich</td>
+<td>Kurzdeutung</td>
+</tr>
+<tr class="even">
+<td><strong>nb</strong></td>
+<td>Basic</td>
+<td>len(y)</td>
+<td>Punkte</td>
+<td>gültige Punkte im Bereich</td>
+</tr>
+<tr class="odd">
+<td><strong>trans</strong></td>
+<td>Basic</td>
+<td>nb − 1</td>
+<td>Schritte</td>
+<td>Nenner der Normierungen</td>
+</tr>
+<tr class="even">
+<td><strong>TVAR</strong></td>
+<td>Basic</td>
+<td>Σ|dy|</td>
+<td>Y</td>
+<td>gesamter vertikaler Weg</td>
+</tr>
+<tr class="odd">
+<td><strong>NTVAR</strong></td>
+<td>Basic</td>
+<td>TVAR / trans</td>
+<td>Y pro Schritt</td>
+<td>mittlere Unruhe</td>
+</tr>
+<tr class="even">
+<td><strong>SIGN_CHG</strong></td>
+<td>Basic</td>
+<td>Vorzeichenwechsel von dy</td>
+<td>Anzahl</td>
+<td>Richtungswechsel (eps)</td>
+</tr>
+<tr class="odd">
+<td><strong>PEAKS</strong></td>
+<td>Basic</td>
+<td>+ dann −</td>
+<td>Anzahl</td>
+<td>lokale Maxima (eps)</td>
+</tr>
+<tr class="even">
+<td><strong>VALLEYS</strong></td>
+<td>Basic</td>
+<td>− dann +</td>
+<td>Anzahl</td>
+<td>lokale Minima (eps)</td>
+</tr>
+<tr class="odd">
+<td><strong>OSC_PERIOD</strong></td>
+<td>Basic</td>
+<td>mittl. Abstand der Extrema</td>
+<td>X</td>
+<td>halbe Schwingungsperiode</td>
+</tr>
+<tr class="even">
+<td><strong>TVAR2</strong></td>
+<td>Advanced</td>
+<td>Σdy²</td>
+<td>Y²</td>
+<td>Energie, gewichtet große Sprünge</td>
+</tr>
+<tr class="odd">
+<td><strong>NTVAR2</strong></td>
+<td>Advanced</td>
+<td>TVAR2 / trans</td>
+<td>Y² pro Schritt</td>
+<td>mittlere Energie pro Schritt</td>
+</tr>
+<tr class="even">
+<td><strong>SPIKE_RATIO</strong></td>
+<td>Advanced</td>
+<td>NTVAR2 / NTVAR²</td>
+<td>≥ 1</td>
+<td>1 = homogen; ≫ 1 = Spitzen</td>
+</tr>
+<tr class="odd">
+<td><strong>RAMP_CONC</strong></td>
+<td>Advanced</td>
+<td>√TVAR2 / TVAR</td>
+<td>1/√trans … 1</td>
+<td>1 = ein einziges Ereignis</td>
+</tr>
+<tr class="even">
+<td><strong>ZERO_X</strong></td>
+<td>Advanced</td>
+<td>Vorzeichenwechsel von y</td>
+<td>Anzahl</td>
+<td>Nulldurchgänge (eps)</td>
+</tr>
+<tr class="odd">
+<td><strong>ABS_SLOPE_AVG</strong></td>
+<td>Advanced</td>
+<td>mean|dy/dx|</td>
+<td>Y pro X</td>
+<td>mittlere Geschwindigkeit</td>
+</tr>
+<tr class="even">
+<td><strong>ABS_SLOPE_MAX</strong></td>
+<td>Advanced</td>
+<td>max|dy/dx|</td>
+<td>Y pro X</td>
+<td>steilste Rampe</td>
+</tr>
+<tr class="odd">
+<td><strong>AUTOCORR_LAG1</strong></td>
+<td>Advanced</td>
+<td>corr(y[:-1], y[1:])</td>
+<td>−1 … +1</td>
+<td>+1 träge; 0 Rauschen; − Alternierung</td>
+</tr>
+<tr class="even">
+<td><strong>SMOOTHNESS</strong></td>
+<td>Advanced</td>
+<td>1 / (1 + NTVAR)</td>
+<td>0 … 1 (Y-abhängig)</td>
+<td>1 = glatt</td>
+</tr>
+<tr class="odd">
+<td><strong>HF_ENERGY</strong></td>
+<td>Expert</td>
+<td>Σ(y − MA_w(y))²</td>
+<td>Y²</td>
+<td>Rauschen und kurze Schwingungen</td>
+</tr>
+<tr class="even">
+<td><strong>FFT_FREQ1</strong></td>
+<td>Expert</td>
+<td>Maximum von |FFT|²</td>
+<td>Zyklen pro X</td>
+<td>dominante Frequenz</td>
+</tr>
+<tr class="odd">
+<td><strong>FFT_PERIOD1</strong></td>
+<td>Expert</td>
+<td>1 / FFT_FREQ1</td>
+<td>X</td>
+<td>Periode des dominanten Zyklus</td>
+</tr>
+<tr class="even">
+<td><strong>FFT_POWER_HF</strong></td>
+<td>Expert</td>
+<td>Energieanteil f &gt; Median</td>
+<td>0 … 1</td>
+<td>0,5 = weißes Rauschen</td>
+</tr>
+<tr class="odd">
+<td><strong>FFT_POWER_LF</strong></td>
+<td>Expert</td>
+<td>1 − FFT_POWER_HF</td>
+<td>0 … 1</td>
+<td>1 = Trend oder langer Zyklus</td>
+</tr>
+</tbody>
+</table>
+<h2 id="anhang-pseudocode-der-engine"><span id="anchor-62"></span>Anhang — Pseudocode der Engine</h2>
+<p>x, y = endliche Punkte, gefiltert auf [Xmin, Xmax]</p>
+<p>dy = diff(y)</p>
+<p>TVAR = sum(|dy|) ; TVAR2 = sum(dy**2)</p>
+<p>NTVAR = TVAR / len(dy) ; NTVAR2 = TVAR2 / len(dy)</p>
+<p>SPIKE_RATIO = NTVAR2 / NTVAR**2</p>
+<p>RAMP_CONC = sqrt(TVAR2) / TVAR</p>
+<p>AUTOCORR_LAG1 = corrcoef(y[:-1], y[1:])</p>
+<p>HF_ENERGY = sum((y - gleitender_mittelwert(y, w))**2)</p>
+<p>SMOOTHNESS = 1 / (1 + NTVAR)</p>
+<p>OSC_PERIOD = mean(diff(x der Extrema))</p>
+<p># FFT (n &gt;= 8): gleichmäßige Neuabtastung, dann rfft</p>
+<p>fs = (n - 1) / (x[-1] - x[0])</p>
+<p>power = |rfft(interp(y))|**2</p>
+<p>FFT_FREQ1 = freqs[argmax(power[1:]) + 1]</p>
+<p>FFT_PERIOD1 = 1 / FFT_FREQ1</p>
+<p>FFT_POWER_HF = sum(power[n_f//2:]) / sum(power[1:])</p>
+<p>FFT_POWER_LF = 1 - FFT_POWER_HF</p>
+</article></main></body></html>

@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Test Notebooks — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/stats_notebooks.txt</p><h1>Test Notebooks — Help</h1><pre>Notebooks are standalone statistical tests, written in plain Python
+in the program&#x27;s stats/notebooks/ folder. Every file is readable and auditable:
+formula, dependencies, minimum conditions and result notes are
+directly in the code — no black box.</pre><pre>Access: Params button of the Statistical Tests window, or Settings ▸
+Parameters… ▸ Statistics tab.</pre><pre>The Statistics tab offers: the &quot;Statistics execution parameters&quot; frame
+(default p-adjust: BH, Holm, Bonf, none), the list of notebooks, the
+&quot;Per-test parameters&quot; frame (parameters of the selected notebook, drop-down
+lists) and the ? button (this help).</pre><h2>1) CONCEPT</h2><pre>  A notebook is a Python module with two elements:
+    META  dict describing the test (key, title, description).
+    run(context)  function receiving data and returning
+                  {test, stat, p, effect, note}.</pre><pre>  Notebooks are integrated into the test engine: they
+  appear in the result grid exactly like built-in tests,
+  with the same columns.</pre><pre>  context received by run():
+    &quot;A&quot;      list of values (selected series A)
+    &quot;B&quot;      list of values (selected series B)
+    &quot;params&quot; dict of parameters configured in Params</pre><h2>2) AVAILABLE NOTEBOOKS</h2><pre>── Pearson
+  Linear correlation between two aligned series.
+  File   : notebooks/pearson.py
+  Input  : A and B (at least 3 common finite points).
+  Output : r (stat), p-value (SciPy or blank), r (effect).
+  Needs  : NumPy. SciPy for the p-value.</pre><pre>── ADF (Augmented Dickey-Fuller)
+  Stationarity / unit-root test on series A.
+  File   : notebooks/adf.py
+  Input  : A (at least 8 finite points).
+  Output : t-stat, p-value, note &quot;lag=X method=...&quot;.
+  Needs  : statsmodels (main method).
+           NumPy fallback if statsmodels is absent
+           (manual regression on first differences).
+  Params : Autolag (AIC/BIC/t-stat/none),
+           Regression (c/ct/ctt/n),
+           Max lag.
+  Read   : low p → reject unit root → series likely
+           stationary.</pre><pre>── Granger causality
+  Tests whether past values of B improve prediction
+  of A (Granger sense of causality).
+  File   : notebooks/granger.py
+  Input  : A and B (at least 12 common finite points).
+  Output : F-stat, p-value, note &quot;best lag=X method=...&quot;.
+  Needs  : statsmodels (required — no full fallback).
+  Params : Max lag (default 5, max 8).
+  Note   : &quot;Granger causality&quot; is predictive, not causal
+           in the strict sense. Result is sensitive to
+           the chosen lag.</pre><pre>── Change point
+  Detects a mean-shift in series A by scanning all
+  possible split positions.
+  File   : notebooks/change_point.py
+  Input  : A (at least 18 finite points).
+  Output : t-stat at best split, Cohen d (effect),
+           note &quot;idx=X mean_before=... after=...&quot;.
+  Needs  : NumPy only.
+  Params : Min size (minimum segment length, default 8).
+  No p-value is computed.</pre><pre>── Mutual information
+  Non-linear dependence measure between A and B.
+  File   : notebooks/mutual_info.py
+  Input  : A and B (at least 8 common finite points).
+  Output : raw MI (stat), normalised MI (effect),
+           note &quot;normalized=X method=...&quot;.
+  Needs  : scikit-learn for the main method.
+           2D histogram fallback if sklearn is absent.
+  Params : Bins (default auto = sqrt(n), max 24).
+  0 = total independence. No p-value.</pre><pre>3) FINE-TUNING PARAMETERS (Params)</pre><pre>  The Statistics tab of Parameters (Params button of
+  Statistical Tests) lets you configure each test&#x27;s parameters:</pre><pre>  ADF          Autolag, Regression, Max lag
+  KPSS         Regression, N lags
+  Granger      Max lag
+  Change point Min size
+  Mutual info  Bins
+  ACF          Max lag
+  Rolling corr Rolling window
+  Chi2         Bins
+  Shapiro      Warn above N (sampling threshold)
+  Mann-Kendall Alpha</pre><pre>  Parameters are persisted in the workspace and apply
+  to all subsequent runs.</pre><h2>4) TRANSPARENCY AND AUDIT</h2><pre>  Each notebook file is self-contained and short
+  (under 60 lines as a rule). It is designed to be read
+  and verified without any special tooling.</pre><pre>  To audit a test:
+  1. Open stats/notebooks/&lt;name&gt;.py (program folder)
+  2. Read the run(context) function line by line
+  3. Check META for the test metadata
+  4. Compare with the reference documentation
+     (SciPy, statsmodels, sklearn as applicable)</pre><pre>  When a dependency is absent:
+  - Granger and ADF (statsmodels): result absent or
+    NumPy fallback with note &quot;method=fallback&quot;.
+  - Mutual info (sklearn): 2D histogram fallback
+    with note &quot;method=hist2d&quot;.
+  - In all cases, the note field identifies the method
+    actually used.</pre><h2>5) REQUIRED DEPENDENCIES</h2><pre>  NumPy        Required for all notebooks.
+  SciPy        Pearson p-values, some fallbacks.
+  statsmodels  ADF (main method), Granger (required).
+  scikit-learn Mutual info (main method).</pre><pre>  Without statsmodels: Granger produces no result.
+  Without scikit-learn: Mutual info falls back to hist2d.</pre></main></body></html>

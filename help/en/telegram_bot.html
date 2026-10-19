@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TELEGRAM BOT — Setup Guide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/telegram_bot.txt</p><h1>TELEGRAM BOT — Setup Guide</h1><pre>Access: Share Center ▸ Advanced ▸ Setup ▸ Telegram (? button).
+Buttons: 🔗 Open @BotFather, ✓ Verify &amp; Save, 🗑 Delete, 🔄 Refresh,
+🔄 Scan new contacts, 📨 Send test, 🔍 Debug updates; Ctrl+C copies the
+selected row of a list.</pre><pre>WysiQ uses Telegram Bots to send graph snapshots from an
+open WysiQuery and Query files directly to your contacts.</pre><pre>You can configure several bots —
+one per team, project or purpose.</pre><h2>STEP 1 — CREATE A BOT ON TELEGRAM</h2><pre>1. Open Telegram and search for @BotFather
+2. Send:  /newbot
+3. Give it a name, e.g.:  WysiQ RTE Graphs
+4. Give it a username ending in &#x27;bot&#x27;,
+   e.g.:  wysiq_rte_graphs_bot
+5. BotFather gives you a token:
+   123456789:AABBccDDeeFFggHH...
+6. Copy the token — you will need it in Step 2.</pre><pre>👍 Help WysiQ grow — include &#x27;wysiq&#x27;
+   in your bot username.</pre><h2>STEP 2 — ADD THE BOT IN WYSIQ</h2><pre>In the form below the bot list:
+  ID      — a unique key, e.g. bot_rte_graphs
+            (no spaces, letters and _ only)
+  Name    — display name shown in WysiQ
+  @User   — the @username given by BotFather
+  Token   — paste the token from BotFather</pre><pre>Click &quot;✓ Verify &amp; Save&quot; — WysiQ contacts
+Telegram to check that the token is valid.</pre><h2>STEP 3 — REGISTER SUBSCRIBERS</h2><pre>Each recipient must:
+1. Open Telegram
+2. Search for your bot username
+3. Press Start or send /start</pre><pre>Then in WysiQ, select the bot
+and click &quot;🔄 Scan new contacts&quot;.</pre><pre>WysiQ reads every /start message received
+and registers each Chat ID automatically.
+The subscriber appears in the lower list.</pre><h2>SENDING</h2><pre>Graphs (📦 Prep in the Graph Remote, then Share Center ▸ Send):
+  HTML snapshot of the current WysiQuery — sent to contacts
+  whose Telegram channel is active (✈ on) in the Contacts tab.
+  Uses the bot registered for that contact.</pre><pre>Query (📤 Share in Export query):
+  Query ZIP bundle (saved WysiQuery: table + analysis +
+  graph settings) — same mechanism, sent directly to
+  the contact&#x27;s Telegram chat.</pre><h2>MULTIPLE BOTS</h2><pre>You can add as many bots as needed:
+  — one bot per project
+  — one bot for graphs, one for data
+  — one per team or department</pre><pre>Each bot has its own subscriber list.
+A contact can subscribe to several bots —
+scan with each bot separately.</pre></main></body></html>

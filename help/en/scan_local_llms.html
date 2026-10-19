@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SCAN LOCAL LLMs  (Parameters ▸ AI ▸ Profile ▸ Scan LLM…) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/scan_local_llms.txt</p><h1>SCAN LOCAL LLMs  (Parameters ▸ AI ▸ Profile ▸ Scan LLM…)</h1><pre>Find Ollama, LM Studio and other OpenAI-compatible servers on this PC or
+your LAN, then create one AI profile per discovered model in one click.</pre><h2>WHEN TO USE THIS</h2><pre>  • Ollama runs on another PC (e.g. 192.168.8.101) with large models.
+  • You installed several local models and want profiles without typing URLs.
+  • LM Studio or a custom local OpenAI server is running on a non-default port.</pre><pre>Use Catalog… for a fixed offline list of known model names.
+Use Discover… for cloud providers (requires API keys).
+Use Scan LLM… for live detection on local/LAN machines.</pre><pre>SERVER TYPES (port per type)</pre><pre>Ollama          Default port 11434. Native /api/tags + OpenAI /v1/models.
+LM Studio       Default port 1234. OpenAI-compatible local server.
+Other (OpenAI-compatible)
+                Default port 8000. Any OpenAI-compatible endpoint.</pre><pre>Tick only what you need — fewer types = faster scan.</pre><pre>HOSTS</pre><pre>List of machines to probe (this PC and LAN — same list, same ports).</pre><pre>  127.0.0.1 / localhost        This PC (loopback)
+  192.168.x.x (This PC — LAN)  This PC&#x27;s network address (added automatically)
+  192.168.x.x (LAN)            Another machine on your network</pre><pre>Add / Rename… / Remove / Purge…
+Remove     hide IP from scan, keep profiles (e.g. away from office).
+Rename…    server moved (.101 → .100) — migrates profiles + host list.
+Purge…     zombie IP — permanently delete all profiles for this address.
+Parameters ▸ AI ▸ Profile ▸ Purge IP… does the same for a typed IP address.
+Cloud URLs (api.anthropic.com, openai.com…) are rejected — they would
+slow the scan and never host a local Ollama server.</pre><pre>On open, invalid hosts from old configs are cleaned automatically.</pre><pre>SCAN LAN SUBNET (slow) — &quot;Scan LAN subnet (slow — skips 127.x)&quot; checkbox</pre><pre>Optional sweep of 192.168.x.1–254 on each enabled port.
+Leave unchecked when you already know the IP (much faster).
+The subnet field is pre-filled from a LAN host in the list when possible.</pre><h2>SCAN BUTTON &amp; PROGRESS</h2><pre>Click Scan. The button is disabled during the run.
+A progress bar and status line show the current step, e.g.:
+  Ollama @ 192.168.8.101:11434
+  Subnet 192.168.8.x:11434 (48/254)</pre><pre>Typical scan of one LAN IP with Ollama only: a few seconds.</pre><h2>RESULTS TABLE</h2><pre>Location    This PC or LAN (+ IP)
+Server      Ollama | LM Studio | Other
+Model       Model id (e.g. qwen3-coder:30b)
+Status      reachable / error</pre><pre>Click a row to check/uncheck. New models are checked by default if no
+profile exists yet.</pre><h2>APPLY SELECTION</h2><pre>Creates one enabled profile per checked model.</pre><pre>  • Local PC  → combo label [Local Ollama] model name
+  • LAN host  → combo label [LAN 192.168.8.101] model name
+                profile id suffix __192_168_8_101 (one profile per model per IP)
+  • Base URL and model field filled automatically.</pre><pre>Profiles created here have source &quot;user&quot; — they are never deleted by
+Catalog Apply.</pre><pre>TIPS</pre><pre>  • Ensure Ollama is running on the target machine (ollama serve).
+  • On Windows, allow port 11434 through the firewall for LAN access.
+  • Timeout per host is ~3 s — unreachable hosts fail fast.
+  • After Apply, profiles appear in Parameters ▸ AI ▸ Profile and AI Connections combo.</pre><pre>?  Opens this help page.</pre></main></body></html>

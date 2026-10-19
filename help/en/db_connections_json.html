@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Database connections — files, SQL templates and dialects (WysiQ) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/db_connections_json.txt</p><h1>Database connections — files, SQL templates and dialects (WysiQ)</h1><pre>This note explains how the fields you see in Data Sources map to files on disk,
+how connectors are resolved to a database engine, where SQL templates live, and
+how identifier quoting is handled per dialect.</pre><pre>See also: help/en/datasource.txt (the Data Sources window)
+          help/en/params_db_connection.txt (profile JSON files)
+          help/en/save_dialog_create.txt (local CREATE and exports)</pre><pre>1) The four levels
+WysiQ separates four things. Keeping them apart is what allows a large connector
+offering without a driver per service.</pre><pre>Provider    The environment: Local, Generic server, Azure, AWS, Google Cloud,
+            Oracle Cloud, Snowflake, Databricks, and so on. A provider holds no
+            logic; it only groups services and supplies sensible defaults.</pre><pre>Connector   The service you actually connect to: &quot;Azure SQL Database&quot;,
+            &quot;Amazon RDS PostgreSQL&quot;, &quot;Google BigQuery&quot;, &quot;DuckDB&quot;. A connector
+            declares its fields, its default port, and one engine.</pre><pre>Engine      The technical engine: postgresql, mysql, sqlserver, oracle,
+            sap_hana, ingres, sybase_ase, odbc_generic, duckdb, mongodb, and
+            others. The engine decides the SQL dialect and the catalog queries.</pre><pre>Adapter     The code that executes the work for one engine: connect, test,
+            preview, count, list schemas / tables / views / columns. Written
+            once per engine, shared by every connector that declares it.</pre><pre>A cloud service is not a new engine when it reuses an existing one. Example:</pre><pre>  {
+    &quot;family&quot;: &quot;Cloud&quot;,
+    &quot;provider&quot;: &quot;AWS&quot;,
+    &quot;connector_service&quot;: &quot;aws_rds_postgresql&quot;,
+    &quot;connector_label&quot;: &quot;Amazon RDS PostgreSQL&quot;,
+    &quot;engine_type&quot;: &quot;postgresql&quot;
+  }</pre><pre>The engine stays postgresql, so the PostgreSQL adapter and the PostgreSQL
+dialect apply unchanged.</pre><pre>2) File reference
+data_sources.json (workspace)
+  One top-level object per profile name. Each profile keeps the five identity
+  fields (family, provider, connector_service, connector_label, engine_type)
+  and the connector&#x27;s non-sensitive parameters. Optional keys not shown on the
+  form can be added by editing data_sources.json:</pre><pre>    sql_before_select   Statements run before the assistant&#x27;s generated SELECT
+                        (DuckDB when Local; the profile&#x27;s connector when one is
+                        selected).
+    sql_before_create   Prepended to the creation scripts generated for this
+                        profile (remote WYSIQ_QUERY Query catalogue, DDL
+                        scripts shown for a DBA).</pre><pre>db_connection.json (workspace, optional — edit it with a text editor,
+then ⟳ Reload in Data Sources)
+  Overrides the connector catalog: connector keys, labels, icons and the list
+  of form fields. Keys starting with an underscore are documentation only. A
+  field may carry &quot;hidden&quot;: true to hide it without removing legacy keys from
+  old profiles. volatile_field_keys lists the field names treated as secrets.</pre><pre>connection_type/&lt;connector&gt;/ (workspace)
+  One folder per connector, created with the workspace. It contains the
+  connector definition and, for SQL connectors, editable SQL templates such as
+  list_tables.sql. Your workspace copy overrides the version shipped with the
+  application, so a DBA can review and adjust a query. Placeholders such as
+  __MAX_OBJECT_NAMES__ are substituted at run time.</pre><pre>connexions/bundled/dialect_lexicon.json (+ optional workspace overlay)
+  The dialect data: identifier quoting per style (MySQL backticks, ANSI double
+  quotes, SQL Server brackets), the mapping engine to style, bind parameter
+  style, case-insensitive LIKE, catalog queries, and the routing table that
+  binds each engine to its adapter entry points. A workspace
+  dialect_lexicon.json is merged on top (recursive merge; overlay keys starting
+  with an underscore are ignored).</pre><pre>connexions_cache/ (workspace)
+  Cached object lists produced when you build a catalog for the SQL Assistant.
+  Discovery only; nothing is executed on the server.</pre><pre>3) How a connection is resolved
+When you press Test, Connect or Catalog, WysiQ:</pre><pre>  1. reads the profile and takes connector_service (or __type__);
+  2. resolves it to an engine through connection_type/&lt;key&gt;/, which yields
+     engine_type;
+  3. asks the registry for that engine&#x27;s adapter;
+  4. lets the adapter open the connection, using the dialect for quoting,
+     LIMIT syntax and catalog SQL.</pre><pre>An engine with no adapter is refused with a clear message rather than a silent
+failure. This single path is used by Test, the SQL Assistant, the Table Catalog
+and the Save flows, so behaviour is identical everywhere.</pre><pre>4) Secrets
+Session secrets are held in memory and cleared when the profile or the
+application closes.</pre><pre>These are never written to any file: access_token, refresh_token,
+client_secret, private_key, secret_access_key, service_account_private_key.
+A credential-store reference or an external secret identifier may be stored —
+the reference, never the value.</pre><pre>Passwords depend on the PWD toggle in Data Sources. Off (the default) means
+session only. On means the profile receives password_enc, obfuscated so the
+file cannot be read at a glance. That obfuscation is not strong encryption:
+someone holding the file and the application can recover the password. Keep it
+off for production credentials.</pre><pre>Tokens and passwords are masked in traces and error messages.</pre><pre>5) Dialects and identifiers
+The dialect lexicon holds, per engine, only data: the quote characters, the
+LIMIT or TOP form, the bind style, the case-insensitive LIKE operator, and the
+catalog queries for schemas, tables, views and columns. All the logic that
+composes SQL from that data lives in the shared adapter, once.</pre><pre>That is why adding a dialect is a data change, and why every engine formats
+identifiers consistently in the SQL Assistant, in the script shown by the SQL button of the Export Table window, and when
+converting a SELECT for local DuckDB materialization.</pre><pre>6) Optional dependencies
+No database driver is imported at startup; a missing package cannot stop WysiQ
+from launching. The driver loads on first connection. If it is absent, the
+message names the exact pip package for the interpreter running WysiQ. Typical
+packages: psycopg2-binary (PostgreSQL), mysql-connector-python (MySQL,
+MariaDB), pyodbc (SQL Server, Ingres, Db2, Sybase ASE, generic ODBC), oracledb
+(Oracle), hdbcli (SAP HANA), pymongo (MongoDB).</pre><pre>Connectors whose engine is not wired into this build remain visible so profiles
+can be prepared; Test states that plainly instead of reporting a false success.</pre><pre>7) Compatibility
+Profile files are stable. The five identity fields are always written and read
+back as they are, so existing profiles keep working across upgrades. Adding a
+connector does not change the format; it adds a description.</pre><pre>8) Quest / Toad Intelligence Central
+Data Sources: Server family, Quest Software provider, Quest — Toad Intelligence
+Central connector. Enter the TIC host, SQL port 3566 (not 8066), the database
+containing the published objects, and a TIC-local username/password. The
+connector uses MySQL with UTF-8 character set. The catalogue includes
+published tables, views, snapshots and datasets. TIC Data Connectivity licence
+and the required access rights are needed. WysiQ&#x27;s generic MySQL driver does
+not provide TIC Windows-integrated authentication; use a local TIC account.
+When a remote non-MySQL view rejects MySQL SQL, Quest recommends publishing a
+snapshot. This is not a direct API connection to the Toad desktop application.</pre></main></body></html>

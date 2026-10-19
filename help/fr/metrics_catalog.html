@@ -1,0 +1,128 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FENÊTRE METRICS — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/metrics_catalog.txt</p><h1>FENÊTRE METRICS — Aide</h1><pre>Accès : Main ▸ Metric ▸ Catalog ; palette Series (clic droit sur l&#x27;en-tête
+« Create Metric from &quot;In&quot; ») ; clic droit sur le combo X Axis (métriques X).</pre><pre>La fenêtre Metrics gère le catalogue des métriques WysiQ.
+Une métrique est une série virtuelle, généralement une combinaison de séries
+existantes avec coefficients, offsets, décalages et agrégations. Elle est
+stockée dans le workspace sous :</pre><pre>  workspace/metrics/&lt;nom_metrique&gt;.json</pre><pre>Une métrique est identifiée par son NOM seul : la table d&#x27;origine est gardée
+comme métadonnée, mais n&#x27;entre pas dans l&#x27;identité (plusieurs tables partagent
+les mêmes colonnes). Le catalogue ne contient donc pas deux métriques de même
+nom.</pre><pre>Cette fenêtre sert à créer, modifier, retrouver, importer et contrôler ces
+métriques sans ouvrir directement les fichiers JSON.</pre><pre>Zoom texte (aide) : Ctrl + molette ou boutons A− / A+</pre><pre>DEUX ONGLETS : METRICS ET SCENARIOS
+La fenêtre est un notebook à deux onglets.</pre><pre>Onglet Metrics
+  Le catalogue des métriques décrit ci-dessous (filtres, listes Metrics /
+  Series used, détail, Metric Editor).</pre><pre>Onglet Scenarios
+  Liste les scénarios enregistrés dans le workspace. Colonnes : Name,
+  Created, Sample from (série de référence), Points (nombre de points de
+  contrôle), Source, Description. Un aperçu « Points (X | Y) » montre les
+  points du scénario sélectionné. Barre : Refresh, Search, Delete, JSON,
+  → AI (dépose le JSON du scénario dans l&#x27;AI Feed Stack). Un filtre
+  « Name like » restreint la liste.</pre><h2>BARRE D&#x27;OUTILS</h2><pre>Refresh
+  Recharge le catalogue depuis le disque. À utiliser si des fichiers ont été
+  ajoutés, supprimés ou modifiés hors de la fenêtre.</pre><pre>Purge All
+  Supprime tous les doublons détectés dans le catalogue de métriques (garde
+  une copie de chaque). Une confirmation indique le nombre de fichiers à
+  supprimer avant l&#x27;action.</pre><pre>Search
+  Recherche des métriques dans des fichiers query JSON existants. WysiQ ouvre
+  un sélecteur de répertoire, puis scanne récursivement les fichiers .json et
+  extrait les séries combinées trouvées.</pre><pre>Create Metric
+  Ouvre le Metric Editor vide pour créer une nouvelle métrique. Les séries
+  déjà connues par le catalogue sont proposées comme composants possibles.</pre><pre>JSON
+  Affiche / édite le JSON de la métrique sélectionnée.</pre><pre>→ AI
+  Dépose la définition de la métrique sélectionnée dans l&#x27;AI Feed Stack.</pre><pre>?
+  Ouvre cette aide dans la fenêtre d&#x27;aide standard WysiQ.</pre><h2>PANNEAU GAUCHE : FILTRES ET LISTES</h2><pre>Catalog filters
+  Metric like
+    Filtre la liste des métriques sur une partie du nom.</pre><pre>  Series like
+    Filtre les métriques qui utilisent au moins une série dont le nom
+    contient le texte saisi.</pre><pre>  Les deux filtres peuvent être utilisés ensemble.</pre><pre>Liste Metrics
+  Affiche les métriques correspondant aux filtres actifs.
+  Clic simple    → sélectionne et affiche le détail à droite.
+  Double-clic    → ouvre la métrique dans le Metric Editor.
+  Clic droit     → menu contextuel : → AI | Rename… | Duplicate… |
+                   Purge duplicates (keep this one) | Delete.</pre><pre>  Tri :
+    Clic gauche sur l&#x27;en-tête &quot;Metrics&quot;  → tri alphabétique (A-Z / Z-A).
+    Clic droit sur l&#x27;en-tête &quot;Metrics&quot;   → tri par date (plus récent/ancien).</pre><pre>  Règle de purge :
+    Les doublons sont évalués sur le seul NOM de la métrique (la table est
+    ignorée) : Purge All garde l&#x27;entrée la plus récente de chaque nom ;
+    « Purge duplicates (keep this one) » garde la ligne sélectionnée.</pre><pre>  Rename…
+    Change le nom de la métrique. Le fichier JSON est renommé ; si une
+    métrique de ce nom existe déjà, WysiQ demande s&#x27;il faut l&#x27;écraser.</pre><pre>Liste Series used
+  Affiche les séries disponibles et celles déjà utilisées par des métriques.</pre><pre>  Colonnes :
+    Serie  nom de colonne ou nom de série.
+    In     point de présence si la série est utilisée dans au moins une
+           métrique.</pre><pre>  Les séries proviennent des définitions JSON des tables locales et
+  distantes, ainsi que des métriques déjà présentes dans le catalogue.</pre><pre>  Cliquer sur une série remplit automatiquement le filtre Series like afin
+  de voir les métriques qui l&#x27;utilisent.</pre><h2>PANNEAU DROIT : INFORMATIONS DE LA MÉTRIQUE</h2><pre>Bloc Metric
+  Metric   nom de la métrique sélectionnée.
+  Created  date de création lue dans le JSON, ou date de modification du
+           fichier si la date de création n&#x27;existe pas.
+  Table    table d&#x27;origine (métadonnée).</pre><pre>Find Queries
+  Déplie une zone qui recherche les queries utilisant la métrique
+  sélectionnée.</pre><pre>  include history
+    Inclut aussi les archives de queries et les sous-répertoires history.</pre><pre>  Queries
+    Liste des queries qui référencent la métrique.</pre><pre>  Tables
+    Tables associées aux queries trouvées.</pre><pre>  → Utiliser Find Queries avant de renommer ou supprimer une métrique
+    pour vérifier l&#x27;impact.</pre><pre>Metric detail
+  Affiche une lecture structurée du contenu de la métrique : nom, table,
+  date, nombre de composants, liste des séries utilisées et détail de
+  chaque composant.
+  Inclut aussi :
+  - une ligne Group by X (ON/OFF, mode, taille de fenêtre, agrégat, lag/step si présents)
+  - un indicateur Where par composant (● si un WHERE série est actif).</pre><pre>JSON
+  Affiche le JSON brut de la métrique sélectionnée. Zone de diagnostic ;
+  la modification doit se faire via le Metric Editor.</pre><h2>METRIC EDITOR</h2><pre>Fenêtre de création et d&#x27;édition des métriques.
+Ouvert par Create Metric ou par double-clic sur une métrique existante.</pre><pre>Chaque composant peut porter :
+  - une série source ;
+  - un coefficient ;
+  - un offset ;
+  - un décalage ;
+  - une agrégation ;
+  - un filtre WHERE par composant (opérateurs + conditions) ;
+  - un statut actif/inactif selon les options disponibles.</pre><pre>Comportement des WHERE dans le Metric Editor :
+  - Le WHERE par composant se règle sur chaque ligne de composant.
+  - « Serie Where » est l&#x27;interrupteur ON/OFF global de tous les WHERE composants.
+  - « Metric Scope on X » ajoute des conditions WHERE sur l&#x27;axe X pour le calcul.
+  - Le filtrage global final de la métrique se fait dans le WHERE de la palette Table.</pre><pre>Apply
+  Enregistre la métrique. Un dialogue Save confirme le nom.</pre><pre>Save dialog
+  Metric name
+    Nom final de la métrique (Entrée = Save).</pre><pre>  Source table kept as metadata
+    Rappel de la table d&#x27;origine (information seulement).</pre><pre>  Hint
+    Indique si l&#x27;action va écraser le fichier existant ou en créer un
+    nouveau.</pre><pre>  Save    Valide l&#x27;écriture du JSON.
+  Cancel  Annule l&#x27;enregistrement.</pre><pre>Si le nom change, WysiQ crée un nouveau fichier &lt;nom&gt;.json. Si le nom reste
+identique et que l&#x27;écrasement est confirmé, le fichier existant est remplacé.</pre><h2>SEARCH : IMPORTER DES MÉTRIQUES DEPUIS DES QUERIES</h2><pre>Le bouton Search sert à récupérer des métriques déjà présentes dans des
+queries existantes.</pre><pre>Processus :
+  1. Cliquer sur Search.
+  2. Choisir un répertoire, typiquement workspace/queries.
+  3. WysiQ parcourt tous les fichiers .json du répertoire et de ses
+     sous-dossiers.
+  4. Les séries combinées trouvées sont converties en fichiers de
+     métriques.
+  5. Le catalogue est rafraîchi.</pre><pre>WysiQ cherche notamment :
+  - des blocs y_cfg avec expr_type=&quot;combo&quot; ;
+  - des blocs contenant combo_items ;
+  - des clés series contenant combo_items ;
+  - des combo_items présents à la racine d&#x27;un JSON.</pre><pre>Les fichiers créés sont écrits dans workspace/metrics.
+Les doublons déjà existants sont ignorés pour éviter d&#x27;écraser une
+métrique sans confirmation.</pre><h2>ACCÈS DEPUIS LA FENÊTRE PRINCIPALE</h2><pre>Menu Metric → Catalog           ouvre cette fenêtre.
+Menu Metric → Import…           importe des métriques depuis un ZIP ou .json
+                                 (les doublons sont ignorés).
+Menu Metric → Export…           exporte toutes les métriques du workspace
+                                 dans un ZIP horodaté.</pre><h2>CONSEILS D&#x27;UTILISATION</h2><pre>- Utiliser des noms de métriques courts mais explicites.
+- Garder des noms de séries cohérents entre tables pour réutiliser une
+  métrique.
+- Utiliser Find Queries avant de renommer ou supprimer une métrique.
+- Utiliser Refresh après une modification externe du répertoire metrics.
+- Éviter de modifier les JSON à la main, sauf diagnostic ponctuel.
+- Le nom du fichier JSON suit le motif : &lt;nom&gt;.json
+  → changer le nom dans le Save dialog crée donc un nouveau fichier.</pre><pre>OPTIONS RÉCENTES METRIC X0
+Le Metric Editor sauvegarde maintenant les réglages de position X0 avec chaque métrique.</pre><pre>Default
+  Conserve la position normale de la métrique sur le graphe.</pre><pre>Table X0
+  Aligne le premier point non nul de la métrique sur le X0 de sa table/query source.
+  En query multi-table, les tables séquentielles gardent leur décalage ; les tables
+  superposées partagent le X0 global.</pre><pre>Free X0
+  Place le premier point non nul de la métrique à la position X saisie.
+  C&#x27;est utile pour comparer des trimestres, campagnes, scénarios ou tranches de temps.</pre><pre>Metric Scope on X définit toujours la plage de temps sélectionnée. X0 ne fait que
+repositionner le résultat de cette plage. Un scénario peut être décalé en utilisant
+sa série dans une métrique puis en appliquant les réglages X0 de la métrique.</pre><h2>MÉTRIQUE COPIÉE DANS UNE QUERY MULTI-TABLES</h2><pre>Depuis une query, Apply de l&#x27;éditeur copie la métrique dans la query et
+l&#x27;enregistre dans le catalogue (les tooltips le rappellent). En
+multi-tables, elle va dans l&#x27;onglet actif : ses colonnes simples
+(« Nucleaire ») deviennent celles de cet onglet (« RTE2023_2.Nucleaire »).</pre></main></body></html>

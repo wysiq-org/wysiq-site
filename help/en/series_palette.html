@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERIES PALETTE — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/series_palette.txt</p><h1>SERIES PALETTE — Help</h1><pre>The Series palette drives the graph: tables and X axis, axis ranges,
+visibility of each series (graph, table, Area), point styles, metrics
+(computed series) and threshold alerts.</pre><pre>Search keywords: sort → Sort X · yr, right axis, twin → Yr · alert,
+threshold, blink → ALERTS · style, marker, below, above → SERIES STYLE ·
+multi-table, tab, propagate → TABLE TABS.</pre><h2>TOP BAR</h2><pre>  Scroll the series list with the mouse wheel or two-finger touchpad gesture
+  over series rows and checkboxes.</pre><pre>SaveQuery  Save the query (series, Normal / Below / Above styles, metrics,
+           tabs, palette settings).
+Params     Open global settings (Globals ▸ Core).
+≡ / ─      Full list (≡) or Mini (─): the compact list hides series whose
+           In, G, T and A are all off (metrics stay visible).
+Auto / Man Auto: the graph replots as soon as a row changes (In, G, T, A,
+           *X, Yr). Man: those changes wait for PLOT (the Table still
+           updates). X / Y Min-Max, ticks, X axis, styles and metrics always
+           replot. Saved with the query.
+△ ⚠ ⚠•     Threshold alerts of THIS graph (all its tables), click = next
+           mode: △ off · ⚠ alert points shown · ⚠• alert points only, the
+           others dimmed, and Area computes on the alerts. Display only (no
+           replot, axes do not move). See ALERTS.
+PLOT       Recompute and redraw the graph.</pre><h2>TABLE AND X AXIS</h2><pre>Table      Combo of the workspace tables. Choosing a table adds it as a tab
+           (multi-table query); choosing it again while it is already a tab
+           creates a 2nd instance (RTE2023_2, renamable), a view on the same
+           table without copying data, with its own series, coeff and
+           offsets. Remove a table: right-click its tab ▸ Remove table.
+           Right-click (or Shift+click) « Table » or the combo: table menu
+           (✓ = in the query; a click adds or removes).
+rows: N    Row count of the active table.
+X Axis     Horizontal axis: date / numeric column, or metric (virtual
+           series). Right-click the combo: X metrics catalog. A tab can have
+           its own date metric (e.g. JourHeure + 1096 days → 2026 dates):
+           its rows are placed on those dates.
+Sort X     Multi-key ordering of the points along X (X metric inputs +
+           composed X value). Modes: Settings ▸ Globals ▸ List values ▸
+           Sort X; week start: Globals ▸ Core.
+?          Open this help.</pre><h2>VIEW CONTROLS</h2><pre>Empty fields = automatic scale. Enter or leaving the field = replot.
+Click a Min / Max label: calendar (for X when the axis is a date; for
+Y / Yr when the field holds a date).</pre><pre>X Min / Max      Visible X range.
+Y Min / Max      Left Y axis range.
+Yr Min / Max     Right Y axis range (series with Yr on).
+Tick X / Tick Y  Ticks: « auto » or a number.
+Tx / Ty          Minor X / Y grid: checkbox + number of subdivisions.
+X0: ↔            Overlay: all tables start at the same X0 (calendar
+                 overlay).
+X0: ↔↔↔          Sequential: tables follow each other in tab order. The
+                 active mode is green; offsets are recomputed on every tab
+                 add, removal or move.</pre><pre> TABLE TABS (multi-table query)</pre><pre>One tab per table; the main table is the 1st tab. The grid shows the
+series of the active tab.
+Green / grey dot  Table drawn or not in the current graph. Click the dot:
+                  toggle without changing tab. Remembered per graph
+                  (Graph 1, Graph 2…) and in the query. Table and Area are
+                  not affected.
+◀ ▶ / wheel       Scroll the tabs when wider than the palette.
+Right-click (or Ctrl+click) a tab:
+  Set as main           Make it the main table.
+  Propagate UI          (main tab) copies In/G/T/A, Yr, coeff and style of
+                        its series to the same-name series of the other
+                        tables; metric copies follow too.
+  Propagate metrics     copies its metrics into every other table
+                        (« RTE2023.&lt;metric&gt; », ingredients repointed; a table
+                        missing a used column is skipped).
+  Propagate thresholds  copies its alert rules and Below / Above styles.
+  Propagate All         all three at once.
+  Shown in this graph   same as the green / grey dot.
+  &lt;&lt; Move left / &gt;&gt; Move right, Rename…, Remove table.</pre><h2>COLUMN HEADERS</h2><pre>Create Metric from &quot;In&quot;  Click: new metric from the series checked In.
+                         Right-click: import a metric (catalog).
+@                        Click: save all metrics. Right-click: ❄ freeze /
+                         ⚠ unfreeze all metrics.
+In / G / T / A           Click: whole column ON / OFF.
+*X                       Multiplier coefficient of each series.
+Yr                       Click: all series on the right / left Y axis.</pre><h2>SERIES ROWS</h2><pre>Name         Color = series color (grey when G is off). Hover: full name.
+             Click: Style window. Right-click: menu.
+@            (metrics) @ live · ❄ frozen · ⚠ stale cache. Click:
+             composition editor; right-click: freeze / unfreeze this
+             metric; hover: ingredients.
+In           Source for a new metric (does not plot by itself).
+G            Draw in the graph (remembered per graph).
+T            Show in the Table window.
+A            Show in the Area palette.
+*X           Coefficient (e.g. -1 to invert, 1.2 for +20 %).
+Yr           Use the right Y axis.</pre><pre>Right-click menu on the name
+  Set alert thresholds…  Variables catalog in threshold mode for this
+                         series: select a variable, then Set Low, then
+                         Set High.
+  Duplicate              Virtual copy of the series (name asked).
+  Rename…                Metric: rename; multi-table series: short alias
+                         (legend, tooltip).
+  Composition…           (metric) ingredients, WHERE, windowing.
+  Delete                 (virtual series only).</pre><pre> SERIES STYLE (click the name)</pre><pre>Several Style windows can be open (one per series); the new one opens on
+top, slightly offset, and each moves independently. Changes apply live.</pre><pre>Point state  Normal  the series style;
+             Below   points under the low threshold;
+             Above   points over the high threshold (and inside mode).
+Color        Palette or More… .
+Depth (z)    Drawing depth (front / back).
+Position     Normal: order of the series in the list. Below / Above:
+             front / back offset of the alert points.
+Type         Inherit, Line, Point, Both, Fill, Bar.
+             Bar: vertical bars in line mode, filled sectors in polar.
+             Move a window by dragging any free area or static label.
+Marker       Inherit, Circle, Square, Tri ▲, Tri ▼, Diamond, X, Plus.
+Size         Normal: line width or marker area. Below / Above: multiplier
+             of the series size (1 = same).
+Alpha        Opacity 0.05 – 1.
+Blink        (Below / Above) only the alert points flash.
+Below / Above defaults: Inherit, size 1, Blink on, orange (Below), red
+(Above). The 3 states are saved with the query.</pre><h2>METRICS</h2><pre>A metric is a series computed from several columns, with optional WHERE and
+X windowing; saved as JSON, reusable between queries, usable in Y or as the
+X axis.
+• Metrics and committed scenarios at the top of the list, columns below.
+• Global filtering: Table palette (WHERE), like a real series.
+• Freeze (❄): cache not recomputed; editing a source turns dependent frozen
+  metrics ⚠ (Apply in the editor to refreeze).</pre><pre> ALERTS (thresholds)</pre><pre>Workspace-global rules (workspace_alerts.json), identified by Table +
+Series; Low / High = number, variable (&amp;1.4) or formula variable using
+[Series]. No data, SQL or metric is changed: only a graph overlay is added.</pre><pre>Set a threshold: right-click the name ▸ Set alert thresholds…, pick a
+variable, Set Low then Set High (one threshold is enough); the graph
+switches to ⚠. Manage all rules: Variables ▸ Thresholds.</pre><pre>Multi-table: the △ ⚠ ⚠• button acts on the whole graph, whatever the active
+tab. A series without its own rule uses the rule of the same-name series of
+another table (active tab, then main table), with its Below / Above style if
+it has none. A table&#x27;s own rule (Propagate thresholds, Thresholds window)
+wins.</pre><pre>Evaluation: real values (coefficient included); markers drawn on the
+displayed curve (Cum / Norm, Yr axis). Exact series identity (« Solaire » ≠
+« SolaireThermique »). [Consommation] is the series of the SAME table as
+the tested series, even when not plotted; [RTE2023.Consommation] is always
+that table. Missing reference value = no alert at that X. Only plotted
+series (G) are evaluated. Graph status bar: « Alerts …: N points
+(series: n…) ».</pre><pre>Table in ⚠•: the Table keeps only the alert instants (rows where a series
+of the same table is in alert, all columns); header stats and Export use
+those rows. Changing the mode refreshes the Table.</pre><pre>Area in ⚠•: series in alert join the Area (even with A off) and count their
+alert points only; the other A series are computed at the alert instants of
+their table. Changing the mode refreshes Area. The Area rectangle may start
+/ end on the axis scales: it is snapped to the edge (X0, Y0…).</pre><h2>MULTIPLE GRAPHS</h2><pre>G and Yr checks, Y Min / Max, Yr Min / Max and tab dots are remembered per
+graph (Graph combo of the graph window): switching graph restores them,
+editing them only affects the selected graph.</pre></main></body></html>

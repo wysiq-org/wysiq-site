@@ -1,0 +1,40 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Connexions DB — fichiers JSON des profils (WysiQ) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/params_db_connection.txt</p><h1>Connexions DB — fichiers JSON des profils (WysiQ)</h1><pre>Accès : bouton ? à côté de Catalog dans la fenêtre Sources de données
+(Main ▸ Database ▸ DB Connection).</pre><pre>Cette page décrit les fichiers que la fenêtre Sources de données lit et écrit,
+pour qui veut les lire ou les corriger directement avec un éditeur de texte
+(WysiQ fermé ou après un ⟳ Reload). Il n&#x27;y a plus d&#x27;onglet « DB connection »
+dans Parameters : toute la saisie courante se fait dans Sources de données.</pre><pre>Voir aussi : help/fr/datasource.txt (la fenêtre Sources de données)
+             help/fr/db_connections_json.txt (référence complète des fichiers)</pre><pre>Ce que vous pouvez modifier ici
+data_sources.json
+  Un objet par profil de connexion. Chaque profil porte l&#x27;identité de son
+  connecteur — family, provider, connector_service, connector_label,
+  engine_type — et les paramètres non sensibles (host, port, database, schema,
+  username, mode SSL, ...).</pre><pre>  Les mots de passe ne sont jamais à saisir dans ce fichier. Selon la case PWD de
+  la fenêtre Sources de données, un profil peut contenir password_enc (forme
+  brouillée) ; cette valeur est produite par Sources de données, pas à la main.</pre><pre>db_connection.json
+  Optionnel. Définit les types de connecteurs et les champs du formulaire.
+  Présent uniquement si votre workspace surcharge le catalogue fourni.</pre><pre>Préfixes SQL optionnels
+  sql_before_select et sql_before_create, utilisés par les flux DuckDB et par
+  les scripts de création générés pour le profil. Ils sont décrits dans
+  db_connections_json.txt.</pre><pre>Les cinq champs d&#x27;identité
+Tout profil enregistré conserve ces clés explicitement. Ne les supprimez pas :
+c&#x27;est ainsi que WysiQ retrouve le bon connecteur et le bon moteur au
+rechargement.</pre><pre>  family              Local, Server, Cloud, API / NoSQL
+  provider            Generic, Microsoft, Azure, AWS, Google Cloud, ...
+  connector_service   identifiant interne du connecteur, ex. aws_redshift
+  connector_label     le libellé affiché, ex. « Amazon Redshift »
+  engine_type         le moteur technique, ex. postgresql</pre><pre>provider et engine_type répondent à deux questions différentes : qui exploite le
+service, et quel moteur il parle. Plusieurs fournisseurs partagent un même
+moteur — c&#x27;est normal et voulu.</pre><pre>Modification manuelle
+Modifiez les fichiers avec un éditeur de texte, puis ⟳ Reload dans Sources de
+données. Un fichier mal formé est signalé plutôt qu&#x27;ignoré silencieusement ;
+en revanche, un fichier syntaxiquement valide mais au engine_type erroné
+échouera simplement à la connexion. Ne modifiez ce champ que si vous savez
+pourquoi.</pre><pre>Les clés commençant par un tiret bas sont de la documentation et sont ignorées
+par WysiQ.</pre><pre>Ce qui n&#x27;est jamais enregistré
+access_token, refresh_token, client_secret, private_key, secret_access_key et
+service_account_private_key n&#x27;atteignent aucun fichier, quoi que vous saisissiez
+dans le formulaire. Lorsqu&#x27;un gestionnaire de secrets ou un identifiant externe
+existe, WysiQ enregistre la référence, jamais la valeur du secret.</pre><pre>Les mots de passe suivent la case PWD de Sources de données : décochée par
+défaut (session uniquement), ou écrits sous la clé password_enc sous forme
+brouillée. Ce brouillage empêche la lecture accidentelle ; ce n&#x27;est pas un
+chiffrement fort. Voir help/fr/datasource.txt.</pre><pre>Guide complet : help/fr/db_connections_json.txt</pre></main></body></html>

@@ -1,0 +1,107 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CENTRE DE PARTAGE &amp; PUBLICATION — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/share_center.txt</p><h1>CENTRE DE PARTAGE &amp; PUBLICATION</h1><pre>Accès : Main ▸ Share ▸ Share Center, Main ▸ Query ▸ Share…, bouton Open Share
+après un 📦 Prep. En haut : Catalog ouvre le Share Catalog (historique des
+partages, Main ▸ Share ▸ History) ; Close ferme la fenêtre.</pre><pre>INTERFACE AUTOMATISÉE
+Le centre est organisé en 4 onglets : Send, Channels, Advanced et Help.</pre><pre>Channels détecte et réutilise automatiquement les réglages existants.
+  • Auto configure : choisit automatiquement un bot Telegram valide si possible,
+    vérifie le bot et tente de détecter un canal/groupe récent.
+  • Check channels : vérifie Telegram, le webhook Discord et le dossier Gallery.
+  • LinkedIn, Reddit et X sont marqués Assisted : WysiQ prépare le texte
+    et ouvre le navigateur ; la validation finale reste manuelle.</pre><pre>Les réglages Publish, Gallery/Feeds, Social drafts et Setup sont dans les
+sous-onglets de Advanced. Ils ne sont nécessaires que pour les réglages détaillés.</pre><h2>WORKFLOW COMPLET — DE LA DONNÉE AU PARTAGE</h2><pre>ÉTAPE 1 — CONSTRUIRE LE GRAPHE
+  1. Fenêtre principale : sélectionner une table dans l&#x27;arbre workspace.
+  2. Cliquer sur son nom (ou double-cliquer la ligne).
+     Une fenêtre Graph s&#x27;ouvre avec les données.
+  3. Toolbar Graph → Series : ajouter des séries, choisir l&#x27;axe X, styler.
+  4. Toolbar Graph → PLOT : exécuter l&#x27;analyse et tracer le graphe.
+  5. Ajuster le zoom, le pan, le mode polaire, la légende si besoin.
+     Les contrôles de navigation sont dans la palette Graph remote
+     (Toolbar → bouton Graph, ou la télécommande flottante WysiQ).</pre><pre>ÉTAPE 2 — PRÉPARER LE PARTAGE
+  Dans la palette Graph remote, cliquer le bouton 📦 (clic gauche) :
+    • Un popup s&#x27;ouvre avec le titre du graphe.
+    • Optionnel : ● Rec pour enregistrer un commentaire vocal,
+                  ■ Stop pour terminer,  ▶ Play pour écouter,  Erase pour annuler.
+    • Cliquer 📦 Prep pour déposer le graphe.
+  Ce que fait Prep :
+    → Génère le graphe en HTML interactif (Plotly pour cartésien,
+      PNG + Panzoom pour polaire).
+    → Sauvegarde le HTML dans workspace/share/outbox/graphs/
+    → Si un commentaire vocal a été enregistré, sauvegarde le WAV à côté.
+    → Affiche la confirmation « Staged in share/outbox/graphs/ » :
+      Open Share ouvre le Share Center (onglet Send), OK ferme.</pre><pre>  Clic droit 📦 → bascule rapide des contacts et canaux On/Off
+  sans ouvrir le popup de préparation.</pre><pre>ÉTAPE 3 — ENVOYER DEPUIS L&#x27;OUTBOX
+  Dans l&#x27;onglet Send (liste de l&#x27;Outbox) :
+    1. Le fichier déposé apparaît dans la liste (☐ = non sélectionné).
+       Cliquer la ligne pour sélectionner (☑).
+    2. Choisir le Canal : Email | Telegram | Both.
+    3. Destinataires : tous les contacts actifs sont présélectionnés.
+       Cliquer un nom pour restreindre à ce contact uniquement.
+    4. Cliquer Send.
+  À l&#x27;envoi :
+    → Les contacts Email reçoivent le HTML en pièce jointe
+      (+ WAV vocal dans le même email si enregistré).
+    → Les contacts Telegram reçoivent le fichier HTML via bot
+      (+ WAV vocal en message audio séparé).
+    → Les canaux automatiques (Advanced ▸ Publish) s&#x27;exécutent également.</pre><pre>ÉTAPE 4 — LE DESTINATAIRE OUVRE LE GRAPHE
+  Le destinataire reçoit un fichier .html.
+  En l&#x27;ouvrant dans n&#x27;importe quel navigateur :
+    • Graphe cartésien : Plotly — survol, zoom, pan, légende, export PNG.
+    • Graphe polaire : PNG haute résolution avec zoom/pan tactile (Panzoom).
+  Aucune installation requise. Fonctionne sur mobile et desktop.</pre><pre>ONGLET SEND (OUTBOX)
+  Liste tous les fichiers déposés :
+    share/outbox/graphs/   → HTML graphes + WAV vocaux
+    share/outbox/queries/  → bundles ZIP de Query</pre><pre>  Cliquer une ligne pour sélectionner / désélectionner (☑ / ☐).
+  Canal         Email | Telegram | Both
+  Destinataires tous les contacts actifs par défaut ;
+                cliquer un nom pour restreindre.
+  Send          envoie les fichiers sélectionnés.
+  Refresh       relit les dossiers outbox.
+  📂 Outbox     ouvre le dossier dans l&#x27;explorateur.</pre><pre>ADVANCED ▸ PUBLISH — CANAUX AUTOMATIQUES
+  Ces canaux s&#x27;exécutent automatiquement à chaque Send (pas au Prep).
+  Activer chaque canal et cliquer Save.</pre><pre>  Telegram broadcast
+    ID canal TG  = @nom_canal ou chat ID numérique
+    ID bot TG    = optionnel, remplace le bot par défaut
+    → HTML/ZIP posté sur le canal (séparé de l&#x27;envoi aux contacts).</pre><pre>  Discord webhook
+    URL = https://discord.com/api/webhooks/…
+    → HTML/ZIP posté en pièce jointe dans le canal Discord.</pre><pre>  Gallery
+    Dossier local   = destination des copies HTML/ZIP
+    URL publique    = ex. https://wysiq.org/visualizations</pre><pre>  Flux RSS / JSON   mis à jour automatiquement à chaque Send.</pre><pre>  Réseaux sociaux (semi-automatiques) :
+    LinkedIn   → texte copié dans le presse-papiers + ouverture LinkedIn.
+    Reddit     → titre/corps préparés ; vous soumettez manuellement.
+    X/Twitter  → intent tweet ouvert avec texte et lien.</pre><pre>  Identité du message :
+    URL du site    = adresse de base dans tous les posts
+    Signature      = pied de message
+    Tags par défaut = hashtags</pre><pre>ADVANCED ▸ GALLERY / FEEDS
+  Dossier local       destination HTML/ZIP (vide = outbox/graphs)
+  URL publique base   ex. https://wysiq.org/visualizations
+  Titre / description RSS   métadonnées du canal XML
+  Nom fichier JSON    par défaut : wysiq_feed.json
+  Fichiers générés    liste outbox, feeds, drafts. Cliquer Refresh.</pre><pre>ADVANCED ▸ SOCIAL DRAFTS
+  Tester les modèles avant publication.
+  Titre / URL / Insight → sélectionner le canal dans Preview
+  → le texte du draft apparaît ; ajuster avant publication.</pre><pre>  Copy          copie le draft dans le presse-papiers.
+  Save drafts   écrit des fichiers .txt dans workspace/share/drafts/.
+  Combo Open    ouvre le réseau sélectionné avec le texte.</pre><pre>PARTAGE DE QUERIES (bundles ZIP)
+  Fenêtre principale → Query → Export query…
+    → un bundle ZIP est créé (table + analyse + paramètres graphe
+      + PNG/PPTX optionnel + note vocale).
+  Dans la fenêtre de résultat de l&#x27;export, cliquer 📤 Share… pour envoyer par
+  Email/Telegram.
+  Ou : le ZIP est copié dans share/outbox/queries/ et apparaît
+  dans l&#x27;onglet Send pour un envoi ultérieur.</pre><pre>  Les destinataires importent via : Query → Import query….</pre><pre>POUR LES CONTACTS, EMAIL, TELEGRAM, HTTP SERVER
+ET LE JOURNAL D&#x27;ENVOI — voir Advanced ▸ Setup (aide « share_params »).</pre><pre>ONGLET CHANNELS ET ADVANCED — CONTRÔLES
+  Channels : une ligne par canal avec la case Use (activer / désactiver le
+  canal) ; Auto configure, Check channels, Advanced… (ouvre l&#x27;onglet
+  Advanced).
+  Advanced ▸ Publish : options de publication automatique, choix du bot
+  Telegram (↺ recharge la liste), Save, Open feeds folder.
+  Advanced ▸ Gallery/Feeds : dossier de galerie (…), Save, Refresh,
+  📂 Feeds, 📂 Outbox.
+  Advanced ▸ Social drafts : aperçu et ouverture des brouillons, Copy,
+  Save drafts.
+  Cadres de ces onglets : Publish = « Automatic channels », « Social networks
+  (semi-auto) », « Message identity » ; Gallery/Feeds = « Site gallery »,
+  « RSS / JSON feeds », « Generated files » ; Social drafts = « Draft
+  generator », « Preview ». Détail des champs : aide « share_params ».
+  Advanced ▸ Setup : contacts, email, Telegram, serveur HTTP, journal (aide
+  « share_params »).
+  Help : cette aide (Language, A− / A+).</pre></main></body></html>

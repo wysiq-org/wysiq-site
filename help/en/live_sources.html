@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WysiQ Live Sources — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/live_sources.txt</p><h1>WysiQ Live Sources — Help</h1><pre>Access: Live button of the Graph Remote / of the graph window (&quot;Live
+Sources&quot; palette of the active query).</pre><pre>Live Sources adds LIVE1, LIVE2… tabs to queries, fed in real time. Each tuple
+received becomes a record of the LIVEn table: series, graphs, WHERE, Metrics,
+rules and thresholds can use it like a table.</pre><pre>Typical process:
+  Add source ▾ → (file folder, local table replay or SQL database)
+  → the source appears (Stopped) → Add to query (LIVEn tab, without
+  acquisition) → set Live / Show, styles, Start X / End X → Start / Resume
+  → Pause / Stop → right-click ▸ Export current table if needed.</pre><pre>No confirmation is asked for these buttons: hovering over a button shows its
+role.</pre><h2>TOP BAR</h2><pre>  Add source ▾       Menu:
+    Live graph from Files ▸ Watch files (CSV / JSON / XLSX)…
+                     watches a local or network folder (see FILES);
+    Live graph from Files ▸ Replay a local table…
+                     replays a historical WysiQ Parquet table point by
+                     point;
+    Live graph from Databases
+                     DB Live on an ACTIVE connection (see DB LIVE);
+    Live graph from agents
+                     planned, disabled (network transport not yet
+                     operational).
+  Add to query       Adds the selected Live as a LIVEn tab of the query (no
+                     acquisition starts).
+  Remove             Stops the Live, detaches it from all open queries and
+                     deletes its temporary LIVE table. The source files and the
+                     saved queries are not modified (save the queries concerned
+                     afterwards).
+  Clear              Empties the selected Live (all its points, Seq counter at
+                     0, rate statistics cleared); it goes to Stopped. The
+                     source and the series selection are kept.
+  Clear All          Stops and empties the buffers of all the Lives of the
+                     query, puts their cursors back at Start X; sources and
+                     tabs kept. If a Live is also shown in another query, its
+                     shared table is emptied there too.
+  Pause All          Suspends only the Running Lives of the query.
+  Run All / Stop All Run All starts together the Stopped / Paused Lives of
+                     THIS query; the button becomes Stop All, which stops the
+                     active Lives of the query without erasing their points or
+                     their checkpoints. The rates stay independent (no point
+                     by point X synchronisation).
+  Close              Closes the window without stopping reception.
+  ?                  This help.</pre><pre>SOURCE LIST (top)</pre><pre>Columns: Live name, Type, Source, State, Seq, Rate, Min, Max, In.
+  Click on a row              adds the Live to the query; another click =
+                              removes it (● in In = present in the query).
+                              Data and cursors are kept; no automatic start.
+                              Space / Enter do the same from the keyboard.
+  F2 or right-click ▸ Rename… renames the Live (Enter confirms, Escape
+                              cancels).
+  Right-click ▸ Export current table…   see EXPORT.
+  Hover over Source           full path of the folder or of the Parquet.
+  State = error               double-click on the cell: full diagnosis.
+Seq is the human number of the last point received (17,510 = 17,510 tuples).
+Rate, Min and Max are in points/second (pt/s): Rate over a sliding 5 s
+window; Min/Max = extreme positive rates observed (zeros due to an absence of
+measurements do not lower Min). Idle and Finished freeze Rate at the last
+rate; Pause keeps the last average; Stop shows 0. Pause/Resume excludes the
+pause duration; a Start after Stop, Clear or a change of dates starts again
+with new statistics.
+The horizontal separator between the list and the lower panel can be moved
+with the mouse; the columns can be resized.</pre><h2>LOWER PANEL — ONE ROW PER LIVE OF THE QUERY</h2><pre>Each row shows the clickable name, the last X date received (read-only) and
+the values of the series ticked Show. Clicking ▸ LIVEn expands its details
+(series, bounds, commands); ▾ LIVEn collapses them. Only one detail is open at
+a time, below its own row, in the order of the list. Clicking the header of
+the details hides the whole lower part except the current values.</pre><pre>Series list:
+  Live    the series is fed by the stream (unticked = empty column); the X
+          column is always fed.
+  Show    the series is plotted (G) and shown in the values row; a
+          double-click on the name or Space does the same.
+  Click on the Live / Show header: tick all, then untick all.
+  Click on the Series header: ascending / descending sort.</pre><pre>Period:
+  Start X / End X   inclusive bounds specific to each LIVEn; empty End X =
+                    unlimited acquisition. Click on the underlined label:
+                    small calendar (◀ ▶ month, year, day; Cancel or Escape to
+                    close); the time HH:MM:SS is typed in the field, Enter
+                    confirms, Escape restores. From an empty End X, the
+                    calendar chooses the end of the day. An end earlier than
+                    the start is refused. Changing a bound only erases the
+                    buffer and the graph of this Live, then resumes its state
+                    (Running / Paused / Stopped) from Start X. When End X is
+                    reached, the Live goes to Finished without erasing its
+                    points. If End X is in the future without data, polling
+                    waits.</pre><pre>Pace:
+  Tempo / refresh   (file folders) 0.002 to 5 s per point.
+  Tempo, Points     (table replay) pace and number of points replayed.
+  Polling           (DB Live) 100 to 60,000 ms; Apply or Enter: immediate
+                    effect, and saved.</pre><pre>Commands (same position for all types):
+  Start / Resume    starts this Live (or resumes after Pause); after Stop, a
+                    new Start resets the buffer and resumes at the first
+                    record.
+  Pause             suspends reception and keeps the cursor; on a Stopped
+                    Live, arms it (Armed) and prepares its tab without
+                    reading.
+  Stop              stops the reader; the tab and the data already received
+                    are kept.</pre><pre>FILES (Watch files)</pre><pre>Choose a local or shared folder (e.g. \\server\measurements). The files are
+neither imported as historical tables, nor converted, modified, renamed or
+deleted: only their tuples feed the temporary LIVE table.
+WysiQ opens the FIRST file in the Check file window in Live mode (even if
+stream.json exists; the JSON pre-fills names and boxes). All the functions of
+Check file remain available; at the bottom, &gt;&gt; Live replaces &gt;&gt; File and
+&gt;&gt; Table: choose &quot;Date/time X:&quot; then &gt;&gt; Live. For a CSV without a header,
+Header = -1: row 1 stays a record (rename Column_1…).
+The transformations are applied to the following files of the folder. The
+description is kept in the workspace Live registry, never in the source folder
+(which may be read-only). File... only examines another file of the same
+folder.</pre><pre>Priority order of the description:
+  1. stream.json (or a WysiQ type=table, columns definition);
+  2. otherwise, header of the first row of the first CSV;
+  3. otherwise, entry in Check file (columns #, Live, Name, Inferred, Type).</pre><pre>stream.json (optional):
+{
+  &quot;protocol&quot;: &quot;wysiq-live/1&quot;,
+  &quot;source_id&quot;: &quot;rte_live&quot;,
+  &quot;name&quot;: &quot;Power grid&quot;,
+  &quot;enabled&quot;: true,
+  &quot;x&quot;: {&quot;name&quot;: &quot;DateTime&quot;, &quot;type&quot;: &quot;datetime&quot;, &quot;timezone&quot;: &quot;Europe/Paris&quot;},
+  &quot;series&quot;: [
+    {&quot;name&quot;: &quot;Consumption&quot;, &quot;type&quot;: &quot;number&quot;},
+    {&quot;name&quot;: &quot;Production&quot;, &quot;type&quot;: &quot;number&quot;}
+  ],
+  &quot;separator&quot;: &quot;;&quot;,
+  &quot;decimal&quot;: &quot;,&quot;,
+  &quot;csv_header&quot;: &quot;auto&quot;,
+  &quot;csv_columns&quot;: [&quot;DateTime&quot;, &quot;Consumption&quot;, &quot;Production&quot;],
+  &quot;xlsx_sheet&quot;: &quot;Measurements&quot;,
+  &quot;buffer_points&quot;: 100000
+}
+separator (auto, comma, semicolon, tab) and decimal (&quot;.&quot; or &quot;,&quot;) concern CSV
+files; xlsx_sheet designates the Excel sheet (first by default). Non-ISO
+dates: add for example &quot;format&quot;: &quot;%d/%m/%Y %H:%M&quot; in the x object. ISO 8601
+recommended: 2026-10-10T20:00:00.</pre><pre>Data formats: JSON (&quot;records&quot; object, single object, list), JSONL (one object
+per line), CSV, XLSX (first row = column names). JSON example:
+{&quot;records&quot;: [{&quot;x&quot;: &quot;2026-10-10T20:00:00&quot;,
+              &quot;values&quot;: {&quot;Consumption&quot;: 71500, &quot;Production&quot;: 69800}}]}
+Missing numeric values stay NULL (never zero).</pre><pre>Order and waiting: the files are read in alphabetical order (chronological
+prefix recommended: 20261010T200000_001.json…), then WysiQ waits for new ones.
+A file already read is not read again in the session; a file added before the
+last name read is not replayed. The producer first writes &quot;file.tmp&quot; then
+renames it: an unfinished copy must never bear its final name. After WysiQ
+restarts, a LIVE source reads the files again from the beginning. Prefer
+modest files (a few hundred tuples).</pre><h2>TRUE POINT-BY-POINT LIVE</h2><pre>The reader passes ONE tuple at a time (no batch import). Reading follows the
+Tempo, not the redraw speed: if a redraw is slow, the points received are
+applied in order and then displayed together. No PLOT is needed. When the
+curve reaches the right edge, the X axis advances by pages (a quarter of the
+visible width). A Live overlaid (offset 0) on a historical table fills the
+next row of the query&#x27;s X axis.</pre><pre>DB LIVE (Live graph from Databases)</pre><pre>Creation box: ACTIVE connection of Data Sources (Local (DuckDB) included),
+table of its catalogue, Start date (YYYY-MM-DD or DD/MM/YYYY, optional time;
+▦ opens the calendar), optional End date (▦). WysiQ detects the X column
+(date/time), the primary key and the numeric series; without a usable date or
+key, an error is shown. Create DB Live creates the LIVEn table then waits for
+Start; Cancel abandons. No additional password is created.
+Also reachable from the Table Catalog (right-click ▸ Create DB Live…).</pre><pre>On start, the rows X &gt;= Start date are read in (X, PK) order; Stop keeps the
+(X, PK) checkpoint; Clear erases buffer and checkpoint. Dialects: PostgreSQL,
+SQL Server, MySQL/MariaDB, Oracle, DuckDB, Quest TIC (if configured).
+Only SELECTs are executed; the source is never modified and no table is
+created on the server.
+IMPORTANT: incremental polling, not CDC capture. A late COMMIT at a (X, PK)
+position already passed may be missed; UPDATE/DELETE are not tracked.
+Precision: SQL Server datetime ≈ 3.33 ms (prefer datetime2), MySQL
+DATETIME(6) keeps microseconds, Oracle DATE has no fractions of a second
+(TIMESTAMP does).
+For a refreshed WWW source, use Database ▸ WWW Connection (WL table).</pre><pre>EXPORT (right-click ▸ Export current table…)</pre><pre>Copies the rows STILL present in the LIVEn buffer at the time of the click,
+even while Running or Paused. Proposed name: LIVEn_YYYYMMDD_HHMMSS (X of the
+LAST record received), then _2, _3… if it already exists. File exports CSV /
+XLSX / Parquet; Table creates a DuckDB table and can send it to a remote
+database. To export the enriched result of the query (Metrics, joins), use
+the export of the working table or of the graph.</pre><h2>SERIES AND QUERIES</h2><pre>In the Series palette, Remove table on a LIVE tab erases its curves; if no
+other open query uses this Live, it is stopped and emptied. The source stays
+in Live Sources. Save Query stores the Live tabs, as well as the size,
+position and open/closed state of the Live Sources window and the detailed
+Live; they are restored on reopening. Adding a source or reloading a query
+leaves the Lives at Stopped (manual start).</pre><pre>TEMPORARY / PERSISTENT
+Each LIVEn is a temporary technical DuckDB table. The definitions (source,
+series, Start X / End X, polling) are saved in workspace/live/live_tables.json.
+Only Export current table and Save Query write durable data or settings.</pre></main></body></html>

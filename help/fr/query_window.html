@@ -1,0 +1,31 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ECRAN QUERY — Last PCA summary — AIDE WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/query_window.txt</p><h1>ECRAN QUERY — Last PCA summary — AIDE WysiQ</h1><pre>Accès : Settings ▸ Parameters… ▸ onglet Query, bloc « Last PCA summary »,
+bouton ?.</pre><pre>Rôle
+Cet écran regroupe les paramètres de la Query active et le résumé de la dernière ACP/PCA calculée dans Area.
+Le bloc PCA a quatre onglets : Summary / loadings, Scores / datasets,
+PCA guide, Multi-table PCA ; Refresh PCA relit le dernier résumé. Les paramètres d&#x27;axes et la disposition des
+tables sont décrits dans les aides « query_params » et « table_layout ».</pre><pre>Une Query WysiQ n&#x27;est plus seulement une requête SQL : c&#x27;est une recette analytique. Elle peut décrire la table source, les séries sélectionnées, les Metrics construits, les bornes Area, les résultats PCA, les signaux, les tests et le Feed AI.</pre><pre>Paramètres de query
+Y axis : unité, échelle, décimales et facteur de période.
+Axes / ticks : bornes X/Y et graduations pour l&#x27;affichage et l&#x27;extraction des données.
+Ces deux blocs peuvent être masqués pour laisser plus de place au résumé PCA.</pre><pre>Résumé ACP
+La section Last PCA summary montre le dernier calcul PCA effectué depuis Area.</pre><pre>Ce qui est sauvegardé dans query.json :
+- le contexte de la Query,
+- la table source,
+- les colonnes utilisées,
+- les définitions de Metrics présentes dans la Query,
+- les bornes X/Y utilisées pour le dernier calcul PCA,
+- les séries A qui ont servi d&#x27;entrée à l&#x27;ACP,
+- les PC calculées,
+- les pourcentages de variance expliquée et cumulée,
+- les coefficients et contributions principales.</pre><pre>Ce qui n&#x27;est pas sauvegardé :
+- les valeurs lourdes des séries AXIS_PC1, AXIS_PC2, etc.,
+- AXIS_RECONSTRUCTION_ERROR,
+- AXIS_DIST_PCA.</pre><pre>Ces séries doivent être recréées dans Area avec le bouton PCA→Series, ou matérialisées dans une table de travail si vous voulez les conserver durablement.</pre><pre>Table variance
+Variance % : part d&#x27;information expliquée par chaque composante.
+Cumulative % : information conservée en cumulant PC1, PC2, PC3, etc.</pre><pre>Table coefficients / loadings
+Pour rester lisible, l&#x27;écran affiche les principales séries contributrices de chaque PC, généralement les 3 plus importantes par composante.</pre><pre>PC1, PC2, ... : coefficient de la série dans chaque composante.
+P1%, P2%, ... : contribution relative de cette série dans la composante.
+Dom.PC : composante où cette série pèse le plus.
+Σ|coef| : importance globale de la série dans les PC affichées.
+mean / scale : centrage et échelle utilisés pour le calcul.</pre><pre>La couleur reprend la couleur réelle de la série dans la palette Series.</pre><pre>Règle pratique
+Si vous voulez plusieurs ACP historiques, utilisez Post-it ou PPTX.
+Si vous voulez réutiliser les valeurs PC plus tard, exportez/materialisez une table de travail.</pre></main></body></html>

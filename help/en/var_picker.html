@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Variable picker — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/var_picker.txt</p><h1>Variable picker — Help</h1><pre>Compact list opened from the numeric fields of metrics (right-click on k,
++/-, Min, Max, Δ, Fill, Lag, WHERE value…), or through
+Rules &amp; params ▸ Rules &amp; Vars… in the graph window.</pre><pre>Buttons: Stay open, Vars series, PLOT, New…, Catalog (opens the Variables
+Catalog), ?, Save, Close. Double-click or Enter on a row = insert the
+reference.</pre><h2>OPENING / INSERTION</h2><pre>Right-click a linked field → opens this picker.
+Click a row → inserts &amp;ref into the active field.
+&quot;Stay open&quot; keeps the window open while editing the metric field.</pre><pre>Theme / Variable filters narrow the list (remembered for the session).</pre><h2>CREATING A VARIABLE</h2><pre>New… creates a variable without going through the Variables Catalog: theme,
+name, value, unit, description. A theme name that does not exist creates
+the theme. If a field is targeted (metric, WHERE value…), the ref of the new
+variable is inserted there. Opened from Rules &amp; params ▸ Rules &amp; Vars…
+(no targeted field), the variable is only created and selected.
+Right-click a row: Insert ref / Create… / Duplicate… / Rename / edit… /
+Delete.</pre><h2>IN QUERY / SHOW / VARS SERIES</h2><pre>IN
+  ✓ = variable used by at least one metric of the open query
+      (combo k/+/−/Min/Max/Δ/Fill, WHERE, table WHERE…).</pre><pre>Show  (IN variables only)
+  Enables/disables the variable in the preview.
+  Click the Show heading → all ON / all OFF.
+  The G/T/A boxes of the Series palette remain; the preview only filters.</pre><pre>Vars series
+  • List limited to IN variables.
+  • The Description column is replaced by sliders (bounds between the JSON
+    value and the current simulated value).
+  • The other metrics are hidden in the preview while Vars series is
+    ticked.
+  • Hover / right-click on the Variable name: unchanged list of metrics.
+  • The window shrinks to its sliders; it gets its size back when Vars
+    series is unticked.</pre><pre>PLOT
+  Refreshes the graph (like PLOT of the Series palette) after a value
+  change.</pre><h2>METRICS USING THIS VARIABLE</h2><pre>Hover over the Variable column (normal mode) or the Variable name (Vars
+series): &quot;Uses: …&quot; tooltip (direct refs) and &quot;Depends: …&quot; (combo/alias
+chain).</pre><pre>Right-click the Variable name:
+  list of metrics (read-only), then Insert ref / Duplicate / Rename / Delete.</pre><pre>VALUE — SIMULATE vs SAVE</pre><pre>Click the Value cell (or the label in Vars series mode) → direct editing.</pre><pre>Simulated value
+  Applied immediately to the metrics and the preview (Min/Max follow the
+  simulation). Shown with a trailing * (not saved).</pre><pre>Save
+  Writes all simulated values into the theme JSON on disk.
+  Enabled only if there is at least one * value.
+  Confirmation dialog before writing.</pre><pre>Close without Save
+  Cancels all simulated values (*) and returns to the JSON values.
+  Clears the variables preview on the graph.</pre><h2>WINDOW</h2><pre>Wider default size to keep PLOT and ? visible.
+Position and size remembered per query (like the Series / Table palettes).</pre><pre>Resize or move the window — the geometry is restored when this query is
+reopened.</pre><pre>METRIC FIELDS (&amp;x.y)</pre><pre>In the Composition, a variable is shown in its compact form &amp;x.y
+(x = theme no., y = variable no.), e.g. &amp;1.4.
+Hovering over the field → tooltip: theme, name, value, unit and
+description, e.g. &quot;&amp;1.4 = energie.min_nucl = 35000 MW&quot;.
+Right-click the field → opens this picker.
+The &amp;x.y numbers are specific to the workspace: the query stores the
+by-name form (&amp;theme.variable), portable from one workspace to another.</pre><h2>SORTING</h2><pre>Click a heading (IN, Ref, Theme, Variable, Value, Description): ascending
+sort; click again: descending sort. No marker in the heading.</pre><pre>?
+  This help (language set in the application Params).</pre><h2>DISPLAY ON THE GRAPH / STYLE</h2><pre>Show keeps its behaviour (selection in the query preview).
+Display is distinct: when ticked, the variable is drawn directly on the
+graph as a graphic marker, WITHOUT text (no name, value or unit). A numeric
+value produces a horizontal reference line; a formula using series
+produces a curve if its dependency series are available.
+Display is OFF by default and changes neither series, metrics nor
+WHERE. In Vars series mode, each row has three clickable swatches:
+Legend (legend text), Display (graphic marker) and Style.
+Style opens the style popup WITHOUT Position: colour (More...), depth
+(↓ ↑), Type, Marker, Size, Alpha and Blink. Normal / Below / Above states:
+Below and Above take the Normal values as long as they are not changed.
+Close closes the popup. Styles and Display are saved in the theme JSON. See
+also the &quot;variables_catalog&quot; help (Line, Fill, Bar, Point, Both types).</pre></main></body></html>

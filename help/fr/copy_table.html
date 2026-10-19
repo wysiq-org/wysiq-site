@@ -1,0 +1,64 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Export Table / Copy Table — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/copy_table.txt</p><h1>Export Table / Copy Table — Aide</h1><pre>La fenêtre « Export Table » crée une table WysiQ (DuckDB + fichier .parquet
+dans le workspace) à partir d&#x27;une source, et peut aussi pousser les lignes vers
+une base distante. Elle est ouverte par :
+  • Main ▸ In/Out Data ▸ Export (table sélectionnée) ;
+  • Import files ▸ Bulk load (une fenêtre par fichier) ;
+  • Check file ▸ &gt;&gt; Table ;
+  • la fenêtre Table, le SQL Assistant et les exports de résultats.</pre><pre>Processus type :
+  vérifier Input / source → saisir Target table → choisir Target connection
+  → (base distante : Remote target table + Remote push) → SQL (contrôle)
+  → EXEC.</pre><h2>ÉTAPE 1 — FILE OU TABLE ?</h2><pre>Depuis certaines fenêtres, une première boîte demande la destination :
+  File  (export to exchange)            écrire un fichier (voir plus bas) ;
+  Table  (DuckDB workspace + remote)    ouvrir la fenêtre Export Table.
+Continue valide ; Cancel abandonne. Les imports de fichiers vont directement
+à Table.</pre><h2>FENÊTRE EXPORT TABLE — CHAMPS</h2><pre>  Input / source        Origine des données (fichier, table, requête SQL) ;
+                        lecture seule.
+  Target table          Nom de la table WysiQ à créer (obligatoire).
+  Owner                 Propriétaire enregistré avec la table.
+  Created               Date de création (lecture seule).
+  Target connection     Local (DuckDB) : la table reste dans le workspace.
+                        Un profil distant connecté : la table est créée dans le
+                        workspace ET les lignes sont poussées vers ce serveur.
+                        Seuls les profils actifs sont proposés.
+  Remote target table   (connexion distante) Nom de la table sur le serveur ;
+                        suit Target table tant qu&#x27;il n&#x27;est pas modifié à la main.
+                        Utiliser schema.table seulement si la base l&#x27;exige.
+  DuckDB ▸ Add row#     Ajoute une colonne de numéro de ligne.
+  Remote push           (connexion distante) Mode d&#x27;écriture distante :
+    Create / recreate table and load rows   (re)crée la table puis insère
+                                            toutes les lignes (droits GRANT
+                                            de l&#x27;ancienne table perdus) ;
+    Append rows to existing table           ajoute les lignes à une table
+                                            compatible existante ;
+    Delete all rows, then insert            vide la table puis insère
+                                            (structure conservée).</pre><pre>WysiQ crée toujours une TABLE (plus de VIEW) : une table peut contenir des
+métriques calculées en Python et des données multi-tables qu&#x27;une vue DuckDB
+ne peut pas représenter.</pre><h2>BOUTONS</h2><pre>  ?       Ouvre cette aide.
+  Help    Fiche descriptive de la table qui sera créée (colonnes, types,
+          source), dans un visualiseur avec A− / A+, Copy et Close.
+  SQL     Affiche le script CREATE TABLE (dialecte de la connexion cible) ;
+          Copy le copie dans le presse-papiers (pour un DBA). Ce script n&#x27;est
+          pas exécuté sur le serveur par ce bouton.
+  Cancel  Ferme sans rien créer.
+  EXEC    Exécute :
+            1. contrôle du nom (« Name is required ») ;
+            2. si la table existe déjà : « Table &#x27;…&#x27; already exists. Overwrite
+               it? » — Oui remplace les données, Non abandonne ;
+            3. chargement complet de la source (fichier relu en entier, masque
+               et shrink appliqués) et CREATE TABLE dans DuckDB ;
+            4. écriture du .parquet et de la définition .json dans
+               workspace/tables/, mise à jour du registre et de la liste Main ;
+            5. si connexion distante : écriture selon Remote push.
+          Une fenêtre de fin résume le résultat (OK / Entrée / Échap).</pre><pre>EXPORT VERS FICHIER (« File export »)</pre><pre>  Name                  Nom du fichier (sans extension).
+  Folder                Dossier (… pour parcourir) ; par défaut
+                        workspace/exchange.
+  Parquet / XLSX / CSV  Formats à écrire (plusieurs possibles).
+  CSV delimiter         Semicolon ; | Comma , | Tab \t | Pipe |.
+  Add Row# column       Ajoute un numéro de ligne.
+  Export                Écrit le(s) fichier(s) ; Cancel abandonne.
+Un export fichier ne crée aucune table et ne modifie pas le workspace.</pre><pre>IMPORT RAPIDE (« Create »)</pre><pre>Pour un fichier seul, une boîte simplifiée affiche File et Table name :
+Create (ou Entrée) charge le fichier dans une nouvelle table ; ? ouvre cette
+aide ; Cancel abandonne.</pre><pre>EXPORT DES DONNÉES D&#x27;UN GRAPHE (overlay / résultats)</pre><pre>Une petite boîte « Export… » propose Format : Parquet ou XLSX, Max rows
+(ALL ou N), Sheet name (XLSX), et affiche le nombre de lignes et de colonnes.</pre><h2>PRÉCAUTIONS</h2><pre>• Overwrite remplace définitivement les données de la table locale.
+• Create / recreate et Delete all rows modifient la base distante : vérifier
+  la connexion et le nom de la table cible avant EXEC.</pre></main></body></html>

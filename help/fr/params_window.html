@@ -1,0 +1,108 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PARAMÈTRES — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/params_window.txt</p><h1>PARAMÈTRES — WysiQ</h1><pre>Accès : Main ▸ Settings ▸ Parameters… (Manual… ouvre directement l&#x27;onglet
+Help Folder) ; bouton Params de la palette Series ; Settings… du menu AI
+(onglet AI). Le dernier onglet utilisé est rouvert.</pre><pre>La fenêtre Paramètres est organisée en deux niveaux :
+  • Onglets principaux : Globals | Query | Statistics | Signal | AI | Help | Help Folder | Legal
+  • Sous-onglets de Globals : Core | Display | Output | Style | List values | Screens | Help</pre><pre>Les réglages globaux sont conservés par WysiQ ; pour enregistrer
+les réglages propres à une query (axes, tables, offsets), utilisez SaveQuery.</pre><pre>Zoom texte (aide) : Ctrl + molette ou boutons A− / A+</pre><h2>ONGLET GLOBALS</h2><pre>Les réglages globaux du workspace (Core, Display, Output, Style, Screens,
+List values) sont documentés dans Globals → Help (mêmes langues que cet
+onglet). Cet onglet-ci couvre le reste de la fenêtre Paramètres : les
+paramètres Query et les références partagées (formats de date, logique du
+locator adaptatif).</pre><pre>  Display &gt; Linked &amp; transparent graphs : Link delay (ms) règle la latence de synchronisation des graphes LINKED (0 = immédiat, défaut 50 ms) ;
+  Hide when transparent (Grid / Legend / Scale) choisit ce qu&#x27;un graphe au fond transparent (▧) masque — valeurs par défaut, modifiables par graphe (clic droit sur ▧, enregistré dans la query).</pre><h2>ONGLET QUERY</h2><pre>Une page unique regroupe les axes du graphe et la disposition des tables.
+Axes / Y axis : unité, coefficient Scale, décimales, facteur de période,
+bornes visibles X/Y, graduations et subdivisions.
+X axis - bounds by table : dates X min/X max de chaque instance de table,
+Rows avant rééchantillonnage, positions Start/End sur l&#x27;axe composite.
+Multi-table - table offsets : offsets X en lignes, Y offset, Coeff,
+Mode (Shrink/Expand), Target rows, Every N, Exec et Reset.</pre><pre>IMPORTANT : les bornes X du bloc Axes concernent le GRAPHE ; celles du
+bloc X axis - bounds by table concernent UNE INSTANCE de table.
+Les offsets de lignes ne sont pas des décalages en temps réel.
+Pour les méthodes de recalage (y compris AVG, Step et Auto calendar),
+cliquez sur ? dans le bloc Multi-table : aide table_layout.txt.
+Enregistrez les modifications de la query avec SaveQuery.</pre><h2>ONGLET STATISTICS</h2><pre>Statistics execution parameters
+  p-adjust    correction pour tests multiples (BH, Holm, Bonf, none)
+  Max lag     décalage maximum pour les tests d&#x27;autocorrélation/corrélation croisée
+  Bins        nombre de classes (histogramme) pour les tests de distribution
+  Min size    taille d&#x27;échantillon minimum requise pour exécuter un test
+  Alpha       seuil de signification</pre><pre>Test Notebooks (liste à gauche + éditeur à droite)
+  Chaque notebook définit un test statistique personnalisé (source +
+  paramètres par test). Sélectionnez un notebook pour voir/modifier ses
+  paramètres et son code source.
+  Le bouton ? ouvre l&#x27;aide des Test Notebooks.</pre><h2>ONGLET SIGNAL</h2><pre>Contrôle les métriques Signal affichées dans la palette Signal.</pre><pre>  Clic sur une ligne        active/désactive cette métrique
+  Clic sur l&#x27;en-tête Signal active/désactive toutes les métriques
+  HF moving average window  taille de fenêtre utilisée par la métrique
+                            HF_ENERGY (valeurs impaires centrées, valeurs
+                            paires arrondies vers le bas)</pre><pre>Les modifications sont sauvegardées immédiatement — pas de boutons
+Save/Cancel séparés.</pre><h2>ONGLET AI</h2><pre>Sous-onglets : Profile | Observatory | AI Folder | Help.</pre><pre>  Profile       Profils IA (fournisseur, modèle, URL, clé), test de
+                connexion, 🧭 Assistant… (AI Setup / Bench), catalogue des
+                fournisseurs, scan des modèles locaux. Voir l&#x27;aide
+                « params_ai ».
+  Observatory   Sélectionner l&#x27;onglet ouvre la fenêtre de réglage de l&#x27;AI
+                Observatory (serveur d&#x27;activité, champs transmis, aperçu
+                JSON) ; Observatory Settings… la rouvre. Voir l&#x27;aide
+                « activity_tracking ».
+  AI Folder     Sélectionner l&#x27;onglet ouvre le dossier AI du workspace
+                (protocole, questions, cases) dans l&#x27;explorateur.
+  Help          Sélectionner l&#x27;onglet ouvre l&#x27;aide « params_ai_knowledge ».</pre><pre>Les questions prédéfinies (AI Feed Question Dictionary) se consultent dans
+le Requests Catalog de l&#x27;AI Command Center (📋 Request) : langue, recherche
+&lt;&lt; / &gt;&gt;, liste et texte exact envoyé. Fichiers : dossier ai/Feed/&lt;lang&gt;/ du
+programme.</pre><h2>ONGLET HELP</h2><pre>Affiche ce texte d&#x27;aide directement dans la fenêtre.
+Utilisez le sélecteur de langue pour basculer entre DE, EN, ES, FR et IT.
+Cliquez sur ↺ pour recharger après avoir changé la langue.
+Zoom : Ctrl + molette ou boutons A− / A+.</pre><h2>ONGLET HELP FOLDER</h2><pre>Parcourez et recherchez tous les fichiers d&#x27;aide .txt fournis avec WysiQ
+(tous sujets confondus, pas seulement cette fenêtre), dans l&#x27;une des 5
+langues.</pre><pre>  Sélecteur de langue   DE / EN / ES / FR / IT
+  Search + &lt;&lt; / &gt;&gt;      recherche plein texte dans les fichiers d&#x27;aide de
+                        la langue sélectionnée, navigation entre résultats
+  Liste (gauche)         tous les sujets d&#x27;aide pour la langue sélectionnée
+  Texte (droite)         contenu complet du sujet sélectionné
+  A− / A+               zoom du texte</pre><pre>RÉGLAGES DE PARTAGE (Share Center ▸ Advanced ▸ Setup)</pre><pre>Les onglets Contacts, Email/SMTP, Telegram, HTTP Server, 📋 Log et Help ne
+sont pas dans Parameters : ils se trouvent dans Main ▸ Share ▸ Share Center,
+onglet Advanced ▸ Setup. Voir l&#x27;aide « share_params ».</pre><h2>ONGLET LEGAL</h2><pre>Informations de licence open-source des composants tiers pour le
+workspace courant.</pre><pre>  Open folder   ouvre le dossier des documents légaux dans l&#x27;explorateur
+  Liste déroulante  Summary | Notices | Full licenses</pre><pre>Le contenu suit automatiquement la langue d&#x27;aide courante.</pre><pre>RÉFÉRENCE DES FORMATS DE DATE  (codes strftime)</pre><pre>Toutes les chaînes de format utilisent la syntaxe strftime de Python.
+Combinez librement les codes, ex. %d/%m/%Y %H:%M:%S</pre><pre>Année
+  %Y    année sur 4 chiffres         2025
+  %y    année sur 2 chiffres         25</pre><pre>Mois
+  %m    mois avec zéro               01 … 12
+  %b    nom du mois abrégé           jan. … déc.  (locale)
+  %B    nom du mois complet          janvier … décembre  (locale)</pre><pre>Jour
+  %d    jour avec zéro               01 … 31
+  %j    jour de l&#x27;année              001 … 366</pre><pre>Jour de semaine
+  %a    jour abrégé                  lun. … dim.  (locale)
+  %A    jour complet                 lundi … dimanche  (locale)
+  %u    numéro de jour (lun=1)       1 … 7
+  %w    numéro de jour (dim=0)       0 … 6</pre><pre>Semaine
+  %W    numéro de semaine (lun)      00 … 53
+  %V    numéro de semaine ISO        01 … 53</pre><pre>Heure
+  %H    heure 24h avec zéro          00 … 23
+  %I    heure 12h avec zéro          01 … 12
+  %p    AM / PM  (locale)</pre><pre>Minute
+  %M    minute avec zéro             00 … 59</pre><pre>Seconde
+  %S    seconde avec zéro            00 … 59</pre><pre>Séparateur / littéral
+  %%    signe % littéral</pre><pre>Fuseau horaire
+  %Z    abréviation du fuseau        UTC, CET …
+  %z    décalage UTC                 +0100</pre><h2>EXEMPLES PRATIQUES</h2><pre>  Années seulement (vue longue)        %Y
+  Mois + année                         %m/%Y
+  Jour + mois                          %d/%m
+  Date complète                        %d/%m/%Y
+  Date + heure (minutes)               %d/%m %H:%M
+  Date + heure (secondes)              %d/%m/%Y %H:%M:%S
+  Heure seule (heures:minutes)         %H:%M
+  Heure seule (h:m:s)                  %H:%M:%S
+  ISO 8601                             %Y-%m-%dT%H:%M:%S
+  Numéro de semaine                    S%W %Y
+  Mois abrégé + jour                   %b %d</pre><h2>LOGIQUE DU LOCATOR ADAPTATIF</h2><pre>WysiQ choisit automatiquement l&#x27;unité des ticks selon l&#x27;étendue visible :</pre><pre>  Étendue &gt; 180 j    MonthLocator   — tick majeur tous les N mois
+  Étendue 60–180 j   WeekdayLocator — tick majeur toutes les N semaines
+  Étendue 14–60 j    MonthLocator   — tick sur jours fixes du mois
+  Étendue 2,5–14 j   DayLocator     — tick majeur tous les N jours
+  Étendue 0,25–2,5 j HourLocator    — tick majeur toutes les N heures
+  Étendue 5min–6h    MinuteLocator  — tick majeur toutes les N minutes
+  Étendue &lt; 5 min    SecondLocator  — tick majeur toutes les N secondes</pre><pre>  Les ticks mineurs sont une unité plus fine que le locator majeur.
+  Le spinbox « ticks cibles » (Zoom 1–6, voir Globals → Display → Zoom
+  date thresholds) contrôle la densité et le format des étiquettes dans
+  chaque unité.</pre><pre>  Première ligne Display : Link (ms) = Link delay, Zoom (%) = Zoom step, Pan (%) = Pan step, Arrows (ms) = Arrow repeat.
+  Display &gt; Linked &amp; transparent graphs : Link delay (ms) règle la latence de synchronisation des graphes LINKED (0 = immédiat, défaut 50 ms) ;
+  Zoom step (%) définit le pas de zoom par flèche de Graph Remote (défaut 6 %, plage 1–50 %), indépendant du Link delay ;
+  Arrow repeat (ms) (défaut 30 ms, plage 15-250 ms) règle les flèches Pan/Zoom et POLAR &lt;&lt; X / X &gt;&gt; dès l’appui, séparément de Link delay ;
+  Pan step (%) (défaut 2 %, plage 1–20 %) règle la distance des déplacements Pan par flèche ;</pre></main></body></html>

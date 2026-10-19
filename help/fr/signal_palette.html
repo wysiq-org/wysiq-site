@@ -1,0 +1,150 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PALETTE SIGNAL — Dynamique / rugosité du signal — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/signal_palette.txt</p><h1>PALETTE SIGNAL — Dynamique / rugosité du signal</h1><pre>Accès : bouton Signals de la fenêtre graphique ou rond Si de la Graph Remote.</pre><pre>Barre d&#x27;outils
+Use Area    Bornes X prises dans le rectangle Area (voir Sélection X).
+Xmin / Xmax Plage X manuelle (Use Area OFF) ; Entrée pour recalculer.
+eps         Seuil des micro-variations (SIGN_CHG, PEAKS, VALLEYS).
+ReCalc      Recalcule le tableau (il n&#x27;est pas recalculé à chaque paquet
+            Live ni à chaque déplacement de l&#x27;Area).
+Transpose   Inverse lignes et colonnes du tableau (séries en lignes ou en
+            colonnes).
+Signals...  Ouvre Parameters ▸ Signal (catalogue des métriques affichées,
+            fenêtre HF, eps).
+→ AI        Envoie les lignes de signal dans l&#x27;AI Feed Stack.
+&gt; Serie     Convertit le signal sélectionné en série (voir Signal → Series).
+Clear       Efface la sélection de colonne pour &gt; Serie.
+Actions     Post-it / Hide/Show (voir Post-it).
+?           Cette aide.</pre><pre>Rôle
+La palette Signal mesure les mouvements internes d&#x27;une série sur une plage X.
+Elle complète Area/Stats quand le graphe montre une courbe plus hachée,
+plus oscillante ou plus pilotée, alors que AVG, SUM, DELTA ou RANGE restent proches.</pre><pre>Exemple WysiQ : comparer la variabilité de la production nucléaire pendant les
+périodes avec solaire et sans solaire.</pre><pre>Séries analysées
+La palette utilise les séries cochées en A : séries de table, Metric / séries
+virtuelles, et séries A même quand elles sont aussi tracées en G.</pre><pre>Sélection X
+Use Area ON : si un rectangle Area valide existe, Xmin/Xmax viennent du rectangle.
+S&#x27;il n&#x27;y a pas de rectangle valide, Signal affiche les bornes X visibles complètes et analyse tous les points.
+Use Area OFF : mode manuel. Xmin/Xmax sont éditables et servent de plage de filtre.
+Les dates affichées dans Xmin/Xmax suivent Params &gt; Core &gt; &quot;Date format (tables)&quot;.
+X peut être le temps, une série brute, une Metric ou une série calculée.</pre><pre>Colonnes affichées
+Settings &gt; Signal contient le catalogue des métriques (22 métriques au total).
+Cliquez une ligne pour afficher/masquer la colonne.
+Cliquez l&#x27;entête Signal pour basculer all on / all off.
+Le bouton Signals... de la palette Signal ouvre directement cet onglet.</pre><pre>Post-it / copie
+Post-it crée une copie jaune figée de la table Signal.
+Hide/Show masque ou réaffiche les post-it Signal.
+CTRL+C copie les lignes sélectionnées avec l&#x27;entête des colonnes.</pre><pre>Formules principales
+Points valides : y0, y1, ..., yn
+Différences : dy[i] = y[i+1] - y[i]</pre><pre>nb            = nombre de points valides
+trans         = nombre de transitions = len(dy)
+TVAR          = Σ |dy[i]|
+TVAR2         = Σ dy[i]^2
+NTVAR         = TVAR / trans
+NTVAR2        = TVAR2 / trans
+SIGN_CHG      = count(sign(dy[i]) != sign(dy[i-1])) après filtrage eps
+PEAKS         = passages pente positive → pente négative (maxima locaux)
+VALLEYS       = passages pente négative → pente positive (minima locaux)
+ZERO_X        = passages de y autour de zéro
+ABS_SLOPE_AVG = mean(|dy/dx|)
+ABS_SLOPE_MAX = max(|dy/dx|)</pre><pre>Métriques avancées
+AUTOCORR_LAG1
+  corr(y[:-1], y[1:])
+  Mesure l&#x27;inertie : proche de +1 = signal très persistant, proche de 0 = bruit blanc.</pre><pre>HF_ENERGY
+  smooth = moving_average(y, fenêtre)   [fenêtre configurable dans Params &gt; Signal]
+  HF_ENERGY = Σ (y - smooth)^2
+  Mesure l&#x27;énergie haute fréquence : bruit, oscillations rapides ou pilotage court terme.</pre><pre>SMOOTHNESS
+  1 / (1 + NTVAR)
+  Score inverse de rugosité dans [0, 1]. Plus élevé = signal plus lisse.</pre><pre>OSC_PERIOD
+  Moyenne des distances X entre pics et vallées successifs.
+  Donne la période moyenne d&#x27;oscillation en unités X. Retourne nan si moins de 2 extrêmes.</pre><pre>Métriques FFT — scalaires spectraux
+WysiQ calcule 4 scalaires à partir de la Transformée de Fourier Rapide (FFT).</pre><pre>La FFT décompose un signal en somme de sinusoïdes et produit un spectre complet
+(graphique fréquence → amplitude). Afficher ce spectre brut nécessite une formation
+en traitement du signal. WysiQ extrait à la place les 4 valeurs les plus utiles.</pre><pre>La série est d&#x27;abord rééchantillonnée sur une grille X uniforme (interpolation
+linéaire) pour que les métriques fonctionnent même quand le pas X est irrégulier
+(trous, dates manquantes). Nécessite au moins 8 points valides ; retourne nan sinon.</pre><pre>FFT_FREQ1
+  argmax(|rfft(y)|, hors DC) * fs / n
+  Fréquence dominante : bin de plus forte énergie spectrale, composante DC exclue.
+  Unité : cycles par unité X.
+  Exemple : 0.1 -&gt; 1 cycle toutes les 10 unités X.</pre><pre>FFT_PERIOD1
+  1 / FFT_FREQ1
+  Période dominante dans la même unité que X.
+  Exemple : 365.0 (X en jours) -&gt; cycle annuel détecté.
+  À comparer avec OSC_PERIOD pour validation croisée.</pre><pre>FFT_POWER_HF
+  Σ|FFT[f &gt; fréquence médiane]|² / Σ|FFT[f &gt; 0]|²
+  Part de l&#x27;énergie spectrale portée par les hautes fréquences. Plage [0, 1].
+  -&gt; 1 : signal dominé par le bruit ou les oscillations rapides.
+  -&gt; 0 : signal dominé par les tendances lentes ou les cycles longs.</pre><pre>FFT_POWER_LF
+  1 - FFT_POWER_HF
+  Part de l&#x27;énergie spectrale basse fréquence. Plage [0, 1].
+  FFT_POWER_HF + FFT_POWER_LF = 1 toujours.
+  -&gt; 1 : tendance lente ou cycle long dominant confirmé.</pre><pre>Pseudo-code
+x = np.asarray(x, dtype=float)
+y = np.asarray(y, dtype=float)
+mask = np.isfinite(x) &amp; np.isfinite(y)
+x, y = x[mask], y[mask]</pre><pre># filtre X facultatif
+mask = (x &gt;= min(X0, X1)) &amp; (x &lt;= max(X0, X1))
+x, y = x[mask], y[mask]</pre><pre>dy = np.diff(y)
+TVAR          = np.nansum(np.abs(dy))
+TVAR2         = np.nansum(dy ** 2)
+NTVAR         = TVAR / len(dy)
+NTVAR2        = TVAR2 / len(dy)
+SPIKE_RATIO   = NTVAR2 / NTVAR**2     # sans unités, &gt;= 1 ; 1=mouvements uniformes, &gt;&gt;1=spikes dominants
+RAMP_CONC     = sqrt(TVAR2) / TVAR    # [0-1] ; haut = mouvement concentré en peu d&#x27;événements
+AUTOCORR_LAG1 = np.corrcoef(y[:-1], y[1:])[0, 1]
+smooth        = moving_average(y, window=7)
+HF_ENERGY     = np.nansum((y - smooth) ** 2)
+SMOOTHNESS    = 1 / (1 + NTVAR)
+OSC_PERIOD    = mean(diff(x_positions_of_peaks_and_valleys))</pre><pre># Scalaires FFT (n &gt;= 8 requis)
+n             = len(y)
+fs            = (n - 1) / (x[-1] - x[0])        # échantillons par unité X
+x_u           = np.linspace(x[0], x[-1], n)
+y_u           = np.interp(x_u, x, y)             # rééchantillonnage uniforme
+spectrum      = np.fft.rfft(y_u)
+freqs         = np.fft.rfftfreq(n, d=1.0/fs)
+power         = np.abs(spectrum) ** 2
+idx           = np.argmax(power[1:]) + 1          # ignorer la composante DC
+FFT_FREQ1     = freqs[idx]
+FFT_PERIOD1   = 1.0 / FFT_FREQ1
+mid           = max(1, len(freqs) // 2)
+FFT_POWER_HF  = np.sum(power[mid:]) / np.sum(power[1:])
+FFT_POWER_LF  = 1.0 - FFT_POWER_HF</pre><pre>Indicateurs de concentration du mouvement
+SPIKE_RATIO = NTVAR2 / NTVAR²  (sans unités, toujours ≥ 1)
+  = 1   : tous les mouvements sont de taille comparable — signal uniforme ou bruit blanc.
+  &gt; 1   : les grands mouvements dominent — plus la valeur est haute, plus les spikes ou rampes
+           sont rares mais intenses.
+  Comparable entre séries de toute échelle (MW, °C, €…).</pre><pre>RAMP_CONC = sqrt(TVAR2) / TVAR  (adimensionnel, borné dans (0, 1])
+  → 1/sqrt(n) : mouvements tous égaux — mouvement totalement diffus.
+  → 1         : un seul mouvement concentre toute l&#x27;énergie.
+  Mesure la concentration géométrique du mouvement — complémentaire de SPIKE_RATIO.</pre><pre>Signal → Series (convertir un signal en série)
+Les titres de colonnes sont les mêmes en-têtes en 3 lignes et en couleur que
+dans Table : en multi-table on voit la table et le nom de la série.</pre><pre>Sélection, puis &gt; Serie :
+  1. Cliquer une ligne de signal convertible (le point dans la colonne S :
+     TVAR, TVAR2, NTVAR, NTVAR2, et les autres lignes qui peuvent devenir
+     une courbe).
+  2. Cliquer un titre de colonne. Ce titre passe en vert clair. Un autre
+     titre remplace la sélection. Clear l&#x27;enlève.
+  3. Cliquer &gt; Serie. Une seule série est créée, avec T et A cochés, G
+     décoché. Table et Area se rafraîchissent si ces fenêtres sont déjà
+     ouvertes.</pre><pre>Le résultat est une série complète, une valeur par point X : une courbe à
+tracer, à utiliser dans Metrics, une PCA, des Areas, ou à envoyer à l&#x27;IA.
+Un clic droit sur une cellule propose encore les mêmes conversions.</pre><pre>Seuls les signaux convertibles apparaissent dans le menu. Les métriques
+purement scalaires (ex. fréquence dominante FFT, entropie globale) en sont
+volontairement exclues : elles ne peuvent pas devenir une courbe pertinente.</pre><pre>Conversions disponibles (libellés d&#x27;interface en anglais). La lettre reste
+dans le nom de la série :
+  _R  Rolling mean         moyenne glissante centrée sur la fenêtre.
+  _V  Local variance       variance glissante centrée.
+  _E  Local energy         somme glissante des résidus au carré après lissage court.
+  _D  Derivative           dy/dx (np.gradient) ; aucune fenêtre.
+  _A  Acceleration         dérivée seconde d²y/dx² ; aucune fenêtre.
+  _C  Rolling correlation  corrélation glissante centrée entre deux séries.
+  _F  Local fractality     longueur du chemin / span (rugosité) sur la fenêtre.</pre><pre>Série ciblée : la colonne dont le titre est en vert clair (vue normale), ou la
+ligne sélectionnée en vue transposée. Une série par clic sur &gt; Serie.
+Rolling correlation demande la seconde série.</pre><pre>Nom : &lt;colonne&gt;_&lt;signal&gt;_&lt;lettre&gt;, plus _w&lt;n&gt; quand le calcul a une fenêtre.
+_w7 est une fenêtre de 7 points, prise dans HF window et gardée dans la
+recette. Exemples : solaire_NTVAR_V_w7, eolien_ABS_SLOPE_AVG_D. Le nom de
+table reste le nom de table : il n&#x27;est pas ajouté au nom de la série.</pre><pre>La série produite est enregistrée dans la query comme une recette (colonne
+source et transformation) et recalculée à l&#x27;ouverture du graphe. Enregistrez
+à nouveau la query après l&#x27;avoir créée. Table lit ce vecteur : la colonne
+n&#x27;est pas vide.</pre><pre>Paramètres Signal
+- Fenêtre moyenne mobile HF : utilisée par HF_ENERGY. Calcul : y - MA(y,w), puis
+  somme des carrés des résidus. Valeur par défaut : 7. Valeurs impaires recommandées.
+- eps : seuil local pour ignorer les micro-variations dans SIGN_CHG, PEAKS et VALLEYS.
+- Utiliser rectangle X : limite l&#x27;analyse à la zone X du rectangle Area ; sans zone
+  valide, tout X est analysé.</pre></main></body></html>

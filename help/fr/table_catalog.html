@@ -1,0 +1,92 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WysiQ — Table Catalog (catalogue des tables) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/table_catalog.txt</p><h1>WysiQ — Table Catalog (catalogue des tables)</h1><pre>Accès : Main ▸ Database ▸ Catalog…</pre><pre>RÔLE
+Le Table Catalog liste et documente les tables du workspace (Host = Local
+(DuckDB)) ou les tables d&#x27;une connexion SQL (Host = un profil connecté).
+Il sert à choisir les tables et colonnes retenues (Sel), gérer les recettes
+de réduction (Recipe / shrink), consulter l&#x27;origine (Import source), renommer,
+supprimer, et préparer une acquisition DB Live.
+Il ne convertit PAS une table Static en Live par un simple clic.</pre><pre>Processus type (base distante) :
+  Host = profil → Search table / Column LIKE → cocher Sel (crée la définition
+  JSON) → cocher les colonnes utiles → Recipe (shrink) → la table apparaît dans
+  Main (RS) → l&#x27;ouvrir ; ou clic droit ▸ Create DB Live… pour un suivi Live.</pre><h2>BARRE DU HAUT</h2><pre>  Close                 Ferme la fenêtre.
+  Refresh               Relit la liste et le détail.
+  Reload DuckDB         (Host local) Après confirmation, relit depuis le disque
+                        chaque table .parquet du registre (colonnes cochées +
+                        shrink) et réduit sur place les autres tables en mémoire
+                        qui ont un tables/&lt;nom&gt;.json. Résumé « n table(s)
+                        processed » et erreurs éventuelles.
+  Rebuild remote JSON   (Host distant) Après confirmation, SUPPRIME toutes les
+                        définitions JSON des tables de cette connexion : les
+                        sélections de colonnes et recettes sont effacées, puis
+                        la liste distante est relue. À utiliser pour repartir
+                        d&#x27;un catalogue propre.
+  Drop                  Supprime la table sélectionnée après confirmation (le
+                        message liste exactement ce qui sera supprimé) :
+                          Local : DROP dans DuckDB + suppression du .parquet et
+                                  du .json ;
+                          Distant : DROP TABLE exécuté sur le serveur.
+                        Une source Live (L) se supprime dans Live Sources.
+  Rename…               Renomme la table (DuckDB, fichiers, registre ; RENAME sur
+                        le serveur pour une connexion distante) et met à jour
+                        les Queries sauvegardées qui l&#x27;utilisent. Un Live L se
+                        renomme dans Live Sources.
+  → AI                  Envoie la définition de la table (structure, pas les
+                        données) dans l&#x27;AI Feed Stack.
+  ?                     Cette aide.</pre><h2>FILTRES</h2><pre>  Host:            Local (DuckDB) ou un profil de connexion actif.
+  Search table:    Filtre sur le nom de table (pendant la frappe).
+  Column LIKE:     Liste les tables contenant une colonne correspondant au
+                   motif (syntaxe LIKE, % = joker).
+  Catalog:         (Oracle) All (ALL_TABLES) ou User (USER_TABLES).</pre><h2>LISTE DES TABLES — COLONNES</h2><pre>  Type :
+    LO  table locale indépendante (DuckDB/Parquet) — affichée LS dans Main
+    RS  table issue d&#x27;une base SQL, copie statique
+    RL  table persistante associée à une acquisition SQL Live
+    WS  table issue d&#x27;un connecteur WWW, chargement Static
+    WL  table issue d&#x27;un connecteur WWW, actualisation Live configurée
+    L   source technique LIVE1/LIVE2… gérée dans Live Sources
+    DB  table distante pas encore enregistrée dans le workspace
+    V   ancien objet de type vue (lecture seule), seulement s&#x27;il existe
+  Type indique l&#x27;origine et le mode déclaré, PAS l&#x27;état Running/Paused.
+  Source name  Nom de la table ou de la source.
+  Sel          ✓ = définition retenue. Clic :
+                 local  — retient / retire la table (une table décochée
+                          disparaît de la liste Main, sans être supprimée) ;
+                 distant — crée ou supprime le JSON de définition dans
+                          workspace/tables/ ;
+                 L       — coche / décoche toutes les séries Live.
+  Recipe       Indicateur de recette (shrink). Clic : ouvre la boîte Shrink
+               (sauf L et V).
+Clic sur un en-tête : tri croissant / décroissant.
+Rows max. (bas de liste) : nombre maximal de lignes lues pour l&#x27;aperçu et
+les statistiques (ALL ou vide = sans limite ; défaut 500, partagé avec le
+paramètre global).</pre><pre>BOÎTE SHRINK (Recipe)</pre><pre>  Shrink to: N + Auto    réduire à environ N lignes ;
+  Every: N + Every       garder une ligne sur N ;
+  Apply                  enregistre la recette (appliquée au chargement) ;
+  Delete                 supprime la recette ; Cancel ferme sans changer.</pre><pre>DÉTAIL (cadre Definition)</pre><pre>  WysiQ name, Rows, Columns, Owner, Created, Modified : métadonnées.
+  Import source : origine RÉELLE de la table — fichier ou répertoire,
+    connexion SQL / table, ou connecteur WWW de l&#x27;API Internet.
+    Pour WS/WL, le nom vient de workspace/WWW/connectors/ et du lien
+    source/www_source mémorisé dans tables/&lt;table&gt;.json ; une infobulle montre
+    le texte complet. « WWW: connector not linked » signale un connecteur
+    absent. Une copie DuckDB/Parquet ne change pas cette origine.
+  File path : chemin complet pour une source L issue de fichiers.
+  SQL (view) : texte SQL d&#x27;un ancien objet V.
+  Les champs modifiables se valident par Entrée.</pre><pre>Colonnes (liste de droite) : Sel / Column / Type.
+  Clic sur Sel d&#x27;une colonne : la retient ou l&#x27;exclut (persistant, utilisé par
+  les Queries, le SQL Assistant et Reload DuckDB). Clic sur l&#x27;en-tête Sel : tout
+  cocher / tout décocher. Le X d&#x27;un Live L reste coché.</pre><pre>MENU CLIC DROIT (sur une table)</pre><pre>  Edit shrink…                     Ouvre la boîte Shrink.
+  View: no shrink / Live table: managed in Live Sources   (grisés, informatifs)
+  → AI                             Comme le bouton → AI.
+  Create DB Live…                  (tables SQL, pas WS/WL) Prépare une source
+                                   DB Live (colonne X, clé, début/fin, polling)
+                                   dans Live Sources.</pre><h2>PRÉPARER UNE SOURCE LIVE</h2><pre>- Base SQL : connexion existante, choisir la table, clic droit ▸ Create DB
+  Live…, puis régler X, clé, début/fin et polling dans Live Sources.
+- WWW/API : Main ▸ Database ▸ WWW Connection, choisir le connecteur, la
+  ressource, les dates et l&#x27;actualisation (Static ou Live), puis télécharger.
+- Fichiers : Live Sources ▸ Add source ▸ fichiers.
+Une source Live L et une table persistante RL/WL ne sont pas la même chose.
+Enregistrer un mode ne lance pas une acquisition ; ni le Type ni un double-clic
+ne convertissent une table.</pre><pre>STOCKAGE
+Définitions des tables : workspace/tables/*.json.
+Connecteurs WWW : workspace/WWW/connectors/*.json.
+Définitions Live L : workspace/live/live_tables.json.
+Les fichiers Parquet ne sont ni renommés ni effacés par l&#x27;affichage du
+catalogue. Les secrets de connexion ne sont jamais affichés dans Import source.</pre></main></body></html>

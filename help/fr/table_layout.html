@@ -1,0 +1,92 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DISPOSITION DES TABLES - SETTINGS &gt; QUERY — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/table_layout.txt</p><h1>DISPOSITION DES TABLES - SETTINGS &gt; QUERY</h1><pre>Les réglages des axes et des tables partagent maintenant une seule page Query.
+Les changements s&#x27;appliquent à la query en cours, sans modifier les tables
+physiques du catalogue. Chaque instance d&#x27;une table a ses propres réglages.</pre><pre>1. X AXIS - BOUNDS BY TABLE
+Table    Instance dans la query. Ajouter une même source deux fois produit,
+         par exemple, spot2225 et spot2225_2, réglables séparément.
+X min    Début de la période utilisée pour cette instance.
+X max    Fin de la période utilisée pour cette instance.
+         Format JJ/MM/AAAA [HH:MM], ou date ISO. Une date de fin sans
+         heure inclut la journée entière. Vide = pas de limite.
+Rows     Nombre de lignes source retenues, AVANT Shrink / Expand ; si la
+         période est limitée, le total est affiché sous forme retenues/total.
+Start    Première position sur l&#x27;axe X composite après transformation.
+End      Dernière position sur ce même axe.</pre><pre>Valider une borne avec Entrée, ou quitter les deux champs X min/X max.
+Les dates modifient la sélection de la QUERY, jamais la table DuckDB.
+Le changement d&#x27;une borne peut recalculer l&#x27;offset automatique ; un offset
+marqué manuel reste intact.</pre><pre>2. MULTI-TABLE - TABLE OFFSETS
+Une ligne par instance, dans l&#x27;ordre des onglets Series. La table principale
+sert de référence pour l&#x27;axe X. Changer l&#x27;ordre des onglets ne déplace
+pas volontairement les offsets personnalisés.</pre><pre>X offset (rows)  Position de départ sur l&#x27;axe composite, en LIGNES,
+                 et non en heures, jours ou dates.
+                 0 = superposition au début de la table principale.
+                 Auto (calendar) = suggestion d&#x27;après les horodatages
+                 des tables de référence (si disponibles).
+                 Flèche + nom de table = départ après cette table ;
+                 cumul = après les tables précédentes.
+                 Il est possible de saisir directement un entier puis Entrée.
+Y offset         Constante ajoutée aux valeurs Y de l&#x27;instance.
+Coeff            Multiplicateur appliqué aux valeurs Y (1.0 = inchangé).
+Mode             Rééchantillonnage des lignes sélectionnées.
+Target rows      Nombre de lignes visé APRÈS la transformation.
+                 Vide avec Mode actif = valeur par défaut (table principale).
+Every N          Garde une ligne sur N ; VIDE = inactif. Si renseigné,
+                 il prend la priorité sur Mode et Target rows.
+Exec             Applique les changements de la ligne et retrace le graphe.</pre><pre>3. MODES DE RÉÉCHANTILLONNAGE
+As is (all rows)    Toutes les lignes de la période, sans adaptation.
+Shrink              Sous-échantillonnage par sélection de lignes.
+Shrink AVG          Moyenne des valeurs de chaque tranche cible.
+Shrink SUM          Somme des valeurs (pour les quantités additionnables).
+Shrink MIN / Shrink MAX    Minimum / maximum des valeurs par tranche.
+Expand - Interpolate  Interpolation linéaire entre mesures.
+Expand - Step (last) Dernier prix ou état connu maintenu jusqu&#x27;au suivant.
+Expand - Next        Utilise la valeur suivante.
+Expand - Smooth      Interpolation puis lissage.
+Expand - Spline      Interpolation par spline si assez de points.
+Expand - Zero-fill   Complète avec des zéros.
+Expand - NaN-fill    Laisse les points non mesurés manquants.</pre><pre>AVG/SUM/MIN/MAX utilisent toutes les mesures sélectionnées dans les
+intervalles cible quand les dates sont exploitables. Une tranche vide reste
+manquante (NaN), et non zéro. Sans dates exploitables, les regroupements
+suivent l&#x27;ordre des lignes. Pour les prix en EUR/MWh, utiliser AVG, pas SUM.</pre><pre>4. RESET ET DISPOSITIONS
+Reset ▾ (menu)
+  X offsets → ↔↔↔ Sequential (restore)   retour à la disposition séquentielle
+                                         mémorisée.
+  X offsets → ↔ Overlay (restore)        retour à la disposition superposée
+                                         mémorisée.
+  Y offsets = 0, Coeffs = 1              Y offset = 0 et Coeff = 1.
+  Mode = As is (all rows), Every N cleared
+                                         supprime Shrink/Expand et Every N.
+  X min/max = full physical table        revient aux bornes de la source
+                                         physique.
+  Reset all (Sequential + Y/Coeff + Mode)
+                                         rétablit la disposition séquentielle
+                                         et les autres réglages de table, y
+                                         compris les bornes.
+Layout: Custom      Certains offsets ont été choisis manuellement.</pre><pre>Le passage Sequential -&gt; Overlay -&gt; Sequential restaure les offsets
+personnalisés (par exemple SPOT à 0), les modes Shrink/Expand, Every,
+Target rows et les périodes propres à chaque instance. Chaque disposition
+garde ses propres réglages. Seul Reset &gt; Mode ou Reset all efface ces modes.
+SaveQuery sauvegarde aussi les deux dispositions et leurs réglages.</pre><pre>5. EXEMPLE RTE + SPOT, 2022-2025
+RTE2022/23/24/25 : quatre tables consécutives à 30 minutes.
+spot2225 (instance 1) : du 01/01/2022 au 30/09/2025, tarifs horaires ;
+  offset 0, Expand - Step (last), vers les lignes RTE correspondantes.
+spot2225_2 (instance 2) : du 01/10/2025 au 31/12/2025, prix à 15 min ;
+  offset Auto (calendar), Shrink AVG, vers les lignes RTE de cette période.
+Les deux instances lisent une seule table source, sans la dupliquer.</pre><pre>ATTENTION : un offset reste une position par ligne. Expand et Shrink ne sont
+pas, à eux seuls, une jointure temporelle universelle. Vérifier les pas
+réels, les trous et les changements d&#x27;heure pour les calculs monétaires.
+Sauvegarder avec SaveQuery ; les périodes, offsets et modes sont persistés.</pre><pre>FIX24 — EVERY EN DUREE, SHRINK + EXPAND SIMULTANES
+  Le champ Every garde son ancien sens pour un nombre sans unite :
+  2 = conserver une ligne sur deux. Vide = traitement par Target rows.
+  Une duree explicite (30s, 30mn, 30min, 1h, 1j) active Adjust temporel.
+  Le champ Target rows n&#x27;est alors pas utilise : les dates determinent les tranches.
+  Cliquer sur le champ Mode puis sur une methode Shrink et une methode Expand.
+  Les deux choix actifs apparaissent en GRAS. Un clic = selection/desactivation ;
+  choisir une autre methode de la meme famille remplace la precedente. La fenetre est deplacable, sans bloquer Settings. OK applique.
+  Shrink AVG = moyenne ponderee par la duree des observations ;
+  SUM = somme ; MIN/MAX = valeurs extremes. Expand Step (last) maintient la valeur.
+  Exemple SPOT : Evenement 1h -&gt; 2 valeurs a 30mn ; puis deux valeurs
+  a 15mn -&gt; 1 valeur a 30mn, automatiquement dans la meme instance.
+  Un trou dans les mesures laisse NaN, pas zero. Aucune table source n&#x27;est modifiee.
+  Les X offsets restent independants et ne sont jamais recalcules par Adjust.
+  Le pas repose sur les veritables X DateTime ; un X numerique n&#x27;est pas admis.
+  Utiliser de preference des X UTC coherents pour les transitions d&#x27;heure.</pre></main></body></html>

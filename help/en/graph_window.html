@@ -1,0 +1,308 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Graph Window — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/graph_window.txt</p><h1>Graph Window — Help</h1><pre>The Graph Window is the main plot area. It shows one or more Y series against
+a common X axis. A single toolbar at the top gives access to all controls;
+all detailed settings live in floating palettes opened from the toolbar.</pre><pre> TOOLBAR (top bar)</pre><pre>Table (left side)
+  Table     Read-only drop-down: the query&#x27;s main table, followed by the
+            secondary tables of a multi-table query. It shows which tables
+            are used; the display always returns to the main table.
+  Live      Opens the Live Sources window of this query (real-time sources
+            LIVE1, LIVE2…). See the &quot;live_sources&quot; help.</pre><pre>Rules &amp; params combo  (after Table, before the Graph selector)
+  Groups query settings in a compact drop-down.
+  Closed: « Rules &amp; params » (plus « · LOG » or « · % » for the active display).
+  Opening the list shows a short « Click an option » hint.
+  rows      Number of loaded rows (read-only).
+  X axis    Active X column (read-only here; change it in Series).
+  Y unit    Select, then EDIT the value directly in this combo.
+  Y scale   Select, then EDIT the scaling factor directly in this combo.
+            Enter applies, Esc cancels. No secondary edit dialog.
+  Display   One reading for this graph: Normal, Percent or Log.
+            Normal    Series in their own unit.
+            Percent   Each series as a percent of its own peak
+                      (columns, signals, metrics). Zero and the sign stay.
+                      Area keeps the original unit.
+            Log       Logarithmic Y. In polar, the radius is logarithmic.
+            Closed, the combo shows « Rules &amp; params · % » or « · LOG ».
+            The choice is saved with the query. Each graph keeps its own.
+            Values and Percent are also the two lines of the Graph combo.
+  Rules &amp; Vars…  Opens the Rules &amp; Vars window.
+  Thresholds…    Opens the thresholds window.</pre><pre>Graph selector  (Graph: [combo]  New  Del)
+  Several graphs per query: each graph stores its own set of G series
+  (see MULTIPLE GRAPHS below).
+  Combo    Selects the displayed graph (Graph 1 by default).
+           Each graph has two entries (Graph 1 Values / Graph 1 Percent,
+           then Graph 2 Values / Graph 2 Percent): two readings of
+           the SAME graph, not two separate graphs.
+             « Graph 1 Values »   Normal — the series in its own unit.
+             « Graph 1 Percent »  Percent — each series as a percent of
+                                  its own peak.
+           Percent = value × 100 / maximum absolute value; each series
+           is scaled separately, not as a percent of the total.
+           Stored data and graph count remain unchanged.
+           Choosing the other line of the same graph switches the reading.
+           Y is refitted (the radius in polar). The X window stays
+           (dates, or the angle in polar).
+           Log is chosen in Rules &amp; params ▸ Display, not in this combo.
+           The name can be edited directly in the combo; press Enter to
+           confirm. Values / Percent is not part of the name.
+  New      Creates a new graph from the current graph&#x27;s settings.
+  Del      Deletes the current graph (confirmation; the last one is kept).
+  Right-click on the combo: Duplicate graph / Detach graph / Detach area
+           (see below).</pre><pre>Display buttons (right of Del)
+  ▧        Transparent background for this graph (click = on / off,
+           Windows): curves and texts stay visible. A transparent graph stays
+           above the other windows (Params ▸ Keep on top). Right-click:
+             Bring forward / Send backward  moves this graph one step up /
+                            down among the transparent graphs.
+             Hide grid / Hide legend / Hide scale  checked = hidden when
+                            transparent. Defaults: Settings ▸ Display ▸
+                            Linked &amp; transparent graphs; every change is kept
+                            for this graph and saved in the query.
+  ▯▯       Arranges every graph window side by side.
+  ⧉        Aligns this window exactly on the graph below it (same size,
+           same scales) — use it with ▧ to superpose graphs.</pre><pre>Palette buttons (right side)
+  PrtScr     Captures every visible WysiQ window, on all monitors
+             (graph, palettes, tables, legends, buttons). The PNG is saved in
+             snapshots/ and then opened in the image viewer (Microsoft Photos
+             on Windows when it is the associated image application).
+             Right-click: capture the whole desktop.
+  Graph      Opens the Graph remote (palettes, LINE / POLAR, navigation,
+             capture, background image, axes, graph link). The remote is
+             shared across all open graphs.
+  Series     Opens the Series palette (series, styles, metrics, axes).
+  PCA        Opens the PCA workbench (principal component analysis).
+  Ask AI     Opens Ask AI (simple AI interface, with your web assistant) on
+             this graph.
+  AI Center  Opens the AI Command Center.
+  Table      Opens the Table palette (columns, sort, filters, export).
+  Area       Opens the Area palette (rectangle, statistics, PCA,
+             Identify/Fit).
+  Tests      Opens the current graph&#x27;s Statistical Tests window (or brings
+             it to the front). This is the same window as the Te dot in
+             the Graph Remote.
+  Signals    Opens the Signal palette (roughness / variability dynamics).
+  Scenario   Opens the Scenario palette (hand-drawn target curves).
+  Legend     Opens the legend editor.
+  Screen2    Sends the graph to the secondary screen. Right-click:
+               Share all graphs — Screen 1   spreads all open graphs on
+                          screen 1;
+               Share all graphs — Screen 2   same on screen 2;
+               Recenter all windows   brings all WysiQ windows back to the
+                          main screen.
+  ?          Opens this help.</pre><h2>GRAPH MODES</h2><pre>Line (default)
+  Standard cartesian plot — X horizontal, Y vertical.
+  Series are rendered as polylines, bars, scatter points or area fills
+  depending on the per-series style set in the Series palette.
+  This is the default mode when a Graph Window is opened.</pre><pre>Polar
+  Circular plot — X is mapped to angle (theta), Y to radius.
+  Polar mode is activated from the Graph remote palette
+  (LINE / POLAR button).
+  In polar mode the remote shows a dedicated POLAR section with X0/X360
+  sliders and rotation controls.
+  To return to line mode, toggle back in the remote.</pre><pre>Scale  (Values, Percent, Log)
+  Two combos set the same reading.
+  Rules &amp; params ▸ Display: Normal, Percent or Log.
+  Graph combo: « Graph N Values » and « Graph N Percent ».
+  Normal / Values   Series in their own unit.
+  Percent           Each series ÷ its own peak × 100. Zero and the sign
+                    stay, so a negative series stays negative.
+  Log               Logarithmic Y (logarithmic radius in polar).
+  Switching Values / Percent refits Y only. The X window stays.
+  The reading is saved with the query, one per graph.</pre><pre>Date formats
+  Dates follow Settings ▸ Globals ▸ Core, in LINE and POLAR alike:
+  &quot;Date format (X axis)&quot; for X ticks (disk rim in polar) and
+  &quot;Date format (cursor)&quot; for the cursor. A change in Params applies on the
+  next plot.</pre><pre> MOUSE INTERACTIONS (line mode)</pre><pre>The active interaction mode is set in the Graph remote (Area / Pan / Zoom buttons):
+  Area    Click and drag to draw a zoom/selection rectangle (default).
+  Pan     Click and drag to pan the visible range.
+          Pointer on the Pan button: Left / Right pan left / right,
+          Up / Down pan up / down,
+          repeating at the Link delay (Settings &gt; Globals &gt; Display, ms).
+  Zoom    Scroll wheel to zoom centred on the cursor position.
+          Pointer on the Zoom button: Left zooms out, Right zooms in,
+          Up zooms in on Y only, Down zooms out on Y only,
+          at the same Link delay.
+          Space, pointer on Pan or Zoom, switches to the other mode.
+          The arrows then do that mode without moving the pointer.</pre><pre>Cursor box
+  Mouse X / Y, then each series value at that X: &quot;name  value&quot;, in legend
+  order. Series with no value at that X (NaN, outside their table) are not
+  listed. In multi-table graphs the values are grouped by table ([RTE2023]…)
+  and a &quot;One per name&quot; series takes the value of the table present at that X.</pre><pre>Right-click on the graph
+  Opens a context menu with additional export and annotation options.
+  On a selected Area:
+    📷  To AI (Area snapshot)   sends a capture of the Area to the AI Feed
+                                 Stack;
+    📌  Post-it                  opens the Area palette (Area Post-it).</pre><pre>Ctrl + scroll wheel
+  Scales the UI font size of the window.</pre><pre>Keyboard ← / →
+  Shifts the major X tick positions by one minor step.</pre><pre> MULTIPLE GRAPHS (Graph 1, Graph 2, …)</pre><pre>A query can hold several graphs. They are not separate windows: it is
+always the same main graph (pan, zoom, Area, recording, Scenario and
+export remain available); only the set of displayed series changes.</pre><pre>Stored per graph
+  G          Plotted series.
+  Yr         Series on the right Y axis (a series can be on the left in one
+             graph and on the right in another).
+  Legend     Series hidden in the legend editor. Series that are not plotted
+             never appear in the legend.
+  Y Min/Max  Y Min / Y Max / Yr Min / Yr Max of the Series palette (empty =
+             autoscale).
+  Type       LINE or POLAR: each graph remembers its own type.
+  Reading    Values or Percent: the two lines of the Graph combo
+             (« Graph 1 Values », « Graph 1 Percent »).
+             Save Query stores the line that was active. It is the same
+             graph, not a second one: same series, same typed Y Min/Max.
+             A separate Percent zoom is not stored.
+  Disk       Horizontal position and size of the polar disk (Legend ▸ Disk).
+             In LINE the same size scales the plot rectangle (Legend ▸ Plot ▸
+             Size), e.g. to keep every value visible.
+  Legend pos Position of the title and of the series list (Legend ▸ Position),
+             one for LINE and one for POLAR.
+  Tables     Multi-table query: sequence / overlay mode (↔↔↔ / ↔), table
+             offsets and the matching X Min / X Max.
+  Transparency  Elements hidden when the graph is transparent, if set with
+             a right-click on ▧ (otherwise the Params values).</pre><pre>Shared by all graphs
+  Series style (color, marker…), X Min / X Max (except multi-table),
+  WHERE, T / A,
+  legend title text, Areas.</pre><pre>How it works
+  • Switching graph in the combo: the current toggles are stored in the
+    graph you leave, then the selected graph is restored and replotted
+    like PLOT: the Y and Yr scales autoscale to its series (unless Y Min/Max
+    were entered for that graph). The current zoom is not kept.
+    Its LINE / POLAR type and disk position are restored too (a graph saved
+    by an older version, without a type, keeps the current type).
+  • The two lines of one graph (« Graph N Values » and « Graph N Percent »)
+    stay on that graph and switch the reading. Y is refitted; X stays.
+    While Percent is shown, a values-scale Y Min/Max is not applied.
+    It applies again on Values.
+  • PPT recording (REC) continues across graphs; each graph switch adds a
+    slide, with the graph name in the header ({graph_name} can be used in
+    the header template).
+  • Checking / unchecking G or Yr only changes the selected graph.
+  • New starts from the current graph&#x27;s G / Yr / legend settings.
+  • Graphs are saved in query.json together with the active graph.
+    A query with a single &quot;Graph 1&quot; graph is unchanged.</pre><pre>Duplicate graph — compare two graphs side by side
+  • Right-click on the Graph combo ▸ Duplicate graph
+    opens the same query (in-memory state, even unsaved) in a new window
+    showing a copy of the current graph only, or a new &quot;Graph 2&quot; if there is
+    only one. The original window keeps all its graphs in its combo.
+  • For synchronized pan / zoom: Graph remote ▸ Link, preferably X only
+    (each window keeps its own Y scale). LINK only works between graphs of
+    the same type (line with line, polar with polar).
+  • To see one graph as line and another as polar side by side: give each
+    graph its type (LINE / POLAR is remembered per graph), then Duplicate — the
+    clone opens directly in the type of the graph it shows. Two polar
+    windows can be linked together.
+  • The clone is a copy: data and calculations are identical at Duplicate time,
+    then each window evolves separately (metrics, WHERE…).
+  • The clone keeps the query name; each window title and the remote list
+    show the displayed graph (&quot;… · Graph 1&quot;).
+  • The clone is not saved: its Save proposes &lt;name&gt;_G2 (&lt;name&gt;_G2_2… if
+    that name already exists) and creates a new query, never overwriting
+    the original.</pre><pre>Superposing two graphs (transparency)
+  • Duplicate the graph to superpose, then in the upper window: ▧
+    (transparent background) and ⧉ (exact alignment on the graph below).
+  • Both windows then have the same plot area: with the same X Min/Max and
+    Y Min/Max, scales and grids coincide, in LINE as in POLAR (in POLAR the
+    disk centre follows Y Min even when every displayed series is positive).
+  • To keep only the plot, the remote&#x27;s Gr dot hides the current graph&#x27;s
+    header (second click: it comes back).
+  • What is hidden when transparent (grid, legend, scale) is set globally
+    in Params, or per graph with a right-click on ▧.
+  • In the remote, the graphs of a query keep their order (Graph 1,
+    Graph 2, then the copies); the green dot marks the MAIN graph.</pre><pre>Detach graph — compute in parallel
+  • Right-click on the Graph combo ▸ Detach graph: the displayed
+    graph moves to a new WysiQ process (its own CPU core and memory), with
+    its current state (even unsaved), its window position, its polar
+    X0/X360 window and its zoom.
+  • Window alone with several graphs: the displayed graph goes to the right,
+    this window stays on the left on the next graph.
+  • Otherwise (single graph, or the query already has another window, e.g.
+    after Duplicate): the whole window moves, in place.
+  • The new process loads its own tables (splash shown) and has no main
+    window; it closes itself with its last graph, or when WysiQ is closed.
+  • A single Graph remote drives every process; its list shows P1 · …,
+    P2 · … Save rules are unchanged.</pre><pre>Detach area — open the current Area in another process
+  • Available only in LINE mode when a complete current Area is defined
+    (Xmin, Xmax, Ymin, Ymax).
+  • Right-click Graph ▸ Detach area: the current query is copied to a new WysiQ
+    process and its initial X/Y bounds are taken from the current Area. The
+    source graph stays open.
+  • The bounds sent are exact (to the minute) and the detached Area stays
+    fixed: it does not follow the Series palette X range.
+  • The source graph&#x27;s current zoom does not override the Area bounds in the
+    new process. The copy is independent and Save cannot silently overwrite
+    the source query.
+  • In POLAR mode, Detach area is disabled because no selectable Area exists.</pre><h2>SERIES AND PALETTES</h2><pre>Only series with G (Graph) checked in the Series palette are plotted.
+T (Table) and A (Area) toggles control which series appear in the
+Table palette and are included in Area/Signal analysis.</pre><pre>The set of G (and Yr) toggles belongs to the graph selected in the Graph
+combo of the toolbar (see MULTIPLE GRAPHS).</pre><pre>The palettes (Series, Table, Area, Signal, Scenario) are floating windows
+that can be repositioned freely. Their visibility is controlled by the
+toolbar buttons above and by the round dot buttons in the Graph remote.</pre><pre>Palette positions are saved automatically and restored the next time the
+window is opened.</pre><h2>LEGEND EDITOR</h2><pre>The Legend button opens the legend editor. It stays in front while it
+has the focus (like Settings).</pre><pre>Position
+  Left, horizontal sliders:
+    X Title / X Series   horizontal position of the title and of the series
+                         list (axes-relative coordinates, -1 to 3).
+    Disk X / Size        POLAR mode: horizontal disk position (0 = left,
+                         0.5 = centred, 1 = right) and disk size. The rim
+                         dates always stay visible.
+    Plot Size            LINE mode: size of the plot rectangle.
+  Right, two vertical sliders:
+    Y Title / Y Series   vertical position of the title and of the series
+                         list (top of the slider = top of the graph).
+  Each slider has arrows (click = one step, hold = auto-repeat) and an
+  entry field (Enter to apply).
+  Link Title / Series  checked: moving one moves the other by the same delta.
+Display     Two toggles (on-screen and PNG/PDF exports):
+            Series legend — show/hide the numbered series.
+            Query variables — second list with each &amp; ref and its value.
+            One per name — multi-table: a single entry per series name
+            (RTE2022.Eolien, RTE2023.Eolien… → &quot;Eolien&quot;) in the legend and in
+            the list below; ● acts on the whole group.
+Title       Multi-line legend title (field with scrollbar).
+Font sizes  Title and text size and colour; size of the ●/— symbols.
+Series      ● toggles a series in the legend; double-click to rename its
+            label (Enter confirms, Escape cancels).
+Full graph  (next to the sliders) Extends the graph rectangle to the whole
+            window, within the Params margins; unticked = back to the
+            previous size.
+Colours     A click on the colour swatch of the title or of the text opens
+            the colour picker (More... = full palette).
+Display ▸ Title  Show / hide the legend title.</pre><pre>Bottom buttons
+  Apply      Redraws the graph with the settings.
+  Reload     Re-reads the series list, then redraws.
+  Reset pos  Restores the default positions (title, series, variables, graph
+             rectangle) and unticks Full graph.
+  Fit zones  Readjusts the title, series and variables zones to show all
+             their text again, without changing labels or positions.
+  Close      Closes the editor.</pre><pre>Positions, disk and size are saved in query.json (per graph, one position
+for LINE and one for POLAR).</pre><h2>QUERY VARIABLES</h2><pre>Rules &amp; params ▸ Rules &amp; Vars… opens the Variables window (the same picker as a
+right-click on a metric field):
+  IN         ✓ = variable used by the metrics of the query.
+  Value      Click the value to edit it in place (simulated value, &quot;*&quot;),
+             applied at once to the metrics; Save writes it to the
+             workspace theme.
+  Vars series  Simulation mode: IN variables only, one slider per variable;
+             the window shrinks to its content and gets its size back when
+             returning to the list.
+  New…       Creates a variable (theme, name, value, unit, description)
+             without going through the Variables Catalog; a new theme name
+             creates the theme. When a field is targeted (metric, WHERE…),
+             the new variable&#x27;s ref is inserted into it.
+  PLOT       Replots the graph.
+  ?          Detailed picker help.</pre><pre>In a metric&#x27;s Composition editor a variable is shown in its compact &amp;x.y
+form; hovering the field shows theme, name, value and unit.</pre><h2>SAVE / IMPORT</h2><pre>SaveQuery (Series palette)
+  The query is saved in place: if a query with the same name already exists
+  (whatever the folder spelling), it is updated and the previous version goes
+  to history. No more duplicates in the main window.
+  The query also stores the definition of the variables it uses.</pre><pre>Importing a query (Import from workspace / Import query)
+  Missing variables are recreated in the workspace (existing ones are kept).
+  With Settings ▸ Core ▸ &quot;Query import: add its metrics &amp; scenarios to
+  workspace catalogs&quot; (checked by default), its metrics and scenarios are also
+  added to the catalogs: an identical definition is skipped, a different
+  definition with the same name is added as a duplicate (name_2).
+  Opening a query also recreates its missing variables.</pre><pre> TIPS</pre><pre>• Use the Graph remote (Graph button) to switch between line and polar mode,
+  navigate history, synchronise multiple graphs, and capture screenshots.
+• The Signal palette analyses A-checked series over the Area rectangle X
+  range (or the full X range if no valid rectangle exists).
+• Ctrl + scroll wheel zooms the UI font — useful on high-DPI screens.
+• After a zoom or pan, click ⌂ Home in the Graph remote to return to the
+  full auto-scaled view.
+• PLOT forces a full WysiQuery re-execution; use it after changing X axis or
+  after a data update.</pre></main></body></html>

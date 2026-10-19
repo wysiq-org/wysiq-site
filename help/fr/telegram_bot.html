@@ -1,0 +1,38 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BOT TELEGRAM — Guide de configuration — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/telegram_bot.txt</p><h1>BOT TELEGRAM — Guide de configuration</h1><pre>Accès : Share Center ▸ Advanced ▸ Setup ▸ Telegram (bouton ?).
+Boutons : 🔗 Open @BotFather, ✓ Verify &amp; Save, 🗑 Delete, 🔄 Refresh,
+🔄 Scan new contacts, 📨 Send test, 🔍 Debug updates ; Ctrl+C copie la ligne
+sélectionnée d&#x27;une liste.</pre><pre>WysiQ utilise des Bots Telegram pour envoyer
+des instantanés graphe d&#x27;un WysiQuery ouvert et des
+fichiers Query directement à vos contacts.</pre><pre>Vous pouvez configurer plusieurs bots —
+un par équipe, projet ou usage.</pre><h2>ÉTAPE 1 — CRÉER UN BOT SUR TELEGRAM</h2><pre>1. Ouvrez Telegram et cherchez @BotFather
+2. Envoyez :  /newbot
+3. Donnez un nom, ex. :  WysiQ RTE Graphes
+4. Donnez un identifiant se terminant par &#x27;bot&#x27;,
+   ex. :  wysiq_rte_graphs_bot
+5. BotFather vous donne un token :
+   123456789:AABBccDDeeFFggHH...
+6. Copiez le token — vous en aurez besoin à l&#x27;étape 2.</pre><pre>👍 Aidez WysiQ à grandir — incluez &#x27;wysiq&#x27;
+   dans le nom d&#x27;utilisateur de votre bot.</pre><h2>ÉTAPE 2 — AJOUTER LE BOT DANS WYSIQ</h2><pre>Dans le formulaire sous la liste des bots :
+  ID      — clé unique, ex. bot_rte_graphs
+            (sans espaces, lettres et _ uniquement)
+  Nom     — nom affiché dans WysiQ
+  @User   — le @username donné par BotFather
+  Token   — collez le token de BotFather</pre><pre>Cliquez &quot;✓ Verify &amp; Save&quot; — WysiQ contacte
+Telegram pour vérifier que le token est valide.</pre><h2>ÉTAPE 3 — ENREGISTRER LES ABONNÉS</h2><pre>Chaque destinataire doit :
+1. Ouvrir Telegram
+2. Chercher le nom d&#x27;utilisateur de votre bot
+3. Appuyer sur Démarrer ou envoyer /start</pre><pre>Ensuite dans WysiQ, sélectionnez le bot
+et cliquez &quot;🔄 Scan new contacts&quot;.</pre><pre>WysiQ lit tous les messages /start reçus
+et enregistre automatiquement chaque Chat ID.
+L&#x27;abonné apparaît dans la liste du bas.</pre><pre>ENVOI</pre><pre>Graphes (📦 Prep dans la Graph Remote, puis Share Center ▸ Send) :
+  Instantané HTML du WysiQuery courant — envoyé aux contacts
+  dont le canal Telegram est actif (✈ on) dans l&#x27;onglet Contacts.
+  Utilise le bot enregistré pour ce contact.</pre><pre>Query (📤 Share dans Export query) :
+  Bundle ZIP Query (WysiQuery sauvegardé : table + analyse +
+  réglages graphe) — même mécanisme, envoyé directement dans
+  le chat Telegram du contact.</pre><h2>BOTS MULTIPLES</h2><pre>Vous pouvez ajouter autant de bots que nécessaire :
+  — un bot par projet
+  — un bot pour les graphes, un pour les données
+  — un par équipe ou département</pre><pre>Chaque bot a sa propre liste d&#x27;abonnés.
+Un contact peut être abonné à plusieurs bots —
+scannez avec chaque bot séparément.</pre></main></body></html>

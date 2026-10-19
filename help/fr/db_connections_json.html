@@ -1,0 +1,108 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Connexions aux bases — fichiers, modèles SQL et dialectes (WysiQ) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/db_connections_json.txt</p><h1>Connexions aux bases — fichiers, modèles SQL et dialectes (WysiQ)</h1><pre>Cette note explique comment les champs affichés dans Sources de données
+correspondent aux fichiers sur disque, comment un connecteur est résolu vers un
+moteur, où vivent les modèles SQL, et comment les identifiants sont cités selon
+le dialecte.</pre><pre>Voir aussi : help/fr/datasource.txt (la fenêtre Sources de données)
+             help/fr/params_db_connection.txt (fichiers JSON des profils)
+             help/fr/save_dialog_create.txt (CREATE local et exports)</pre><pre>1) Les quatre niveaux
+WysiQ sépare quatre notions. C&#x27;est cette séparation qui permet une offre large
+de connecteurs sans un pilote par service.</pre><pre>Fournisseur  L&#x27;environnement : Local, serveur générique, Azure, AWS, Google
+             Cloud, Oracle Cloud, Snowflake, Databricks, etc. Un fournisseur ne
+             contient aucune logique ; il regroupe des services et fournit des
+             valeurs par défaut.</pre><pre>Connecteur   Le service auquel vous vous connectez réellement : « Azure SQL
+             Database », « Amazon RDS PostgreSQL », « Google BigQuery »,
+             « DuckDB ». Un connecteur déclare ses champs, son port par défaut
+             et un moteur.</pre><pre>Moteur       Le moteur technique : postgresql, mysql, sqlserver, oracle,
+             sap_hana, ingres, sybase_ase, odbc_generic, duckdb, mongodb, etc.
+             Le moteur détermine le dialecte SQL et les requêtes de catalogue.</pre><pre>Adaptateur   Le code qui exécute le travail pour un moteur : connexion, test,
+             aperçu, comptage, listage des schémas / tables / vues / colonnes.
+             Écrit une seule fois par moteur, partagé par tous les connecteurs
+             qui déclarent ce moteur.</pre><pre>Un service cloud n&#x27;est pas un nouveau moteur lorsqu&#x27;il en réutilise un
+existant. Exemple :</pre><pre>  {
+    &quot;family&quot;: &quot;Cloud&quot;,
+    &quot;provider&quot;: &quot;AWS&quot;,
+    &quot;connector_service&quot;: &quot;aws_rds_postgresql&quot;,
+    &quot;connector_label&quot;: &quot;Amazon RDS PostgreSQL&quot;,
+    &quot;engine_type&quot;: &quot;postgresql&quot;
+  }</pre><pre>Le moteur reste postgresql : l&#x27;adaptateur PostgreSQL et le dialecte PostgreSQL
+s&#x27;appliquent sans changement.</pre><pre>2) Référence des fichiers
+data_sources.json (workspace)
+  Un objet par nom de profil. Chaque profil conserve les cinq champs d&#x27;identité
+  (family, provider, connector_service, connector_label, engine_type) et les
+  paramètres non sensibles du connecteur. Des clés optionnelles absentes du
+  formulaire peuvent être ajoutées en éditant data_sources.json :</pre><pre>    sql_before_select   Instructions exécutées avant le SELECT généré par
+                        l&#x27;assistant (DuckDB en local ; le connecteur du profil
+                        lorsqu&#x27;un profil est sélectionné).
+    sql_before_create   Ajouté en tête des scripts de création générés pour
+                        ce profil (catalogue distant de Queries WYSIQ_QUERY,
+                        scripts DDL affichés pour un DBA).</pre><pre>db_connection.json (workspace, optionnel — à éditer avec un éditeur de texte,
+puis ⟳ Reload dans Sources de données)
+  Surcharge le catalogue de connecteurs : clés, libellés, icônes et liste des
+  champs du formulaire. Les clés commençant par un tiret bas sont de la
+  documentation. Un champ peut porter &quot;hidden&quot;: true pour être masqué sans
+  retirer d&#x27;anciennes clés des profils existants. volatile_field_keys liste les
+  noms de champs traités comme des secrets.</pre><pre>connection_type/&lt;connecteur&gt;/ (workspace)
+  Un dossier par connecteur, créé avec le workspace. Il contient la définition
+  du connecteur et, pour les connecteurs SQL, des modèles SQL modifiables comme
+  list_tables.sql. Votre copie prime sur celle fournie avec l&#x27;application : un
+  DBA peut donc revoir et ajuster une requête. Les marqueurs tels que
+  __MAX_OBJECT_NAMES__ sont substitués à l&#x27;exécution.</pre><pre>connexions/bundled/dialect_lexicon.json (+ surcharge workspace optionnelle)
+  Les données de dialecte : citation des identifiants par style (accents graves
+  MySQL, guillemets ANSI, crochets SQL Server), correspondance moteur vers
+  style, style des paramètres liés, LIKE insensible à la casse, requêtes de
+  catalogue, et la table de routage qui relie chaque moteur aux points d&#x27;entrée
+  de son adaptateur. Un dialect_lexicon.json du workspace est fusionné par
+  dessus (fusion récursive ; les clés de surcharge commençant par un tiret bas
+  sont ignorées).</pre><pre>connexions_cache/ (workspace)
+  Caches des listes d&#x27;objets produits lors de la génération d&#x27;un catalogue pour
+  l&#x27;Assistant SQL. Découverte seule ; rien n&#x27;est exécuté sur le serveur.</pre><pre>3) Comment une connexion est résolue
+Quand vous cliquez sur Test, Connect ou Catalog, WysiQ :</pre><pre>  1. lit le profil et prend connector_service (ou __type__) ;
+  2. le résout vers un moteur via connection_type/&lt;clé&gt;/, qui fournit
+     engine_type ;
+  3. demande au registre l&#x27;adaptateur de ce moteur ;
+  4. laisse l&#x27;adaptateur ouvrir la connexion, en utilisant le dialecte pour la
+     citation, la syntaxe LIMIT et le SQL de catalogue.</pre><pre>Un moteur sans adaptateur est refusé avec un message clair, plutôt qu&#x27;un échec
+silencieux. Ce chemin unique est utilisé par le Test, l&#x27;Assistant SQL, le
+Catalogue de tables et les flux Save : le comportement est donc identique
+partout.</pre><pre>4) Secrets
+Les secrets de session sont conservés en mémoire et effacés à la fermeture du
+profil ou de l&#x27;application.</pre><pre>Ne sont jamais écrits dans un fichier : access_token, refresh_token,
+client_secret, private_key, secret_access_key, service_account_private_key. Une
+référence vers un gestionnaire de secrets ou un identifiant externe peut être
+enregistrée — la référence, jamais la valeur.</pre><pre>Les mots de passe dépendent de la case PWD de Sources de données. Décochée (par
+défaut), le mot de passe reste en session. Cochée, le profil reçoit
+password_enc, brouillé de sorte que le fichier ne soit pas lisible d&#x27;un coup
+d&#x27;œil. Ce brouillage n&#x27;est pas un chiffrement fort : quiconque possède le
+fichier et l&#x27;application peut retrouver le mot de passe. Laissez la case
+décochée pour des identifiants de production.</pre><pre>Les jetons et mots de passe sont masqués dans les traces et les messages
+d&#x27;erreur.</pre><pre>5) Dialectes et identifiants
+Le lexique de dialecte ne contient, par moteur, que des données : les
+caractères de citation, la forme LIMIT ou TOP, le style des paramètres liés,
+l&#x27;opérateur LIKE insensible à la casse, et les requêtes de catalogue pour les
+schémas, tables, vues et colonnes. Toute la logique qui compose le SQL à partir
+de ces données vit dans l&#x27;adaptateur partagé, une seule fois.</pre><pre>C&#x27;est pourquoi ajouter un dialecte est un changement de données, et pourquoi
+chaque moteur formate les identifiants de façon cohérente dans l&#x27;Assistant SQL,
+dans le script affiché par le bouton SQL de la fenêtre Export Table, et lors
+de la conversion d&#x27;un SELECT pour une
+matérialisation locale DuckDB.</pre><pre>6) Dépendances optionnelles
+Aucun pilote de base n&#x27;est importé au démarrage : un paquet manquant ne peut pas
+empêcher WysiQ de se lancer. Le pilote est chargé à la première connexion. S&#x27;il
+est absent, le message nomme le paquet pip exact pour l&#x27;interpréteur qui exécute
+WysiQ. Paquets usuels : psycopg2-binary (PostgreSQL), mysql-connector-python
+(MySQL, MariaDB), pyodbc (SQL Server, Ingres, Db2, Sybase ASE, ODBC générique),
+oracledb (Oracle), hdbcli (SAP HANA), pymongo (MongoDB).</pre><pre>Les connecteurs dont le moteur n&#x27;est pas câblé dans cette version restent
+visibles pour permettre de préparer un profil ; le Test l&#x27;indique clairement
+plutôt que de signaler un faux succès.</pre><pre>7) Compatibilité
+Le format des profils est stable. Les cinq champs d&#x27;identité sont toujours
+écrits et relus tels quels : les profils existants continuent de fonctionner
+après une mise à jour. Ajouter un connecteur ne change pas le format ; cela
+ajoute une description.</pre><pre>8) Quest / Toad Intelligence Central
+Dans Sources de données : Famille Server, Fournisseur Quest Software,
+Connexion Quest — Toad Intelligence Central. Entrer le serveur TIC, le port
+SQL 3566 (pas 8066), la base contenant les objets publies, et le compte TIC.
+Le connecteur utilise MySQL avec charset UTF-8. Les tables, vues, snapshots
+et datasets publies sont proposes par le catalogue. Il faut une licence TIC
+Data Connectivity et les droits appropries. L&#x27;authentification Windows
+integree n&#x27;est pas prise en charge par ce pilote WysiQ : utiliser un compte
+TIC local. Une vue executee sur une base non-MySQL peut refuser du SQL MySQL ;
+Quest recommande alors de publier un snapshot. Aucune API Toad Desktop
+n&#x27;est necessaire et aucun acces direct a la session Toad n&#x27;est fourni.</pre></main></body></html>

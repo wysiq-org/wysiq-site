@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PCA WORKBENCH — Principal component analysis — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/pca_workbench.txt</p><h1>PCA WORKBENCH — Principal component analysis</h1><pre>Access: PCA button of the graph window, PC circle of the Graph Remote, or
+PCA→Series in the Area palette.</pre><pre>Typical workflow:
+  tick A on at least two series → open the workbench → choose Mode,
+  Standardization, Weighting, Missing values, Components → read Explained
+  variance, Loadings, Scores → complementary views → export or → AI.</pre><pre>Role
+The PCA workbench reduces several correlated series to a few synthetic axes called principal components (PC1, PC2, PC3...), ranked by decreasing variance. Each axis is a weighted combination of the original series. WysiQ uses it as a magnifying glass: the axes summarise the dominant structure of the graph, then bring out groups, oppositions, drifts and anomalies.</pre><pre>The graph as data source
+Unlike a classic PCA that reads a file again, WysiQ never rereads the tables. The engine works directly on the series displayed in the graph, after applying the coefficient, masks and filters. The coefficient, shrink, offsets and NaN already on screen are taken as they are. The engine stays independent of the interface: it only returns Python objects and numeric arrays, reusable by the AI, exports and reports.</pre><pre>Choosing the series
+In the Series palette, tick the A column for each series to include. At least two are needed. Then open the PCA workbench from the button bar of the graph. The computation reruns automatically as soon as you change a configuration setting, and the Refresh PCA button forces a full reread of the current graph state: ticking or unticking a series, changing a coefficient, a shrink or an offset, adding or removing a table.</pre><pre>Projection modes
+The mode decides how several tables are combined, and it sets the X offset column of the Multi-table grid.
+Sequence (concatenated): the tables are seen as successive periods of the same variables and stacked one after the other. The X offset is the real calendar offset of the graph (for example 0, 17520, 35040). Useful to follow a drift or spot a break between two periods.
+Overlay: the tables describe the same variables and are overlaid in the same space to compare populations. As the tables share the same space, every X offset is 0. Useful to compare years and see whether a table no longer follows the others.
+Reference: the first table computes the axes; the others are only projected onto them, without recomputing the components. X offsets are 0. Useful to measure how far a recent period is from a reference, or for anomaly detection.
+Fusion (common space): all tables take part in the computation at the same time, merged into a single population. The X offset takes the real offset of the graph. Useful to build a robust common reference frame.</pre><pre>The number of rows actually used per table (Rows used column) is always the true count of each table, whatever the mode; it is never multiplied by the number of tables.</pre><pre>Projection configuration (left column)
+Mode: Reference projection, Overlay (superposition), Sequence (concatenated),
+Fusion (common space) — see Projection modes.
+Weighting: weight of each table in the computation — Equal (1.0), By table rows
+(proportional to rows), By visible variance (proportional to the visible
+variance).
+Components: number of computed components (2 to 20).
+Each change recomputes the PCA immediately.
+Multi-table grid: the Use box of each table (click) includes or
+excludes it from the computation.</pre><pre>Components view (right)
+X axis (PC) / Y axis (PC): components shown in the projection
+(PC1 to PC10).
+Content: Auto, Datasets (table points), Variables (series arrows)
+or Biplot (both).
+Show labels: shows the names; Show trails: links the successive points
+of the same table.</pre><pre>Standardisation
+Z-score (mean=0, std=1) puts all series on the same scale and prevents a large-amplitude series from crushing the others. It is the default choice, recommended when units differ.
+Center only removes only the mean and keeps the original variances.
+None uses the raw data, without centring or scaling.</pre><pre>Missing values
+Interpolate linear fills gaps by linear interpolation along the rows.
+Mean imputation replaces each missing value with the mean of its column.
+Drop complete rows removes any row with at least one missing value.</pre><pre>Reading the results
+Explained variance gives the variance carried by each component and the cumulative total. A very strong PC1 (above 70 %) signals series that mostly move together; a medium PC1 with a strong PC2 reveals two distinct logics; close PC1/PC2/PC3 values indicate a more complex, often multi-regime structure.
+PCA loadings shows the weight of each series on each axis, the norm of the loading vector and the dominant component. A high absolute loading marks a central series of the axis; two series with the same sign move in the same direction, two opposite signs structure an opposition.
+PCA scores places each table in the PC1 vs PC2 plane, with its distance to the origin and to the reference; the projection on the right shows these points. Close points mean similar behaviours, a distant point an atypical population or an anomaly.
+Quality indicators sums up the selection criteria: Kaiser keeps components with an eigenvalue above 1; broken-stick compares the variance of each PC with a reference model; the condition number flags near-collinearity; the mean residual and the reconstruction quality measure the information lost by the retained axes.</pre><pre>Interactive tables
+All tables scroll vertically and horizontally. Drag the edge of a column title to resize it. Click a title to sort the rows; a second click reverses the order. The arrow shows the sort direction, ascending or descending.</pre><pre>Component detail
+In the Explained variance table, double-clicking or right-clicking a PC row opens a small window listing, for that component, each series with its loading and contribution. The loading is the signed coefficient of the series in the linear combination of the axis; the contribution is its absolute relative weight, as a percentage. The window shows five rows at a time and scrolls for the next ones; its columns are resizable and the window itself is resizable. An opposite sign between two series means opposite behaviour on that axis.</pre><pre>Views and exports
+Scree plot shows the eigenvalues component by component. Cumulative variance plots the cumulative explained percentage. Loadings heatmap shows the loadings by series and by component: the darker a cell, the stronger the absolute loading. These three views stay above the PCA workbench. Only one window of each kind can be open; clicking its button again brings the existing window to the front.</pre><pre>Refresh PCA rereads the current graph state and recomputes; ? opens this help.</pre><pre>Copy (loadings + scores) puts both tables in the clipboard; Export CSV (loadings + scores) saves them in a single file, loadings section then scores section; Export plot (PNG) saves the projection. PCA HTML produces a standalone report. The → AI button sends the current analysis to the AI resource basket.</pre><pre>Interpretation landmarks
+A PCA shows a structure, not a causality. The sign of the axes may flip without changing the meaning of the analysis. A very large-scale series dominates if you do not standardise. Too many redundant variables can crush rare signals, and a PCA over mixed periods can hide a time drift: in that case, prefer Sequence mode to make it visible.</pre><pre>Quick decision grid
+Compare several years: Overlay or Fusion.
+Follow a drift over time: Sequence.
+Check a new data set against history: Reference.
+Build a global model: Fusion.
+Find an atypical population: Scores and PCA distance.
+Understand which series dominate: Loadings and contribution.</pre></main></body></html>

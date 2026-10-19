@@ -1,0 +1,74 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PARAMÈTRES AI — Requests · Knowledge · Sessions · Profile — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/params_ai_knowledge.txt</p><h1>PARAMÈTRES AI — Requests · Knowledge · Sessions · Profile</h1><pre>Accès : Parameters ▸ AI ▸ Help (cette aide s&#x27;ouvre au choix de l&#x27;onglet),
+Main ▸ AI ▸ Help.</pre><pre>ORGANISATION DE L&#x27;ONGLET AI (Parameters)
+  Profile       profils IA (voir l&#x27;aide « params_ai »).
+  Observatory   sélectionner cet onglet ouvre directement la fenêtre de
+                réglage de l&#x27;AI Observatory (aide « activity_tracking »).
+  AI Folder     sélectionner cet onglet ouvre le dossier AI du workspace dans
+                l&#x27;explorateur.
+  Help          ouvre cette aide.</pre><pre>REQUESTS (QUESTIONS PRÉDÉFINIES)
+Bibliothèque de questions réutilisables à insérer dans le prompt IA. Elle
+s&#x27;ouvre depuis l&#x27;AI Command Center (📋 Request ou PANELS ▸ 📋 Requests
+Catalog) : fenêtre « AI Requests ».
+Les fichiers sont stockés dans : WysiQ/AI/Feed/&lt;langue&gt;/&lt;nom_question&gt;/question.txt</pre><pre>Insérer une question dans le prompt
+    Double-clic, Entrée ou Ctrl+D sur une question → insère le texte complet
+    dans le prompt du Command Center.
+    Ctrl+C sur le texte à droite → insère le texte sélectionné (ou tout le
+    corps si rien n&#x27;est sélectionné).</pre><pre>Créer une question
+    Ajouter un dossier WysiQ/AI/Feed/&lt;langue&gt;/&lt;id_question&gt;/ contenant un
+    fichier question.txt (l&#x27;identifiant du dossier sert de libellé, espaces =
+    underscores), ou dupliquer une question existante (clic droit ▸
+    Duplicate) puis l&#x27;éditer.</pre><pre>Language
+    Sélectionne la langue du répertoire de questions à afficher.
+    Les questions d&#x27;un second répertoire (anglais) s&#x27;ajoutent en complément
+    si la langue choisie ne couvre pas tous les dossiers.</pre><pre>Recherche dans Questions
+    Le champ Search filtre la liste des questions à gauche ET surligne les
+    occurrences dans le texte à droite.
+    Les boutons &lt;&lt; et &gt;&gt; naviguent entre les occurrences dans le texte.
+    L&#x27;occurrence courante est surlignée en orange, les autres en jaune.</pre><pre>Clic droit sur une question
+    Edit — ouvre l&#x27;éditeur complet (renommage d&#x27;id + édition du texte).
+    Duplicate — copie la question dans un nouveau dossier.
+    Rename — renomme le dossier sans ouvrir l&#x27;éditeur de texte.
+    Delete — supprime définitivement le dossier de la question.</pre><pre>KNOWLEDGE
+Les Knowledge sont des fichiers JSON envoyés à l&#x27;IA lors de chaque connexion
+(bouton Connect d&#x27;AI Connections). Fenêtre : Main ▸ AI ▸ Knowledge… ou
+Command Center ▸ 📖 Knowledge Setup. Ils apportent à l&#x27;IA le contexte permanent
+de votre domaine : définitions métier, règles d&#x27;interprétation, nomenclatures,
+conventions, ontologies sectorielles.</pre><pre>Un seul répertoire : WysiQ/AI/protocol/
+    Les schémas techniques WysiQ (Protocol v0.2) et vos fichiers Knowledge
+    coexistent dans le même répertoire. Tous les fichiers JSON du répertoire
+    sont listés dans l&#x27;écran Knowledge avec leur état Send individuel.
+    Les fichiers WysiQ par défaut (000_protocol_handshake…, 001_ai_response…
+    etc.) sont présents dès l&#x27;installation. Vous pouvez y ajouter librement
+    vos propres JSON de contexte métier.</pre><pre>Colonne Send  ☑ / ☐
+    Cliquer sur la case bascule l&#x27;état du fichier : ☑ = envoyé à la connexion,
+    ☐ = ignoré. L&#x27;état de chaque fichier est mémorisé entre les sessions dans
+    WysiQ/AI/protocol_send_selection.json.
+    Seuls les fichiers cochés sont inclus dans le handshake Protocol WysiQ v0.2
+    transmis au début de chaque session AI.</pre><pre>Ce que l&#x27;IA fait avec les Knowledge
+    Au Connect, WysiQ envoie l&#x27;ensemble des fichiers ☑ comme contexte système.
+    L&#x27;IA reconnaît ainsi vos codes produits, unités, seuils métier, noms de
+    séries ou toute règle d&#x27;interprétation propre à votre domaine, sans que
+    vous ayez à le rappeler à chaque question.</pre><pre>Langue des Knowledge
+    Les Knowledge n&#x27;ont pas de langue prédéfinie : rédigez-les dans la langue
+    de travail de votre domaine. Les schémas WysiQ par défaut sont en anglais.</pre><pre>Créer un fichier Knowledge
+    Ajouter un fichier JSON dans WysiQ/AI/protocol/ (bouton Open protocol
+    folder de la fenêtre AI Knowledge), ou dupliquer un fichier existant
+    (clic droit ▸ Duplicate) puis l&#x27;éditer. Le JSON est vérifié à la
+    sauvegarde — un JSON invalide est rejeté.</pre><pre>Aperçu
+    La case JSON de la fenêtre AI Knowledge affiche l&#x27;aperçu du fichier
+    sélectionné.</pre><pre>Clic droit sur un fichier
+    Edit — ouvre l&#x27;éditeur JSON intégré avec vérification à la sauvegarde.
+    Duplicate — copie le fichier sous un nouveau nom.
+    Rename — renomme le fichier (l&#x27;état Send suit le renommage).
+    Delete — supprime définitivement le fichier.</pre><pre>SESSIONS ET AI CASES
+Les échanges IA sont archivés par requête WysiQ. Les échanges actuels sont
+des AI Cases (qai/cases) : questions posées, réponses reçues, jetons
+consommés et rapports HTML. Ils se consultent dans l&#x27;AI Case Center
+(Main ▸ AI ▸ AI Cases…) et le Nav HTML (Main ▸ AI ▸ Answers…).</pre><pre>Les sessions historiques (versions précédentes) restent stockées dans
+WysiQ/AI/sessions/&lt;nom_requête&gt;/ ; l&#x27;ancien écran Sessions n&#x27;est plus ouvert
+par aucun menu (aide « ai_session_window »).</pre><pre>PROFILE
+Un Profile est une instance configurée d&#x27;un fournisseur AI : modèle, URL,
+clé API, température et timeout. Plusieurs profils peuvent coexister ; la
+case Default connection marque le profil présélectionné par l&#x27;assistant
+AI Setup / Bench.</pre><pre>Pour l&#x27;aide détaillée des champs du profil, ouvrir l&#x27;onglet Profile
+puis cliquer le bouton ? de cet onglet.</pre></main></body></html>

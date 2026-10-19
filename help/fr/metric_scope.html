@@ -1,0 +1,48 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>METRIC SCOPE — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/metric_scope.txt</p><h1>METRIC SCOPE — Aide</h1><pre>Accès : Éditeur de métrique ▸ bouton ? de la barre Where Series / NaN Policy.</pre><pre>Le Metric Scope définit les filtres et restrictions appliqués lors du calcul
+d&#x27;une métrique. Les paramètres sont indépendants et cumulatifs.</pre><pre>☑ Where Series  (barre de scope dans le Metric Editor)
+Quand coché (ON par défaut), les clauses WHERE définies sur les séries
+sources sont propagées au calcul de la métrique.</pre><pre>Exemple numérique : si une série source est filtrée avec « &lt;= 0 » ou
+« &lt; -15000 », la métrique n&#x27;est calculée que sur les points conservés par
+ce filtre. Les points exclus deviennent des NaN volontaires.</pre><pre>Désactiver pour obtenir la valeur brute de toutes les lignes, sans les filtres
+des composants.</pre><pre>NaN Policy  (à côté de Where Series)
+Cette option indique comment les NaN produits par les filtres sont traités
+dans les calculs de composition.</pre><pre>  NaN+x=x
+    Mode souple : les NaN sont ignorés quand d&#x27;autres valeurs existent.
+    Utile pour des additions classiques de séries partiellement vides.</pre><pre>  NaN+x=NaN
+    Mode strict : si une série-condition filtre un point, le résultat reste
+    absent. Utile pour les recherches d&#x27;événements avec plusieurs conditions,
+    par exemple :
+      PROD-CONSO &lt; -15000
+      AND Solaire &lt;= 0
+    Dans ce cas, une série à coefficient 0 peut servir de condition sans créer
+    une fausse ligne horizontale à 0.</pre><pre>Metric Scope on X  (bouton en bas du Metric Editor)
+Popup WHERE standard avec opérateurs c1 / c2 / c3 appliqué à l&#x27;axe X.</pre><pre>Exemples :
+  c1 :  &gt;=  2020-01-01
+  join: AND
+  c2 :  &lt;=  2023-12-31
+  → La métrique n&#x27;est calculée que sur la plage 2020–2023.</pre><pre>  c1 :  &gt;=  0
+  join: AND
+  c2 :  &lt;=  120000
+  → Restriction numérique sur X.</pre><pre>Bouton 📅 sur chaque champ valeur : ouvre le sélecteur de date
+(Day / Month / Year) et insère la date au format ISO YYYY-MM-DD.</pre><pre>L&#x27;activation se fait automatiquement dès qu&#x27;une valeur est saisie (case
+Where ON). Bouton + : affiche / masque la condition c3. Apply valide,
+Cancel ferme sans modifier. Le libellé à côté du bouton indique le filtre
+actif ou « not set ».</pre><pre>Placement X0  (mode de positionnement, post-calcul)
+Contrôle où le premier point non nul de la métrique est placé sur l&#x27;axe X,
+une fois le calcul terminé. Trois modes :</pre><pre>  none      Comportement par défaut : aucun repositionnement.
+  Table X0  Suit le X0 de la table / query dans les dispositions
+            multi-tables.
+  Free X0   Place le premier point non nul scopé à l&#x27;index de ligne graphe
+            demandé. La longueur est déjà définie par Metric Scope on X.</pre><pre>Ce placement agit après le calcul ; il ne filtre pas les données.</pre><pre>Filtrage des lignes de table
+Le filtre « Metric Where » des anciennes versions a été retiré. Le filtrage
+des lignes de la table passe désormais par un seul chemin : le WHERE de la
+palette Table. Pour restreindre les lignes AVANT l&#x27;agrégation, définissez le
+WHERE sur la série / la table concernée ; Where Series le propage ensuite au
+calcul de la métrique.</pre><pre>Combinaison et résumé
+Where Series + NaN Policy + Metric Scope on X + Placement X0 peuvent être
+actifs simultanément. Le résumé « Scope: X + S + X0 » indique quels filtres
+sont actifs :
+  X   = Metric Scope on X (axe X)
+  S   = Where Series (filtres des séries sources propagés)
+  X0  = placement Table X0 ou Free X0
+Le résumé affiche « Scope: none » quand aucun n&#x27;est actif.</pre></main></body></html>

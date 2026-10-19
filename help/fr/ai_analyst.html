@@ -1,0 +1,60 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Connections — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/ai_analyst.txt</p><h1>AI Connections — WysiQ</h1><pre>Accès : AI Command Center ▸ PANELS ▸ 👤 AI Connections (Ctrl+N dans le
+Command Center).</pre><pre>La fenêtre AI Connections ouvre l&#x27;AI Case de la query, choisit un profil IA et
+le connecte. Les envois (feeds JSON, données, questions) se font ensuite dans
+l&#x27;AI Command Center : prompt, ▶ Send, &gt;&gt;AI Next, ⚡ Analyze graph. Chaque
+échange est archivé automatiquement dans l&#x27;AI Case actif (voir AI Case Center).</pre><pre>Processus type :
+  AI Case: (nom proposé = nom de la query) → Create → AI profile: → Connect
+  → retour au Command Center (un onglet par profil connecté) → envoyer.</pre><h2>CONTRÔLES</h2><pre>  AI Case:      Nom de l&#x27;AI Case (champ modifiable). Un clic sur le nom
+                affiché permet de le renommer.
+  Create        Crée l&#x27;AI Case (commun à tous les profils) ou le rouvre s&#x27;il
+                existe déjà. Un profil IA doit être sélectionné.
+  Close         Ferme le panneau (la connexion et le Case restent actifs ;
+                le Command Center peut être fermé ou ouvert sans couper la
+                session).
+  ?             Cette aide.
+  Last req:     Jetons du dernier échange (tous profils).
+  Session:      Total cumulé des jetons de l&#x27;AI Case actif.
+  AI profile:   Profil IA à utiliser (liste des profils de Parameters ▸ AI).
+  Connect       (actif seulement quand un AI Case est créé ou ouvert)
+                Connecte le profil courant : envoie en handshake les schémas
+                de protocole sélectionnés et le contexte query/Case. N&#x27;envoie
+                pas le payload analytique. Une fois connecté, le bouton
+                devient Disconnect (le profil se déconnecte, le Case reste
+                ouvert, les autres profils restent actifs).
+  AI Params     Ouvre Parameters ▸ AI (profils, clés, modèles).
+  Open Nav      Ouvre le visualiseur HTML des réponses.
+  Connection log  Journal de la connexion (handshake, erreurs, jetons).</pre><h2>AI CASE UNIQUE MULTI-PROFILS</h2><pre>Un seul AI Case regroupe tous les profils IA actifs : même dossier, même
+historique, même nom affiché.</pre><pre>  Profil principal (main)
+    Le premier profil connecté devient le profil principal. Ses questions
+    (JSON AI Feed, Data AI Feed, Send) sont les événements de référence du
+    Case, rejouables sur les autres profils.</pre><pre>  Profils secondaires
+    Tout profil ajouté ensuite est secondaire. À sa connexion, il reçoit
+    automatiquement en replay les questions déjà posées au profil principal,
+    pour produire sa propre réponse sur le même feed analytique. Chaque
+    profil a son propre onglet dans le Command Center.</pre><pre>  Changer d&#x27;onglet (profil)
+    Sélectionner l&#x27;onglet d&#x27;un profil dans le Command Center bascule vers ce
+    profil, sa file de replay et son historique ; le Case ne change pas.</pre><h2>PROTOCOLE</h2><pre>- La sélection des schémas envoyés par Connect se fait dans AI Knowledge
+  Setup (colonne Send). Reset (recommended) rétablit les 3 schémas ★ CORE
+  (000, 001, 002) si tout a été décoché par erreur.
+- Les autres schémas (PCA, signaux, stats…) partent automatiquement avec le
+  feed JSON correspondant de l&#x27;AI Feed Stack.</pre><pre>PAYLOAD ET ENVOI (dans le Command Center)</pre><pre>- Les feeds de l&#x27;AI Feed Stack décident de ce que contient le JSON
+  d&#x27;analyse (graphe, Area, tests, signaux, corrélations, PCA, scénario).
+- Les échantillons de données ne sont envoyés que sur demande ; seule leur
+  recette est archivée, jamais les valeurs des lignes — un replay régénère
+  un échantillon frais à partir des données actives.
+- ▶ Send envoie la question du prompt au profil actif (et aux cibles
+  Broadcast).</pre><pre>  INTÉGRITÉ DES DONNÉES
+  Les schémas de protocole imposent à l&#x27;IA de n&#x27;utiliser que les données
+  reçues dans les payloads WysiQ. Elle ne doit jamais inventer, extrapoler
+  ou imaginer des valeurs, noms, montants ou identifiants absents du payload.
+  Si une donnée est absente, l&#x27;IA doit le dire explicitement.</pre><h2>REPLAY</h2><pre>- &gt;&gt;AI Next (Command Center) parcourt les étapes en file pour le profil
+  actif. La file peut être préparée dans l&#x27;AI Case Center.
+- Quand un profil secondaire est connecté, le replay des questions du profil
+  principal est déclenché automatiquement.
+- Seules les questions du profil principal sont dupliquées sur les profils
+  secondaires ; celles posées directement à un profil secondaire lui restent
+  propres.</pre><h2>COMPTEURS DE JETONS</h2><pre>- « Last req » : jetons du dernier échange, tous profils confondus.
+- « Session » : total cumulé de l&#x27;AI Case actif ; remis à zéro à chaque Create
+  et Close du Case.
+- Le compteur sous l&#x27;onglet d&#x27;un profil (Command Center) affiche les jetons de
+  sa dernière requête.</pre></main></body></html>

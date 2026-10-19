@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQL Assistant — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/sqlassistant.txt</p><h1>SQL Assistant — Help</h1><pre>Access: Main ▸ Database ▸ Table / View.</pre><pre>The SQL Assistant creates DuckDB work tables without writing SQL.
+It lets you select, rename, filter, format, join or stack columns, then
+materialise the result as a TABLE (views are no longer created: a table
+can contain computed metrics).</pre><pre>Typical workflow:
+  Connection → Mode → choose the table(s) → tick the columns, WHERE,
+  formats, computed series → EXEC (preview) → CREATE (Export Table window)
+  → the table appears in Main; Create (recipe) to redo it later.</pre><pre>HEADER
+  Mode:          Single table or GRID JOIN / UNION.
+  Connection:    Local (DuckDB) or a connected profile; the ● dot shows the
+                 connection state. ↺ rereads the table list.
+  ?              This help.
+  Shrink to:     Auto N / Every N (row reduction, see SHRINK).
+  Rows max       Number of preview rows (Enter to apply).
+  ◄ 100 / 100 ►  Previous / next page of the preview.</pre><pre>MODES</pre><pre>Single table
+  Work on a single table: column selection, WHERE filters, renaming,
+  date formats and computed series.
+  Sort…          sort on several columns (ASC box per level; Apply,
+                 Clear, Cancel).
+  GLOBAL WHERE   enables / disables all the column WHERE clauses.
+  Add row nb     adds a row-number column.
+  Column list:   double-click = properties; right-click = WHERE…,
+                 Compose metric… (new computed series from the column),
+                 Edit metric… (existing computed series).
+  Value list:    double-click to edit (Enter confirms, Escape cancels);
+                 ◀ 100 / 100 ▶ scroll the rows.</pre><pre>GRID JOIN / UNION
+  Multi-table work. Add tables with Add → (← Remove removes them), choose
+  JOIN or UNION, tick Sel for the output columns, Join for the join keys,
+  then choose LEFT or FULL and the Base table.</pre><pre>  LEFT  keeps all rows of the Base table and adds the matching values of
+        the other tables. Each additional table joins directly on the
+        Base key, without cascading COALESCE.</pre><pre>  FULL  keeps all rows of all tables. Join keys are merged with COALESCE
+        over all tables.</pre><pre>  The generated SQL uses one CTE per table (named TABLE_j) that renames
+  the columns with a table prefix (RTE13_Consommation, …), then a clean
+  SELECT with explicit LEFT JOINs. Click Edit SQL to inspect or copy the
+  generated query.</pre><h2>FORMATS AND RENAMING</h2><pre>Double-click a column row or right-click to open the column properties.
+There you can change the output name and the date format (list of presets
+or typed entry) in the same dialog; Apply confirms, Clear all clears the
+column settings, Cancel closes.</pre><pre>To compare several years on the same calendar axis, map the real dates to
+a common reference year:</pre><pre>  Format: %d/%m/2000 %H:%M
+  Effect: 2013-07-15 08:30  →  2000-07-15 08:30
+          2024-07-15 08:30  →  2000-07-15 08:30</pre><pre>Year 2000 keeps the result as a valid TIMESTAMP, usable as a datetime axis
+in graphs. By applying this format to the join column in a GRID JOIN, you
+overlay several years on the same X axis.</pre><pre>When a format is set on a column in one panel, it propagates automatically
+to the same column in all the other panels.</pre><h2>TYPE HARMONISATION</h2><pre>In GRID JOIN mode, if a numeric column exists as BIGINT in the Base table
+and as DOUBLE in another table (same numeric family), the generated SQL
+adds a CAST to match the Base type. Columns of really different types
+(e.g. INTEGER vs VARCHAR) are left as they are.</pre><h2>ADD SERIE</h2><pre>+ Add Serie opens the composition editor. It creates a column computed
+from numeric columns: sum, difference, ratio, weighted combination,
+coefficients, etc. The result is propagated to all panels in GRID mode.</pre><pre>SHRINK (UNION mode)</pre><pre>Each table panel has its own Shrink controls:
+  Auto N   — keep approximately N rows (one row out of k)
+  Every N  — keep exactly one row every N rows</pre><pre>This balances tables of very different sizes in a UNION.</pre><h2>RECIPES</h2><pre>Recipes save and restore the full configuration of the SQL Assistant. They
+are stored as individual JSON files in the recipes/ folder of the
+workspace. The generated SQL is NOT stored — it is always regenerated from
+the current table definitions when a recipe is applied.</pre><pre>Buttons (2×2 grid):
+  Create  saves the current configuration as a new recipe.
+  Delete  deletes the selected recipe.
+  Load    refreshes the recipe list from disk.
+  Apply   restores the selected recipe and regenerates the SQL.</pre><pre>Double-click a recipe to apply it immediately.</pre><pre>Right-click a recipe for more options:
+  → AI        send the recipe to the AI Feed Stack
+  Apply       apply the recipe
+  Rename…     rename the recipe file
+  Duplicate…  create a copy under a new name
+  Delete      delete the recipe</pre><pre>Hover over a recipe name to see a tooltip with its mode, its tables and
+its last modification date.</pre><pre>Recipe JSON format (GRID mode, version 2):
+  mode, operation, join_type, base_table, global_where
+  tables[]  — per table: selected_cols, join_cols, formats,
+              aliases, where, computed_cols, shrink
+  restore_policy — ignore_missing_columns: true by default
+  output    — suggested_name, default_kind</pre><pre>On Apply, the proposed output name is pre-filled with the recipe name.</pre><h2>GLOBAL WHERE</h2><pre>Tick GLOBAL WHERE to apply the column filters to all tables in GRID mode.
+Each table keeps its own WHERE definition; the box enables or disables
+them all.</pre><h2>PREVIEW AND CREATE</h2><pre>EXEC       runs the SQL and shows the data preview.
+■          interrupts a running query.
+CREATE     opens the Export Table window (&quot;copy_table&quot; help) to
+           materialise the result as a WysiQ TABLE (DuckDB + Parquet), and
+           optionally push it to a remote database.
+Close      closes the SQL Assistant.
+Edit SQL   opens the full SQL in an editable popup (Courier font).
+           Export (copy) copies the query, Import (paste) pastes a query
+           from the clipboard, Apply &amp; Run runs it, Close closes.
+Show Table switches from the GRID builder to the Single table view of the
+           combined result (all columns selected by default).
+← Grid     returns to the GRID builder and removes the temporary view.</pre></main></body></html>

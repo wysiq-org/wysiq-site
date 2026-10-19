@@ -1,0 +1,139 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI SESSION CENTER — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/ai_session_window.txt</p><h1>AI SESSION CENTER — WysiQ</h1><pre>Note (version actuelle) : la fenêtre AI Session historique n&#x27;est plus ouverte
+par aucun menu — les sessions ont été remplacées par les AI Cases (AI Command
+Center ▸ 🗂 AI Case Center, Main ▸ AI ▸ AI Cases…). Cette page reste la
+référence pour les sessions créées avec les versions précédentes.</pre><h2>OBJECTIF</h2><pre>AI Session Center est l&#x27;outil d&#x27;archivage et de rejeu des conversations
+de AI Analyst. Il ne dialogue pas directement avec l&#x27;IA : c&#x27;est AI
+Analyst qui envoie les questions et reçoit les réponses, et chaque
+échange est archivé automatiquement ici.</pre><pre>AI Session Center permet de :
+  - parcourir les sessions et leur historique complet d&#x27;événements
+  - consulter l&#x27;instantané du Query Core et toute réponse IA archivée
+  - constituer une file de rejeu à partir de questions passées
+  - rejouer des étapes sélectionnées sur la query/table courante dans
+    AI Analyst</pre><pre>Philosophie : DATA → QUERY → AI SESSION → KNOWLEDGE</pre><h2>SESSION UNIQUE PARTAGÉE PAR TOUS LES PROFILS</h2><pre>Une session WysiQ est unique et partagée entre tous les profils IA qui
+y participent. Il n&#x27;y a pas une session par profil.</pre><pre>  Structure de la session
+    La session contient un historique séquentiel de tous les événements,
+    quel que soit le profil qui les a produits. Chaque événement est
+    horodaté et identifié par son profil (profile_id).</pre><pre>  Profil principal (main)
+    Le premier profil connecté à la session est le profil principal. Ses
+    questions (JSON AI Feed, Data AI Feed, AI_Query) constituent la
+    timeline de référence de la session. Ce sont ces événements qui sont
+    automatiquement rejoués sur les profils secondaires lors de leur
+    connexion.</pre><pre>  Profils secondaires
+    Tout profil connecté à la même session après le profil principal est
+    secondaire. À la connexion, il reçoit en replay automatique toutes
+    les questions du profil principal déjà posées, dans leur ordre
+    d&#x27;origine. Ses propres réponses sont archivées dans la même session.</pre><pre>  Liberté de rejeu
+    Chaque profil peut aussi avoir sa propre file de rejeu manuelle
+    (questions supplémentaires ou croisements spécifiques). Seules les
+    questions du profil principal sont automatiquement dupliquées sur les
+    secondaires ; les questions posées directement sur un profil
+    secondaire restent propres à ce profil.</pre><pre>  Threads dans l&#x27;historique
+    Chaque connexion d&#x27;un profil crée un thread distinct dans l&#x27;arbre
+    Threads / History. La ligne du thread affiche le profil, le statut
+    de connexion, et le total des tokens in/out consommés par ce thread.
+    Les événements rejoués d&#x27;un autre profil portent la mention
+    replay_of_index indiquant l&#x27;événement d&#x27;origine.</pre><h2>ARCHIVAGE AUTOMATIQUE</h2><pre>Chaque fois que vous utilisez Connect, envoyez un JSON AI Feed, un Data
+AI Feed, ou Send dans AI Analyst, l&#x27;échange est archivé automatiquement
+dans la session commune :
+  - le handshake Connect (avec le profil concerné)
+  - le JSON d&#x27;analyse complet (JSON AI Feed)
+  - l&#x27;échantillon de données brutes envoyé seul (Data AI Feed) — seule
+    la recette d&#x27;échantillonnage est archivée, jamais les valeurs des
+    lignes : les données ne sont jamais écrites sur disque ici
+  - la question de suivi (Send)
+  - la réponse IA reçue
+  - un instantané query_core lorsque c&#x27;est pertinent</pre><pre>Vous n&#x27;avez rien à saisir manuellement.</pre><h2>BARRE D&#x27;OUTILS</h2><pre>In/out Session
+    Import..., Import ZIP..., Export..., Open sessions folder.
+    Utilisez ces options pour déplacer une session entre machines ou la
+    partager. Une session est un dossier portable autonome. Comme les
+    valeurs des lignes d&#x27;un Data AI Feed ne sont jamais archivées,
+    exporter ou partager une session n&#x27;inclut jamais d&#x27;échantillon de
+    données brutes.</pre><pre>Query Core
+    Ouvre l&#x27;éditeur du JSON query_core de la session active, ou
+    enregistre un nouvel instantané de l&#x27;état analytique courant.</pre><pre>Answer HTML
+    Ouvre le visualiseur AI Answer sur la dernière réponse archivée de
+    la session active.</pre><pre>Replay (n)
+    Envoie les étapes de la file à AI Analyst comme plan de rejeu. (n)
+    indique le nombre d&#x27;étapes en file. AI Analyst proposera un bouton
+    Next pour les enchaîner une par une.</pre><pre>Clear queue
+    Vide la file de rejeu et réinitialise la numérotation (colonne Sel).</pre><pre>⧉ Open Nav
+    Onglet-bouton (fantôme) à droite du panneau de détail : ouvre le
+    navigateur HTML (AI Answer / rapports) dans une fenêtre dédiée.</pre><pre>?   Ouvre cette page d&#x27;aide.</pre><pre>LISTE DES SESSIONS (gauche)</pre><pre>Liste toutes les sessions IA trouvées dans le workspace.
+Double-cliquez sur une session pour aller à son onglet Manifest.
+Clic droit sur une session : Rename..., Duplicate..., Queue session for
+replay, Set active in Analyst, Delete.</pre><pre>QUERIES (milieu)</pre><pre>Affiche la query (ou les queries) liée(s) à la session sélectionnée,
+avec le nom de la table. Une session se souvient de la query à partir de
+laquelle elle a été créée, afin de pouvoir être rejouée sur la même
+query ou sur une autre query/table compatible.</pre><pre>THREADS / HISTORY (droite, haut)</pre><pre>Un arbre de tous les événements archivés pour la session sélectionnée,
+groupés par thread. Chaque thread correspond à une connexion d&#x27;un profil
+et regroupe les questions et réponses qui ont suivi.</pre><pre>  Session setup (nœud racine)
+    Regroupe les événements de configuration de la session (query_core,
+    imports…) qui ne font partie d&#x27;aucun thread de chat IA.</pre><pre>  Ligne de thread
+    Affiche : Thread N — profil (statut), avec en colonne Cost le total
+    des tokens in/out consommés par ce thread dans la session.
+    Exemple : Thread 4 — openrouter_claude_sonnet (connect ✓)  ↑1 234 ↓567</pre><pre>  Colonnes des événements :
+    Sel    Numéro de sélection pour la file de rejeu.
+    Type   Le type d&#x27;événement :
+             Connect     handshake de protocole envoyé
+             Disconnect  profil déconnecté
+             AI_JSON     JSON d&#x27;analyse complet envoyé (JSON AI Feed)
+             AI_Data     échantillon de données brutes envoyé seul
+                         (recette + comptage uniquement, jamais les valeurs)
+             AI_Query    question de suivi envoyée (Send)
+             AI_Answer   réponse reçue de l&#x27;IA
+    Cost   Tokens ↑in ↓out pour les événements AI_Answer (et leur requête
+           associée par convention d&#x27;affichage).
+    When   Horodatage de l&#x27;événement.</pre><pre>  Redimensionnement des colonnes
+    Toutes les colonnes sont redimensionnables par glisser-déposer sur le
+    séparateur d&#x27;en-tête. Clic droit sur un en-tête de colonne pour
+    rétablir les largeurs par défaut.</pre><pre>  Hauteur de la zone History
+    La séparation entre la liste des événements et la zone Detail
+    (bas de panneau) est ajustable en faisant glisser la barre
+    de séparation horizontale.</pre><pre>  Replay_of_index
+    Les événements rejoués sur un profil secondaire (depuis le profil
+    principal) affichent dans leur détail un champ replay_of_index
+    indiquant l&#x27;index de l&#x27;événement d&#x27;origine dans la session.</pre><h2>SÉLECTIONNER DES ÉTAPES POUR LE REJEU</h2><pre>Cliquez sur la cellule Sel d&#x27;un événement Connect, AI_JSON, AI_Data ou
+AI_Query pour l&#x27;ajouter à la file de rejeu. Un numéro apparaît indiquant
+sa position dans la file. Re-cliquez pour le retirer.</pre><pre>La numérotation n&#x27;est pas réutilisée immédiatement : de petits sauts
+sont normaux et sans conséquence. Changer de session conserve la
+numérotation : vous pouvez piocher des étapes dans tout l&#x27;historique,
+sur plusieurs sessions, avant de cliquer sur Replay.</pre><pre>Clic droit sur l&#x27;en-tête Sel : All on (select every AI_Query) sélectionne
+tous les AI_Query de la session ; All off (deselect this session) vide la
+sélection de cette session.</pre><pre>DETAIL (droite, bas)</pre><pre>Onglet Selected item
+    Contenu brut du fichier de l&#x27;événement sélectionné (JSON envoyé ou
+    réponse HTML reçue). Pour un événement AI_Data, c&#x27;est uniquement la
+    recette et les comptages — les valeurs des lignes envoyées ne sont
+    stockées nulle part.</pre><pre>Onglet Session info
+    Contenu du manifest de la session (ai_session.json) : nom, profil
+    principal, profils secondaires, query/table liée, date de création,
+    index de tous les fichiers archivés, et totaux de tokens par profil.</pre><h2>REPLAY</h2><pre>Constituez une file (colonne Sel, éventuellement sur plusieurs sessions),
+puis cliquez sur Replay. Les étapes sont envoyées à AI Analyst dans
+l&#x27;ordre de leurs numéros de sélection. Dans AI Analyst, le bouton Next
+prépare la prochaine étape de la file selon son type d&#x27;origine :</pre><pre>  Connect / AI_JSON  Reconstruit à neuf depuis ce qui est ouvert
+                     maintenant, prêt à envoyer d&#x27;un clic de plus.
+  AI_Data            La recette archivée est réappliquée aux données
+                     actuellement ouvertes — jamais les anciennes
+                     valeurs figées, puisqu&#x27;elles n&#x27;ont jamais été
+                     conservées.
+  AI_Query           Le texte de la question est renvoyé
+                     automatiquement.</pre><pre>Cas particulier : replay automatique des profils secondaires
+  Quand un profil secondaire se connecte à une session existante,
+  les questions du profil principal déjà archivées sont rejouées
+  automatiquement dans l&#x27;ordre, sans action manuelle dans AI Session
+  Center. Cette file automatique reste indépendante de la file manuelle
+  que vous pouvez construire ici pour des besoins spécifiques.</pre><h2>STRUCTURE DU DOSSIER SESSION</h2><pre>  &lt;workspace&gt;/AI/sessions/&lt;nom_session&gt;/
+      ai_session.json                      manifest (tous profils)
+      history/
+          001_query_core.json
+          002_ai_protocol_connect_sent.json  (profil principal)
+          003_ai_answer.html
+          004_ai_json_feed_sent.json
+          005_ai_query_sent.json
+          006_ai_answer.html
+          018_ai_protocol_connect_sent.json  (profil secondaire)
+          019_ai_answer.html
+          020_ai_json_feed_sent.json         (replay auto depuis 004)
+          021_ai_query_sent.json             (replay auto depuis 005)</pre><pre>Chaque fichier est numéroté séquentiellement dans la chronologie globale
+de la session, tous profils confondus. La session est portable : elle peut
+être copiée, archivée ou partagée sous forme de ZIP — sans jamais
+transporter les valeurs des échantillons de données.</pre></main></body></html>

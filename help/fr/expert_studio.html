@@ -1,0 +1,67 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Expert Studio — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/expert_studio.txt</p><h1>Expert Studio — WysiQ</h1><pre>Note (version actuelle) : Expert Studio n&#x27;est plus ouvert par aucun menu ni
+bouton. Ses fonctions principales sont reprises par l&#x27;AI Command Center
+(🎚 Expert Config, 🗄 AI Feed Stack, prompt et ▶ Send). Cette page reste la
+référence de l&#x27;ancien atelier.</pre><pre>L&#x27;Expert Studio est la surface de travail principale qui orchestre les
+échanges analytiques avec l&#x27;IA. Il ne fait plus le transport lui-même : il
+alimente la fenêtre Prompt (indépendante) qui pilote l&#x27;envoi vers un profil
+IA, et les réponses reviennent dans le HTML Viewer et la fenêtre Scenario.</pre><pre>Architecture générale (WysiQ après démontage) :
+  Expert Studio      Configuration, recettes, options JSON/data, scénarios.
+  AI Session         Gestion des sessions (créer, archiver, rouvrir).
+  AI Profile         Gestion des profils IA (créer, connecter, protocole).
+  Prompt             Fenêtre indépendante — édition du prompt, bouton Send.
+  HTML Viewer        Réponses en chapitres.
+  Scenario           Reçoit les scénarios corrigés par l&#x27;IA.</pre><h2>MODE RÉDUIT / PLEIN</h2><pre>Le bouton &quot;Reduced&quot; en haut à droite bascule l&#x27;affichage. La hauteur de la
+fenêtre s&#x27;ajuste automatiquement au contenu (pas d&#x27;espace vide qui masque
+le graphique).</pre><pre>  Reduced (par défaut)
+    Seules les sections d&#x27;action restent visibles :
+      - Data &amp; session
+      - Scenario &amp; exchange
+      - Quality bar
+      - Footer (?, Settings, Close)
+    Utile une fois que le rôle et la recette sont choisis, pour rester
+    compact au-dessus du graphique.</pre><pre>  Plein (Reduced décoché)
+    Ajoute les sections de configuration :
+      - Expert configuration (Recipe, Role, Context, Audience, Style,
+        Language)
+      - AI analysis options (Graph context, Tests, Signals, Correlations,
+        PCA)
+      - Run behavior</pre><h2>EXPERT CONFIGURATION</h2><pre>Recipe      Recette d&#x27;analyse préconfigurée. Modifier une recette recharge
+            automatiquement les autres champs.
+Role        Rôle expert que joue le modèle IA.
+Context     Contexte d&#x27;analyse.
+Audience    Public visé par la réponse. Ajuste le vocabulaire.
+Style       Format de la réponse.
+Language    Langue de la réponse.</pre><h2>AI ANALYSIS OPTIONS</h2><pre>Toggles qui pilotent le payload analytique envoyé à l&#x27;IA :
+  Graph context   Contexte du graphique courant.
+  Tests           Statistiques et tests calculés dans la palette Area.
+  Signals         Séries sélectionnées.
+  Correlations    Matrice de corrélation.
+  PCA             Analyse en composantes principales.</pre><h2>RUN BEHAVIOR</h2><pre>Attach cropped area only    Attache seulement l&#x27;image rognée sur l&#x27;Area.
+Hide AI console             Masque les fenêtres compagnons à l&#x27;ouverture.
+Open HTML viewer            Ouvre le HTML Viewer quand une réponse arrive.
+Chapter HTML answers        Découpe les réponses en chapitres HTML.</pre><h2>DATA &amp; SESSION</h2><pre>AI Session
+  Ouvre la fenêtre AI Session Center (gestion des sessions : créer,
+  archiver, rouvrir).</pre><pre>AI Profiles
+  Ouvre la fenêtre AI Profile — WysiQ (formellement &quot;AI Analyst&quot;), qui
+  gère la connexion aux profils IA.</pre><pre>Build JSON
+  Reconstruit le JSON payload (Analytics Feed) à partir de l&#x27;état
+  courant du graphique et des toggles.</pre><pre>Select Data…
+  Ouvre la boîte de sélection des données à inclure dans le payload.</pre><pre>Prompt…
+  Ouvre la fenêtre Prompt indépendante (l&#x27;interface principale d&#x27;édition
+  et d&#x27;envoi vers l&#x27;IA). Elle s&#x27;ouvre aussi automatiquement à
+  l&#x27;ouverture d&#x27;Expert Studio (sauf si Hide AI console est actif).</pre><pre>Generate Expert Report
+  Assemble le prompt complet (rôle, contexte, audience, style, langue)
+  et le pousse dans la fenêtre Prompt pour envoi.</pre><h2>SCENARIO &amp; EXCHANGE</h2><pre>Open Scenario…
+  Ouvre la palette Scenario du WysiQuery courant.</pre><pre>Send to AI…
+  Envoie le scénario actif à la fenêtre Prompt (JSON structuré,
+  kind=wysiq_scenario_response). L&#x27;utilisateur relit puis clique Send
+  dans la fenêtre Prompt pour envoyer effectivement.</pre><pre>Receive from AI…
+  Récupère un scénario retourné par l&#x27;IA et le réinjecte dans la
+  palette Scenario.</pre><h2>QUALITY / ESTIMATED PROMPT</h2><pre>La barre &quot;Quality&quot; et le texte &quot;Estimated prompt&quot; indiquent la qualité du
+prompt courant (0-100 %) et une estimation du nombre de caractères et de
+tokens.</pre><h2>FOOTER</h2><pre>?         Affiche cette aide.
+Settings  Ouvre les préférences globales WysiQ (Params).
+Close     Ferme l&#x27;Expert Studio. Les fenêtres compagnons (Prompt,
+          AI Profile, HTML Viewer) restent ouvertes indépendamment.</pre><h2>COMPORTEMENT DE FENÊTRE</h2><pre>L&#x27;Expert Studio est traité comme les autres palettes flottantes WysiQ :
+attribut -topmost persistant sur Windows, remise au premier plan sur
+activation. Cliquer sur le graphique ne le fait pas disparaître derrière.</pre></main></body></html>

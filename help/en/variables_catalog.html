@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Variables Catalog — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/variables_catalog.txt</p><h1>Variables Catalog</h1><pre>The Variables catalog lists the workspace constant packs, grouped
+by theme (energy, finance, custom…). Use them in the numeric fields
+of metrics with the compact syntax &amp;theme_id.var_id (e.g. &amp;1.4).</pre><pre>Same layout as the Tables catalog: themes on the left, variables on the right.</pre><pre>Opening: Metric menu → Variables…</pre><h2>TOOLBAR</h2><pre>Create / Duplicate / Delete
+  Below the theme and variable lists.</pre><pre>Thresholds
+  Opens the Thresholds window (workspace alert rules, see the
+  &quot;thresholds&quot; help).</pre><pre>Set Low / Set High
+  (threshold mode, opened by Set alert thresholds… in the Series palette; the
+  bar shows &quot;Alert: Table.Series — select one variable, then Set Low /
+  Set High&quot;): select a variable then Set Low; the same button
+  becomes Set High for the upper threshold.</pre><pre>Import / Export
+  Imports or exports a theme as a portable JSON file (theme and variable
+  names, without workspace IDs). On import, new IDs are assigned;
+  names stay stable for metrics (&amp;energie.seuil_kwh).</pre><pre>Refresh
+  Reloads from disk, assigns missing IDs, clears the cache.</pre><pre>JSON
+  Shows the raw JSON of the workspace theme (with IDs).</pre><pre>Search theme / Search variable
+  Filters the theme list and the variable grid.</pre><pre>Close / ?
+  Close or this help.</pre><h2>LEFT PANEL: THEMES</h2><pre>Sel
+  Enables the theme for &amp;… resolution.</pre><pre>ID
+  Numeric identifier of the theme (workspace). Used in &amp;1.4.</pre><pre>Theme
+  Technical name of the pack (file name, e.g. energie).</pre><pre>Description
+  Free text.</pre><h2>RIGHT PANEL: DEFINITION + VARIABLES</h2><pre>Definition
+  Theme (name), theme ID, Ref prefix (&amp;1.), description, modification date.</pre><pre>Variables grid:
+  Sel, Display, Style, ID, Variable (technical name), Value, Unit, Description, Ref (&amp;1.4)
+  Double-click a row to edit; F2 = rename; Del = delete.</pre><pre>Right-click a theme: Create variable, Rename…, Duplicate, Export theme…,
+Import theme…, Delete (F2 = rename the theme).
+Right-click a variable: Edit…, Style…, Toggle Display/Show, Duplicate,
+Rename…, Delete.</pre><pre>Edit / Create box of a variable: Theme, name, Value (formula allowed;
+Insert adds a series reference [Table.Series] or a variable reference), Unit,
+Description; OK (Enter) confirms, Cancel (Escape) cancels.</pre><pre>COMPACT PICKER (while editing a metric / WHERE)</pre><pre>This catalog does NOT show &quot;used in the query&quot; — that is the role of the
+compact Variables picker, opened by right-clicking a linked numeric field
+(k, +/-, Min, Max, Δ, Fill, Lag, WHERE value…).</pre><pre>The picker shows:
+  ● black if the variable is used in the open query (read-only)
+  Legend for the legend text (● variables)
+  Vars series with sliders
+  Inline simulation (* until Save)</pre><pre>See the picker help (?) for details.</pre><pre>NUMERIC IDS (UI) vs NAMES (PERSISTENCE)</pre><pre>Each theme and each variable has an incremental numeric label
+(unique across the whole workspace). In the UI (catalog, picker, metric fields):</pre><pre>  &amp;1.4     theme id=1, variable id=4
+  &amp;1.&amp;4    accepted form (equivalent)
+  &amp;4       variable id=4 alone, if unique in the workspace</pre><pre>In the metric / query JSON saved on disk, references are converted
+to stable names:</pre><pre>  &amp;energie.seuil_kwh</pre><pre>Both forms are resolved at run time. Theme import/export only
+carries the names (not the IDs).</pre><h2>USE IN THE METRIC EDITOR</h2><pre>Fields k, +/- (offset), Min, Max, Δ and Fill of each component:
+  • Type &amp;1.4 directly or choose via right-click → compact picker
+  • &quot;Keep open&quot; keeps the window open while editing
+  • Simulated values (*) applied immediately; Save writes the theme JSON</pre><pre>On Apply/Save, the metric stores &amp;energie.seuil_kwh (stable name).
+The editor shows &amp;1.4 again on reopening if the theme still exists.</pre><pre>Same principle for Lag, Size, Step (Group by X) and Free (X0).</pre><pre>Reference not found (theme or variable deleted) → default value of the field:
+  k / transform_k = 1.0 · offset / fill = 0 · lag / size / step / free = 0.
+The ref stays in the metric JSON (to be corrected or validated later).</pre><h2>USE IN WHERE CLAUSES</h2><pre>Variables can also be used in the Value fields of WHERE clauses (Table/Area
+palette, series WHERE, metric composition WHERE).</pre><pre>Value field
+  • Simple ref (&amp;1.4) or arithmetic expression:
+    &amp;a.x + &amp;b.y · &amp;energie.seuil * 1.1 · (&amp;a.min + &amp;a.max) / 2
+  • Right-click → compact picker to insert a ref.</pre><pre>Operators: = != &lt; &lt;= &gt; &gt;= ~ ^ $ in
+Several rows: AND / OR between c1, c2, c3.</pre><pre>Persisted as stable names in the query JSON; the UI shows &amp;1.4 again if the
+theme exists. Changing a value here updates metrics and WHERE after refresh.</pre><h2>DISPLAY ON THE GRAPH / STYLE</h2><pre>Legend = text of the variables used in the query, in the Legend panel.
+Display = only a graphic marker. Never a name, value or unit
+written on the graph. The variable does not become a Series or a Metric.
+Display is still possible for a constant not used in the query.</pre><pre>For a numeric constant, a single marker covers the whole width:
+  Line : horizontal line at Y = value.
+  Fill : thin horizontal band around the threshold + level line.
+  Bar  : horizontal band over the WHOLE width, from Y = 0 to the threshold,
+         with an outline. Size sets the outline thickness,
+         Alpha the band transparency.
+  Point : a single marker at the threshold level.
+  Both : full line + a single marker.
+An expression varying with X can draw a curve; in Bar, a single continuous
+area joins the curve to zero instead of one bar per sample.
+In polar mode, Line produces a circle; Bar fills the disc up to the
+threshold radius over 360 degrees, without pie slices.</pre><pre>If the threshold is outside the visible Y range, it stays at its real value
+(and becomes visible again after zooming). No label or artificial edge
+line replaces it. Axes and data are unchanged.
+Thresholds are rebuilt in PNG/PDF exports, without graphic text.</pre><pre>Style: same controls as Series, except Position: colour, Depth (z),
+Type, Marker, Size, Alpha and Blink. Initial values: Z = 0,
+Type = Inherit, Marker = Inherit. Normal / Below / Above are independent.
+Legend, Display and styles are saved in the theme JSON.</pre></main></body></html>

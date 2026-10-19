@@ -1,0 +1,246 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SHARE &amp; PUBLISH CENTER — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/share_params.txt</p><h1>SHARE &amp; PUBLISH CENTER</h1><pre>TERMINOLOGY
+WysiQuery   The live whole: source table + analysis (series, metrics,
+            filters) + graph window.
+Query       Saved WysiQuery snapshot (query.json in queries/).
+Queries     Plural — several Query files.</pre><pre>WysiQ prepares share packages from an open WysiQuery (graph HTML
+snapshot) or from an exported Query (ZIP bundle) — interactive HTML
+(matplotlib PNG with zoom/pan in the browser; Plotly in local WiFi
+preview), optional voice brief, short analysis text — then publishes
+automatically where possible and prepares drafts for social networks.</pre><pre>Query ZIP exports follow the same pipeline
+(gallery, feeds, LinkedIn draft, Telegram channel).</pre><pre>📦 Prep button in the graph remote palette:
+  Left-click    = Prep popup (recorder + outbox)
+  Right-click   = quickly toggle contacts On/Off</pre><pre>Main window → Share → Share Center, Send tab:
+  list the prepared files, choose the recipients, Send.
+  Automatic channels (Publish tab) run on Send, not on Prep.</pre><h2>SEND TAB (OUTBOX)</h2><pre>Files prepared in:
+  workspace/share/outbox/graphs/    HTML, PNG, PDF, voice WAV
+  workspace/share/outbox/queries/   Query ZIP bundles</pre><pre>Sources: Remote 📦 Prep, Print export, Query → Share…
+Manual WhatsApp: attach the files from share/outbox/graphs/ or …/queries/</pre><h2>PUBLISH TAB</h2><h2>AUTOMATIC CHANNELS</h2><pre>  Telegram      broadcast to a channel + direct send to contacts
+  Discord       post via webhook — file + link + caption if enabled
+  Site gallery  copies HTML/ZIP to the local/public gallery folder
+  RSS           updates wysiq_feed.xml
+  JSON feed     updates wysiq_feed.json for a site / API</pre><pre>  Tick the channels you want, then click
+  &quot;Save publish options&quot;.</pre><pre>  TG channel ID   identifier of the broadcast channel or group
+  TG bot id       optional — replaces the bot from bots.json</pre><pre>  Discord webhook   webhook URL (Discord server settings)
+                    sends HTML/ZIP attachment + caption + link</pre><h2>SEMI-AUTOMATIC SOCIAL NETWORKS</h2><pre>  LinkedIn      copies the post text + opens LinkedIn in the browser
+  Reddit        prepares title / body; the user submits manually
+  X / Twitter   opens the tweet intent with text and link</pre><pre>  These channels open a browser tab with the pre-filled draft.
+  You complete and publish it yourself.</pre><h2>DEFAULT MESSAGE IDENTITY</h2><pre>  Site base URL    base address linked in all posts
+                   e.g. https://wysiq.org
+  Default tags     hashtags added to social drafts
+                   e.g. #WysiQ #DataVisualization #Analytics
+  Signature        footer in generated posts
+                   e.g. Made with WysiQ</pre><h2>GALLERY / FEEDS TAB</h2><h2>SITE GALLERY</h2><pre>  Local folder     destination folder for HTML / ZIP files
+                   empty → workspace/share/outbox/graphs
+                   Query → gallery/queries/ subfolder
+  Public base URL  public address where the files are reachable
+                   e.g. https://wysiq.org/visualizations</pre><h2>RSS / JSON FEEDS</h2><pre>  RSS title        channel title in the feed XML
+  RSS description  short description of the channel
+  JSON filename    name of the output JSON file
+                   default: wysiq_feed.json</pre><h2>GENERATED FILES</h2><pre>  Text area listing all the files present in the publish folder.
+  Click &quot;Refresh list&quot; to update it.</pre><pre>Buttons:
+  Save gallery/feed options   saves the settings
+  Refresh list                re-reads the publish folder
+  Open publish folder         opens the folder in the file explorer</pre><h2>SOCIAL DRAFTS TAB</h2><pre>Test the draft templates before publishing.</pre><pre>  Title     title of the graph or analysis
+  URL       public link to the graph&#x27;s HTML file
+  Insight   optional short observation about the data</pre><h2>PREVIEW / OPEN</h2><pre>  Preview LinkedIn / Preview Reddit / Preview X
+               choose an entry — the draft is displayed
+  Open LinkedIn / Open Reddit / Open X
+               choose an entry — opens the network with the preview text</pre><pre>  Copy text          copies the preview to the clipboard
+  Create draft files saves one .txt file per network
+                     in workspace/share/drafts/</pre><h2>DISCORD — SET UP AND TEST</h2><pre>Discord is fully automatic (like the Telegram channel broadcast):
+each Send (Share Center) or 📤 Share… posts directly to your Discord
+channel via a webhook. No browser tab to complete — the message appears
+at once.</pre><pre>Unlike LinkedIn, Discord receives the .html or .zip file as an
+attachment. You do NOT need a public website or hosting for members to
+open the graph — they download it from Discord.</pre><pre>WHAT WysiQ SENDS TO DISCORD</pre><pre>  • Caption text     short message from the generic publish template
+                     (title, URL, default tags)
+  • Attachment       graph .html or Query .zip
+  • Voice memo       WysiQ_{title}_voice.wav if recorded in 📦 Prep
+  • Embed            card with the graph title + clickable link (if a URL
+                     is defined)</pre><pre>Configuration stored in:  workspace/share/publish.json</pre><h2>STEP 1 — CREATE A WEBHOOK IN DISCORD</h2><pre>  1. Open Discord (app or browser) → your server
+     (create a free server if needed: &quot;+&quot; → Create My Own).
+  2. Create or choose a text channel, e.g.  #wysiq-graphs
+  3. Channel settings (⚙ next to the channel name)
+     → Integrations → Webhooks → New Webhook
+  4. Name it &quot;WysiQ&quot; (or anything), confirm the target channel.
+  5. Click &quot;Copy Webhook URL&quot;
+     Format: https://discord.com/api/webhooks/123456789/AbCdEf…</pre><pre>  Keep this URL secret — anyone who has it can post to your channel.</pre><pre>STEP 2 — CONFIGURE WysiQ</pre><pre>  1. Open Share Center… (Share menu).
+  2. Publish tab → Automatic channels → tick Discord.
+  3. Paste the URL in &quot;Discord webhook&quot;.
+  4. Click &quot;Save publish options&quot;.</pre><pre>  Discord is disabled by default (unlike LinkedIn). Tick it once.</pre><pre>STEP 3 — TEST WITH A GRAPH (same path as Telegram)</pre><pre>  1. Open a graph with data.
+  2. Graph Remote ▸ 📦 Prep, then Share Center ▸ Send tab.
+  3. Optionally record a voice comment → Send.</pre><pre>  After the Email/Telegram send to contacts, the publish pipeline also
+  posts to Discord if enabled. Check your Discord channel:
+  you should see the caption, the attached .html file,
+  WysiQ_{title}_voice.wav (if recorded) and an embed.</pre><pre>  For a Query: Query &gt; Export query → 📤 Share… → Send.
+  Discord receives the .zip bundle in the same way.</pre><pre>TELEGRAM CHANNEL vs DISCORD WEBHOOK</pre><pre>  Telegram channel    BotFather bot + TG channel ID + bot token
+  Discord webhook     only the webhook URL — no bot per recipient</pre><pre>  Both attach the file directly. Both send the voice memo on Send.
+  Both work without wysiq.org hosting.</pre><h2>WITHOUT ACTIVE HOSTING (DOMAIN ONLY)</h2><pre>  Discord works immediately: the interactive .html is uploaded to
+  Discord as a file. Members click the attachment → it opens in the
+  browser.</pre><pre>  The link in the embed may point to a local or WiFi URL if no public
+  URL is configured — the attachment stays usable; only the embed link
+  is less convenient until Gallery or HTTP Server is configured.</pre><h2>TROUBLESHOOTING</h2><pre>  Nothing in Discord     → Discord unticked, empty webhook URL, or
+                           &quot;Save publish options&quot; not clicked.
+  Invalid webhook        → recreate the webhook in Discord and paste
+                           the new URL (must start with https://).
+  Deleted webhook        → Discord returns an error; WysiQ ignores it
+                           silently — check the channel and update
+                           publish.json.
+  File too large         → Discord limit ~25 MB; WysiQ graph HTML ~150 KB.
+  No voice on Discord    → record before Send in the 📦 Prep window; same
+                           as Telegram.</pre><h2>LINKEDIN — HOW TO TEST (WITH OR WITHOUT AN ACTIVE SITE)</h2><pre>LinkedIn is semi-automatic: WysiQ prepares the post text and opens
+LinkedIn in your browser. You paste the text and publish it yourself.</pre><pre>PREREQUISITES (2 minutes)</pre><pre>  1. Open Share Center… (Share menu).
+  2. Publish tab → tick LinkedIn (Semi-automatic social networks).
+  3. Click &quot;Save publish options&quot;.
+  LinkedIn is enabled by default. Telegram and LinkedIn can both stay
+  ticked.</pre><pre>TEST 1 — WITHOUT SENDING A GRAPH (fastest)</pre><pre>  Social drafts tab of the Share Center:</pre><pre>    1. Edit Title and URL if needed (put a real https://… URL when you
+       have one).
+    2. Preview LinkedIn combo → the draft text is shown at the bottom.
+    3. Copy text → paste elsewhere (Ctrl+V) to check the clipboard.
+    4. Open LinkedIn combo → the browser opens the LinkedIn share dialog.</pre><pre>  This validates template + clipboard + browser opening — without
+  sending a graph.</pre><pre>TEST 2 — SAME AS TELEGRAM (via 📦 Prep on a graph)</pre><pre>  1. Open a graph with data.
+  2. Graph Remote ▸ 📦 Prep, then Share Center ▸ Send tab.
+  3. Optionally record a voice comment → Send.</pre><pre>  What happens automatically:
+    • The LinkedIn post text is copied to the clipboard.
+    • LinkedIn opens in the browser (share-offsite with the URL).
+    • A .txt draft file is also saved in
+      workspace/share/drafts/  (…_linkedin_….txt).</pre><pre>  In LinkedIn: paste the text (Ctrl+V), check the link, then publish
+  yourself.</pre><h2>IMPORTANT — THE URL IN THE POST</h2><pre>  LinkedIn can only preview links reachable from the public Internet
+  (the LinkedIn servers fetch the page).</pre><pre>    URL source                           LinkedIn link preview
+    http://192.168.x.x:47430 (WiFi)      ✗  local only — no preview
+    Local path (C:\… or workspace/…)     ✗  not a web link
+    Public base URL (Gallery tab)        ✓  if the files are on a web server
+    HTTP Server upload (Setup tab)       ✓  if the upload succeeds
+    Site base URL (Publish tab)          ✓  only if this address really
+                                            serves the files</pre><h2>NO ACTIVE HOSTING (DOMAIN ONLY)</h2><pre>  You may own wysiq.org, wysiq.fr, wysiq.eu, etc. without a website
+  online yet. That is normal during setup.</pre><pre>  What works without hosting:
+    • Telegram (.html file direct to contacts or channel)
+    • Email with a .html attachment
+    • Manual WhatsApp via workspace/share/outbox/graphs/ or …/queries/
+    • LinkedIn text copied + browser opened (Social drafts or Send)
+    • .txt draft files in workspace/share/drafts/</pre><pre>  What does not work until the files are served on the web:
+    • Clickable public link in a LinkedIn post (preview card)
+    • RSS/JSON feeds pointing to real public pages
+    • Gallery Public base URL (e.g. https://wysiq.org/visualizations)</pre><pre>  When you add hosting later:
+    • Gallery / Feeds → Local folder + Public base URL on your server
+    • or Setup → HTTP Server → Public URL + Upload path
+    • wysiq.org cloud hosting — coming soon</pre><pre>  Meanwhile: use Telegram or Email for the interactive .html;
+  use LinkedIn for the prepared text — paste it manually, or mention
+  the file shared through another channel.</pre><h2>TROUBLESHOOTING</h2><pre>  Nothing opens         → LinkedIn unticked or &quot;Save publish options&quot; not
+                          clicked.
+  Empty clipboard       → try again; Windows may block the clipboard from
+                          a thread.
+  LinkedIn opens but    → configure a public URL (Gallery or HTTP Server)
+  the link is useless     when hosting is available; the local WiFi URL is
+                          not enough.</pre><h2>SETUP TAB — CONTACTS</h2><pre>Stored in:  workspace/share/contacts.json</pre><pre>Add contacts manually (Add / Edit frame: Add adds, Update modifies the
+selected contact, Delete removes it) or import them from a spreadsheet
+(📂 Import xlsx/csv). &quot;Click On/✉/✈ to toggle&quot; reminds you that the
+columns toggle on click. Each contact has:
+  Name    — display name
+  Email   — for Email/SMTP sending
+  Phone   — reference for Telegram</pre><h2>LIST COLUMNS</h2><pre>  On    = contact globally enabled
+          Click to enable/disable.</pre><pre>  ✉ on  = email channel enabled
+          Click to enable/disable.</pre><pre>  ✈ on  = Telegram channel enabled
+          Click to enable/disable.</pre><pre>  📱 on  = phone reference (manual WhatsApp sharing)
+          WysiQ copies the files into workspace/exchange/
+          — no automatic WhatsApp sending (paid API).</pre><pre>  TG    = ✓ if the Telegram Chat ID is registered
+          (see Telegram section — Step 3)</pre><h2>IMPORT FROM A SPREADSHEET</h2><pre>  Click &quot;📂 Import xlsx/csv&quot; to load an Excel or CSV file.
+  A window (&quot;Map columns to contact fields:&quot;) lets you map your
+  columns, then Import:
+    Name column   → contact display name (required)
+    Email column  → used for SMTP sending
+    Phone column  → phone reference</pre><pre>  Existing contacts are not overwritten.
+  New names are added to contacts.json.</pre><h2>SETUP TAB — EMAIL / SMTP</h2><pre>Stored in:  workspace/share/sender.json</pre><pre>WysiQ sends the graph as a .html attachment over SMTP.
+If a voice comment was recorded, it is attached
+as WysiQ_{graph title}_voice.wav in the same email.</pre><h2>FIELDS</h2><pre>  Sender name     shown in the From field of the email
+  SMTP server     e.g. smtp.gmail.com
+  Port            587 for STARTTLS  /  465 for SSL
+  Username        your email address
+  Password        see the Gmail note below
+  STARTTLS (port 587)  recommended for port 587
+  Test &amp; Save     saves the settings, then tests the SMTP connection and
+                  authentication (&quot;Connection successful!&quot;).
+  Reminder shown: &quot;Gmail: enable App password in your Google account&quot;.</pre><pre>GMAIL</pre><pre>  Gmail requires an App Password —
+  not your usual Google password.
+  Go to:  myaccount.google.com
+          → Security
+          → 2-Step Verification
+          → App passwords
+          → Create &quot;WysiQ&quot;
+  Use the 16-character code (no spaces).</pre><pre>HTML MODE (&quot;HTML mode:&quot;)</pre><pre>  Standalone (~3.5MB, offline)
+                ~3.5 MB   works offline
+                          Plotly.js embedded (WiFi / legacy paths)</pre><pre>  Lightweight (~500KB, needs internet)
+                ~500 KB   requires an internet connection
+                          Plotly.js loaded from a CDN</pre><pre>  Note: graph sending by Email and Telegram currently uses a
+  standalone matplotlib PNG HTML (~150 KB) with touch zoom/pan —
+  independent of the Plotly mode above.</pre><h2>SETUP TAB — TELEGRAM</h2><pre>WysiQ sends the graph&#x27;s .html file directly
+via a free Telegram Bot. Zero cost. No third-party
+service.</pre><pre>If a voice comment was recorded, it is sent
+as a separate audio message after the graph.</pre><h2>STEP 1 — CREATE YOUR BOT</h2><pre>  Open Telegram → search for @BotFather → send /newbot
+  Give it a name, e.g.:  WysiQ Analytics
+  Give it a username ending with &#x27;bot&#x27;,
+    e.g.:  wysiq_mycompany_bot</pre><pre>  👍 Help WysiQ grow — include &#x27;wysiq&#x27; in the name.</pre><pre>  BotFather gives you a token:  123456:ABCdef...</pre><h2>STEP 2 — PASTE THE TOKEN AND VERIFY</h2><pre>  Paste the token → click Verify &amp; Save.
+  WysiQ calls getMe to confirm that it is valid.
+  The token is saved in workspace/share/sender.json.</pre><h2>STEP 3 — REGISTER THE RECIPIENTS</h2><pre>  Each recipient must open your bot in Telegram
+  and send /start (once only).
+  Then click &quot;Scan new contacts&quot; in WysiQ.
+  WysiQ reads the incoming messages and registers each
+  Chat ID automatically in contacts.json.</pre><h2>STEP 4 — TEST MESSAGE</h2><pre>  Sends a confirmation message to all registered Telegram
+  contacts to check that everything works.</pre><pre>ON SEND (Send)</pre><pre>  WysiQ calls sendDocument to deliver the .html file
+  directly in the recipient&#x27;s Telegram chat.
+  The recipient taps the file → it opens in
+  their mobile browser → zoom and pan available.</pre><h2>SETUP TAB — HTTP SERVER</h2><pre>For teams that have an internal web server
+or a NAS.</pre><pre>WysiQ uploads the graph HTML to your server
+and generates a short clickable link sent to the recipients.</pre><h2>FIELDS</h2><pre>  Public URL     URL visible to the recipients
+                 e.g. https://wysiq.mycompany.com</pre><pre>  Upload path    destination folder on the server side
+                 e.g. /var/www/wysiq/graphs
+                 or the remote SFTP path</pre><pre>  Username       server login (if required)
+  Password       server password (if required)</pre><pre>METHODS (&quot;Method:&quot;)</pre><pre>  SFTP          SSH transfer — most secure
+  FTP           classic FTP
+  HTTP PUT      REST upload endpoint
+  Local folder  shared network drive</pre><pre>Buttons: Save saves the &quot;Server configuration&quot;; Test URL checks that
+the public URL responds.
+wysiq.org cloud hosting — coming soon (&quot;wysiq.org cloud sharing
+(coming soon)&quot;).</pre><pre>When Public URL and Upload path are configured here, each Send (Share
+Center) or 📤 Share… also uploads the graph HTML or the Query ZIP to
+your server (local folder, HTTP PUT, FTP, or SFTP if paramiko is
+installed). The public link is used in feeds, Discord, Telegram channel
+and social drafts when the upload succeeds.</pre><pre> SENDING A GRAPH (📦 Prep then Send)</pre><pre>There is no longer a 📱 button in the remote palette: sharing a graph
+takes two steps.
+  1. Graph Remote ▸ 📦 (left-click): optional voice recorder
+     (● Rec, ■ Stop, ▶ Play, Erase), then 📦 Prep stores the HTML (+ WAV)
+     in share/outbox/graphs/. Cancel closes without writing anything.
+  2. Share Center ▸ Send tab: choose the file, the channel (Email, TG,
+     Both), the recipients, then Send:
+       Email contacts    → graph .html + voice .wav as attachments
+       Telegram contacts → graph .html via bot, voice .wav as audio message
+  Right-click on 📦: &quot;📱 Contacts On/Off&quot; window (columns On, Name,
+  ✉on, 📱on, ✈on) to quickly enable / disable contacts and channels.</pre><h2>WHATSAPP SHARING (MANUAL)</h2><pre>  Graphs (.html) are copied to   workspace/share/outbox/graphs/
+  Queries (.zip) are copied to   workspace/exchange/queries/
+  Share these files yourself from WhatsApp on your phone
+  or computer — no automatic WhatsApp sending.</pre><pre>On each Send from the Share Center or 📤 Share…, WysiQ also runs the
+Publish pipeline if enabled: exchange copy, HTTP server upload (if
+configured), gallery, JSON/RSS feeds, Telegram channel broadcast,
+Discord webhook, LinkedIn draft (text copied + browser opened).</pre><pre> QUERY SHARING (📤 after Export query)</pre><pre>After Query &gt; Export query, the result popup offers 📤 Share…</pre><pre>  Channel     Email / Telegram / Both (default from Setup)
+  Bot         optional Telegram bot selector (bots.json)
+  Recipients  checkbox list — only the ticked contacts receive
+              the Query ZIP bundle</pre><pre>On send, the same publish effects as for graphs:
+  exchange/queries/   manual WhatsApp / file sharing
+  gallery/queries/    if Site gallery is enabled
+  JSON / RSS feeds    if enabled in the Publish tab
+  Discord webhook     if Discord is enabled + webhook URL filled in
+  LinkedIn            draft text copied + share dialog
+  Telegram channel    if TG channel ID is configured</pre><pre>Import on the recipient&#x27;s side: Query &gt; Import query.</pre><pre>Note: a Query ZIP contains the saved WysiQuery definition
+(table, analysis, graph settings, optional PNG/PPTX, voice memo) —
+not only an HTML snapshot of the graph.</pre><pre>The ZIP is sent as is (Email, Telegram, Discord webhook, gallery)
+so that technical profiles can import it via Query &gt; Import query,
+change the WHEREs, filters and metrics, and rebuild or adapt the graph.</pre><pre>Optional voice memo in the bundle:
+  WysiQ_{query name}_voice.wav
+  (older bundles may still contain voice_note.wav)</pre><h2>SETUP TAB — SEND LOG</h2><pre>Stored in:  workspace/share/send_log.json</pre><pre>Each Email or Telegram send (graph or Query) is logged.</pre><pre>  Refresh     re-read the log from disk
+  Purge       delete all entries (confirmation asked)
+  Export CSV  save the log as a spreadsheet file</pre><pre>Columns: date/time, graph or Query title, channel, contact,
+address, status (OK / ERR), error message if any.</pre><h2>SEND RESULT</h2><pre>After Send, a small result window shows an icon (success or error)
+and the message (number of successful sends, errors per contact and
+channel, e.g. &quot;no chat_id&quot;, &quot;SMTP error&quot;); OK closes it. The detail of
+each send is kept in the 📋 Log tab.</pre><pre>SETUP TAB — HELP
+  The Help tab of Setup shows this page (language choice, zoom).</pre></main></body></html>

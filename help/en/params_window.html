@@ -1,0 +1,106 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PARAMETERS — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/params_window.txt</p><h1>PARAMETERS — WysiQ</h1><pre>Access: Main ▸ Settings ▸ Parameters… (Manual… opens the Help Folder tab
+directly); Params button of the Series palette; Settings… of the AI menu
+(AI tab). The last tab used is reopened.</pre><pre>The Parameters window is organised in two levels:
+  • Main tabs: Globals | Query | Statistics | Signal | AI | Help | Help Folder | Legal
+  • Globals sub-tabs: Core | Display | Output | Style | List values | Screens | Help</pre><pre>Global settings are kept by WysiQ; to save the settings specific to a
+query (axes, tables, offsets), use SaveQuery.</pre><pre>Text zoom (help): Ctrl + mouse wheel or A− / A+ buttons</pre><h2>GLOBALS TAB</h2><pre>The global workspace settings (Core, Display, Output, Style, Screens,
+List values) are documented in Globals → Help (same languages as this
+tab). This tab covers the rest of the Parameters window: the Query
+parameters and the shared references (date formats, adaptive locator
+logic).</pre><pre>  Display &gt; Linked &amp; transparent graphs: Link delay (ms) sets the
+  synchronisation latency of LINKED graphs (0 = immediate, default 50 ms);
+  Hide when transparent (Grid / Legend / Scale) chooses what a graph with a
+  transparent background (▧) hides — default values, changeable per graph
+  (right-click on ▧, saved in the query).</pre><h2>QUERY TAB</h2><pre>A single page groups the graph axes and the table layout.
+Axes / Y axis: unit, Scale coefficient, decimals, period factor, visible
+X/Y bounds, ticks and subdivisions.
+X axis - bounds by table: X min/X max dates of each table instance,
+Rows before resampling, Start/End positions on the composite axis.
+Multi-table - table offsets: X offsets in rows, Y offset, Coeff,
+Mode (Shrink/Expand), Target rows, Every N, Exec and Reset.</pre><pre>IMPORTANT: the X bounds of the Axes block apply to the GRAPH; those of the
+X axis - bounds by table block apply to ONE table INSTANCE.
+Row offsets are not real-time shifts.
+For the realignment methods (including AVG, Step and Auto calendar), click
+? in the Multi-table block: table_layout.txt help.
+Save the query changes with SaveQuery.</pre><h2>STATISTICS TAB</h2><pre>Statistics execution parameters
+  p-adjust    multiple-testing correction (BH, Holm, Bonf, none)
+  Max lag     maximum lag for autocorrelation/cross-correlation tests
+  Bins        number of classes (histogram) for distribution tests
+  Min size    minimum sample size required to run a test
+  Alpha       significance threshold</pre><pre>Test Notebooks (list on the left + editor on the right)
+  Each notebook defines a custom statistical test (source + per-test
+  parameters). Select a notebook to view/edit its parameters and its source
+  code.
+  The ? button opens the Test Notebooks help.</pre><h2>SIGNAL TAB</h2><pre>Controls the Signal metrics shown in the Signal palette.</pre><pre>  Click a row               enables/disables that metric
+  Click the Signal heading  enables/disables all metrics
+  HF moving average window  window size used by the HF_ENERGY metric
+                            (odd values centred, even values rounded
+                            down)</pre><pre>Changes are saved immediately — no separate Save/Cancel buttons.</pre><pre>AI TAB</pre><pre>Sub-tabs: Profile | Observatory | AI Folder | Help.</pre><pre>  Profile       AI profiles (provider, model, URL, key), connection test,
+                🧭 Assistant… (AI Setup / Bench), provider catalogue, scan
+                of local models. See the &quot;params_ai&quot; help.
+  Observatory   Selecting the tab opens the AI Observatory settings window
+                (activity server, fields sent, JSON preview); Observatory
+                Settings… reopens it. See the &quot;activity_tracking&quot; help.
+  AI Folder     Selecting the tab opens the AI folder of the workspace
+                (protocol, questions, cases) in the file explorer.
+  Help          Selecting the tab opens the &quot;params_ai_knowledge&quot; help.</pre><pre>The predefined questions (AI Feed Question Dictionary) are viewed in the
+Requests Catalog of the AI Command Center (📋 Request): language, search
+&lt;&lt; / &gt;&gt;, list and exact text sent. Files: ai/Feed/&lt;lang&gt;/ folder of the
+program.</pre><h2>HELP TAB</h2><pre>Shows this help text directly in the window.
+Use the language selector to switch between DE, EN, ES, FR and IT.
+Click ↺ to reload after changing the language.
+Zoom: Ctrl + mouse wheel or A− / A+ buttons.</pre><h2>HELP FOLDER TAB</h2><pre>Browse and search all the .txt help files shipped with WysiQ (all topics,
+not only this window), in any of the 5 languages.</pre><pre>  Language selector     DE / EN / ES / FR / IT
+  Search + &lt;&lt; / &gt;&gt;      full-text search in the help files of the selected
+                        language, navigation between results
+  List (left)           all help topics for the selected language
+  Text (right)          full content of the selected topic
+  A− / A+               text zoom</pre><pre>SHARING SETTINGS (Share Center ▸ Advanced ▸ Setup)</pre><pre>The Contacts, Email/SMTP, Telegram, HTTP Server, 📋 Log and Help tabs are
+not in Parameters: they are in Main ▸ Share ▸ Share Center, Advanced ▸
+Setup tab. See the &quot;share_params&quot; help.</pre><h2>LEGAL TAB</h2><pre>Open-source licence information of the third-party components for the
+current workspace.</pre><pre>  Open folder       opens the legal documents folder in the file explorer
+  Drop-down list    Summary | Notices | Full licenses</pre><pre>The content automatically follows the current help language.</pre><pre>DATE FORMAT REFERENCE  (strftime codes)</pre><pre>All format strings use Python&#x27;s strftime syntax.
+Combine the codes freely, e.g. %d/%m/%Y %H:%M:%S</pre><pre>Year
+  %Y    4-digit year                 2025
+  %y    2-digit year                 25</pre><pre>Month
+  %m    zero-padded month            01 … 12
+  %b    abbreviated month name       Jan … Dec  (locale)
+  %B    full month name              January … December  (locale)</pre><pre>Day
+  %d    zero-padded day              01 … 31
+  %j    day of the year              001 … 366</pre><pre>Weekday
+  %a    abbreviated day              Mon … Sun  (locale)
+  %A    full day                     Monday … Sunday  (locale)
+  %u    day number (Mon=1)           1 … 7
+  %w    day number (Sun=0)           0 … 6</pre><pre>Week
+  %W    week number (Mon)            00 … 53
+  %V    ISO week number              01 … 53</pre><pre>Hour
+  %H    zero-padded 24h hour         00 … 23
+  %I    zero-padded 12h hour         01 … 12
+  %p    AM / PM  (locale)</pre><pre>Minute
+  %M    zero-padded minute           00 … 59</pre><pre>Second
+  %S    zero-padded second           00 … 59</pre><pre>Separator / literal
+  %%    literal % sign</pre><pre>Time zone
+  %Z    time zone abbreviation       UTC, CET …
+  %z    UTC offset                   +0100</pre><h2>PRACTICAL EXAMPLES</h2><pre>  Years only (long view)               %Y
+  Month + year                         %m/%Y
+  Day + month                          %d/%m
+  Full date                            %d/%m/%Y
+  Date + time (minutes)                %d/%m %H:%M
+  Date + time (seconds)                %d/%m/%Y %H:%M:%S
+  Time only (hours:minutes)            %H:%M
+  Time only (h:m:s)                    %H:%M:%S
+  ISO 8601                             %Y-%m-%dT%H:%M:%S
+  Week number                          W%W %Y
+  Abbreviated month + day              %b %d</pre><h2>ADAPTIVE LOCATOR LOGIC</h2><pre>WysiQ automatically chooses the tick unit according to the visible span:</pre><pre>  Span &gt; 180 d       MonthLocator   — major tick every N months
+  Span 60–180 d      WeekdayLocator — major tick every N weeks
+  Span 14–60 d       MonthLocator   — tick on fixed days of the month
+  Span 2.5–14 d      DayLocator     — major tick every N days
+  Span 0.25–2.5 d    HourLocator    — major tick every N hours
+  Span 5min–6h       MinuteLocator  — major tick every N minutes
+  Span &lt; 5 min       SecondLocator  — major tick every N seconds</pre><pre>  Minor ticks are one unit finer than the major locator.
+  The &quot;target ticks&quot; spinbox (Zoom 1–6, see Globals → Display → Zoom date
+  thresholds) controls the density and the label format in each unit.</pre><pre>  Display first row: Link (ms) = Link delay, Zoom (%) = Zoom step, Pan (%) = Pan step, Arrows (ms) = Arrow repeat.
+  Display &gt; Linked &amp; transparent graphs: Link delay (ms) controls LINKED graph synchronization latency (0 = immediate, default 50 ms);
+  Zoom step (%) sets the Graph Remote keyboard zoom step (default 6%, range 1–50%), independently of Link delay;
+  Arrow repeat (ms) (default 30 ms, range 15-250 ms) repeats Pan/Zoom arrows and POLAR &lt;&lt; X / X &gt;&gt; immediately on press, separately from Link delay;
+  Pan step (%) (default 2%, range 1–20%) sets each Pan arrow&#x27;s movement distance;</pre></main></body></html>

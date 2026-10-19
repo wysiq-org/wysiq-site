@@ -1,0 +1,156 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Palette Graph — Télécommande — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/graph_remote.txt</p><h1>Palette Graph — Télécommande</h1><pre>La télécommande Graph est une palette unique, partagée par toutes les fenêtres
+graphiques ouvertes. Elle agit toujours sur le graphe actif (le dernier graphe
+cliqué). Elle regroupe l&#x27;ouverture des palettes, le mode LINE / POLAR, la
+navigation, les captures, l&#x27;image de fond, les styles d&#x27;axes, le lien entre
+graphes et la liste des graphes ouverts.</pre><pre>Cliquer sur la barre de titre de la télécommande remet le graphe actif au
+premier plan (utile lorsqu&#x27;une autre fenêtre le cache).
+Le bouton Graph de l&#x27;en-tête d&#x27;un graphe rouvre la télécommande.
+Pour déplacer la télécommande, faire glisser n&#x27;importe quelle zone non
+cliquable (titres de section, fond) : utile si la barre de titre est sortie
+de l&#x27;écran. Valable pour toutes les palettes.</pre><pre> BARRE D&#x27;INFO (haut de palette)</pre><pre>À gauche, un bandeau de texte ; à droite, le logo WysiQ.
+Sa couleur indique le niveau du message :
+  • Blanc   → information normale
+  • Orange  → avertissement
+  • Rouge   → erreur ou condition bloquante</pre><pre>En mode LINE :
+  Affiche le Xmin et le Xmax visibles de la vue courante.
+  Si l&#x27;axe X est une date, le format complet de la table est utilisé
+  (Params &gt; Core &gt; « Date format (tables) ») : même en zoom serré sur les
+  heures, le jour, le mois et l&#x27;année restent visibles.
+  Le bandeau se met à jour à chaque zoom, pan ou défilement.</pre><pre>En mode POLAR :
+  Scope   durée de la fenêtre polaire (ex. 365.0 days)
+  Step    pas de rotation actif (Window = une fenêtre entière)
+  X000    début de la fenêtre (X0)
+  X360    fin de la fenêtre (X360)
+  Si X0 et X360 couvrent toute la plage de données, la rotation &lt;&lt; X / X &gt;&gt;
+  est impossible → fond rouge « ⚠ Adjust X0 &amp; X360 for rotation ».
+  Réduisez la fenêtre polaire pour réactiver la rotation.</pre><pre>Les confirmations courtes (Snap, REC, overlay, NewRec, export…) s&#x27;affichent
+aussi ici pendant environ 4 secondes, puis le contexte habituel revient.</pre><h2>BOUTONS RONDS — PALETTES DU GRAPHE ACTIF</h2><pre>Une rangée de 10 boutons ronds ouvre ou ferme chaque fenêtre du graphe actif.
+Vert = ouverte, gris = fermée. Un clic sur un bouton vert ferme la fenêtre,
+un clic sur un bouton gris l&#x27;ouvre. L&#x27;état est rafraîchi à chaque retour
+sur la télécommande.</pre><pre>  Gr   En-tête du graphe courant (barre Table / Graph / boutons) : un clic
+       le masque — il ne reste que le tracé, par ex. un polar transparent
+       posé sur un graphe line — un second clic le réaffiche.
+       Vert = en-tête visible.
+  Se   Palette Séries (séries, styles, métriques, axes X/Y)
+  PC   Atelier PCA (analyse en composantes principales)
+  AI   AI Command Center
+  Ta   Palette Table (colonnes, tri, filtres WHERE, export)
+  Ar   Palette Area (rectangle, statistiques, PCA, Identify/Fit)
+  Te   Fenêtre Tests statistiques (également accessible par le bouton
+       Tests de l&#x27;en-tête du graphe)
+  Si   Palette Signal (rugosité, dynamique de variabilité)
+  Sc   Palette Scénario (courbes cibles tracées à la main)
+  Le   Éditeur de légende</pre><h2>LIGNE DE COMMANDE</h2><pre>LINE / POLAR   Bascule le graphe actif entre le mode cartésien et le mode
+               polaire. Le libellé indique le mode courant.
+PLOT           Retrace le graphe actif et remet la vue à zéro (bornes de la
+               palette Séries, ou échelle automatique).
+📦             Prépare le graphe pour le partage (voir PREP plus bas).
+               Clic droit : activation rapide des contacts / canaux.
+?              Ouvre cette aide.</pre><pre> MODE D&#x27;INTERACTION (mode LINE)</pre><pre>Area   Clic-glisser sur le graphe : trace un rectangle de zoom / sélection
+       (défaut). Le rectangle alimente aussi la palette Area.
+Pan    Clic-glisser : déplace la vue.
+       Souris sur ce bouton : flèche gauche / droite = pan gauche / droite,
+       flèche haut / bas = pan haut / bas.
+       Le maintien répète au Link delay
+       (Settings &gt; Globals &gt; Display, en millisecondes).
+Zoom   Molette : zoom centré sur le curseur.
+       Souris sur ce bouton : flèche gauche = zoom moins, flèche droite = zoom plus,
+       flèche haut = zoom avant vertical, flèche bas = zoom arrière vertical,
+       à la même cadence Link delay.
+Le bouton enfoncé indique le mode actif.</pre><pre> MODE POLAR : &lt;&lt; X / X &gt;&gt; / Zoom</pre><pre>En mode polaire, les trois boutons deviennent :
+&lt;&lt; X    Décale la fenêtre polaire vers l&#x27;arrière d&#x27;un pas.
+X &gt;&gt;    Décale la fenêtre polaire vers l&#x27;avant d&#x27;un pas.
+        Maj+clic ou clic droit sur &lt;&lt; X / X &gt;&gt; : choix du pas (Window,
+        1 an, 6 mois, 3 mois, 1 mois, 10 jours, 7 jours, 1 jour, heures,
+        minutes, secondes pour un axe date ; pas numériques sinon).
+        Window = décalage d&#x27;une fenêtre entière.
+Zoom    Zoom radial à la molette ou au glisser vertical (le rayon mini
+        reste fixe).
+Le zoom radial est mémorisé : il est réappliqué aux retracés suivants.</pre><h2>HISTORY — NAVIGATION</h2><pre>⌂      Vue d&#x27;accueil : vue complète avec échelle automatique
+       (en polaire : rotation remise à 0 et zoom radial effacé ; la
+       fenêtre X0/X360 est conservée).
+Prev   Recule dans l&#x27;historique des vues.
+Next   Avance dans l&#x27;historique des vues.</pre><h2>CAPTURE</h2><pre>Print    Ouvre la boîte d&#x27;export PNG/PDF (résolution, marges, mise en page).
+Snap     Clic gauche : capture du graphe (+ vue Area si un rectangle Area
+         est défini). Clic droit : capture de l&#x27;Area seule.
+         Fichiers dans snapshots/ du workspace. Si REC est actif, les
+         captures sont aussi ajoutées à la présentation PowerPoint.
+NewRec   Crée une nouvelle présentation PowerPoint et active REC.
+● REC    Clic sur le point : enregistrement ON / OFF.
+         Rouge = ON : chaque PLOT et chaque Snap ajoute une diapositive,
+         y compris quand on change de graphe dans le combo Graph (le nom du
+         graphe apparaît dans l&#x27;en-tête de la diapositive).
+         Vert = OFF.</pre><h2>BACKGROUND — IMAGE DE FOND</h2><pre>Overlay ...   Affiche / masque le bloc de réglages de l&#x27;image de fond :
+              W, H (taille d&#x27;export), PNG (fichier), Zoom, X, Y (position)
+              et α (transparence).
+Save          Enregistre les courbes du graphe MAIN seules en PNG dans
+              overlays/ (réutilisable comme fond sur une autre query).
+Load          Charge un PNG et l&#x27;applique en fond du graphe MAIN.
+Clear         Retire l&#x27;image de fond du graphe MAIN.</pre><h2>AXES — STYLES</h2><pre>X: Top     Affiche aussi l&#x27;axe X en haut du graphe.
+X: Y=0     Trace une ligne horizontale à Y = 0.
+Y: right   Affiche aussi les graduations Y à droite.</pre><pre> POLAR — RÉGLAGES (visible en mode polaire)</pre><pre>Tx / Ty   Grilles secondaires angulaire (Tx) et radiale (Ty).
+X0        Début de la fenêtre polaire (curseur + champ de saisie).
+X360      Fin de la fenêtre polaire.
+          Clic droit sur l&#x27;étiquette X360 : fixe la longueur de la fenêtre
+          (1 an, 6 mois, 1 mois, 7 jours, 1 jour, heures…).
+Disque    Position horizontale du disque : éditeur Legend ▸ Disk
+          (0 = à gauche, 0,5 = centré, 1 = à droite).
+Ymin      Rayon minimum (centre du graphe).
+Ymax      Rayon maximum (bord du graphe).
+Synchronisé avec la palette Series : X0/X360 = X Min/Max et
+Ymin/Ymax = Y Min/Max. Tout changement dans la remote (curseur, champ,
+X &gt;&gt;, zoom molette) s&#x27;affiche aussitôt dans la palette Series ; Entrée /
+PLOT dans la palette Series applique ses valeurs à la fenêtre polaire.
+Cliquer sur l&#x27;étiquette X0 ou X360 ouvre un calendrier si l&#x27;axe X est une
+date. Ymin / Ymax (rayon) sont numériques : leur étiquette n&#x27;ouvre un
+calendrier que si le champ contient une date. Le calendrier s&#x27;ouvre à côté de
+la remote, à la hauteur du champ cliqué. Le survol d&#x27;une étiquette indique son
+rôle (📅 = calendrier). Entrée ou sortie du champ valide la saisie.</pre><h2>GRAPH LINK — SYNCHRONISATION DES VUES</h2><pre>ON   Active la synchronisation entre les graphes cochés dans la liste.
+X    Synchronise l&#x27;axe X.
+Y    Synchronise l&#x27;axe Y.
+Le graphe MAIN (rond vert) pilote : les graphes cochés suivent ses zooms,
+défilements, Home et retracés.
+Le délai de propagation est réglable dans Settings &gt; Globals &gt; Display &gt; Linked &amp; transparent graphs &gt; Link delay (ms). Valeur par défaut : 50 ms ; 0 = synchronisation immédiate.
+En mode polaire, maintenez « &lt;&lt; X » ou « X &gt;&gt; » pour faire défiler la fenêtre en continu ; la répétition utilise également ce délai.</pre><pre>Le LINK ne fonctionne qu&#x27;entre graphes de même type :
+  line avec line     X et Y synchronisent les axes (zoom, défilement).
+  polar avec polar   X synchronise la fenêtre X0/X360, la rotation et le
+                     pan angulaire ; Y synchronise le zoom radial (Ymin/Ymax).
+Un graphe line et un graphe polaire ne sont jamais liés entre eux (l&#x27;axe X
+polaire est un angle et l&#x27;axe Y un rayon). En mode polaire, la section
+GRAPH LINK s&#x27;affiche sous la section POLAR.</pre><pre>Astuce : clic droit sur le combo Graph de l&#x27;en-tête d&#x27;un graphe ▸ Duplicate graph
+= même query dans une 2e fenêtre sur un autre graphe ; avec LINK X, les deux
+vues bougent ensemble. ▸ Detach graph = le graphe affiché est calculé en
+parallèle dans un autre processus (P2 · …). ▸ Detach area = en LINE, ouvre
+l’Area courante dans un autre processus avec ses bornes X/Y.</pre><h2>LISTE DES GRAPHES OUVERTS</h2><pre>Une ligne par fenêtre graphique :
+  ☐       case LINK : ce graphe suit le graphe MAIN quand LINK est ON
+  nom     nom de la query et graphe affiché, ex. « PPE · Graph 2 »
+          (clic : rend ce graphe actif et déroule la liste de ses séries
+          tracées ; double-clic : rend actif). Nom long : la fin reste
+          visible, la molette fait défiler le nom, le survol affiche le
+          nom complet.
+  nS      nombre de séries tracées
+  ●       rond vert = graphe MAIN (pilote du LINK) ; clic sur un rond gris
+          pour désigner ce graphe comme MAIN
+Dans la liste déroulée, un clic (gauche ou droit) sur une série ouvre sa
+fenêtre de style.</pre><h2>PREP — BOUTON 📦</h2><pre>Le bouton 📦 prépare le graphe actif dans share/outbox/graphs/.
+Rien n&#x27;est envoyé tant que vous n&#x27;utilisez pas
+Fenêtre principale → Share → Share Center, onglet Send.</pre><pre>  Clic gauche   Ouvre la fenêtre Prep :
+                  • enregistreur vocal optionnel (● Rec / ■ Stop / ▶ Play / Erase)
+                  • 📦 Prep → écrit le HTML (+ WAV optionnel) dans share/outbox/graphs/ ;
+                    une confirmation « Staged in share/outbox/graphs/ » propose
+                    Open Share (ouvre le Share Center) ou OK
+                  • Cancel → ferme sans rien écrire
+  Clic droit    Activation rapide des contacts / canaux : double-clic sur
+                une ligne pour la passer On / Off, Close pour fermer.</pre><pre>Envoi : Share Center ▸ onglet Send (fichiers, destinataires, canal Email / Telegram / Both).
+Configuration des contacts et canaux : Share Center ▸ Advanced ▸ Setup.</pre><pre> ÉCRAN 2</pre><pre>Le bouton Screen2 se trouve dans l&#x27;en-tête de chaque graphe (plus dans la
+télécommande). Clic gauche : envoie le graphe sur l&#x27;écran secondaire ou le
+ramène. Clic droit : recentre toutes les fenêtres.
+Configuration : Params → Globals → Screen.</pre><h2>CONSEILS</h2><pre>• La télécommande reste visible même si la fenêtre principale est réduite.
+• LINK X compare deux graphes sur la même période en gardant des échelles Y
+  indépendantes.
+• Snap est plus rapide que Print pour une capture sans boîte de dialogue.
+• En zoom sur les heures, la barre d&#x27;info affiche toujours la date complète.</pre><pre>  Première ligne Display : Link (ms) = Link delay, Zoom (%) = Zoom step, Pan (%) = Pan step, Arrows (ms) = Arrow repeat.
+  Display &gt; Linked &amp; transparent graphs : Link delay (ms) règle la latence de synchronisation des graphes LINKED (0 = immédiat, défaut 50 ms) ;
+  Zoom step (%) définit le pas de zoom par flèche de Graph Remote (défaut 6 %, plage 1–50 %), indépendant du Link delay ;
+  Arrow repeat (ms) (défaut 30 ms, plage 15-250 ms) règle les flèches Pan/Zoom et POLAR &lt;&lt; X / X &gt;&gt; dès l’appui, séparément de Link delay ;
+  Pan step (%) (défaut 2 %, plage 1–20 %) règle la distance des déplacements Pan par flèche ;</pre></main></body></html>

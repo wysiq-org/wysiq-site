@@ -1,0 +1,52 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Find Best Correlation — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/stats_best_correlation_window.txt</p><h1>Find Best Correlation — Aide</h1><pre>Cette fenêtre recherche, pour deux séries, le décalage (lag) qui
+maximise la corrélation de Pearson en valeur absolue. Elle calcule
+aussi la régression linéaire associée et permet d&#x27;en faire une
+Metric résiduelle éditable dans WysiQ.</pre><h2>1) INTERFACE</h2><pre>Accès : bouton Best corr de la fenêtre Statistical Tests, après avoir
+coché une série A et une série B (sinon : « Select Serie A and Serie B »).</pre><pre>  Target        (lecture seule) Cible y = série A ; la série B est la source x.
+  Scope         (lecture seule) Sélection de la fenêtre Statistical Tests :
+                Area limite le calcul à la zone ; All prend tous les points.
+  Lag           Décalage maximal (champ numérique). Le scan va de -Lag à +Lag.
+  Run           Lance la recherche.
+  See residual  Charge le résidu dans __COMBO__ et ouvre le Metric Editor.
+  Create Serie  Crée une Metric nommée dans la palette Series et ouvre
+                le Metric Editor pour la vérifier ou la modifier.
+  Clear         Vide les résultats.
+  Export        Enregistre la grille en .xlsx ou .txt (« No result to
+                export » si la grille est vide). Ctrl+C copie les lignes
+                sélectionnées dans le presse-papiers.
+  → AI          Envoie les lignes sélectionnées, ou toute la grille si
+                aucune ligne n&#x27;est sélectionnée, vers AI Feed.</pre><pre>Résumé (au-dessus de la grille) : Best lag, Pearson, Counter, Slope,
+Intercept, Relation du meilleur résultat. Clic sur un en-tête de la grille :
+tri.</pre><pre>La ligne choisie dans la grille détermine le lag, la pente et
+l&#x27;intercept utilisés par See residual et Create Serie. Sans sélection,
+WysiQ utilise le meilleur résultat.</pre><h2>2) LECTURE DES RÉSULTATS</h2><pre>  lag           Décalage en nombre de points.
+  corr          Corrélation de Pearson r à ce lag.
+  counter_corr  Corrélation obtenue au lag opposé.
+  p             p-value de Pearson (vide si SciPy est indisponible).
+  spearman      Corrélation de rang de Spearman.
+  kendall       Tau de Kendall.
+  slope         Pente de la régression cible ~ source décalée.
+  intercept     Constante de cette régression.
+  n             Nombre de couples valides après alignement.
+  relation      direct si r &gt; 0, inverse si r &lt; 0.</pre><pre>  lag = 0 : séries alignées sans décalage.
+  lag &gt; 0 : la source est décalée de lag points et précède la cible.
+  lag &lt; 0 : décalage dans le sens opposé.</pre><pre>Un lag n&#x27;est calculé que si au moins trois couples finis subsistent.</pre><h2>3) METRIC RÉSIDUELLE CRÉÉE</h2><pre>Le modèle ajusté est :</pre><pre>  cible estimée = slope × source décalée + intercept</pre><pre>La Metric créée représente ce qui n&#x27;est pas expliqué par ce modèle :</pre><pre>  résidu = cible - (slope × source décalée + intercept)</pre><pre>Dans le Metric Editor, WysiQ construit exactement deux composants :</pre><pre>  cible : coeff = 1,        dx = 0,   offset = 0
+  source : coeff = -slope,  dx = lag, offset = -intercept</pre><pre>Le nom proposé est de la forme :</pre><pre>  residual_cible_vs_source_lag+N</pre><pre>Il est rendu unique automatiquement si ce nom existe déjà.</pre><h2>4) SEE RESIDUAL OU CREATE SERIE ?</h2><pre>See residual ouvre la Metric spéciale __COMBO__ dans le Metric Editor.
+Elle sert à prévisualiser et ajuster le calcul avant de le conserver.
+Elle peut remplacer le contenu précédent de __COMBO__.</pre><pre>Create Serie ajoute immédiatement une nouvelle Metric à la palette
+Series du graphique courant, puis ouvre le Metric Editor. La Metric
+reste entièrement éditable : nom, coefficients, dx, offsets, activation
+des composants, style et autres paramètres disponibles dans l&#x27;éditeur.
+Elle fait partie de la configuration de la query et peut être réutilisée
+comme toute autre Metric lorsque la query est sauvegardée et rechargée.</pre><pre>Attention : le bouton porte encore le libellé historique « Create Serie »,
+mais l&#x27;objet créé est bien une Metric (série combinée virtuelle).</pre><h2>5) INTERPRÉTATION ET LIMITES</h2><pre>La Metric résiduelle sert à étudier la part propre à la cible : anomalie,
+tendance restante, rupture, saisonnalité ou événement non expliqué par
+la source. Elle peut ensuite être analysée dans le graphe, Area, Signals,
+les tests statistiques, PCA ou envoyée à l&#x27;IA.</pre><pre>• Corrélation ne signifie pas causalité.
+• Le lag est exprimé en points, pas automatiquement en secondes ou jours.
+• Un lag élevé réduit n et peut produire un résultat fragile.
+• Vérifier le signe du lag, la pente, le graphe et le contexte métier.
+• Scope=Area permet d&#x27;étudier un régime ou une période particulière.
+• Les coefficients sont calculés sur la zone choisie ; les modifier dans
+  le Metric Editor change la Metric, sans relancer la recherche.</pre><pre>Code auditable : stats/tests_engine.py (dossier du programme),
+fonction analyze_best_correlation().</pre></main></body></html>

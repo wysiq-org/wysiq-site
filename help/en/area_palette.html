@@ -1,0 +1,153 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AREA PALETTE — Selection statistics, post-its, PCA and Identify — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/area_palette.txt</p><h1>AREA PALETTE — Selection statistics, post-its, PCA and Identify</h1><pre>Access: Area button of the graph window or Ar circle of the Graph Remote.</pre><pre>Typical workflow:
+  tick A in Series → draw a rectangle on the graph (Area mode) →
+  Refresh → (Stats / Pct / PCA / Identify + Fit) → Save (named area) →
+  Post-it or → AI.</pre><pre>Role
+Computes the statistics of the series whose A toggle = ON, over a
+selection rectangle drawn on the graph. The Area palette is also the
+entry point to PCA analysis and to Identify / Fit shape exploration.
+Statistical tests are no longer embedded here: they have been moved to
+the Statistical Tests window (see the stats_tests_window help).</pre><pre>The input series are those selected with the A toggle in the Series
+palette. Area therefore uses the same series for area computations,
+PCA and Identify.</pre><pre>TOOLBAR (first row)
+Dec       Number of decimals shown in the table (0–12).
+Tol       X tolerance used to pair two series on neighbouring X values.
+          Set 0 for an exact match, or the typical X step (e.g. 1.0 for
+          daily data) for nearest-neighbour pairing.
+UF        Unit factor: multiplies the sum column when Adj is ON.
+Adj       Enables/disables applying the Unit factor.
+Stats     Shows the extended statistics columns (σ, NA, NA%, IQR,
+          MAD, skew, kurt).
+Pct       Enables the percentile columns. Clicking the &quot;Pct&quot; text
+          (left or right click) opens a small editor for the list of
+          levels (e.g. 10,25,50,75,90): OK (Enter) confirms, Close (Escape)
+          closes.
+PCA       Computes the principal components over the X scope of the Area.
+Identify  Shows the six Identify columns (shape search).
+Fit       Runs the best-model computation for each A series (Identify).
+Edit      Enables visual editing of the Area rectangle on the graph. An
+          Area must already exist (drawn on the graph or recalled from
+          an Xmin/Xmax/Ymin/Ymax combo). Drag the inside to move;
+          pull the edges or corners to resize. The bound fields and the
+          table stay in sync while moving.
+          After a change, Save stores a new named Area;
+          Refresh updates the statistics.</pre><pre>BOUNDS HEADER (second row)
+Xmin / Xmax   Editable X range. Press Enter or leave the field
+              to apply. For a date, clicking the label opens the
+              calendar (OK / Cancel). These are combos: selecting a saved
+              area (e.g. &quot;A2 | value&quot;) restores its four bounds.
+ΔX            Width of the selection on the X axis.
+Ymin / Ymax   Y range of the rectangle.
+ΔY            Height of the selection on the Y axis.</pre><pre>Zoom In / Out and Save
+Edit       Enables visual editing of the Area rectangle on the graph (see
+           also the toolbar). Drag the inside to move;
+           pull the edges or corners to resize.
+Zoom In    Pushes the bounds of the selected area into the X/Y bounds of
+           the Series palette and forces a Plot. While Zoom In is active,
+           selecting another saved area applies it to the graph.
+Zoom Out   Restores the previous full-frame bounds.
+Save       Stores the four current bounds. If they are new,
+           WysiQ creates a named area (A1, A2, A3…) in the query JSON.
+           Right-click a bound combo: Delete Area removes the displayed
+           area.</pre><pre>ACTION BAR (right)
+Refresh    Reapplies the rectangle bounds and refreshes all the
+           statistics. The computation is not automatic, to avoid
+           slowdowns on large data sets: click Refresh after any change
+           of bounds, scope or selection.
+PCA→Series Creates the temporary lambda series matching the PCs (see the
+           PCA section).
+Actions    Combo grouping the secondary actions:
+             • Post-it     Freezes a snapshot of the stats as a floating
+                           post-it.
+             • Hide/Show   Hides / restores all open post-its.
+             • Add Fit     (Identify, Curve mode) publishes the fitted curve.
+             • → Scenario  (Identify, Curve mode) samples the curve
+                           into Scenario control points.
+           Clicking the visible &quot;Post-it&quot; text creates a post-it
+           directly; the arrow drops down the other actions.
+?          Opens this help.</pre><pre>STATS TABLE COLUMNS
+#      Row number.
+Serie  Series name (coloured as on the graph).
+nb     Number of points in the rectangle.
+sum    Sum of Y values (multiplied by UF if Adj is ON).
+avg    Arithmetic mean.
+min    Minimum Y value.
+max    Maximum Y value.
+Range  Spread: max − min.
+σ      Standard deviation (Stats toggle).
+NA     Number of missing / NaN values (Stats toggle).
+NA%    Percentage of NaN values (Stats toggle).
+IQR    Interquartile range Q75 − Q25 (Stats toggle).
+MAD    Median absolute deviation (Stats toggle).
+skew   Skewness (Stats toggle).
+kurt   Excess kurtosis (Stats toggle).
+Pxx    Percentile at level xx (Pct toggle; e.g. P10, P75).</pre><pre>When exactly two A series are active, three extra rows
+appear:
+  S1&gt;S2 : Δ   Positive deltas (S1 − S2 &gt; 0).
+  S1&lt;S2 : Δ   Negative deltas (S1 − S2 &lt; 0).
+  Δ (S1-S2)   All S1 − S2 deltas.</pre><pre>POST-ITS
+A post-it is a borderless floating snapshot of the current table. It
+does not update when the rectangle moves. Drag it by its header;
+resize from the right/bottom edges; close with ✕.
+&quot;Copy&quot; in the header copies all the data as TSV.
+&quot;→ AI&quot; sends the snapshot to the AI.</pre><pre>PCA IN AREA
+The PCA toggle computes the principal components over the X scope of the
+Area: Xmin / Xmax select the rows used. The Area Ymin / Ymax do not
+filter the PCA data; the full-graph Ymin / Ymax bound the values, to
+avoid a different number of points per series before the computation.</pre><pre>The number of PCs is 3 by default (standardised data); it is no longer
+adjustable in Parameters (the former Axes tab has been removed). The PCA
+workbench (PCA button of the graph window) offers a fuller analysis. Area
+adds the rows AXIS_PC1, AXIS_PC2, …, AXIS_RECONSTRUCTION_ERROR and
+AXIS_DIST_PCA to the table. AXIS_DIST_PCA = sqrt(sum(PCi²)) acts as a
+global distance score in PCA space. λ% is the variance explained by each
+component, cumλ% the cumulative variance.</pre><pre>The PCA→Series button creates the matching temporary lambda series
+(PC scores, reconstruction error, PCA distance) in the Series palette.
+They are meant for quick exploration and plotting but are not
+saved into query.json. To keep them, create a work table containing the
+real series and the PCs, then open it as a query.</pre><pre>IDENTIFY / FIT (exploratory shape search)
+Explores which mathematical shape best describes each A series in the
+current Area rectangle. It is a Graph First aid — not a formal
+statistical test. Fit % measures the quality of the model, not &quot;the
+probability that the data follow this law&quot;.</pre><pre>Distribution / Curve (mode combo)
+  Distribution — fits the Y values inside the Area only (X ignored).
+                 For residuals, noise or spread. Not well suited to
+                 ordered profiles (age pyramid, time series): prefer
+                 Curve.
+  Curve        — fits Y = f(X) using the X axis of the series (time,
+                 age, index…).</pre><pre>Fit          Computes the best model for each A series. The columns
+             show &quot;(click Fit)&quot; until Fit has been pressed.
+             After moving the rectangle, reloading the data or
+             recomputing with changed values, click Fit again.</pre><pre>Identify columns (when Identify is ON)
+  IdType       &quot;dist&quot; or &quot;curve&quot;.
+  Best model   Name of the best ranked candidate.
+  Fit %        Quality score (R²-based for Curve, KS-based for
+               Distribution).
+  Param 1..3   Up to three fitted parameters (label=value).</pre><pre>Add Fit / → Scenario actions (Actions combo, Curve mode only)
+  Add Fit      Publishes the best fitted curve as a new series.
+               The model is evaluated over the WHOLE X of the series — values
+               outside the Area rectangle may be extrapolated.
+  → Scenario   Samples the best curve into Scenario control points
+               and opens the Scenario palette.
+  Both actions are hidden when Distribution mode is chosen.</pre><pre>KEYBOARD SHORTCUTS
+Ctrl+C     Copies the selected rows (or all) of the Stats table as
+           TSV.</pre><pre>TIPS
+• Draw a new rectangle by click-dragging on the graph in Area mode
+  (Graph Remote ▸ Area).
+• To move or resize an existing rectangle, click Edit then
+  handle the rectangle directly on the graph.
+• Use consistent Xmin/Xmax between post-its to compare
+  periods.
+• Set Tol to the X axis step to align series sharing the
+  same dates.
+• Pyramids, cohort profiles, seasonal shapes: use Curve, not
+  Distribution.
+• Allow ~8 points in the Area for Distribution, ~5 for Curve.
+• Identify results are included in the AI Feed JSON when Identify
+  is ON and Fit has been run.</pre><pre>SELECTION BEYOND THE FRAME (several graphs)
+Area filters the points on X and Y at the same time: a Y value outside
+the bounds is excluded from the &quot;nb&quot; count, even if its date is selected.
+When drawing the Area, extending the gesture ABOVE or BELOW the frame
+extends Ymin/Ymax to the extremes of the A series and of the series of the
+other graphs of the same query. A gesture to the LEFT or RIGHT of the frame
+extends Xmin/Xmax. The axis not exceeded keeps the drawn selection (for
+example, the time peak on X). Graphs and their zoom are not changed; only
+the Area rectangle takes these bounds after the mouse is released.</pre></main></body></html>

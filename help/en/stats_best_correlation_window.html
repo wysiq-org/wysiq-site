@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Find Best Correlation — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/stats_best_correlation_window.txt</p><h1>Find Best Correlation — Help</h1><pre>This window searches, for two series, the lag that maximises the absolute
+Pearson correlation. It also computes the associated linear regression
+and can turn it into an editable residual Metric in WysiQ.</pre><h2>1) INTERFACE</h2><pre>Access: Best corr button of the Statistical Tests window, after ticking a
+series A and a series B (otherwise: &quot;Select Serie A and Serie B&quot;).</pre><pre>  Target        (read-only) Target y = series A; series B is source x.
+  Scope         (read-only) Selection of the Statistical Tests window:
+                Area restricts the computation to the area; All uses every point.
+  Lag           Maximum shift (numeric field). The scan runs from -Lag to +Lag.
+  Run           Starts the search.
+  See residual  Loads the residual into __COMBO__ and opens the Metric Editor.
+  Create Serie  Creates a named Metric in the Series palette and opens
+                the Metric Editor so it can be checked or edited.
+  Clear         Clears the results.
+  Export        Saves the grid as .xlsx or .txt (&quot;No result to
+                export&quot; if the grid is empty). Ctrl+C copies the selected
+                rows to the clipboard.
+  → AI          Sends the selected rows, or the whole grid when no row
+                is selected, to AI Feed.</pre><pre>Summary (above the grid): Best lag, Pearson, Counter, Slope,
+Intercept, Relation of the best result. Click a grid heading:
+sort.</pre><pre>The row chosen in the grid supplies the lag, slope and intercept used by
+See residual and Create Serie. With no selection, WysiQ uses the best
+result.</pre><h2>2) READING THE RESULTS</h2><pre>  lag           Shift in number of points.
+  corr          Pearson correlation r at this lag.
+  counter_corr  Correlation obtained at the opposite lag.
+  p             Pearson p-value (blank if SciPy is unavailable).
+  spearman      Spearman rank correlation.
+  kendall       Kendall&#x27;s tau.
+  slope         Slope of the regression target ~ shifted source.
+  intercept     Constant of that regression.
+  n             Number of valid pairs after alignment.
+  relation      direct if r &gt; 0, inverse if r &lt; 0.</pre><pre>  lag = 0: series aligned with no shift.
+  lag &gt; 0: the source is shifted by lag points and precedes the target.
+  lag &lt; 0: shift in the opposite direction.</pre><pre>A lag is computed only if at least three finite pairs remain.</pre><h2>3) RESIDUAL METRIC CREATED</h2><pre>The fitted model is:</pre><pre>  estimated target = slope × shifted source + intercept</pre><pre>The created Metric represents what this model does not explain:</pre><pre>  residual = target - (slope × shifted source + intercept)</pre><pre>In the Metric Editor, WysiQ builds exactly two components:</pre><pre>  target: coeff = 1,        dx = 0,   offset = 0
+  source: coeff = -slope,   dx = lag, offset = -intercept</pre><pre>The proposed name has the form:</pre><pre>  residual_target_vs_source_lag+N</pre><pre>It is made unique automatically if that name already exists.</pre><h2>4) SEE RESIDUAL OR CREATE SERIE?</h2><pre>See residual opens the special Metric __COMBO__ in the Metric Editor.
+It is used to preview and adjust the computation before keeping it.
+It may replace the previous content of __COMBO__.</pre><pre>Create Serie immediately adds a new Metric to the Series palette of the
+current graph, then opens the Metric Editor. The Metric remains fully
+editable: name, coefficients, dx, offsets, component activation, style
+and the other parameters available in the editor.
+It is part of the query configuration and can be reused like any other
+Metric once the query is saved and reloaded.</pre><pre>Note: the button still carries the historical label &quot;Create Serie&quot;,
+but the object created is indeed a Metric (virtual combined series).</pre><h2>5) INTERPRETATION AND LIMITS</h2><pre>The residual Metric is used to study what is specific to the target:
+anomaly, remaining trend, break, seasonality or event not explained by the
+source. It can then be analysed in the graph, Area, Signals, the
+statistical tests, PCA, or sent to the AI.</pre><pre>• Correlation does not mean causation.
+• The lag is expressed in points, not automatically in seconds or days.
+• A large lag reduces n and can give a fragile result.
+• Check the sign of the lag, the slope, the graph and the business context.
+• Scope=Area lets you study a particular regime or period.
+• The coefficients are computed on the chosen range; changing them in
+  the Metric Editor changes the Metric without rerunning the search.</pre><pre>Auditable code: stats/tests_engine.py (program folder),
+function analyze_best_correlation().</pre></main></body></html>

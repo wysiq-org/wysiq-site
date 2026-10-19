@@ -1,0 +1,110 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GLOBALS — WysiQ settings — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/params_globals.txt</p><h1>GLOBALS — WysiQ settings</h1><pre>Sub-tabs: Core | Display | Output | Style | List values | Screens | Help</pre><pre>These settings apply to the whole workspace (params.json).
+Scr2 only moves the graph — palettes and tables stay on the main screen.</pre><pre>Close with [X] — automatic save.</pre><pre>CORE</pre><pre>Workspace
+  Root directory (WysiQuery)   WysiQ root folder (always named WysiQ).
+  Browse… / New…   Open or create a workspace (New… warns if a
+                   workspace already exists in the chosen folder).
+  Switch           Workspace switch box:
+                     Permanent — remember this workspace on next startup
+                     Temporary — after quit, restore the previous workspace
+                     Keep loaded tables (T MEM stays available)
+                     Clear all tables — fresh DuckDB for the new workspace
+  Personal settings: &lt;user&gt;_params.json · factory: params_ORI.json
+                   Personal settings file and factory file.
+  Restore defaults (ORI)…   Replaces your personal settings with those of
+                   params_ORI.json (&quot;Personal settings were restored&quot;
+                   confirmation).
+  Query import: add its metrics &amp; scenarios to workspace catalogs
+                   (ticked by default) When a query is imported, its
+                   metrics and scenarios are added to the workspace
+                   catalogs; an identical definition is skipped.</pre><pre>Dates &amp; numbers
+  Date format (Min Max)    X Min / X Max fields of the Series, Area, Signal
+                           palettes and windows that take a date bound.
+  Date format (cursor)     Cursor bubble on the graph: date/time shown with
+                           the series values.
+  Date format (X axis)     X-axis ticks of the graphs. The date zoom
+                           thresholds can pick a finer format depending on
+                           the visible range.
+  Date format (tables)     Date cells of the Table windows, Main window
+                           (LAST MODIFIED, tables and queries loaded or not),
+                           Area, Signal, catalogs and table previews/exports.
+  Week 1st day             Mon=0 … Sun=6.
+    start X axis           Weekly X-axis ticks start on that day.
+    auto                   Automatic choice of weekly ticks.
+  Day abbr. (Mo→Su)        Abbreviations of the 7 days (3 characters max,
+                           tooltip = day name) used by the ticks and
+                           Sort X ▸ Weekday.
+  Unit text / Scale (x) / Decimal / Period factor
+                           Default axis values of a new query (see the
+                           Query tab).
+  Nb digits for Exp notation  Number of digits from which values switch to
+                           exponential notation.
+  Decimals (default)       Table / Area decimals.</pre><pre>Table
+  Table display rows       Maximum rows in the Table palette (number or ALL).</pre><pre>Help language
+  Language                 Help language: EN / FR / DE / ES / IT.
+  Text size                Font of the help windows (A− / A+).</pre><h2>DISPLAY</h2><pre>Plot defaults — type, render, line width, marker, alpha for new graphs.
+  In polar mode, bar forms filled angular sectors of radius Y, without
+  turning the data into percentages.
+  Render values: line, point, both, fill, bar. &quot;bar&quot; draws a bar from Y=0
+  up to each value, with a thickness set by Line width. &quot;fill&quot; fills from 0
+  up to each value while keeping the thickness and colour of the line as
+  outline (the per-series render stays editable in the series style popup).
+Linked, transparent &amp; large graphs — settings of overlaid graphs.
+  Link delay (ms)  synchronisation delay of LINKED graphs after pan, zoom or
+                   polar rotation, also used for the hold-to-repeat of
+                   &quot;&lt;&lt; X&quot; / &quot;X &gt;&gt;&quot;. 0 = immediate; default = 50 ms.
+  Hide when transparent  what a graph hides when its background is
+                   transparent (▧ button of the graph window):
+                   Grid (grid, ticked by default), Legend (legend, title,
+                   comment), Scale (axis values, dates, polar frame /
+                   circle). Default values for all graphs; each graph can
+                   have its own setting (right-click on ▧), saved in the
+                   query. A change applies immediately to transparent
+                   graphs.
+  Keep on top (even without focus)
+                   a transparent graph stays above the other windows, even
+                   without focus (ticked by default). Its transparent areas
+                   let you see and click what is below.
+  Large graphs     Fast drawing (only the points visible on screen)
+                   (ticked by default): a cloud of several thousand points
+                   draws only the points visible in the view, one per screen
+                   cell of the marker size. Pan, zoom and resize become
+                   faster; the picture stays the same. Data, cursor, Table,
+                   Area and statistics always use all the points. Untick to
+                   draw every point.
+Graph margins — matplotlib margins (left/right/bottom/top).</pre><pre>Zoom date thresholds
+  Six zones according to the visible range (days): threshold, Auto switch,
+  format, X ticks, X minor, else format.
+  Full guide: ? button on this panel (params_zoom_display topic).</pre><pre>SCREENS (Scr2)</pre><pre>Secondary sub-tab of Globals, right of List values and just before Help.
+Image capture is done with PrtScr in the graph; only window placement is
+configured here.</pre><pre>Moves only the active graph window to a 2nd screen (HDMI, Miracast,
+extended desktop). Palettes, tables, Parameters and other windows stay on
+the main screen.</pre><pre>  Mode
+    auto     First secondary monitor detected by Windows.
+    monitor  Choose from the list (Refresh displays).
+    custom   WxH+X+Y geometry (typed directly or with the buttons below).</pre><pre>  Monitor → geom — takes the size and position of the chosen monitor.
+  Graph → geom   — takes the size and position of the active graph;
+                   produces no image. First place the graph where wanted.
+                   In Custom mode, untick &quot;Maximise on target&quot; to keep
+                   exactly its size.</pre><pre>  Maximise graph on target screen
+    Maximises the graph on the target.</pre><pre>  Refresh displays
+    Rescans the screens. Windows must be in Extend mode (Win+P), not
+    Duplicate only.</pre><pre>  Test Scr2 — tests on the active graph.
+  Graph header: Screen2 button = same toggle.</pre><h2>OUTPUT</h2><pre>Export graph (format, size, Transparent bg = transparent background),
+Snapshot (Footer: capture footer text), Overlay size, PPT record
+(PowerPoint slides after SHOT; &quot;Create PPT on first SHOT&quot; creates the
+presentation on the first SHOT).</pre><pre>PrtScr — Choose the application that automatically opens the PNG captures.
+Windows default keeps the current Windows association. The list detects the
+software declared PNG-compatible; Refresh updates the list, Browse… lets you
+pick an .exe. The choice is saved in the settings, without changing the
+Windows association or the snapshots/ folder. Right-click PrtScr always
+captures the whole desktop.</pre><pre>STYLE</pre><pre>Color panel — 4×8 colour grid; More… opens the full picker,
+  Reset colors restores the original palette.
+Axes — Font, Style (Bold / Italic), X/Y colours and visibility;
+  Reset restores the default colour of a row.
+Grid line colors — major/minor X/Y grids.
+UI — background, buttons, ttk theme, modern/classic style.</pre><h2>LIST VALUES</h2><pre>Polar step menus (CSV) — polar X / X360 steps (1y, 7d, 1h …).
+Sort X — CSV modes for X sorting (raw, dow, dom, month, year …).</pre><pre>Saved globally in params.json.</pre><pre>  Display first row: Link (ms) = Link delay, Zoom (%) = Zoom step, Pan (%) = Pan step, Arrows (ms) = Arrow repeat.
+  Display &gt; Linked &amp; transparent graphs: Link delay (ms) controls LINKED graph synchronization latency (0 = immediate, default 50 ms);
+  Zoom step (%) sets the Graph Remote keyboard zoom step (default 6%, range 1–50%), independently of Link delay;
+  Arrow repeat (ms) (default 30 ms, range 15-250 ms) repeats Pan/Zoom arrows and POLAR &lt;&lt; X / X &gt;&gt; immediately on press, separately from Link delay;
+  Pan step (%) (default 2%, range 1–20%) sets each Pan arrow&#x27;s movement distance;</pre></main></body></html>

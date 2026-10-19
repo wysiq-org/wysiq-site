@@ -1,0 +1,218 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WysiQ — WWW Connection | Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/www_connection.txt</p><h1>WysiQ — WWW Connection | Aide</h1><pre>Accès : Main ▸ Database ▸ WWW Connection.</pre><pre>PRINCIPE
+WWW Connection découvre des jeux de données publiés sur Internet (RTE, ENTSO-E,
+INSEE, Eurostat, BCE, OCDE, ONU, Open-Meteo, SDMX worldwide…), sélectionne des
+séries, les teste, puis construit une table datée WysiQ : WS (WWW Static,
+instantané) ou WL (WWW Live, actualisée périodiquement). Les tables s&#x27;utilisent
+ensuite dans Query, Graph, Table, Metrics, Rules &amp; Vars, Area et Scenario.
+Les droits d&#x27;utilisation restent ceux du fournisseur.</pre><pre>Processus type :
+  choisir le site → choisir le dataset (Discover datasets) → sélectionner les
+  dimensions / codes (Discover series, Select values…, Choose series…)
+  → Test connection (statut ✓ ready) → Download selection (aperçu de la liste,
+  dates From / To, nom de table) → Load → la table WS/WL apparaît dans Main.</pre><pre>Ne confondez pas : site (fournisseur), dataset / dataflow (structure publiée),
+clé de série (sélection de codes), connexion (réglages enregistrés) et table
+WysiQ (données téléchargées). Découvrir un dataflow indique sa structure, pas la
+présence garantie d&#x27;observations.</pre><pre>Les dates affichées et saisies suivent le format de Parameters ▸ Globals ▸ Core
+(« Date format (tables) »), comme dans les autres fenêtres.</pre><h2>FENÊTRE PRINCIPALE — BARRE DU HAUT</h2><pre>  New                Crée un connecteur (« New WWW connector ») : Site existant
+                     ou New site, Data existante ou New data (URL, Query).
+                     Create l&#x27;enregistre ; Test montre ensuite ce que le site
+                     renvoie.
+  Add URL…           Analyse une URL de fournisseur ou de dataset (Analyze URL),
+                     affiche le fournisseur, les datasets et limites trouvés ;
+                     « Create a connection when a usable dataset was
+                     identified » crée aussi la connexion ; Add to catalog
+                     enregistre, Cancel abandonne.
+  SDMX worldwide…    Annuaire officiel SDMX (Global Discovery Service) :
+                     Refresh agencies, Explore dataflows, Filter flows, Add
+                     selected dataset (ajoute le dataflow au catalogue), Copy
+                     service URL, Close.
+  Test All…          Teste une à une les connexions : « Selected site » ou « All
+                     sites ». Start tests lance, Cancel arrête, Close ferme. Un
+                     test n&#x27;est réussi qu&#x27;avec de vraies observations numériques.
+  ?                  Cette aide.
+  Folder             Ouvre le dossier workspace/WWW (connecteurs, profils).
+  Updates…           « Site updates » : Check lit le catalogue signé WysiQ,
+                     Install selected installe les définitions vérifiées,
+                     Restore previous revient à la version précédente.</pre><pre>RECHERCHE (« Search worldwide catalogue »)</pre><pre>  Search        Recherche locale dans tous les sites, datasets et ressources
+                connus (aucune requête Internet à la frappe).
+  Where         AND : tous les mots doivent correspondre ; OR : au moins un.
+  All sites     Retire le filtre de site.
+  Include sites without datasets   Affiche aussi les sites de référence sans
+                dataset chargeable.
+Listes Themes [A-Z] et Sites : cliquer pour filtrer.</pre><pre>CONNEXIONS DU SITE (« Connections of selected site »)</pre><pre>Colonnes : Connector, Site, Theme, Table, Rows, Last load, Account.
+Clic sur un en-tête : tri. Double-clic : ouvre l&#x27;éditeur de la connexion.
+Statuts de la colonne Account :
+  ✓ ready          dernier test réussi avec données numériques datées ;
+  ● key saved      clé enregistrée, test à faire ;
+  ○ no key         site public sans clé ;
+  ○ sign up        inscription nécessaire ;
+  · catalogue      entrée de catalogue sans définition chargeable ;
+  ○ test required  pas encore testé (Not tested) ;
+  ○ no data        test terminé mais sans observation ;
+  ✗ test failed    dernier test en échec ;
+  ◌ testing… / ◌ cancelling…   test en cours / annulation demandée ;
+  ○ cancelled      dernier test annulé (ce n&#x27;est pas un échec).
+Un statut Ready n&#x27;est accordé qu&#x27;après réception de données numériques datées
+pour cette sélection exacte ; un changement de paramètres le remet en cause.</pre><pre>Boutons sous la liste :
+  Account          Ouvre la fenêtre du compte du site (voir plus bas).
+  Test connection  Teste exactement la connexion sélectionnée et ses paramètres.
+  Cancel test      Arrête le test en cours (y compris sur un autre site) ; se
+                   désactive dès que l&#x27;arrêt est demandé.
+Clic droit sur une connexion : New, ▶ Load, ⟳ Update to today (si un historique
+existe), Rename…, Delete (supprime le connecteur ; la table reste dans le
+workspace), Site account….</pre><pre>Test des fréquences : pour les données annuelles, trimestrielles, mensuelles ou
+hebdomadaires, WysiQ tient compte de la fréquence déclarée dans le connecteur.
+Sans dates enregistrées, il examine respectivement 3 années, 8 trimestres,
+12 mois ou 12 semaines civils complets. Pour les fichiers historiques complets
+(comme DWD annuel), une seule lecture vérifie toute la période From / To.
+Un retour HTTP 200 sans observation numérique datée ne donne jamais Ready.
+Between requests ne change que le délai réseau, pas la période de test.</pre><h2>DATA / RESOURCES</h2><pre>  Show                All items, Datasets, Parameters, Series, Fields.
+  Discover datasets   Récupère la liste officielle des datasets / dataflows du
+                      fournisseur (métadonnées uniquement, aucune table créée).
+  Discover series     Lit les dimensions, codes ou séries du dataset
+                      sélectionné. Pour INSEE BDM, la DSD (structure) est lue
+                      d&#x27;abord ; une erreur de DSD n&#x27;est pas une erreur de clé.
+  Download selection  Ouvre l&#x27;onglet Download / Live de l&#x27;éditeur avec la
+                      sélection courante (aucune requête à l&#x27;ouverture).
+Arbre : colonnes Name, Code, Type ; cochez directement les codes (☑ / ☐) ou
+double-cliquez un paramètre pour ouvrir le sélecteur. Le cadre « Selected item »
+détaille l&#x27;élément (Description / Source).
+  Select values…  Sélecteur commun de valeurs pour tout paramètre ; plusieurs
+                  valeurs possibles.
+  Fit names       Élargit la colonne Name au libellé le plus long (760 px max).</pre><pre>Sélections multiples : si l&#x27;API n&#x27;accepte qu&#x27;un code par appel, WysiQ fait
+plusieurs requêtes puis fusionne les séries sur Date. Une combinaison trop
+volumineuse est refusée avant téléchargement. Une connexion existante peut être
+téléchargée dès qu&#x27;un dataset ou l&#x27;un de ses codes est affiché ; pour réunir
+plusieurs datasets, cochez explicitement leurs lignes Dataset.</pre><pre>Zone « Messages / trace » (bas du catalogue et de l&#x27;éditeur) : messages et
+erreurs, conservés après fermeture d&#x27;une trace. Clic droit : Copy all, Clear
+messages.</pre><pre>SÉLECTEUR DE VALEURS (codes publiés)</pre><pre>Search filtre la liste, All / None cochent ou décochent tout, le compteur
+indique la sélection ; OK valide, Cancel abandonne. La fenêtre est redimension-
+nable (2 colonnes, 1 colonne si étroite) ; le texte complet et le code sont dans
+l&#x27;infobulle.</pre><pre>SÉLECTEUR DE SÉRIES SDMX (Dimensions / Choose series…)</pre><pre>Une ligne par dimension (commencer par Frequency). Pour chaque dimension :
+Choose values… (codes publiés), saisie libre dans Codes puis Set, ou Clear.
+Cochez plusieurs valeurs pour obtenir plusieurs séries.
+  One series     construit la clé SDMX d&#x27;UNE série précise (recommandé).
+  Apply filter   applique le filtre (peut donner plusieurs séries).
+  Cancel         abandonne.
+« All series » / « All series (large) » télécharge tout le dataflow : demande
+une confirmation explicite, peut être refusé par le fournisseur (HTTP 413) ;
+préférez Choose series…. WysiQ n&#x27;invente jamais un filtre et refuse un
+chargement massif non confirmé. UNData accepte une requête sans clé (segment
+omis) ; INSEE BDM utilise sa syntaxe /all. Une série INSEE peut aussi être
+choisie directement par son IDBANK.</pre><pre>ÉDITEUR D&#x27;UNE CONNEXION — ONGLETS ET BOUTONS COMMUNS
+Onglets : Download / Live, Connection / Test, History, Columns. Changer d&#x27;onglet
+garde la taille de la fenêtre. En bas : Messages / trace, Close (ferme
+l&#x27;éditeur) et ? (cette aide, dans une fenêtre séparée).</pre><pre>1. DOWNLOAD / LIVE (SINGLE DATA / LIVE)
+« Build and download ONE WysiQ table ».</pre><pre>Cadre « Selected datasets / series (uncheck to exclude) » (après Download
+selection) : colonnes Use / Series, Provider / Dataset, Codes / Filter ;
+décocher une ligne l&#x27;exclut. Choose series… ouvre le sélecteur SDMX ; All series
+(large) prend tout le dataset après confirmation. Les dataflows sans filtre sont
+signalés ALL.</pre><pre>Cadre « Data to download » :
+  From / To        Période demandée.
+  Time             Local (fuseau du fournisseur ; l&#x27;heure du changement d&#x27;heure
+                   d&#x27;automne apparaît deux fois) ou UTC.
+  Update to today  Load ajoute depuis la dernière date chargée jusqu&#x27;à
+                   aujourd&#x27;hui (From / To inutilisés).
+  Paramètres       Valeurs du connecteur (pays, variables, clés) ; ☰ ouvre le
+                   sélecteur de valeurs.</pre><pre>Cadre « Table / Live options » :
+  Table            Nom de la table WysiQ à créer ou mettre à jour.
+  Replace / Append Replace remplace le contenu ; Append ajoute les dates et
+                   séries (les valeurs historiques absentes du nouveau lot sont
+                   conservées).
+  Data mode        WS = instantané statique ; WL = acquisition WWW
+                   incrémentale.
+  Live             Coché = table WL en UTC, nouvelles dates ajoutées à chaque
+                   période tant que WysiQ tourne ; décoché = WS.
+  Polling every    Période en minutes (WL seulement) ; 0 = arrêt.
+  Between requests Délai en SECONDES ENTIÈRES entre deux appels HTTP ; le
+                   minimum du fournisseur reste imposé (Background et Test
+                   compris). Default rétablit la valeur recommandée.
+  Provider quotas  Quotas connus ; Docs ouvre la page de quotas du fournisseur
+                   (absent si non publiée).
+  Load             Télécharge la période dans la table (créée si besoin).
+  Clear            Vide la table (définition conservée) après « Confirm clear ».
+  Drop             Supprime la table (DuckDB, .parquet, définition) après
+                   « Confirm drop » ; le connecteur est conservé. Les graphes
+                   qui l&#x27;utilisent sont signalés.
+  Stop             Arrête le téléchargement en cours.
+  Background       Charge la période par morceaux en arrière-plan : chaque
+                   morceau est écrit aussitôt (table utilisable pendant le
+                   remplissage), la fenêtre peut être fermée, la reprise se fait
+                   après redémarrage. Utile pour les sites qui refusent les gros
+                   téléchargements (HTTP 429).</pre><pre>Règles de Load :
+  • Une table doit être nommée (« Enter a table name »).
+  • Un dataflow SDMX découvert doit avoir réussi Test pour cette sélection
+    exacte avant création ou mise à jour (« Test required »).
+  • WL exige Time = UTC et un Load initial.
+  • Remplacer une table qui ne vient pas de cette source WWW demande une
+    confirmation (protection des tables étrangères).
+  • Plusieurs sources : jointure externe sur Date ; les dates absentes restent
+    vides (ni inventées, ni remplacées par zéro). Si une source échoue, aucune
+    table partielle n&#x27;est créée. Une sélection multi-datasets est toujours WS
+    (pas de Live, pas de Background repris).
+  • Les périodes statistiques (année, trimestre, mois) sont gardées comme dates
+    de début de période, sans décalage UTC (2024-Q1 = 2024-01-01).</pre><pre>2. CONNECTION / TEST
+Cadre « Connection settings » :
+  New       Crée une nouvelle connexion à partir de TOUTES les valeurs affichées
+            (paramètres, dimensions, périodes, séries), avec un nouveau nom de
+            table ; aucune donnée, aucun historique, aucun statut Ready copié.
+  Name      Nom de la connexion.
+  Site      Fournisseur (statut du compte affiché à droite).
+  Data      Ressource / dataset du site.
+  Series…   Lit un jour de données puis choisit les séries à garder (vide =
+            toutes).
+  Liens     Boutons vers la documentation et les pages du site.
+  Account…  Clé API, identifiant et proxy de ce site.
+Les dataflows SDMX exigent souvent une sélection dans Dimensions ; la clé de
+série est construite à partir de la DSD. Utilisez Test connection sous la liste
+pour vérifier les vraies observations avant tout chargement.</pre><pre>3. HISTORY
+« History of this connector » : When, Period, Rows, Mode des chargements de la
+connexion active. Double-clic sur une ligne : réutilise sa période dans
+Download / Live. L&#x27;historique concerne le connecteur, pas la sélection
+temporaire.</pre><pre>4. COLUMNS
+Liste des séries / colonnes de la connexion. Read series lit un court
+échantillon chez le fournisseur pour lister les séries d&#x27;un dataset sans série
+choisie (aucune table modifiée).</pre><pre>5. HELP (bouton ?)
+Le bouton ? (barre du haut, ou à côté de Close dans l&#x27;éditeur) ouvre cette aide
+dans la fenêtre d&#x27;aide standard : choix de la langue, A− / A+, ↺. Il n&#x27;y a pas
+d&#x27;onglet Help dans l&#x27;éditeur. Un seul fichier www_connection.txt par langue
+décrit toute la fenêtre WWW.</pre><pre>COMPTE DU SITE (« WWW — Site account »)</pre><pre>  Site                    Choix du fournisseur et statut.
+  Liens                   Inscription, documentation, compte.
+  How to get the key…     Procédure d&#x27;obtention de la clé (et modèle d&#x27;e-mail :
+                          Write e-mail, Copy text).
+  Check links             Teste les liens de documentation et de compte.
+  Test                    Teste le fournisseur ; le détail s&#x27;affiche dessous
+                          (Show log ▾ / Hide log ▴).
+  API credentials         Clé(s) API demandées par le site.
+  Account details ▸       Login / e-mail, Password, Registered, Note
+                          (facultatif).
+  Save secrets            Mots de passe et clés enregistrés sous forme
+                          brouillée dans WWW/profiles (comme pour les
+                          connexions DB) ; sinon gardés pour la session.
+  Show                    Affiche les secrets saisis.
+  Proxy                   Vide = proxy système (ex. http://proxy.societe:8080).
+  Verify SSL              Vérification des certificats (laisser coché).
+Les réglages sont enregistrés automatiquement, et à la fermeture.</pre><pre>TEST ET ANNULATION
+Pendant un test, la colonne Account affiche « testing » puis « cancelling » si
+Cancel test est demandé. La fenêtre de trace d&#x27;un test propose Copy, Cancel test
+et Close. Les pauses dues aux quotas s&#x27;interrompent immédiatement ; une requête
+HTTPS déjà partie peut attendre son délai (20 s maximum en Test). Un test annulé
+ne modifie aucune table et libère le moteur pour un autre test.</pre><pre>ERREURS ET LIMITES
+  HTTP 404   mauvaise ressource ou clé : vérifier le dataset et les codes.
+  HTTP 413   périmètre trop large : réduire les dimensions ou la période.
+  HTTP 429   trop de requêtes : augmenter Between requests, utiliser
+             Background, réessayer plus tard.
+  HTTP 400   requête refusée : le message du fournisseur est affiché en texte
+             lisible.
+  no data    la requête a abouti sans observation : changer la période ou les
+             codes.
+Un échec ou un timeout ne prouve pas que le dataset est vide. Les sources
+peuvent avoir des fréquences et unités différentes : vérifiez leur cohérence
+avant de comparer les colonnes.</pre><pre>SÉCURITÉ ET PROVENANCE
+Ne partagez pas les clés API. Respectez les licences de réutilisation. La
+provenance de chaque table (connecteur, ressource) est conservée dans
+tables/&lt;table&gt;.json et visible dans le Table Catalog (Import source). Les
+connecteurs sont dans workspace/WWW/connectors/.</pre><pre>PÉRIODE ET QUOTAS
+From / To déterminent exactement la période du prochain Load/Download (sauf Update to today activé). Les messages « Last background load » décrivent un ancien transfert, sans modifier les dates actuelles. Test lit un échantillon dans la période sélectionnée ; les fichiers historiques complets sont vérifiés sur toute cette période. Le délai Between requests est modifiable ; les quotas de l&#x27;API sont respectés automatiquement, même pour 0 seconde.</pre><pre>SITES WEB ET DATES HISTORIQUES
+Clic droit sur un site dans la liste Sites : Open website in browser ouvre l&#x27;adresse homepage declaree dans son JSON ; Open API documentation ouvre sa documentation si disponible. Show site information affiche les renseignements deja connus (description, sujets, couverture, licence, jeux de donnees) dans Messages / trace en bas a droite.
+Fetch additional website information recupere, sur demande et en arriere-plan, le titre et la description publics de la page Web (eventuellement mots-cles, editeur et langue). Cette description est ajoutee au JSON local WWW/www_type/&lt;site&gt;.json et conservee lors des mises a jour officielles. Elle ne constitue PAS un inventaire certifie des donnees de l&#x27;API ni une autorisation de reutilisation. Aucun appel Internet n&#x27;est fait au simple changement de site.
+Pour les series historiques, une date anterieure a 1678 reste une date de calendrier sans conversion en UTC. Elle est stockee en precision microseconde plutot que supprimee par la limite de TIMESTAMP_NS, sans regle specifique a un fournisseur.</pre></main></body></html>

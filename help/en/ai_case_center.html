@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI CASE CENTER — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/ai_case_center.txt</p><h1>AI CASE CENTER</h1><pre>Access: AI Command Center ▸ 🗂 AI Case Center, or Main ▸ AI ▸ AI Cases…
+(a graph must be open).</pre><pre>Double-click an AI Case in the list: open it (make it active).</pre><pre>An AI Case is the complete, replayable record of an AI investigation built on a
+WysiQuery: the questions you asked the AI (AI Prompts), the executions against
+one or more AI Profiles, the answers and errors, the context that travelled
+with each question (AI feeds — Area and data feeds), and the HTML reports
+produced. Nothing is read from raw files here; every value comes from the
+Case&#x27;s own timeline through the CaseStore, which is an append-only log with
+request / response correlation.</pre><h2>LAYOUT — TWO LISTS ON THE LEFT, DETAIL ON THE RIGHT</h2><pre>The window follows the same shape as the Metric catalog.</pre><pre>  AI Case (left column) — one row per Case, by name. The active Case is
+  marked with a bullet.</pre><pre>  Query (right column) — the WysiQuery(ies) the selected AI Case is based on.
+  Select a Case on the left to see which WysiQuery it rests on, the same way
+  the Metric catalog shows &quot;Series used&quot; for a metric.</pre><pre>The right side is a pure inspector for the selected Case:</pre><pre>  AI Case header — Name, Created, Updated, Query (the WysiQuery name),
+  Profiles, and Counts (prompts, executions, events, reports).</pre><pre>  AI Prompt tab — the questions asked to the AI. A broadcast that asked
+  several Profiles the same question collapses to one prompt row, with the
+  number of executions shown in the &quot;x&quot; column. Selecting a prompt lists its
+  executions and responses (profile, tokens, provenance, errors).</pre><pre>  Summary / Prompts &amp; executions / Grouped / Chat — full-Case views
+  for deeper inspection. Double-click an event: opens the associated HTML
+  report if there is one. Internal identifiers are not shown in the timeline;
+  they remain available in the underlying Case files.</pre><h2>VOCABULARY</h2><pre>  Query = WysiQuery — the WysiQ query the Case is built on.
+  AI Prompt = a question asked to the AI.
+  Execution = one AI Prompt run against one AI Profile (one try).
+  AI feed = the context sent with a question (Area or data feed), addressed by
+  content fingerprint, never as raw data.</pre><h2>TOOLBAR</h2><pre>  Open folder — open the selected Case folder on disk.
+  Add to AI Feed Stack — append feeds from the Sel-numbered AI Cases (or the
+  highlighted Case if none are numbered) into the live AI Feed Stack, in Sel
+  order, after the feeds already present. Click the Sel column on each Case to
+  assign / clear its sequence. Trim or reorder in the AI Feed Stack window
+  afterwards.
+  ? — this help (right edge of the window).
+  Close — close the window.</pre><h2>RIGHT-CLICK ON AN AI CASE</h2><pre>  Rename... — change the Case name.
+  Duplicate... — clone the whole Case (timeline, feeds, reports, logs) into a
+  new folder with a fresh identity. The original is never touched. A duplicate
+  is the starting point for re-running the same Case on another WysiQuery or on
+  updated data — for example, a different year.
+  Delete... — permanently remove the Case folder and all its files. This
+  cannot be undone.</pre><pre>The list refreshes on its own when you open, duplicate, delete or rename a
+Case, so no manual refresh is needed.</pre><pre>ORIGINAL vs CURRENT DATA (in the AI Feed Stack)</pre><pre>A feed replayed from an AI Case can be sent either on the data that was
+originally sent, or rebuilt on the current WysiQ data with the same recipe
+(same bounds and shrink). This is chosen in the AI Feed Stack, per entry:</pre><pre>  Right-click the &quot;Send #&quot; column of an AI-Case feed → Original data / Current
+  data. A tooltip shows the current mode.
+  Right-click the &quot;Feed&quot; column → Delete, or Duplicate. Duplicate adds a second
+  entry in the OPPOSITE data mode, so you can send both the original and the
+  current version side by side (for example, comparing two years).</pre><pre>Feeds added from a window&#x27;s AI button are always on current data and have no
+such choice.</pre></main></body></html>

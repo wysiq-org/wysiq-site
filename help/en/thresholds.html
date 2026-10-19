@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>THRESHOLDS / ALERTS — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/thresholds.txt</p><h1>THRESHOLDS / ALERTS</h1><pre>Access: Rules &amp; params ▸ Thresholds… (graph window) or Variables Catalog
+▸ Thresholds.</pre><pre>WINDOW BAR
+  Refresh          Reloads the rules.
+  Catalog          Opens the variables catalogue.
+  Alerts enabled   Globally enables / disables the workspace alerts
+                   (saved immediately).
+  ?  / Close       This help / close.
+  Create, Edit, Duplicate, Delete   Rule management (double-click a
+                   rule = Edit). A rule box offers Table, Series,
+                   Low, High, Mode; OK (Enter) / Cancel (Escape).</pre><pre>Thresholds are workspace-global rules applied to graph series.</pre><pre>CREATE A RULE
+• Table: choose a table from the query.
+• Series: choose a series from that table.
+• Low: optional lower threshold.
+• High: optional upper threshold.
+• Mode: outside, above, below, or inside.</pre><pre>Low and High may contain:
+• a numeric value;
+• a variable reference such as &amp;1.4;
+• a calculated variable based on a formula.</pre><pre>VARIABLES AND SERIES
+A variable formula may use a series.
+[Consumption] means the Consumption series from the current table.
+[RTE2023.Consumption] always means the Consumption series from table RTE2023.
+If the reference series has no value for an X position, no threshold is applied to that point.</pre><pre>DISPLAY
+Alert point styling is defined in the series Style window:
+• Normal
+• Below
+• Above
+Each state can have its own color, type, marker, size, alpha, depth, position, and Blink setting.</pre><pre>The alert button in the Series palette cycles through:
+△  alerts off
+⚠  alerts displayed
+⚠• alert points only; other points remain faded for context.</pre><pre>In ⚠• mode, Area uses only alert instants: the series&#x27; own alert points, otherwise the alert X of a series of the same table.</pre><pre>CATALOG
+The Catalog button opens the full workspace Variables Catalog to create or edit variables used by thresholds.</pre><pre>RIGHT-CLICK ON A SERIES (Series palette)
+Set alert thresholds… opens the catalog in threshold mode: select one variable, then Set Low / Set High.
+In a multi-table query, turning alerts on (△ ⚠ ⚠•) from one table turns them on for every table of the graph: a series without its own rule uses the rule of the same-name series of another table (active tab, then main table).
+Main tab ▸ Propagate thresholds copies all rules and Below / Above styles of the main table.
+Type / Marker « Inherit » in Below / Above use the series&#x27; own; size is a multiplier of the series&#x27; size (default: Inherit, size 1, Blink, orange / red).</pre></main></body></html>

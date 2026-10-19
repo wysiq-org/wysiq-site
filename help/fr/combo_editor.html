@@ -1,0 +1,180 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ÉDITEUR DE MÉTRIQUE — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/combo_editor.txt</p><h1>ÉDITEUR DE MÉTRIQUE — Aide</h1><pre>Accès : palette Series ▸ clic sur @ d&#x27;une métrique, clic droit ▸
+Composition…, en-tête « Create Metric from &quot;In&quot; » ; catalogue des métriques.</pre><pre>Processus type :
+  cocher In sur les séries sources → Create Metric from &quot;In&quot; → choisir Agg et
+  Post → régler chaque composante (Transform, k, +/-, Where…) → Group by X si
+  besoin → Apply → la métrique apparaît dans la palette Series (@).</pre><pre>L&#x27;Éditeur de Métrique (fenêtre Composition) construit une métrique calculée
+à partir de plusieurs séries avec des transformations par série, une
+agrégation, un post-traitement et un fenêtrage sur X.</pre><pre>La métrique est enregistrée avec la query et peut être sauvegardée dans le
+catalogue workspace/metrics/&lt;nom&gt;.json. Elle est identifiée par son seul nom
+(la table n&#x27;entre pas dans l&#x27;identité) et réutilisable par d&#x27;autres queries
+dont les tables ont les mêmes colonnes.</pre><pre>EN-TÊTE
+  Name      Nom de la métrique (lecture seule ici ; renommer depuis la palette
+            Series, clic droit ▸ Rename…).
+  Alias     Libellé court affiché dans la légende.
+  Output    Type du résultat : auto, datetime, float, int, str (datetime pour
+            une métrique utilisée comme axe X).
+  Description  Texte libre enregistré avec la métrique.</pre><h2>BARRE DU HAUT</h2><pre>Agg  [SUM | AVG | MIN | MAX | RANGE | MEDIAN | * | / | PROD | NORM-L1 |
+      NORM-L2 | RMS | STDDEV | VARIANCE | SUM-SQ | SUM-SQRT | ENTROPY]
+  Comment les composantes actives sont combinées en une seule valeur, ligne
+  par ligne (étape 4 de l&#x27;ordre d&#x27;application). Le Group Agg (étape 6)
+  s&#x27;applique ENSUITE au résultat combiné et post-transformé. Les deux réglages
+  sont indépendants.</pre><pre>  Standard : SUM  AVG  MIN  MAX  RANGE  MEDIAN  *  /
+  Norme : NORM-L1 (S|xi|)  NORM-L2 (sqrt(S xi^2))  RMS (sqrt(moy(xi^2)))
+  Statistiques : STDDEV  VARIANCE
+    Note : STDDEV et VARIANCE n&#x27;ont de sens qu&#x27;avec au moins 3 à 5 composantes.
+    Avec 1 ou 2 composantes, le résultat est trivial (0 ou sqrt(diff/2)).
+  Non-linéaires : PROD  SUM-SQ  SUM-SQRT
+  Information : ENTROPY (entropie de Shannon : -S(pi * log2 pi))</pre><pre>Post  [none | √ | ² | ³ | ABS | LOG | LN | 100× | %]
+  Transformation sur le résultat final de l&#x27;agrégation (après Agg).
+  none   Aucune (défaut).
+  √ / ² / ³ / ABS / LOG / LN   Fonctions mathématiques classiques.
+  100×   Multiplie par 100 (ex. 0.42 → 42%).
+  %      Normalise pour que la somme totale vaille 100%.</pre><pre>Add [liste déroulante]
+  Double-clic pour insérer la série sélectionnée comme composante.</pre><pre>Export   Exporte la définition complète de la métrique (fichier JSON).
+JSON     Fenêtre JSON de la métrique : Copy, Paste, Apply (applique le JSON
+         édité), Export, Import (charge un fichier dans l&#x27;éditeur), Close.
+SQL      Affiche l&#x27;équivalent SQL du calcul (Copy, Close) — informatif.
+?        Cette aide.</pre><h2>GRILLE DES COMPOSANTES</h2><pre>  Column     Nom de la série source.
+  Where      Indicateur du filtre (vert = actif). Clic pour ouvrir.
+  Sc         Mode de jointure (AND / OR) pour les filtres globaux.
+  Transform  Transformation appliquée AVANT le multiplicateur k.
+    √ SQRT, ² square, ³ cube, |·| ABS, LOG₁₀, LN, EXP eˣ, 1/x inv, — none,
+    % of sum, Z-score, RANK
+  k          Multiplicateur APRÈS la transformation (défaut 1.0).
+             Constante ou référence &amp;1.4 — clic droit sur le champ.
+  +/-        Décalage constant APRÈS k (défaut 0.0). Clic droit → variables.
+  Min / Max  Bornes de valeur après transformation, k et offset.
+  Delta      Décalage en points sur X.
+  Fill       Valeur de remplissage. Clic droit → variables (&amp;1.4).</pre><pre>Group by X — Lag, Size, Step : clic droit pour insérer une variable.
+X0 Free : clic droit pour une variable.</pre><pre>Clic gauche sur le nom → Popup WHERE (voir ci-dessous).
+Clic droit → Menu contextuel : Where / Duplicate / Delete.</pre><h2>POPUP WHERE PAR COMPOSANTE</h2><pre>Clic gauche sur le nom d&#x27;une composante pour ouvrir sa popup WHERE.
+Le filtre s&#x27;applique AVANT la transformation et le multiplicateur k.</pre><pre>  Where ON   Interrupteur. ON = actif. OFF = suspendu.</pre><pre>  With other cols [NONE | AND | OR]
+    NONE   Mode local. Les valeurs qui échouent au filtre deviennent 0
+           (ou la valeur de l&#x27;offset). Les autres lignes ne sont pas
+           affectées. La métrique s&#x27;exécute sur toutes les lignes.
+    AND    Masque global. Les lignes qui échouent au masque combiné
+           AND/OR sont mises à NaN sur TOUTES les composantes avant
+           l&#x27;agrégation. Utilisez AND pour exclure des lignes entières
+           (ex. export négatif sur n&#x27;importe quelle composante).
+    OR     Comme AND mais en logique OR. Une ligne survit si elle passe
+           au moins un filtre OR.</pre><pre>  c1   Première condition (toujours visible) : opérateur + valeur.
+  join [AND | OR]   Logique entre c1 et c2.
+  c2   Deuxième condition.
+  Bouton +   Affiche ou masque c3 (troisième condition).
+             Quand c3 est visible, il participe à la logique join.
+             Cliquez à nouveau pour masquer c3 et effacer sa valeur.
+  c3   Troisième condition (visible après avoir cliqué +).</pre><pre>  Opérateurs : =  !=  &lt;  &lt;=  &gt;  &gt;=  ~ (contient)  ^ (commence par)  $ (finit par)  in</pre><pre>Exemples courants :
+  c1 : &gt; 0                Seules les valeurs positives entrent dans l&#x27;agrégation.
+  c1 : &gt;= 10, join: AND, c2 : &lt;= 100   Valeur bornée entre 10 et 100.
+  c1 : != 0               Exclure les zéros exacts (données manquantes).
+  With other cols : AND, c1 : &lt;= 0    Exclure du metric les lignes où
+                                       cette série est &lt;= 0.</pre><pre>Le filtre WHERE s&#x27;applique AVANT la transformation et le multiplicateur k.
+Pour filtrer sur le résultat final calculé, voir la section Ordre d&#x27;application.</pre><pre>GROUP BY X (fenêtrage)</pre><pre>Fenêtre le résultat combiné (après Agg, étape 4, et Post, étape 5) dans une
+fenêtre sur X (étape 6).</pre><pre>Group by X   Off (aucun fenêtrage), Moving ou Fixed.
+Moving       Fenêtre glissante de Size points.
+Fixed        Blocs non chevauchants de Size points.
+Lag          Points initiaux forcés à zéro.
+Size         Taille de la fenêtre en points.
+Step         Écart entre blocs (mode Fixed uniquement).</pre><pre>Group Agg  [AVG | SUM | CUM | MIN | MAX | Δ | ABS(Δ) | RANGE | MEDIAN | STDVAR]
+  Réduction dans la fenêtre sur X, appliquée à la série combinée.
+  Indépendant du Agg de la barre du haut (combinaison inter-séries).</pre><h2>ORDRE D&#x27;APPLICATION</h2><pre>  1. Metric Scope on X     Restriction à une plage de l&#x27;axe X.
+  2. Filtre WHERE          Filtrage des valeurs par composante.
+  3. Transform, k, offset, Min/Max, Delta   Par composante.
+  4. Agg (barre du haut)   Combinaison de toutes les composantes (cross-séries).
+  5. Post-transformation   Appliquée juste après Agg, AVANT le fenêtrage.
+                           Exemple : Agg=SUM-SQ + Post=sqrt → norme euclidienne.
+  6. Group Agg             Agrégation du résultat post-transformé dans les fenêtres X.
+  7. WHERE palette Table   Filtre global sur le résultat final.</pre><pre>Les trois étapes d&#x27;agrégation/transformation en détail :</pre><pre>  Agg (étape 4)
+    Opération CROSS-SÉRIES. Combine les N séries transformées ligne par ligne.
+    Exemples : SUM de trois séries d&#x27;énergie, NORM-L2 des composantes.</pre><pre>  Post-transformation (étape 5)
+    Appliquée à la série combinée produite par Agg.
+    S&#x27;exécute AVANT Group Agg pour que le fenêtrage opère sur l&#x27;unité finale.
+    Exemple : Agg=SUM-SQ + Post=√ → norme euclidienne (L2).
+    Exemple : Agg=SUM + Post=100x → conversion en pourcentage.</pre><pre>  Group Agg (étape 6)
+    Opération TEMPORELLE. Applique une fenêtre glissante ou fixe sur la série
+    déjà agrégée et post-transformée.
+    Exemple : moyenne mobile sur 48 points de la norme euclidienne.
+    Group Agg est optionnel (désactivé quand Size = 0).</pre><pre>Appliquer un WHERE APRÈS la métrique (post-filtrage) :
+  Les filtres WHERE par composante agissent AVANT l&#x27;agrégation. Pour filtrer
+  sur le résultat final calculé, créez une seconde métrique qui inclut cette
+  métrique comme seule composante, et ajoutez un WHERE sur cette composante.
+  Exemple : la métrique A calcule une norme glissante ; la métrique B inclut
+  A avec WHERE &gt; 100 pour ne garder que les instants où la norme dépasse 100.</pre><h2>SERIE WHERE</h2><pre>Interrupteur maître pour tous les filtres WHERE par composante.
+ON (défaut)   Tous les filtres actifs.
+OFF           Tous suspendus sans suppression (utile pour comparaison rapide).</pre><h2>PERSISTANCE</h2><pre>Tous les paramètres sont sauvegardés dans le JSON et restaurés au rechargement :
+  Agg, Post, Transform, k, +/-, Min, Max, Delta, Fill, filtres Where,
+  paramètres Group by X, Alias, type Output.
+  Les champs k, +/- et Fill peuvent contenir une référence &amp;theme_id.var_id
+  (ex. &amp;1.4) dans l&#x27;éditeur ; à l&#x27;Apply/Save, le JSON metric enregistre la forme
+  portable &amp;theme.var (ex. &amp;energie.seuil_kwh). La valeur est lue au tracé.
+  Dans le picker, double-clic Value simule en session (*); Save écrit le JSON workspace.
+  Fenêtre Variables (clic droit sur k, Min, Max, Δ, Fill…) : gardez-la ouverte (Stay open)
+  pour simuler tout le graphe de la query (sliders, mode Vars series, Min/Max/Δ).
+  Bouton Vars dans la palette Scénario pour tester des extrêmes pendant DRAW/MOVE.
+  L&#x27;état Freeze est uniquement en session (non persisté).</pre><pre>BAS DE FENÊTRE
+  Metric Scope on X   Restreint le calcul à une plage de X (voir l&#x27;aide
+                      « metric_scope », bouton ? de la barre Where Series).
+  X0  Table / Free    Origine des positions X de la métrique : Table (début
+                      de la table) ou Free (valeur saisie, variable possible
+                      par clic droit) ; les deux cases sont exclusives.
+  Freeze              « Freeze » : gèle le résultat (cache ❄ Frozen) ;
+                      « ⚠ Refreeze » si une source a changé ; décocher pour
+                      dégeler.
+  Apply               Calcule et applique la métrique au graphe (la fenêtre
+                      reste ouverte).
+  Close               Ferme l&#x27;éditeur.</pre><pre>Where Series et NaN Policy</pre><pre>Where Series active les conditions Where portées par les séries de la composition. Ces conditions servent souvent à détecter un événement métier : par exemple PROD-CONSO &lt; -15000 ET Solaire &lt;= 0.</pre><pre>NaN Policy contrôle ce qui arrive lorsqu&#x27;une série de condition filtre un point et produit un NaN dans le calcul final.</pre><pre>NaN+x=x : mode permissif. Les NaN sont ignorés dans la somme ; une série de condition avec k=0 peut donc créer des points à 0. Utile pour des additions classiques de séries partiellement vides.</pre><pre>NaN+x=NaN : mode strict. Si une série de condition est filtrée ou vaut NaN, le point final reste absent. Recommandé pour les filtres AND, les séries helper à k=0 et les recherches d&#x27;événements.</pre><pre>Valeur spéciale NaN dans les WHERE
+  = NaN    Sélectionne les positions avec une valeur manquante (NaN / NULL / NaT).
+  != NaN   Sélectionne les positions avec une valeur présente, y compris zero.
+  = 0      Sélectionne les vrais zéros ; 0 et NaN sont différents.
+  Les majuscules/minuscules sont ignorées (NaN, nan, NAN).
+  Seuls = et != sont acceptés avec NaN ; &lt; NaN ou &gt; NaN ne correspondent a rien.
+  Le Nb de chaque composante affiche combien de positions passent son WHERE.
+  Avec With other cols = AND/OR, on peut utiliser un WHERE = NaN sur une
+  composante pour limiter le calcul d&#x27;une autre composante à ces positions.
+  Aucun NaN n&#x27;est remplacé par un zéro et aucune ligne absente n&#x27;est créée.</pre><pre>DÉTAIL DES AGRÉGATS (Agg)
+  SUM       Somme des composantes actives.
+  AVG       Moyenne arithmétique.
+  MIN / MAX Minimum / maximum entre composantes.
+  RANGE     Max moins Min (amplitude).
+  MEDIAN    Médiane entre composantes (voir plus bas).
+  *         Produit S1 × S2 — utilise les 2 premières composantes.
+  /         Quotient S1 / S2 — utilise les 2 premières composantes ; une
+            division par 0 donne NaN. À la sélection de /, un petit +/-
+            de 0.001 est pré-rempli sur le dénominateur s&#x27;il est vide.
+  PROD      Produit des N composantes : x1 × x2 × … × xn.
+  SUM-SQ    Somme des carrés : S xi².
+  SUM-SQRT  Somme des racines : S sqrt(|xi|).
+  STDDEV / VARIANCE   Écart-type / variance entre composantes (population,
+            ddof=0).
+  ENTROPY   -S(pi × log2 pi) avec pi = |xi| / S|xi|.
+La liste Add contient toutes les séries de la query (colonnes et autres
+métriques) ; une même série peut être ajoutée plusieurs fois avec des
+paramètres différents.</pre><pre>LIGNE DE RÉSULTAT (⟹ Metric)
+Sous la grille, « ⟹ Metric nb=… [0]: … [N]: … » affiche le nombre de
+valeurs et le résultat sur la première et la dernière ligne ; elle se met
+à jour quand un paramètre change. « (no data …) » : lancer un PLOT ou
+ouvrir la Table pour disposer des données.</pre><pre>FREEZE (détail)
+  Freeze (décoché)  calcul en direct à chaque tracé.
+  ❄ Frozen          résultat gardé en cache, réutilisé tel quel.
+  ⚠ Refreeze        une source a changé : le cache est périmé ; Apply le
+                    recalcule.
+L&#x27;état Freeze n&#x27;est pas enregistré : après rechargement, la métrique est
+recalculée en direct.</pre><pre>NaN POLICY PAR AGRÉGAT
+NaN+x=x (permissif) : les composantes NaN sont ignorées, seules les
+valeurs présentes comptent ; un point n&#x27;est absent que si TOUTES les
+composantes sont NaN sur la ligne.
+  SUM x+y · AVG (x+y)/2 · MIN/MAX/MEDIAN/RANGE/STDDEV/VARIANCE/ENTROPY sur
+  les valeurs présentes · NORM-L1 |x|+|y| · NORM-L2 sqrt(x²+y²) ·
+  RMS sqrt((x²+y²)/2).
+NaN+x=NaN (strict) : si au moins une composante est NaN sur une ligne, le
+résultat est NaN quel que soit l&#x27;agrégat.
+Valeur proposée : NaN+x=x pour une nouvelle métrique ; NaN+x=NaN pour une
+métrique existante enregistrée sans NaN Policy (c&#x27;est ainsi qu&#x27;elle est
+calculée), afin qu&#x27;un simple Apply ne change pas ses valeurs.</pre><pre>CALCUL DE MEDIAN
+MEDIAN trie les valeurs présentes de chaque ligne et renvoie la valeur
+centrale ; avec un nombre pair de valeurs, la moyenne des deux valeurs
+centrales.
+  [10, 20, NaN, 40] : NaN+x=x → médiane de [10, 20, 40] = 20 ;
+                      NaN+x=NaN → NaN.
+  [10, 20, 30, 40]  : (20 + 30) / 2 = 25 dans les deux modes.
+MEDIAN est peu sensible aux valeurs aberrantes (contrairement à AVG).</pre></main></body></html>

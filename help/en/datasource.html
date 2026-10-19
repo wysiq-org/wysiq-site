@@ -1,0 +1,106 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Data Sources — connection profiles (WysiQ) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/datasource.txt</p><h1>Data Sources — connection profiles (WysiQ)</h1><pre>Access: Main ▸ Database ▸ DB Connection (requires an open workspace).</pre><pre>Typical workflow:
+  + New → Family / Provider / Type → fill in the fields → Test → Save
+  → Connect → Catalog (choose the tables) → the tables appear in Main.</pre><pre>This window keeps the connection profiles WysiQ uses to reach your data:
+local files, server databases, managed cloud databases, cloud warehouses,
+object storage, APIs and NoSQL databases. A profile is then reused by the
+SQL Assistant, the Table Catalog and imports/exports.</pre><pre>Non-sensitive parameters are saved in data_sources.json, in your workspace.
+Passwords and tokens stay in session memory by default — see &quot;Saving
+passwords&quot; below.</pre><pre>See also: help/en/db_connections_json.txt (files, SQL templates, dialects)
+          help/en/params_db_connection.txt (profile JSON files)</pre><pre>Choosing a connector: Family, Provider, Type
+The connector list is filtered by two drop-down lists (Family:, Provider:),
+then a list:</pre><pre>Family       The kind of source: Local, Server, Cloud, API / NoSQL.
+Provider     Who operates it: Generic, Microsoft, Azure, AWS, Google Cloud,
+             Oracle Cloud, Snowflake, Databricks, MongoDB, etc.
+Type         The actual service, for example &quot;Azure SQL Database&quot;,
+             &quot;Amazon Redshift&quot;, &quot;Google BigQuery&quot;, &quot;IBM Db2&quot;.</pre><pre>Choose the family, then the provider, then the type in the list. The value
+&quot;All&quot; in either list widens the choice. Examples:</pre><pre>  Family Cloud   &gt; Provider AWS     &gt; Type Amazon Redshift
+  Family Cloud   &gt; Provider Azure   &gt; Type Azure SQL Database
+  Family Server  &gt; Provider Generic &gt; Type IBM Db2
+  Family Local   &gt; Provider WysiQ   &gt; Type DuckDB</pre><pre>The form fields change with the type. Only the fields useful to the
+connector are shown; the examples show the expected format.</pre><pre>Cloning a connector
+Right-click a connector of the Type list ▸ &quot;Clone this connector…&quot; to clone
+it.
+WysiQ asks for a key (the folder name) and a label, then copies the
+connector into your workspace under connection_type/&lt;key&gt;/.</pre><pre>The copy declares the same engine as the original: it works immediately —
+same driver, same SQL dialect, same catalog queries. No code is needed.</pre><pre>Use it when a service needs a variant specific to your site: an imposed
+ODBC driver name, an extra field, a different default port, or an adjusted
+list_tables.sql. Edit db-connection.json or the SQL files in the new
+folder; the original connector is never modified, and your copy survives
+WysiQ updates.</pre><pre>The key must start with a letter and contain only letters, digits and
+underscores. A name already in use is refused.</pre><pre>Provider and engine are two different things
+Many cloud services reuse a standard engine. Amazon RDS PostgreSQL, Azure
+Database for PostgreSQL and Google Cloud SQL PostgreSQL are three distinct
+services, but all three speak PostgreSQL. WysiQ stores both pieces of
+information:</pre><pre>  provider      the environment (AWS, Azure, Google Cloud, ...)
+  engine_type   the technical engine (postgresql, mysql, sqlserver, oracle, ...)</pre><pre>That is why a new managed service can be offered without a new driver: it
+simply declares an existing engine. It also guarantees that the same engine
+behaves the same way everywhere — same SQL dialect, same catalog queries.</pre><pre>&quot;Sources&quot; list (left panel)
+Each row is a named profile, for example &quot;Prod Oracle&quot; or &quot;Analytics
+Snowflake&quot;. Columns:
+  C        ● = profile connected for the session.
+  Source   family icon + profile name.
+  DB       profile number (the same as the DB column of the Main window).</pre><pre>  ⟳ Reload  Reloads the catalog of connector types from disk (useful after
+            cloning or changing a connector).
+  + New     Creates a profile with the default connector. Rename it in the
+            Name field; the name must be unique.
+  Delete    Deletes the selected profile after confirmation. The session
+            secrets of that profile are cleared at the same time.</pre><pre>Right-click (or Ctrl+click) a profile:
+  Duplicate…  copies the profile under a new name (&quot;name (2)&quot; proposed);
+  Rename…     renames the profile;
+  Delete…     deletes the profile after confirmation.</pre><pre>Buttons
+Test      Opens a short connection and runs a harmless probe (typically
+          SELECT 1, a version query, or a ping). Nothing is written to your
+          database. A trace window shows each step: driver import,
+          connection, version, number of tables, closing. Copy copies the
+          trace; Close closes it.</pre><pre>Save      Writes the profile to data_sources.json, in the workspace.
+          Passwords follow the PWD box described below.</pre><pre>Connect   Marks the profile active for this session so that the other
+          windows can use it. No JSON file is rewritten. The button then
+          shows Disconnect.</pre><pre>Catalog   Opens the Table Catalog for this profile: schemas, tables, views
+          and columns read from the server. Available only for connectors
+          that really support the catalog.</pre><pre>?         (next to Catalog) Opens the &quot;params_db_connection&quot; help on the
+          connection JSON files.
+?         (top right) Opens this help.</pre><pre>Saving passwords
+By default, passwords and tokens live in memory for the current session and
+are never written to disk. After restarting WysiQ, you type them again.</pre><pre>The PWD box next to Save changes this behaviour:</pre><pre>  unticked   &quot;Passwords are session-only — never saved to disk.&quot;
+             Nothing sensitive reaches data_sources.json.</pre><pre>  ticked     The password is written to the profile under the password_enc
+             key, in scrambled form (never in clear text).</pre><pre>Read carefully: this scrambling prevents accidental reading of the JSON
+file — a colleague opening it, a screenshot, a forgotten backup. It is not
+strong encryption. Anyone holding the file and the application can recover
+the password. Use the box for convenience on a personal machine; leave it
+unticked for production credentials, or on any machine or folder you do
+not control.</pre><pre>Whatever the setting, these values are never written to disk:
+access_token, refresh_token, client_secret, private_key, secret_access_key,
+service_account_private_key.</pre><pre>When a driver is missing
+WysiQ loads no database driver at startup: a missing optional package
+therefore cannot prevent the application from starting. The driver is
+imported on the first connection. If it is missing, the Test states exactly
+what to install, for the Python interpreter running WysiQ, for example:</pre><pre>  The postgresql connector requires the &#x27;psycopg2-binary&#x27; package.
+  Install it with: pip install psycopg2-binary</pre><pre>Some connectors are listed so that the profile can be prepared while their
+engine is not yet wired in this version. The Test says so clearly rather
+than faking a success.</pre><pre>Workspace files
+data_sources.json
+  One object per profile: the connector identity (family, provider,
+  connector_service, connector_label, engine_type) and the non-sensitive
+  parameters.</pre><pre>connection_type/&lt;connector&gt;/
+  One folder per connector, copied from the application when the workspace
+  is created. It contains the field definition and, for SQL connectors,
+  editable SQL templates such as list_tables.sql. Your copy takes
+  precedence over the shipped version, so a DBA can adjust a query after
+  review.</pre><pre>connexions_cache/
+  Caches of the object lists (tables, entity sets, collections) produced
+  when you generate a catalog. Read-only discovery; nothing is run on the
+  server.</pre><pre>Default security settings
+WysiQ is read-oriented. Cloud connectors enable TLS/SSL by default and keep
+certificate validation; no insecure mode is chosen for you. The Test never
+runs a destructive statement.</pre><pre>Tips
+  • Check the firewall, VPN and DNS before suspecting the connector.
+  • On Windows, &quot;localhost&quot; resolves to IPv6 first; WysiQ forces
+    127.0.0.1 for PostgreSQL because pg_hba.conf usually allows only the
+    IPv4 address.
+  • For ODBC connectors (Ingres, Db2, Sybase ASE, ...), the driver name must
+    match exactly the entry in the Windows ODBC Data Source Administrator.
+  • For Oracle Cloud with mTLS, fill in the wallet directory.
+  • The Oracle service and connector_service are two distinct fields: the
+    first is the Oracle service name, the second the internal identifier of
+    the WysiQ connector.</pre><pre>Help language: Language list at the bottom of each help window, or
+Settings ▸ Manual… (Help Folder).</pre></main></body></html>

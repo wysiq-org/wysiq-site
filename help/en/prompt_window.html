@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prompt — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/prompt_window.txt</p><h1>Prompt — WysiQ</h1><pre>Note (current version): the Prompt window was only opened from Expert
+Studio, which is no longer accessible. The prompt is now typed directly in
+the AI Command Center (prompt area, ▶ Send, Ctrl+Enter).</pre><pre>The Prompt window is the independent interface where you edit the question
+sent to the AI. Expert Studio feeds it (Send to AI…, Generate Expert
+Report), and the Send button delegates transport to the existing plumbing
+(session, feed grounding, answer routing to HTML Viewer and Scenario
+window).</pre><pre>USAGE</pre><pre>1. Open: from Expert Studio (&quot;Prompt…&quot; button) or automatically when
+   Expert Studio opens.
+2. Edit: type or modify the prompt text. Expert Studio can pre-fill
+   the area via Send to AI… (scenario) or Generate Expert Report
+   (full report).
+3. Send: &quot;▶ Send&quot; button. The AI Profile window is opened / raised
+   automatically to host the connection, the question is sent with
+   the current feed (JSON AI Feed, Data AI Feed, or Area feed), and
+   the answer comes back to the HTML Viewer.</pre><h2>BUTTONS</h2><pre>Clear     Empty the prompt area.
+AI Request…  Opens the AI Request catalogue (saved AI requests).
+AI Feed…  Opens the AI Feed Stack.
+Attach…   Attaches files to the prompt; 📌 attaches them for the whole
+          session. Attachment list: left-click toggles on / off, right-click
+          removes.
+🎤 Mic    Opens the voice recorder.
+▶ Play    Sends the next group of the plan prepared in the AI Feed Stack (one
+          Send # group per click); greyed out without a plan.
+Refresh   Updates the &quot;AI Feed: N feeds&quot; summary.
+▶ Send    Send the prompt to the AI via the AI Profile / Session
+          plumbing. All checks (profile selected, session active, feed
+          grounding) apply as they did in the former AI Analyst.
+?         Show this help.</pre><h2>ANSWER ROUTING</h2><pre>Answers do NOT appear in this window:
+  - HTML Viewer: contains the formatted answers (chapters if the
+    &quot;Chapter HTML answers&quot; toggle is active in Expert Studio).
+  - Scenario window: if the answer is a structured scenario
+    (kind=wysiq_scenario_response), points are injected there.</pre><h2>AI CONNECTION</h2><pre>This window does not manage AI profiles — use the &quot;AI Profiles&quot; button
+in Expert Studio to create, connect or switch profiles. It also does
+not manage sessions — use the &quot;AI Session&quot; button.</pre><h2>WINDOW BEHAVIOUR</h2><pre>Treated like the other WysiQ floating palettes (Expert Studio, Series,
+Table): stays above the graph permanently (persistent -topmost attribute
+on Windows) and re-raises on activation or focus.</pre></main></body></html>

@@ -1,0 +1,74 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI SETTINGS — Requests · Knowledge · Sessions · Profile — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/params_ai_knowledge.txt</p><h1>AI SETTINGS — Requests · Knowledge · Sessions · Profile</h1><pre>Access: Parameters ▸ AI ▸ Help (this help opens when the tab is chosen),
+Main ▸ AI ▸ Help.</pre><pre>LAYOUT OF THE AI TAB (Parameters)
+  Profile       AI profiles (see the &quot;params_ai&quot; help).
+  Observatory   selecting this tab directly opens the AI Observatory
+                settings window (&quot;activity_tracking&quot; help).
+  AI Folder     selecting this tab opens the AI folder of the workspace in
+                the file explorer.
+  Help          opens this help.</pre><pre>REQUESTS (PREDEFINED QUESTIONS)
+Library of reusable questions to insert into the AI prompt. It opens from
+the AI Command Center (📋 Request or PANELS ▸ 📋 Requests Catalog):
+&quot;AI Requests&quot; window.
+The files are stored in: WysiQ/AI/Feed/&lt;language&gt;/&lt;question_name&gt;/question.txt</pre><pre>Inserting a question into the prompt
+    Double-click, Enter or Ctrl+D on a question → inserts the full text
+    into the Command Center prompt.
+    Ctrl+C on the text on the right → inserts the selected text (or the
+    whole body if nothing is selected).</pre><pre>Creating a question
+    Add a folder WysiQ/AI/Feed/&lt;language&gt;/&lt;question_id&gt;/ containing a
+    question.txt file (the folder id is used as the label, spaces =
+    underscores), or duplicate an existing question (right-click ▸
+    Duplicate) then edit it.</pre><pre>Language
+    Selects the language of the question folder to show.
+    Questions from a second folder (English) are added as a complement if
+    the chosen language does not cover every folder.</pre><pre>Searching Questions
+    The Search field filters the question list on the left AND highlights
+    the occurrences in the text on the right.
+    The &lt;&lt; and &gt;&gt; buttons move between occurrences in the text.
+    The current occurrence is highlighted in orange, the others in yellow.</pre><pre>Right-click a question
+    Edit — opens the full editor (id renaming + text editing).
+    Duplicate — copies the question into a new folder.
+    Rename — renames the folder without opening the text editor.
+    Delete — permanently deletes the question folder.</pre><pre>KNOWLEDGE
+Knowledge files are JSON files sent to the AI at each connection (Connect
+button of AI Connections). Window: Main ▸ AI ▸ Knowledge… or
+Command Center ▸ 📖 Knowledge Setup. They give the AI the permanent context
+of your domain: business definitions, interpretation rules, nomenclatures,
+conventions, industry ontologies.</pre><pre>A single folder: WysiQ/AI/protocol/
+    The WysiQ technical schemas (Protocol v0.2) and your Knowledge files
+    live in the same folder. Every JSON file of the folder is listed in the
+    Knowledge screen with its own Send state.
+    The default WysiQ files (000_protocol_handshake…, 001_ai_response…
+    etc.) are present from installation. You can freely add your own
+    business-context JSON files.</pre><pre>Send column  ☑ / ☐
+    Clicking the box toggles the state of the file: ☑ = sent on connection,
+    ☐ = ignored. The state of each file is remembered between sessions in
+    WysiQ/AI/protocol_send_selection.json.
+    Only ticked files are included in the WysiQ Protocol v0.2 handshake
+    sent at the start of each AI session.</pre><pre>What the AI does with Knowledge
+    On Connect, WysiQ sends all ☑ files as system context.
+    The AI then recognises your product codes, units, business thresholds,
+    series names or any interpretation rule specific to your domain,
+    without you having to repeat it with every question.</pre><pre>Language of Knowledge files
+    Knowledge files have no predefined language: write them in the working
+    language of your domain. The default WysiQ schemas are in English.</pre><pre>Creating a Knowledge file
+    Add a JSON file to WysiQ/AI/protocol/ (Open protocol folder button of
+    the AI Knowledge window), or duplicate an existing file (right-click ▸
+    Duplicate) then edit it. The JSON is checked on save — an invalid JSON
+    is rejected.</pre><pre>Preview
+    The JSON box of the AI Knowledge window shows the preview of the
+    selected file.</pre><pre>Right-click a file
+    Edit — opens the built-in JSON editor with checking on save.
+    Duplicate — copies the file under a new name.
+    Rename — renames the file (the Send state follows the renaming).
+    Delete — permanently deletes the file.</pre><pre>SESSIONS AND AI CASES
+AI exchanges are archived per WysiQ query. Current exchanges are AI Cases
+(qai/cases): questions asked, answers received, tokens consumed and HTML
+reports. They are viewed in the AI Case Center (Main ▸ AI ▸ AI Cases…)
+and the HTML Nav (Main ▸ AI ▸ Answers…).</pre><pre>Historical sessions (previous versions) remain stored in
+WysiQ/AI/sessions/&lt;query_name&gt;/; the former Sessions screen is no longer
+opened by any menu (&quot;ai_session_window&quot; help).</pre><pre>PROFILE
+A Profile is a configured instance of an AI provider: model, URL, API key,
+temperature and timeout. Several profiles can coexist; the Default
+connection box marks the profile preselected by the AI Setup / Bench
+assistant.</pre><pre>For the detailed help on the profile fields, open the Profile tab then
+click the ? button of that tab.</pre></main></body></html>

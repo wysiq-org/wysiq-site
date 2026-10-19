@@ -1,0 +1,71 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Setup / Bench — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/ai_setup_wizard.txt</p><h1>AI Setup / Bench — Aide</h1><pre>L&#x27;assistant trouve les modèles d&#x27;IA utilisables — sur ce PC, sur les autres
+ordinateurs du réseau et dans le cloud —, les teste avec une vraie question
+et crée les profils. Choisissez un modèle, ou plusieurs pour les comparer
+côte à côte (bench).</pre><pre>Il s&#x27;ouvre avec l&#x27;AI Command Center (décochez « Open this assistant when
+the AI Command Center opens » pour l&#x27;éviter), depuis la barre latérale
+(🧭 AI Setup / Bench), depuis Parameters ▸ AI (🧭 Assistant…) et depuis
+⚡ Analyze graph quand aucun profil n&#x27;est encore utilisable.</pre><pre>1 · OÙ SONT VOS IA ?
+  This PC
+    Discover Ollama / LM Studio on this computer
+                 Cherche Ollama (port 11434) et LM Studio (port 1234) sur cet
+                 ordinateur. Le dossier des modèles Ollama (« Ollama data »)
+                 est rappelé dessous.
+    Start Ollama automatically if it is installed but not running
+                 Si rien ne répond sur le port 11434, l&#x27;assistant lance un
+                 script de démarrage *ollama*.bat trouvé (workspace, dossier
+                 WysiQ, dossier personnel, Bureau, Documents) ou
+                 « ollama serve », puis attend jusqu&#x27;à 30 s.
+  Local network
+    Other computers (e.g. a Mac running Ollama or LM Studio)
+                 Les autres ordinateurs ; saisir leurs IP ou noms dans
+                 Hosts / IPs (ex. MacBook-Pro.local), séparés par des
+                 virgules. Ils sont mémorisés.
+    Scan the whole subnet (≈ 10 s)
+                 Interroge toutes les adresses du sous-réseau.
+  Cloud APIs
+    Providers with an API key
+                 Les fournisseurs dont la clé est déjà enregistrée (ou dans
+                 une variable d&#x27;environnement), listés dessous.
+    Add a key:   choisir le fournisseur (ou le laisser reconnaître par le
+                 préfixe : sk-ant- → Anthropic, sk-or- → OpenRouter, AIza →
+                 Gemini, xai- → Grok), coller la clé, puis Add.
+  Open this assistant when the AI Command Center opens
+                 Ouvre l&#x27;assistant à chaque ouverture du Command Center tant
+                 qu&#x27;aucun modèle n&#x27;est connecté.
+  ?              Cette aide.   Close   Ferme l&#x27;assistant.
+  Search →       Lance la recherche et passe à l&#x27;écran 2.
+  ↻ Last selection (n) — test →
+                 Saute la recherche et reteste les modèles du dernier bench.</pre><pre>2 · CHOIX DES MODÈLES
+  Les modèles sont groupés par lieu (This PC, LAN &lt;hôte&gt;, Cloud —
+  fournisseur). Un clic sur une ligne (ou Espace) la coche. Plusieurs
+  modèles cochés = un bench. Colonnes Model, Size, Profile (le profil
+  existant réutilisé, ou « new profile »). La dernière sélection est
+  recochée automatiquement. None décoche tout ; « n selected » compte la
+  sélection ; ← Back revient à l&#x27;écran 1 ; Test selected → lance les tests.</pre><pre>3 · TEST &amp; CONNEXION
+  Chaque modèle reçoit une petite vraie question, en parallèle. ✔ = il a
+  répondu (temps affiché), ✖ = échec, avec une piste. Double-clic sur une
+  ligne pour l&#x27;erreur complète.
+  Corrigé automatiquement (🔧) : /v1 manquant (Anthropic, OpenAI,
+  Ollama…), /api/v1 d&#x27;OpenRouter, /v1beta/openai de Gemini, une URL qui
+  finit par /chat/completions, « Bearer » ou guillemets collés avec la clé.
+  Connect       Enregistre et active les profils qui ont répondu, les
+                connecte (un onglet chacun) et fait du premier le profil
+                par défaut.
+  ⚡ Connect &amp; analyze graph
+                Idem, puis envoie la question Analyze graph à chaque
+                modèle connecté : chaque réponse arrive dans son onglet.
+                Les Send suivants partent vers l&#x27;onglet actif seulement.
+  Retry failed  Reteste les modèles en échec (un modèle local qui se
+                charge pour la première fois peut être lent).</pre><pre>ÉCHECS FRÉQUENTS
+  Rien ne répond sur ce PC     Ollama / LM Studio n&#x27;est pas démarré.
+  Ordinateur du LAN injoignable
+                               Sur cet ordinateur, Ollama doit écouter le
+                               réseau : OLLAMA_HOST=0.0.0.0 (Mac :
+                               launchctl setenv OLLAMA_HOST 0.0.0.0, puis
+                               relancer Ollama), et le pare-feu doit
+                               accepter les connexions entrantes.
+  Clé API refusée (401/403)    Recopiez la clé en entier ; vérifiez le
+                               fournisseur.
+  Quota / crédit (429)         Vérifiez la facturation chez le fournisseur.
+  Modèle introuvable (404)     Ce nom de modèle n&#x27;existe plus pour votre
+                               compte — choisissez-en un autre.</pre></main></body></html>

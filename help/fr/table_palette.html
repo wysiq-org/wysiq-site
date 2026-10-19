@@ -1,0 +1,78 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Palette Table — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/table_palette.txt</p><h1>Palette Table — Aide</h1><pre>Accès : bouton Table de la fenêtre graphique ou rond Ta de la Graph Remote.</pre><pre>La palette Table affiche les données de la query sous forme tabulaire : une
+zone d&#x27;agrégats par série (nb, sum, avg, min, max, Δ) et un tableau de détail
+défilant. Elle montre les séries cochées T dans la palette Series ; en
+multi-tables, les noms sont préfixés par leur table (Table.série).</pre><pre>Processus type :
+  cocher T dans Series → régler rows / Dec / UF → filtrer (WHERE d&#x27;une série,
+  Search d&#x27;une colonne) → trier (Sort) → Export.</pre><h2>1) BARRE D&#x27;OUTILS</h2><pre>rows / total
+  Nombre de lignes affichées dans le tableau de détail (Entrée pour
+  appliquer). Le total, après filtres, s&#x27;affiche après « / ».
+Dec
+  Nombre de décimales affichées (Entrée ou sortie du champ).
+UF  (facteur d&#x27;unité)
+  Multiplie les valeurs avant affichage (ex. 0,001 pour passer de Wh à kWh).
+Adj
+  Coché : UF est aussi appliqué aux agrégats de la zone du haut.
+Sort
+  Popup de tri sur 3 niveaux au plus (une ligne par niveau) :
+  - case à droite de la colonne : active / désactive le niveau sans perdre la
+    colonne choisie (effet immédiat) ;
+  - ASC / DESC : texte cliquable, bascule l&#x27;ordre ;
+  - Apply applique et laisse le popup ouvert ; Clear supprime tous les tris ;
+    Cancel ferme.
+SQL
+  Affiche les requêtes générées (DATA SELECT et AGGREGATES SELECT), avec A− /
+  A+ (ou Ctrl+molette), Copy, Close et l&#x27;option « Include aggregates rows in
+  exported file ».
+Export
+  Ouvre la fenêtre d&#x27;export de la table de travail (fichier CSV / XLSX /
+  Parquet, ou nouvelle table WysiQ). Voir l&#x27;aide « copy_table ».
+WHERE  (case)
+  Active / désactive le filtre global combinant les WHERE des séries
+  (voir 3).
+Row#  (case)
+  Affiche / masque la colonne de numéro de ligne.
+?
+  Cette aide.
+Refresh
+  Relit uniquement les données de la Table (par ex. nouvelles lignes Live),
+  sans PLOT ni changement de zoom du graphe.</pre><pre>2) ZONE D&#x27;AGRÉGATS (haut)</pre><pre>Une ligne par série visible : nom | nb | sum | avg | min | max | Δ (max − min),
+calculés sur les lignes retenues (zoom, WHERE, alertes ⚠•).
+• Clic sur un nom de série : éditeur WHERE de cette série.
+• Clic sur un en-tête : tri sur cette colonne.</pre><h2>3) WHERE GLOBAL</h2><pre>Quand la case WHERE est cochée, les conditions WHERE actives des séries sont
+combinées et appliquées comme filtre de lignes au tableau de détail.
+Le WHERE d&#x27;une série reste une restriction sur tout le jeu de cette série
+(graphe compris).</pre><pre>4) TABLEAU DE DÉTAIL (bas)</pre><pre>• Colonnes gelées : Seq, Row et la colonne X active restent visibles à gauche
+  pendant le défilement horizontal.
+• Clic sur un en-tête : tri croissant ; nouveau clic : décroissant.
+• Glisser les séparateurs d&#x27;en-tête pour redimensionner les colonnes (y
+  compris dans la zone gelée).
+• Clic droit sur un titre de colonne ou une cellule : popup Search sur cette
+  colonne (même éditeur que WHERE, mais il ne sélectionne que les lignes de ce
+  tableau). Plusieurs popups Search peuvent être ouverts en même temps, même
+  sur la même colonne (titre « Search: colonne #2 »…). Un nouveau clic droit
+  rouvre d&#x27;abord une recherche existante de la colonne, sinon en crée une.
+  Apply n&#x27;enregistre que la recherche de son popup et le laisse ouvert ;
+  chaque recherche appliquée s&#x27;ajoute aux précédentes selon son « With other
+  cols » (AND / OR). Clear ne retire que la recherche de son popup.
+• Ctrl+C copie les lignes sélectionnées (séparateur tabulation).
+• Molette : défilement vertical ; Maj+molette : horizontal.
+• Le séparateur entre agrégats et détail est mémorisé avec la query.</pre><pre>5) ÉDITEUR WHERE / SEARCH (popup)</pre><pre>  Where ON / Search ON   active la condition.
+  With other cols        NONE, AND ou OR (combinaison avec les autres).
+  c1, join, c2           conditions ; + affiche une 3e condition (c3).
+  Opérateurs             =  !=  &lt;  &lt;=  &gt;  &gt;=  ~ (contient)  ^ (commence par)
+                         $ (finit par)  in
+  Valeur                 seuil, motif ou référence de variable (&amp;1.4) ; pour
+                         une date, un clic ouvre le sélecteur (OK / Cancel).
+  Apply / Clear / Cancel appliquer, effacer, fermer.
+Le filtre s&#x27;applique aux valeurs brutes de la colonne, avant le facteur UF.
+Une métrique se filtre ici comme une série normale ; les WHERE du Metric
+Editor portent sur les composantes de la métrique.</pre><pre>Valeurs absentes : saisir NaN avec = (valeurs manquantes NaN / NULL / NaT) ou
+!= (valeurs présentes, zéro compris). NaN n&#x27;est pas égal à 0 ; aucune ligne
+absente n&#x27;est inventée.</pre><h2>MODE ALERTES ⚠•</h2><pre>Quand le bouton d&#x27;alerte de la palette Series est sur ⚠•, la Table ne garde
+que les instants d&#x27;alerte : les lignes où une série de la même table est en
+alerte (toutes les colonnes restent). Les statistiques d&#x27;en-tête et l&#x27;Export
+portent sur ces lignes. Repasser en △ ou ⚠ restaure toutes les lignes.</pre><pre>CONSEILS
+• Dec = 0 pour des données entières.
+• UF = 0,001 pour afficher des kWh quand les données sont en Wh.
+• Sort + Export exportent rapidement un sous-ensemble trié.
+• La Table ne se rafraîchit pas seule sur les paquets Live : utiliser Refresh.</pre></main></body></html>

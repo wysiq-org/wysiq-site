@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sort X — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/sort_x.txt</p><h1>Sort X — Help</h1><pre>Sort X sets the ORDER of the points (the rows of the query) along X, with up to
+three priority keys. Opened from the Sort X button of the Series palette
+(Table + X Axis row). The sort is saved with the query.</pre><pre>EACH ROW (Sort 1, Sort 2, Sort 3)
+  Column   What to sort on: &quot;&lt;X&gt; — X-axis value&quot; (the plotted X, including a
+           composed X metric) or one of the inputs of the active X metric.
+           Empty = row not used. Sort 1 is applied first, then Sort 2 for ties,
+           then Sort 3.
+  Mode     How the value is read:
+             Value               the value itself (date or number)
+             Weekday             day of the week; order starts on
+                                 Settings ▸ Globals ▸ Core ▸ Week 1st day
+             Day of month (1–31) groups every 1st of the month, every 2nd, …
+             Week-in-month       index of the week inside its month (1–5)
+             Month               month of the year (Jan … Dec)
+             Year                calendar year
+           The modes offered are set in Settings ▸ Globals ▸ List values ▸
+           Sort X (comma-separated keys raw, dow, dom, wom, month, year;
+           separate lists for datetime and numeric X; old polar step tokens
+           there are ignored).
+  ASC/DESC Ascending or descending order.
+           &quot;&lt;X&gt; — X-axis value&quot; in DESC with mode Value mirrors the X axis
+           (large values on the left; the ticks stay linear).</pre><pre>HOW IT IS DRAWN
+  Calendar modes (Weekday, Month, …) keep the Sort X order of the rows. For
+  series rendered as Line or Both, the points are then drawn as markers only
+  (no connecting line), otherwise the chart would fill with segments crossing
+  back and forth in time. Series rendered as Point and polar charts are
+  unchanged.</pre><pre>BUTTONS
+  ?        This help.
+  Clear    Removes the sort (back to the natural X order) and replots.
+  Cancel   Closes without applying.
+  Apply    Applies and replots; the window stays open to compare settings.</pre></main></body></html>

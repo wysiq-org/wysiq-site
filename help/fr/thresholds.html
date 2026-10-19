@@ -1,0 +1,35 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEUILS / ALERTES — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/thresholds.txt</p><h1>SEUILS / ALERTES</h1><pre>Accès : Rules &amp; params ▸ Thresholds… (fenêtre graphique) ou Variables Catalog
+▸ Thresholds.</pre><pre>BARRE DE LA FENÊTRE
+  Refresh          Relit les règles.
+  Catalog          Ouvre le catalogue des variables.
+  Alerts enabled   Active / désactive globalement les alertes du workspace
+                   (enregistré aussitôt).
+  ?  / Close       Cette aide / fermer.
+  Create, Edit, Duplicate, Delete   Gestion des règles (double-clic sur une
+                   règle = Edit). La boîte d&#x27;une règle propose Table, Series,
+                   Low, High, Mode ; OK (Entrée) / Cancel (Échap).</pre><pre>Les seuils sont des règles globales du workspace qui s&#x27;appliquent aux séries des graphes.</pre><pre>CREER UNE REGLE
+• Table : choisissez la table de la query.
+• Series : choisissez une série de cette table.
+• Low : seuil bas, facultatif.
+• High : seuil haut, facultatif.
+• Mode : outside, above, below ou inside.</pre><pre>Low et High peuvent contenir :
+• une valeur numérique ;
+• une référence de variable, par exemple &amp;1.4 ;
+• une variable calculée à partir d&#x27;une formule.</pre><pre>VARIABLES ET SERIES
+Une variable peut contenir une formule utilisant une série.
+[Consommation] désigne la série Consommation de la table courante.
+[RTE2023.Consommation] désigne toujours la série Consommation de la table RTE2023.
+Si une valeur de la série de référence manque pour un X, aucun seuil n&#x27;est appliqué à ce point.</pre><pre>AFFICHAGE
+Le style des points d&#x27;alerte est défini dans Style de la série :
+• Normal
+• Below
+• Above
+Chaque état peut avoir sa couleur, son type, son marker, sa taille, son alpha, sa profondeur, sa position et Blink.</pre><pre>Le bouton alerte de la palette Series parcourt les modes :
+△  alertes désactivées
+⚠  alertes affichées
+⚠• uniquement les points en alerte ; les autres restent atténués pour le contexte.</pre><pre>En mode ⚠•, Area travaille uniquement sur les instants en alerte : les points en alerte propres de la série, sinon les X en alerte d&#x27;une série de la même table.</pre><pre>CATALOG
+Le bouton Catalog ouvre le catalogue complet des variables du workspace afin de créer ou modifier les variables utilisées par les seuils.</pre><pre>CLIC DROIT SUR UNE SERIE (palette Series)
+Set alert thresholds… ouvre le catalogue en mode seuil : sélectionnez une variable puis Set Low / Set High.
+En query multi-tables, activer les alertes (△ ⚠ ⚠•) depuis une table les active pour toutes les tables du graphe : une série sans règle propre utilise la règle de la série homonyme d&#x27;une autre table (onglet actif, puis table principale).
+Onglet principal ▸ Propagate thresholds recopie toutes les règles et styles Below / Above de la table principale.
+Type / Marker « Inherit » dans Below / Above reprend ceux de la série ; la taille est un multiplicateur de celle de la série (défaut : Inherit, taille 1, Blink, orange / rouge).</pre></main></body></html>

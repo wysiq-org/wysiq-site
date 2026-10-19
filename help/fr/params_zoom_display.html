@@ -1,0 +1,55 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SEUILS DE ZOOM DATE — cadre « Zoom date thresholds »  (Globals → Display) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/params_zoom_display.txt</p><h1>SEUILS DE ZOOM DATE — cadre « Zoom date thresholds »  (Globals → Display)</h1><pre>Contrôle l’affichage des libellés et de la densité des ticks sur l’axe X
+datetime quand vous zoomez ou pannez. Les seuils et Auto switch sont
+toujours en JOURS.</pre><pre>FONCTIONNEMENT DES ZONES
+Six lignes (Zoom 1 … Zoom 6). La plage visible choisit la première zone
+où :</pre><pre>  span ≥ seuil de la ligne
+  (et en dessous du seuil de la zone supérieure)</pre><pre>Exemples de défauts :
+  Zoom 1  ≥ 365 j     ~ vue année
+  Zoom 2  ≥ 30 j      ~ vue mois
+  Zoom 3  ≥ 1 j       ~ vue jour
+  Zoom 4  ≥ 1/24      ~ 1 heure   (0.041667 j)
+  Zoom 5  ≥ 1/1440    ~ 1 minute  (0.000694 j)
+  Zoom 6  ≥ 1/86400   ~ 1 seconde (≈ 0.000012 j)
+  else    &lt; Zoom 6    sous-seconde</pre><h2>COLONNES</h2><pre>threshold (seuil)
+  Point de bascule en jours. Fractions pour le sous-jour
+  (1 h ≈ 0.041667).</pre><pre>Auto switch
+  Toujours en jours. Dans la zone COURANTE seulement : si la plage
+  visible est PLUS PETITE que cette valeur, densifie les locateurs
+  (heures / minutes) — le format, X ticks et X minor restent ceux
+  de cette ligne (pas ceux de Zoom 4/5/6).
+  0 = désactivé.
+  Exemples avec les défauts :
+    Zoom 3 Auto switch = 3.0 → vue &lt; 3 jours → ticks style horaire
+    Zoom 4 Auto switch = 0.5 → vue &lt; 12 h   → ticks plus fins</pre><pre>format
+  strftime pour les libellés X de la zone (toujours la zone du span).
+  auto = utilise Core → Date format (axe X).
+  Pour des heures en Zoom 3, mettez un format explicite
+  (ex. %d/%m %H) — ne laissez pas « auto » si Core n’a pas l’heure.
+  Les formats possibles sont ceux proposés pour les dates de base
+  de l’onglet Core (et leurs adaptations). Voir l’aide Globals /
+  Paramètres pour la référence strftime complète.
+  Typique : %d/%m %H:%M (heures), %H:%M (minutes), %H:%M:%S (secondes).</pre><pre>X ticks
+  Nombre cible de ticks MAJEURS pour la zone.
+  0 = utilise « Tick X » de la palette Series.
+  Préférer ~10–12 pour des libellés lisibles et calés sur l’horloge
+  (00:00, heures rondes). Ne laissez pas 0 si Tick X est élevé (ex. 24) :
+  le zoom hériterait de cette densité et surchargerait l’axe.</pre><pre>X minor
+  Subdivisions ENTRE les ticks majeurs (grille mineure).
+  0 = utilise « Tx » de la palette Series.
+  7 = mode semaine sur vues larges (majeurs lundi + grille journalière).
+  En zoom ≤ ~4 semaines (ou densité &lt; 7 j/tick), les libellés passent
+  automatiquement aux jours (lun–dim) même si X minor = 7 — la place
+  disponible prime.
+  Ex. Zoom 3 → 12  (sous-heures / grille fine hors mode semaine forcé)
+  Ex. Zoom 4 → 12 ; Zoom 5 → 6 ; Zoom 6 → 4</pre><pre>else format
+  Format si span &lt; Zoom 6 (ex. %H:%M:%S.%f).</pre><pre>ALIGNEMENT HORLOGE
+Les majeurs sont placés sur les bornes calendrier / horloge (minuit,
+heures pleines, minutes rondes), pas sur des offsets arbitraires
+(:16, 04:51…).</pre><pre>PALETTE SERIES vs CES PARAMÈTRES
+Au zoom, Zoom X ticks / X minor écrasent Series Tick X / Tx si &gt; 0.
+La vue Home (non zoomée) année peut encore suivre Series + réglages
+semaine.</pre><pre>ASTUCES
+  • Vos réglages actifs sont dans {user}_params.json (racine workspace).
+  • Pour que les mêmes seuils de zoom servent aux autres utilisateurs
+    de ce workspace, copiez vos valeurs zoom dans params_ORI.json —
+    elles deviennent la base Restore defaults (ORI) pour tous.</pre></main></body></html>

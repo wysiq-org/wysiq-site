@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WysiQ — Table Catalog — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/table_catalog.txt</p><h1>WysiQ — Table Catalog</h1><pre>Access: Main ▸ Database ▸ Catalog…</pre><pre>ROLE
+The Table Catalog lists and documents the tables of the workspace (Host =
+Local (DuckDB)) or the tables of an SQL connection (Host = a connected
+profile). It is used to choose the tables and columns kept (Sel), manage
+the reduction recipes (Recipe / shrink), look at the origin (Import source),
+rename, delete, and prepare a DB Live acquisition.
+It does NOT convert a Static table into Live with a simple click.</pre><pre>Typical workflow (remote database):
+  Host = profile → Search table / Column LIKE → tick Sel (creates the JSON
+  definition) → tick the useful columns → Recipe (shrink) → the table appears
+  in Main (RS) → open it; or right-click ▸ Create DB Live… for Live tracking.</pre><h2>TOP BAR</h2><pre>  Close                 Closes the window.
+  Refresh               Rereads the list and the detail.
+  Reload DuckDB         (local Host) After confirmation, rereads from disk
+                        each .parquet table of the registry (ticked columns +
+                        shrink) and reduces in place the other in-memory
+                        tables that have a tables/&lt;name&gt;.json. Summary
+                        &quot;n table(s) processed&quot; and any errors.
+  Rebuild remote JSON   (remote Host) After confirmation, DELETES all the JSON
+                        definitions of the tables of this connection: column
+                        selections and recipes are erased, then the remote
+                        list is reread. Use it to restart from a clean
+                        catalog.
+  Drop                  Deletes the selected table after confirmation (the
+                        message lists exactly what will be deleted):
+                          Local: DROP in DuckDB + deletion of the .parquet and
+                                 of the .json;
+                          Remote: DROP TABLE run on the server.
+                        A Live source (L) is deleted in Live Sources.
+  Rename…               Renames the table (DuckDB, files, registry; RENAME on
+                        the server for a remote connection) and updates the
+                        saved Queries that use it. A Live L is renamed in
+                        Live Sources.
+  → AI                  Sends the table definition (structure, not the data)
+                        to the AI Feed Stack.
+  ?                     This help.</pre><h2>FILTERS</h2><pre>  Host:            Local (DuckDB) or an active connection profile.
+  Search table:    Filter on the table name (while typing).
+  Column LIKE:     Lists the tables containing a column matching the pattern
+                   (LIKE syntax, % = wildcard).
+  Catalog:         (Oracle) All (ALL_TABLES) or User (USER_TABLES).</pre><h2>TABLE LIST — COLUMNS</h2><pre>  Type:
+    LO  independent local table (DuckDB/Parquet) — shown as LS in Main
+    RS  table from an SQL database, static copy
+    RL  persistent table linked to a Live SQL acquisition
+    WS  table from a WWW connector, Static load
+    WL  table from a WWW connector, Live refresh configured
+    L   technical source LIVE1/LIVE2… managed in Live Sources
+    DB  remote table not yet registered in the workspace
+    V   former view-type object (read-only), only if it exists
+  Type shows the origin and the declared mode, NOT the Running/Paused state.
+  Source name  Name of the table or of the source.
+  Sel          ✓ = definition kept. Click:
+                 local  — keeps / drops the table (an unticked table
+                          disappears from the Main list, without being
+                          deleted);
+                 remote — creates or deletes the definition JSON in
+                          workspace/tables/;
+                 L      — ticks / unticks all the Live series.
+  Recipe       Recipe (shrink) indicator. Click: opens the Shrink box
+               (except L and V).
+Click a heading: ascending / descending sort.
+Rows max. (bottom of the list): maximum number of rows read for the preview
+and the statistics (ALL or empty = no limit; default 500, shared with the
+global parameter).</pre><pre>SHRINK BOX (Recipe)</pre><pre>  Shrink to: N + Auto    reduce to about N rows;
+  Every: N + Every       keep one row out of N;
+  Apply                  saves the recipe (applied on load);
+  Delete                 deletes the recipe; Cancel closes without change.</pre><pre>DETAIL (Definition frame)</pre><pre>  WysiQ name, Rows, Columns, Owner, Created, Modified: metadata.
+  Import source: REAL origin of the table — file or folder, SQL connection
+    / table, or WWW connector of the Internet API.
+    For WS/WL, the name comes from workspace/WWW/connectors/ and from the
+    source/www_source link stored in tables/&lt;table&gt;.json; a tooltip shows
+    the full text. &quot;WWW: connector not linked&quot; flags a missing connector. A
+    DuckDB/Parquet copy does not change this origin.
+  File path: full path for an L source coming from files.
+  SQL (view): SQL text of a former V object.
+  Editable fields are confirmed with Enter.</pre><pre>Columns (right list): Sel / Column / Type.
+  Click the Sel of a column: keeps or excludes it (persistent, used by
+  Queries, the SQL Assistant and Reload DuckDB). Click the Sel heading: tick
+  all / untick all. The X of a Live L stays ticked.</pre><pre>RIGHT-CLICK MENU (on a table)</pre><pre>  Edit shrink…                     Opens the Shrink box.
+  View: no shrink / Live table: managed in Live Sources   (greyed,
+                                   informative)
+  → AI                             Same as the → AI button.
+  Create DB Live…                  (SQL tables, not WS/WL) Prepares a DB Live
+                                   source (X column, key, start/end, polling)
+                                   in Live Sources.</pre><h2>PREPARING A LIVE SOURCE</h2><pre>- SQL database: existing connection, choose the table, right-click ▸ Create
+  DB Live…, then set X, key, start/end and polling in Live Sources.
+- WWW/API: Main ▸ Database ▸ WWW Connection, choose the connector, the
+  resource, the dates and the refresh (Static or Live), then download.
+- Files: Live Sources ▸ Add source ▸ files.
+A Live L source and a persistent RL/WL table are not the same thing.
+Saving a mode does not start an acquisition; neither the Type nor a
+double-click converts a table.</pre><pre>STORAGE
+Table definitions: workspace/tables/*.json.
+WWW connectors: workspace/WWW/connectors/*.json.
+Live L definitions: workspace/live/live_tables.json.
+Parquet files are neither renamed nor erased by displaying the catalog.
+Connection secrets are never shown in Import source.</pre></main></body></html>

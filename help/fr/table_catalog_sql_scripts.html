@@ -1,0 +1,18 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WysiQ - Catalogue : scripts SQL (technique) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/table_catalog_sql_scripts.txt</p><h1>WysiQ - Catalogue : scripts SQL (technique)</h1><pre>Le catalogue distingue la liste distante, les colonnes et les statistiques.
+Les chemins ci-dessous sont relatifs au dossier du programme.
+1. Liste des tables distantes :
+   connexions/bundled/&lt;connecteur&gt;/list_tables.sql
+2. Colonnes et statistiques (created/modified/row_count) :
+   connexions/bundled/dialect_lexicon.json
+   section catalog_sql (dialectes de chaque SGBD).
+3. Exécution et assemblage :
+   connexions/catalog_sql_runner.py
+   connexions/table_column_rows.py</pre><pre>Les définitions métier et Sel/Recipe appartiennent aux JSON de
+workspace/tables/, pas aux scripts SQL. Les connecteurs WWW ne sont pas
+une connexion SQL : leurs ressources et paramètres sont dans
+workspace/WWW/connectors/ et leur provenance dans source/www_source.
+Les sources L sont gérées dans workspace/live/live_tables.json.</pre><pre>Consultez aussi l&#x27;aide Catalogue des tables (?) pour les codes LO, RS,
+RL, WS, WL et L. Il n&#x27;existe pas de bascule Static / Live dans le catalogue
+(elle se fait par clic droit sur la table dans la fenêtre Main).
+Les objets V historiques restent lisibles lorsqu&#x27;ils existent ; ils ne sont
+pas une famille d&#x27;acquisition de données.</pre></main></body></html>

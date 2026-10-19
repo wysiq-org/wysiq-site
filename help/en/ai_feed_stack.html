@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI FEED STACK — preparing the analytical blocks of the next prompt — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/ai_feed_stack.txt</p><h1>AI FEED STACK — preparing the analytical blocks of the next prompt</h1><pre>The AI Feed Stack is the dedicated window where you assemble the analytical
+blocks that go with your next AI prompt. Open it from the AI Command
+Center (AI Feed Stack panel). Each feed is a compact JSON description of a
+part of the active graph — never a raw data dump.</pre><h2>TOOLBAR</h2><pre>+ Add feed ▾
+    Menu: Table Feed, Area (stats JSON), Area graph (PNG crop), PCA report,
+    Signals, Stats / tests, Correlations, Current scenario; then Rebuild
+    handshake (Feed 0) — recreates the protocol feed (useful if the Expert
+    AI level changed while the Stack was closed). Select Data… only appears while Expert Studio is open (window
+    no longer accessible in this version).
+    The handshake (Feed 0) is created and refreshed automatically.</pre><pre>Empty
+    Removes every feed from the Stack, except the Feed 0 handshake.</pre><pre>Refresh
+    Reloads the list from the current basket.</pre><pre>Preview
+    Shows or hides the preview of the selected feed (JSON, or an image for
+    an Area graph feed; click the image to enlarge it). Hidden by default to
+    keep the window compact. Used to check exactly what will be sent
+    before spending tokens.</pre><pre>?
+    This help.</pre><pre>Close
+    Closes the window (the Stack is kept).</pre><pre>STACK LIST
+    Columns: Send #, When, Kind, Name, Size. Hover: feed detail.
+    Multiple selection + Del key: delete the selected feeds.
+    Numbered feeds are walked through by &gt;&gt;AI Next in the Command Center.</pre><h2>SEND # COLUMN</h2><pre>    Left-click a cell: assigns the next number; clicking again removes the
+    number.
+    Right-click on Send #: &quot;Send with step #n&quot; joins an already assigned
+    number (same group = grouped send — useful for memoryless profiles
+    that must compare several Areas in a single message);
+    &quot;New step (send alone)&quot; creates a separate step; Disable removes the
+    number.
+    Click the Send # heading: tick all / untick all.
+    Right-click elsewhere on the row: Delete (or &quot;Delete n feeds&quot; with a
+    multiple selection).</pre><pre>PROTOCOL vs STACK</pre><pre>    Only the three CORE schemas (000-002) go on Connect (Knowledge Setup).
+    The other protocol files (PCA, signals, stats...) are sent
+    automatically with the AI Feed JSON when the matching type is present
+    here — for example, a Signals feed also sends the signal schemas.
+    You never manage protocol files by hand; the Stack does it for you.</pre><pre>ORIGINAL vs CURRENT DATA</pre><pre>    A feed replayed from an AI Case can be sent on the data originally
+    sent, or rebuilt on the current data with the same recipe (same bounds
+    and shrink). Right-click the Send # column of a feed coming from an AI
+    Case to switch Original data / Current data; a tooltip shows the
+    current mode. Right-click the Feed column for Delete or Duplicate.
+    Duplicate adds a 2nd entry in the OPPOSITE mode, to send the original
+    and the current version side by side (for example to compare two
+    years). Feeds added through the AI button of a window are always on
+    current data and do not have this choice.</pre><pre>→ AI BUTTON OF THE WINDOWS (Area, Table, Signals…)
+    Left-click: sends the item to the Stack according to the chosen mode.
+    Right-click: &quot;Left-click sends:&quot; menu with the modes Area data (JSON),
+    Area graph capture (PNG), Both (data + graph) (✓ = active mode), then
+    &quot;Send now (current mode)&quot; to send immediately.</pre></main></body></html>

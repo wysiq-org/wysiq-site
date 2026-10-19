@@ -1,0 +1,119 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TESTS STATISTIQUES — Guide de référence — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/area_tests_stats.txt</p><h1>TESTS STATISTIQUES — Guide de référence</h1><pre>Ce fichier couvre la documentation détaillée de chaque test
+statistique. Les tests sont exécutés dans la fenêtre Statistical
+Tests (ouverte depuis la barre d&#x27;outils) ; le panneau autrefois
+intégré à la palette Area a été retiré. Pour les contrôles de
+l&#x27;interface (Scope, pAdj, Mode, ReCalc…) consultez l&#x27;aide
+stats_tests_window.</pre><h2>PORTÉE &amp; ALIGNEMENT</h2><pre>Scope Area / All
+  Les tests peuvent porter sur la sélection (Area) ou sur la
+  série entière (All).
+  • Area : uniquement les points dans le rectangle (Xmin..Xmax).
+  • All  : toute la série, indépendamment du rectangle.
+  Astuce : comparez Area vs All pour savoir si un effet est local
+  ou global.
+  Si un résultat vous surprend, basculez Area/All pour comprendre
+  l&#x27;impact de la sélection.</pre><pre>Tol (alignement sur X)
+  Tol définit la tolérance d&#x27;alignement des points X lors des
+  tests par paires (S1 vs S2).
+  formule : bucket(x) = round(x/tol)*tol  (approx.)
+  • tol = 0 : alignement strict (souvent par index si X exacts
+              rares).
+  • tol &gt; 0 : aligne les points X proches — utile si les séries
+              ont des timestamps légèrement décalés.
+  Vérifiez toujours n (points appariés) dans la table Tests.
+  Augmentez Tol si vos séries ont la même forme mais pas
+  exactement les mêmes timestamps.</pre><h2>TESTS PAR PAIRES</h2><pre>Pearson  (corrélation linéaire)
+  Mesure la relation linéaire entre deux séries appariées.
+  r ∈ [-1, +1]
+  r proche de +1 → forte corrélation linéaire positive.
+  r proche de  0 → pas de relation linéaire.
+  r proche de -1 → forte corrélation linéaire négative.
+  Pertinent si la relation est approximativement linéaire et les
+  outliers sont limités.</pre><pre>Spearman  (corrélation de rang)
+  Mesure la relation monotone (pas forcément linéaire) via les
+  rangs.
+  ρ ∈ [-1, +1]
+  Plus robuste aux outliers et aux relations non-linéaires
+  monotones.
+  À préférer si la relation est monotone mais non linéaire, ou
+  en présence d&#x27;outliers.</pre><pre>t-test  (apparié)
+  Test paramétrique sur la moyenne des différences d = S1 − S2.
+  H0 : mean(d) = 0
+  p petit → différence moyenne significative entre les deux
+  séries appariées.
+  Valide si les deltas sont approximativement normaux (ou n grand).</pre><pre>Wilcoxon  (apparié)
+  Alternative non-paramétrique au t-test apparié (sur les rangs
+  des différences).
+  H0 : médiane(d) = 0
+  Plus robuste si les différences ne sont pas normales ou en
+  présence d&#x27;outliers forts.
+  À préférer si la distribution des deltas est asymétrique ou
+  avec outliers.</pre><pre>MAE / RMSE
+  Métriques d&#x27;erreur entre S1 et S2 sur les points appariés.
+  MAE  = mean(|d|)
+  RMSE = sqrt(mean(d²))
+  RMSE pénalise davantage les grosses erreurs (sensible aux
+  outliers).
+  Utiliser pour mesurer la performance prévision vs réel.</pre><pre>Cohen d  (taille d&#x27;effet apparié)
+  Taille d&#x27;effet sur les deltas, exprimée en écarts-types.
+  d = mean(deltas) / std(deltas)
+  ≈ 0.2 petit  |  0.5 moyen  |  0.8 grand  (règle de pouce)
+  Évite le piège : « p très petit mais effet pratiquement nul ».</pre><pre>TESTS DE GROUPE  (≥ 3 séries)</pre><pre>ANOVA  (one-way)
+  Test global paramétrique (k séries) sur l&#x27;égalité des moyennes.
+  H0 : mean(S1) = mean(S2) = … = mean(Sk)
+  p petit → au moins une série diffère des autres.
+  Compléter avec Tukey HSD pour identifier les paires.
+  À utiliser si les résidus sont approximativement normaux et les
+  variances comparables entre groupes.</pre><pre>Kruskal-Wallis
+  Test global non-paramétrique (k séries) sur l&#x27;égalité des
+  distributions (basé sur les rangs).
+  H0 : distributions identiques
+  p petit → au moins une série diffère des autres.
+  Compléter avec Dunn pour identifier les paires.
+  À utiliser si les distributions sont asymétriques/avec outliers
+  ou si la normalité est douteuse.</pre><h2>TESTS POST-HOC</h2><pre>Tukey HSD  (post-hoc après ANOVA)
+  Comparaisons par paires après ANOVA ; contrôle l&#x27;erreur de type I
+  sur l&#x27;ensemble des paires (family-wise).
+  Basé sur la loi du range studentisé (q).
+  Procédure :
+    1. Faites d&#x27;abord l&#x27;ANOVA.
+    2. Si ANOVA significative, lisez les lignes Tukey.
+    3. p_adj &lt; alpha → différence significative pour cette paire.
+  Préférer Kruskal+Dunn si les variances diffèrent fortement ou
+  en présence d&#x27;outliers importants.</pre><pre>Dunn  (post-hoc après Kruskal)
+  Comparaisons par paires sur les rangs, après Kruskal-Wallis.
+  Statistique z sur les différences de rangs.
+  p_adj &lt; alpha → différence significative (non-paramétrique).
+  À utiliser quand Kruskal est significatif et/ou les données
+  ne sont pas normales.</pre><h2>CORRECTION POUR TESTS MULTIPLES</h2><pre>p_adj  (correction multi-tests)
+  Corrige les p-valeurs quand on effectue plusieurs comparaisons
+  pour contrôler le taux de faux positifs.
+  • Bonf (Bonferroni) : très conservateur — multiplie chaque p
+    par le nombre de tests.  À utiliser si un seul faux positif
+    est critique.
+  • Holm : step-down, moins sévère que Bonferroni.
+  • BH (Benjamini-Hochberg) : contrôle le FDR — recommandé par
+    défaut pour l&#x27;analyse exploratoire.
+  Regardez toujours p_adj (pas seulement p) quand de nombreuses
+  paires sont testées.</pre><h2>TAILLES D&#x27;EFFET</h2><pre>eta²  (taille d&#x27;effet ANOVA)
+  Part de la variance totale expliquée par le facteur (quelle
+  série).
+  eta² = SS_between / SS_total
+  Utile pour quantifier l&#x27;ampleur, pas seulement la
+  significativité (p).
+  À utiliser si p est très petit mais l&#x27;effet pratique pourrait
+  rester faible.</pre><h2>GLOSSAIRE</h2><pre>paired      Test sur les mêmes points X ; compare d = S1 − S2.
+one-way     ANOVA à un facteur (k groupes = k séries).
+post-hoc    Tests après un test global (ANOVA/Kruskal) pour
+            identifier quelles paires diffèrent.
+HSD         Honestly Significant Difference (Tukey).  p-valeurs
+            déjà ajustées (contrôle family-wise).
+FDR         False Discovery Rate — proportion de faux positifs
+            parmi les résultats significatifs.
+eta²        Taille d&#x27;effet ANOVA (part de variance expliquée).
+n           Nombre de points appariés utilisés dans le test.
+stat        Valeur de la statistique du test (r, t, W, F, H, z
+            selon le test).
+p           P-valeur brute (non ajustée).
+p_adj       P-valeur ajustée après correction multi-tests.
+note        Tag complémentaire : &quot;paired&quot;, &quot;non-param&quot;,
+            &quot;post-hoc&quot;, etc.</pre></main></body></html>

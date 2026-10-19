@@ -1,0 +1,91 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI COMMAND CENTER — unified AI hub — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/ai_command_center.txt</p><h1>AI COMMAND CENTER — unified AI hub</h1><pre>Access: AI Center button of the graph window, AI circle of the Graph Remote,
+Main ▸ AI ▸ AI Command Center (Expert)… (a graph must be open).</pre><pre>Role
+The AI Command Center is the central point to run an AI investigation on
+the active WysiQuery. It gathers in a single window the prompt, the chat
+thread, the connection tabs, the AI Feed Stack, the Expert configuration,
+and direct access to the AI Connections panel, the AI Case Center, Usage and
+the HTML viewer. The analysed graph stays the hero: the Command Center sits
+on top of it and every feed sent describes that graph, never a raw data dump.</pre><pre>Workflow
+  1. 👤 AI Connections (sidebar) — create or open an AI Case / session,
+     choose a profile, then Connect. The transport window opens as a
+     panel; closing it only hides it. The session stays active whether
+     the Command Center is open or closed.
+  2. AI Feed Stack — enable the analytical blocks to send (table, area,
+     tests, signals, PCA, correlations, scenario). The order of clicks in
+     the Send # column is the sending order.
+  3. Expert Config — define role, style and AI level for the handshake feed.
+  4. Prompt — type the question and ▶ Send, or use &gt;&gt;AI Next to walk
+     through the Stack feed by feed, and ▶ Run Remaining to chain the
+     remaining feeds.</pre><pre>⚡ Analyze graph — one-click analysis
+The ⚡ Analyze graph button (next to Send) chains the whole workflow above
+for you:
+  • creates the AI Case of the query if it does not exist (no more Create
+    step);
+  • takes the profile already used for this query (main profile of its
+    Case), otherwise the last profile used;
+  • enables Feed 0 (graph context) and, if nothing else is active in the
+    Stack, adds the compact summary of the Table (never the raw table);
+  • connects the profile and waits until it is ready (a local model may
+    take a few seconds to load the first time);
+  • sends a standard analysis question in the help language — or the
+    question you typed in the prompt.
+If no profile is usable yet, it opens the AI Setup assistant (below); the
+analysis starts as soon as the chosen models are connected. The full
+workflow (Stack, Expert Config, &gt;&gt;AI Next) remains available for detailed
+analyses.</pre><pre>🧭 AI Setup / Bench — find, test and compare models
+Opens with the Command Center as long as no model is connected (can be
+disabled in the assistant), or from the sidebar. In three screens: where
+your AIs are (this PC — it can start your Ollama .bat start script —, the
+other computers of the network such as a Mac, the cloud keys) → the models
+found, tick one or several → a real test of each, in parallel, with
+automatic corrections. ⚡ Connect &amp; analyze graph connects every model that
+answered (one tab each) and sends them the same analysis: a bench in one
+click. Details: ? in the assistant.</pre><pre>Sidebar (◀ folds / reopens it)
+  CONNECTIONS   connected profiles: click = make active; the
+                &quot;WysiQ Support&quot; row (if available) is enabled by its On box.
+  PANELS        🧭 AI Setup / Bench, 👤 AI Connections, 🗄 AI Feed Stack,
+                📋 Requests Catalog, 🗂 AI Case Center, 📊 Usage,
+                📖 Knowledge Setup, 🎚 Expert Config, 🌐 HTML Viewer.
+  SENT PROMPTS  history of the prompts sent.</pre><pre>Prompt area
+  📋 Request   opens the request catalog; a click loads the request into
+               the prompt.
+  🗄 Feed      opens the AI Feed Stack (the Stack summary above the prompt
+               opens it too).
+  📎 Attach    attaches files (click an attachment: enable / disable it;
+               ✕ removes it).
+  🎤 Mic       voice dictation.
+  Clear        clears the prompt.
+  Up / Down    (in the prompt) recalls previous prompts.
+🔎 search bar of the thread: Enter = next occurrence, Shift+Enter =
+previous, Escape = clear. Clicking the status bar opens Usage.</pre><pre>Connection tabs
+Each connected profile has its own tab above the chat. The active tab
+receives the next Send. The token counters under a tab reflect the last
+exchange of that profile, to compare cost and verbosity between models.</pre><pre>Broadcast
+Broadcast (header) adds other already connected profiles as extra targets
+for the next JSON AI Feed, Data AI Feed and Send. The main profile (active
+tab) is always included. The target line shows (+N) when extra profiles
+are armed. Broadcast lets you ask the same question to several models and
+compare their answers in a single Case.</pre><pre>&gt;&gt;AI Next (formerly Play Next)
+&gt;&gt;AI Next walks through the Stack feed by feed for the active profile tab.
+Switching tab resynchronises the cursor and proposes the next canonical
+prompt that this profile has not received yet (+N = benchmark catch-up). A
+freshly connected model can thus be brought to the same point as the others
+without resending everything by hand.</pre><pre>No Fat AI Feed
+Everything that leaves this window is compact structured JSON: results,
+metadata and content fingerprints, never the full raw series. Raw samples
+are optional and explicitly configured. Token cost stays low and the AI
+reasons on computed facts.</pre><pre>Shortcuts
+  Ctrl+Enter — send
+  Ctrl+Up / Ctrl+Down — prompt history
+  Ctrl+N — open AI Connections (new session)
+  Ctrl+L — clear the prompt
+  F1 — this help</pre><pre>Colours
+Parameters ▸ Globals controls the Command Center palette.</pre><pre>Expert Config (🎚)
+  Configuration window of the handshake feed: Recipe, Role, Context,
+  Audience, Style, Language and AI level (drop-down lists). Save
+  saves; → AI drops the configuration into the AI Feed Stack; Cancel
+  closes without saving; Reset restores the default values.</pre><pre>Broadcast — choosing the profiles
+  The &quot;Broadcast — additional AI profiles&quot; window recalls the main profile
+  (always included) and lists the other connected profiles to tick;
+  Apply arms the selection, Clear empties it. With no other connected
+  profile, a message invites you to connect one first.</pre></main></body></html>

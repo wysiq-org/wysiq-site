@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ZOOM DATE THRESHOLDS  (Globals → Display) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/params_zoom_display.txt</p><h1>ZOOM DATE THRESHOLDS  (Globals → Display)</h1><pre>Controls how the datetime X axis labels and tick density change when you
+zoom or pan. Units for thresholds and Auto switch are always in DAYS.</pre><pre>HOW ZONES WORK
+Six rows (Zoom 1 … Zoom 6). The visible span picks the first zone where:</pre><pre>  span ≥ that row&#x27;s threshold
+  (and below the next higher zone&#x27;s threshold)</pre><pre>Example defaults:
+  Zoom 1  ≥ 365 d     ~ year view
+  Zoom 2  ≥ 30 d      ~ month view
+  Zoom 3  ≥ 1 d       ~ day view
+  Zoom 4  ≥ 1/24      ~ 1 hour   (0.041667 d)
+  Zoom 5  ≥ 1/1440    ~ 1 minute (0.000694 d)
+  Zoom 6  ≥ 1/86400   ~ 1 second (≈ 0.000012 d)
+  else    &lt; Zoom 6    sub-second</pre><h2>COLUMNS</h2><pre>threshold
+  Breakpoint in days. Enter fractions for sub-day (1 h ≈ 0.041667).</pre><pre>Auto switch
+  Still in days. Inside the CURRENT zone only: if the visible span is
+  SMALLER than this value, densify locators (hours / minutes) — format,
+  X ticks and X minor stay those of THIS row (not Zoom 4/5/6).
+  0 = off.
+  Examples with defaults:
+    Zoom 3 Auto switch = 3.0 → view &lt; 3 days → hourly-style ticks
+    Zoom 4 Auto switch = 0.5 → view &lt; 12 h  → finer ticks</pre><pre>format
+  strftime for X labels in that zone (always the zone selected by span).
+  auto = use Core → Date format (X axis).
+  For hours while still in Zoom 3, set an explicit format (e.g. %d/%m %H)
+  — do not leave &quot;auto&quot; if Core has no hour component.
+  Possible patterns are the same date formats offered on the Core tab
+  (and free adaptations of those codes). See Globals / Settings help
+  for the full strftime reference.
+  Typical: %d/%m %H:%M (hours), %H:%M (minutes), %H:%M:%S (seconds).</pre><pre>X ticks
+  Target number of MAJOR ticks for that zone.
+  0 = use Series palette &quot;Tick X&quot;.
+  Prefer ~10–12 so labels stay readable and land on round clock values
+  (00:00, whole hours). Do not leave 0 if Tick X is high (e.g. 24):
+  zoom would inherit that density and crowd the axis.</pre><pre>X minor
+  Subdivisions BETWEEN major ticks (minor grid).
+  0 = use Series palette &quot;Tx&quot;.
+  7 = week mode on wide views (Monday majors + daily minor grid).
+  When zoomed to ≤ ~4 weeks (or denser than 7 days/tick), labels switch
+  automatically to every weekday (Mon–Sun) even if X minor = 7 — available
+  space wins.
+  Ex. Zoom 3 → 12 ; Zoom 4 → 12 ; Zoom 5 → 6 ; Zoom 6 → 4</pre><pre>else format
+  Format when span is below Zoom 6 (e.g. %H:%M:%S.%f).</pre><pre>CLOCK ALIGNMENT
+Majors are placed on calendar / clock boundaries (midnight, whole hours,
+round minutes), not on arbitrary linspace offsets like :16 or 04:51.</pre><pre>SERIES PALETTE vs THESE PARAMS
+On zoom, Zoom X ticks / X minor override Series Tick X / Tx when &gt; 0.
+Home (non-zoomed) year views may still follow Series + week settings.</pre><pre>TIPS
+  • Your active settings live in {user}_params.json (workspace root).
+  • To share the same zoom thresholds with other users of this
+    workspace, copy your zoom values into params_ORI.json — they
+    become the Restore defaults (ORI) baseline for everyone.</pre></main></body></html>

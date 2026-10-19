@@ -1,0 +1,56 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PALETTE SCÉNARIO — Courbes cibles manuelles — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/scenario_palette.txt</p><h1>PALETTE SCÉNARIO — Courbes cibles manuelles</h1><pre>Accès : bouton Scenario de la fenêtre graphique ou rond Sc de la Graph Remote.</pre><pre>Rôle
+Un Scénario est une courbe cible éditée manuellement et affichée au-dessus du graphique courant. Il sert à tester rapidement des hypothèses : dessiner une cible, l&#x27;alimenter depuis une série existante, changer le type d&#x27;interpolation, puis éventuellement la convertir en série WysiQ normale avec → Series ou l&#x27;envoyer à l&#x27;IA avec → AI. La table source et la requête SQL ne sont pas modifiées.</pre><pre>Flux conseillé
+1. Saisir un nom de scénario puis utiliser New.
+2. Activer DRAW et cliquer/glisser sur le graphique pour ajouter des points de contrôle.
+3. Utiliser MOVE pour déplacer les points existants.
+4. Choisir le type de Curve et son paramètre.
+5. Utiliser COMPUTE pour recalculer la courbe sans refaire un Feed depuis la référence.
+6. Utiliser → Series quand le scénario doit devenir une série normale utilisable par les métriques, les Areas, l&#x27;AI feed et les exports.
+7. Utiliser → AI pour déposer le JSON du scénario actif dans l&#x27;AI Feed Stack (sans le convertir en série).</pre><pre>Contrôles du haut
+Nom du scénario : nom du scénario actif.
+New/Rename/Duplicate/Delete : gestion des scénarios (liste déroulante
+d&#x27;action ; aussi au clic droit ou Ctrl+clic sur la liste des scénarios).
+Style : choix de la couleur (pastilles ou More...), de la taille et de
+l&#x27;affichage des points de contrôle (case « Show points ») ; Close ferme. La taille grossit le trait ET les points de contrôle. Quand une vraie série est créée ensuite, elle peut hériter du style du scénario, mais la série reste modifiable dans la palette Series.
+Import : ouvre le catalogue de scénarios.
+JSON : fenêtre JSON du scénario — Copy, Paste, Apply (applique le JSON édité), Export, Import, Close.
+Save : sauvegarde les scénarios dans la Query.
+Vars : ouvre la fenêtre Variables de la query active — poussez les refs à l&#x27;extrême
+pendant que DRAW/MOVE reste actif ; laissez le picker ouvert (Stay open) pour comparer
+l&#x27;hypothèse sur tout le graphe.</pre><pre>Liste des scénarios et SUM
+La liste sélectionne le scénario actif. Seul le scénario actif reçoit les éditions DRAW/MOVE.
+SUM affiche le total vivant des Y du scénario interpolé sur les X du graphique courant. Le total applique le même Unit factor que les SUM de la palette Table. Si les X du graphique ne sont pas disponibles, WysiQ utilise en secours la somme des points de contrôle.</pre><pre>Sample from et Feed
+Sample from choisit une série tracée, de base ou virtuelle, utilisée par Feed et par SNAP_TO_TREND.
+Feed échantillonne la série de référence et remplace les points du scénario par ces points échantillonnés. Si aucune série n&#x27;est choisie, une boîte « Select reference series » la demande (OK / Cancel). La boîte « Calc — &lt;série&gt; » règle ensuite l&#x27;échantillonnage : Auto ≤ N pts, First N, Last N ou Every N pt (avec une limite Max facultative) ; l&#x27;estimation du nombre de points s&#x27;affiche ; Apply valide, Cancel abandonne. C&#x27;est pratique pour partir d&#x27;une série réelle, puis modifier manuellement l&#x27;hypothèse.
+Changer de Curve après un Feed est normal : les mêmes points échantillonnés peuvent être interprétés en STEP, BEZIER, LEGENDRE, etc.</pre><pre>Toggles
+DISPLAY : affiche/masque les overlays de scénarios.
+DRAW : ajoute/édite des points par dessin sur le graphique.
+MOVE : déplace les points existants du scénario.
+Snap X : cale les positions X des points sur le X du graphique le plus proche. Y reste la valeur cliquée/glissée.
+Monotone : force les points/la courbe à rester globalement croissants ou décroissants, pour limiter les oscillations non voulues.</pre><pre>Types de Curve et paramètre
+Liste Curve : LINEAR, STEP, PCHIP, SPLINE, BEZIER, EASE_INOUT, SCURVE, EXPONENTIAL, SNAP_TO_TREND, LEGENDRE.
+Le slider change de nom selon la Curve sélectionnée (le champ à côté accepte une saisie, Entrée pour valider). Pour la plupart des courbes c&#x27;est un paramètre continu (0..1) ; pour LEGENDRE c&#x27;est Degree (1..12).</pre><pre>LINEAR — paramètre : Smoothing
+Interpolation linéaire entre les points de contrôle. Smoothing &gt; 0 applique un lissage mobile sur la courbe calculée. Utile pour les cibles simples et les esquisses rapides.</pre><pre>PCHIP — paramètre : Shape
+Interpolation cubique par morceaux qui préserve la forme : elle respecte les intervalles monotones et évite les dépassements artificiels près des pics ou des creux. Pas d&#x27;extrapolation. Utile pour des cibles réalistes sans oscillations.</pre><pre>SPLINE — paramètre : Natural
+Spline cubique naturelle (continuité C2) passant par tous les points ; le modèle complet (coefficients) est enregistré dans le JSON. Pas d&#x27;extrapolation hors du premier / dernier point.</pre><pre>BEZIER — paramètre : Tension
+Spline lisse passant par tous les points de contrôle. Tension 0 donne un rendu presque linéaire entre les points ; Tension 1 donne une courbe plus ronde. La courbe passe toujours par les points. Utile pour les cibles continues naturelles.</pre><pre>STEP — paramètre désactivé
+Interpolation en paliers. La valeur reste constante jusqu&#x27;au point suivant. Utile pour seuils, capacités, tarifs, dates réglementaires ou changements on/off. Le slider est désactivé car STEP n&#x27;a pas de paramètre continu.</pre><pre>EASE_INOUT — paramètre : Tension
+Départ et arrivée adoucis entre les points, avec une vitesse réduite près des bornes du segment. Utile pour des transitions progressives, ramp-up/ramp-down et cibles sans rupture brutale.</pre><pre>SCURVE — paramètre : Steepness
+Transition logistique en S entre les points. Steepness faible se rapproche du linéaire ; Steepness fort concentre le changement au milieu du segment. Utile pour les scénarios d&#x27;adoption/diffusion.</pre><pre>EXPONENTIAL — paramètre : Exponent
+Transition de forme exponentielle entre les points. Exponent faible est proche du linéaire ; Exponent fort produit une accélération ou décélération plus marquée en fin de segment. Utile pour les hypothèses de croissance ou de décroissance.</pre><pre>SNAP_TO_TREND — paramètre : Trend
+Commence en suivant la pente locale de la série Sample from près du premier point de contrôle, puis rejoint progressivement le scénario dessiné. Trend 0 donne peu d&#x27;influence à la tendance réelle ; Trend 1 conserve cette influence plus longtemps. Nécessite une série Sample from.</pre><pre>LEGENDRE — paramètre : Degree
+Ajuste un modèle polynomial de Legendre par moindres carrés sur les points de contrôle, sur la plage X du premier au dernier point. Degree (1..12) fixe l&#x27;ordre du polynôme : valeurs basses = tendance lisse globale, valeurs hautes = plus de détail mais risque d&#x27;oscillations si peu de points. Hors de la plage X des points de contrôle : NaN (pas d&#x27;extrapolation). Utile pour des courbes d&#x27;hypothèse polynomiales lisses avec peu de poignées.</pre><pre>Actions
+Undo : annule la dernière opération scénario une étape à la fois : point ajouté, point supprimé, point déplacé, déplacement global, Clear ou Feed.
+Redo : réapplique l&#x27;opération qui vient d&#x27;être annulée. Toute nouvelle édition vide la pile Redo.
+Clear : supprime les points du scénario courant.
+COMPUTE : applique les paramètres courants et recalcule la courbe à partir des points actuels. Il ne rééchantillonne pas la référence.
+→ Series : transforme le scénario en série WysiQ normale. Ensuite la série peut être utilisée dans les métriques, Areas, AI sessions, tables et exports comme toute autre série.
+→ AI : dépose le JSON du scénario actif (même contenu que JSON / catalogue) dans l&#x27;AI Feed Stack. Ne crée pas de série — utiliser → Series pour cela.</pre><pre>Conseils
+Utiliser Feed pour partir du réel, puis DRAW/MOVE pour construire l&#x27;hypothèse cible.
+Utiliser BEZIER ou EASE_INOUT pour les cibles continues visuelles.
+Utiliser LEGENDRE pour des tendances polynomiales lisses avec peu de points.
+Utiliser STEP pour les seuils administratifs ou de capacité.
+Utiliser SCURVE pour les scénarios d&#x27;adoption.
+Utiliser EXPONENTIAL pour les scénarios d&#x27;accélération/décroissance.
+Utiliser SNAP_TO_TREND quand le scénario doit démarrer de façon cohérente avec la tendance réelle actuelle.</pre><pre>Performance DRAW/MOVE
+Pendant le dessin et le déplacement, WysiQ reste sur le chemin rapide overlay/blit : le graphique complet n&#x27;est pas recalculé à chaque mouvement de souris. Le plot complet est conservé pour les scénarios déjà convertis en vraie série, car il faut alors resynchroniser la table de travail.</pre></main></body></html>

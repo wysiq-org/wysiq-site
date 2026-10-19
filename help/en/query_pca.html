@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QUERY — Last PCA / Axes — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/query_pca.txt</p><h1>QUERY — Last PCA / Axes</h1><pre>Role
+This area documents the latest PCA computed from Area.
+It does not replace Area: Area computes, Query documents.</pre><pre>Query as a PCA recipe
+The query.json file keeps the process that produced the latest PCA:
+- work table,
+- source columns,
+- Metrics defined in the Query,
+- A-enabled series in the Series palette,
+- X/Y bounds used,
+- number of PCs,
+- explained variance,
+- coefficients and contributions.</pre><pre>The Query is therefore a PCA analytical recipe, not only a SQL query.</pre><pre>Stored
+WysiQ stores only a compact summary of the latest PCA:
+- number of rows used,
+- number of input series,
+- Area bounds used,
+- computed PCs,
+- explained percentage for each PC,
+- cumulative percentage,
+- main contributing series,
+- coefficients and contributions.</pre><pre>Not stored
+AXIS_* values are not written into query.json:
+- AXIS_PC1, AXIS_PC2, ...
+- AXIS_RECONSTRUCTION_ERROR
+- AXIS_DIST_PCA</pre><pre>To use them in Metrics, Signals or Table, create them from Area with Create PCA.
+To keep them permanently, export/materialize a work table.</pre><pre>Display
+The variance table shows PC1, PC2, etc. and the cumulative information.
+The loadings table displays the main contributing series for each PC to avoid flooding the user with every series.</pre><pre>P1%, P2%, ... show the relative contribution of the series in each PC.
+Dom.PC shows the dominant PC for the series.
+Σ|coef| gives a compact global-importance indicator.</pre><pre>WysiQ rule
+Area computes.
+Query stores the latest summary.
+Post-it/PPTX keep multiple states.
+A materialized table keeps PC values permanently.</pre></main></body></html>

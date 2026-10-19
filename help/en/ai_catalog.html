@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI MODEL CATALOG  (Parameters ▸ AI ▸ Profile ▸ Catalog… / Discover…) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/ai_catalog.txt</p><h1>AI MODEL CATALOG  (Parameters ▸ AI ▸ Profile ▸ Catalog… / Discover…)</h1><pre>Browse known AI models and create Profiles from them. Opens in two modes:
+Catalog (offline list) and Discover (live query of your providers).</pre><h2>MODELS — SORTED ALPHABETICALLY BY PROVIDER THEN BY NAME</h2><pre>Models are listed in alphabetical order — no favoritism. All providers
+(anthropic, cursor, deepseek, google, groq, mistral, ollama, openai,
+openrouter, qwen, xai…) appear in the same sorted list.</pre><pre>Within each provider group, models are also sorted alphabetically.</pre><h2>ICONS IN THE MODEL COLUMN</h2><pre>💾  Local — model runs on your PC or LAN (Ollama, LM Studio, Scan LLM…).
+    WysiQ sends the full conversation history on every prompt; the model
+    stays loaded in GPU/RAM between calls (Ollama warm start).</pre><pre>🔗  Server memory — the cloud provider keeps prompt cache or uploaded files
+    between API calls (OpenAI, Anthropic, Gemini, Moonshot Kimi…). WysiQ
+    can send large context once and reuse it — lower latency and cost on
+    long sessions. Toggle &quot;Use server memory when available&quot; in the profile.</pre><pre>Models with neither icon are cloud APIs without file/cache memory
+(OpenRouter, Mistral, Groq, DeepSeek, Qwen, XAI…) — full history inline
+each time, but they work fine.</pre><pre>  🔗 OpenAI (gpt-5.x and later)
+      Prompt cache + Files API (upload once, reference by file_id).</pre><pre>  🔗 Anthropic (Claude)
+      cache_control ephemeral blocks + Files API (beta).</pre><pre>  🔗 Google (Gemini)
+      Files API (48 h) + implicit cache above 32 K context.</pre><pre>  💾 Ollama / LM Studio
+      No cloud memory API — history resent each prompt; no API key.</pre><pre>CATALOG vs DISCOVER</pre><pre>Catalog   Offline list bundled with WysiQ, always available.
+Discover  Live query of providers you have an API key for. Shows only
+          models reachable right now. Falls back to the offline catalog
+          if a provider is unreachable.
+Scan LLM…  (Parameters ▸ AI ▸ Profile) Live detection of Ollama, LM Studio
+          and other OpenAI-compatible servers on this PC or LAN. Creates
+          one profile per found model — ideal for qwen3-coder:30b on
+          192.168.x.x without typing URLs. Help: ? in that dialog.</pre><pre>CATALOG ENTRY vs PROFILE</pre><pre>Catalog entry  A model description — provider, name, context size, tags.
+               Read-only, the same for every WysiQ user.
+Profile        Your own configured instance: model + API key + parameters
+               (temperature, max tokens, timeout…). Checking models and
+               clicking &quot;Apply selection&quot; creates one Profile per checked
+               model, pre-filled with sensible defaults.</pre><pre>A single catalog model can produce several profiles (different keys,
+temperatures, or named variants).</pre><h2>COLUMNS</h2><pre>☑ / ☐    Click anywhere on a row to toggle. Space bar also works.
+Provider  The API provider (anthropic, openai, google…).
+Model     Model name. ★ = WysiQ recommended. 💾 = local. 🔗 = server memory.
+Ctx       Context window size in K tokens.
+Tags      Capabilities: chat, reasoning, data, code, memory…
+Status    exists = a profile already exists in this workspace.
+          live   = model confirmed reachable (Discover mode only).</pre><h2>★ RECOMMENDED MODELS</h2><pre>A star marks models WysiQ recommends for analytical work. Use
+&quot;★ Rec&quot; in the toolbar to reset checkboxes to just the starred models.</pre><h2>TOOLBAR BUTTONS</h2><pre>Filter: [___]  Type to narrow by provider, name, or tag.
+All            Check every visible model.
+None           Uncheck all.
+★ Rec          Check only recommended models.
+Apply selection  Create one Profile per checked model (skips existing ones)
+                 and remove profiles for unchecked catalog-managed models.
+Close          Close without changes.
+?              This help.
+Status column: state of the model (existing profile, available…).
+Click the ☐ / ☑ box of a row: tick / untick it.</pre></main></body></html>

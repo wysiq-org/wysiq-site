@@ -1,0 +1,154 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Graph Palette — Remote — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/graph_remote.txt</p><h1>Graph Palette — Remote</h1><pre>The Graph remote is a single palette shared by all open graph windows.
+It always acts on the active graph (the last graph clicked). It gathers the
+palette toggles, LINE / POLAR mode, navigation, captures, background image,
+axis styles, graph link and the list of open graphs.</pre><pre>Clicking the remote&#x27;s title bar brings the active graph back to the front
+(useful when another window hides it).
+The Graph button in a graph&#x27;s header reopens the remote.
+To move the remote, drag any non-clickable area (section titles,
+background): handy when the title bar has gone off-screen. This works for
+every palette.</pre><pre> INFO BAR (top of palette)</pre><pre>A text strip on the left, the WysiQ logo on the right.
+Its colour shows the message level:
+  • White   → normal information
+  • Orange  → warning
+  • Red     → error or blocking condition</pre><pre>In LINE mode:
+  Shows the visible Xmin and Xmax of the current view.
+  If the X axis is a date, the full table format is used
+  (Params &gt; Core &gt; &quot;Date format (tables)&quot;): even when zoomed in on hours,
+  day, month and year stay visible.
+  The strip updates on every zoom, pan or scroll.</pre><pre>In POLAR mode:
+  Scope   length of the polar window (e.g. 365.0 days)
+  Step    active rotation step (Window = one full window)
+  X000    start of the window (X0)
+  X360    end of the window (X360)
+  If X0 and X360 cover the whole data range, &lt;&lt; X / X &gt;&gt; rotation is
+  impossible → red background &quot;⚠ Adjust X0 &amp; X360 for rotation&quot;.
+  Narrow the polar window to enable rotation again.</pre><pre>Short confirmations (Snap, REC, overlay, NewRec, export…) are also shown
+here for about 4 seconds, then the usual context comes back.</pre><h2>ROUND BUTTONS — ACTIVE GRAPH PALETTES</h2><pre>A row of 10 round buttons opens or closes each window of the active graph.
+Green = open, grey = closed. Click a green button to close the window,
+a grey one to open it. The state refreshes each time you come back to the
+remote.</pre><pre>  Gr   Header of the current graph (Table / Graph / buttons bar): one click
+       hides it — only the plot remains, e.g. a transparent polar laid over
+       a line graph — a second click shows it again. Green = header shown.
+  Se   Series palette (series, styles, metrics, X/Y axes)
+  PC   PCA workbench (principal component analysis)
+  AI   AI Command Center
+  Ta   Table palette (columns, sort, WHERE filters, export)
+  Ar   Area palette (rectangle, statistics, PCA, Identify/Fit)
+  Te   Statistical Tests window (also available from the Tests button
+       in the graph window header)
+  Si   Signal palette (roughness, variability dynamics)
+  Sc   Scenario palette (hand-drawn target curves)
+  Le   Legend editor</pre><h2>COMMAND ROW</h2><pre>LINE / POLAR   Switches the active graph between cartesian and polar mode.
+               The label shows the current mode.
+PLOT           Replots the active graph and resets the view (Series palette
+               bounds, or automatic scale).
+📦             Prepares the graph for sharing (see PREP below).
+               Right-click: quick contacts / channels toggle.
+?              Opens this help.</pre><pre> INTERACTION MODE (LINE mode)</pre><pre>Area   Click-drag on the graph: draws a zoom / selection rectangle
+       (default). The rectangle also feeds the Area palette.
+Pan    Click-drag: moves the view.
+       With the pointer on this button, Left / Right pan left / right and
+       Up / Down pan up / down.
+       Holding the key repeats at the Link delay
+       (Settings &gt; Globals &gt; Display, milliseconds).
+Zoom   Mouse wheel: zoom centred on the cursor.
+       With the pointer on this button, Left zooms out and Right zooms in,
+       Up zooms in on Y only, Down zooms out on Y only,
+       repeating at the same Link delay.
+The pressed button shows the active mode.</pre><pre> POLAR MODE: &lt;&lt; X / X &gt;&gt; / Zoom</pre><pre>In polar mode the three buttons become:
+&lt;&lt; X    Moves the polar window back by one step.
+X &gt;&gt;    Moves the polar window forward by one step.
+        Shift+click or right-click on &lt;&lt; X / X &gt;&gt;: choose the step (Window,
+        1 year, 6 months, 3 months, 1 month, 10 days, 7 days, 1 day, hours,
+        minutes, seconds for a date axis; numeric steps otherwise).
+        Window = shift by one full window.
+Zoom    Radial zoom with the wheel or a vertical drag (the minimum radius
+        stays fixed).
+The radial zoom is remembered and reapplied on the following replots.</pre><h2>HISTORY — NAVIGATION</h2><pre>⌂      Home view: full view with automatic scale
+       (in polar: rotation reset to 0 and radial zoom cleared; the X0/X360
+       window is kept).
+Prev   Goes back in the view history.
+Next   Goes forward in the view history.</pre><h2>CAPTURE</h2><pre>Print    Opens the PNG/PDF export dialog (resolution, margins, layout).
+Snap     Left-click: captures the graph (+ Area view if an Area rectangle
+         is defined). Right-click: captures the Area only.
+         Files go to the workspace snapshots/ folder. If REC is on, the
+         captures are also added to the PowerPoint presentation.
+NewRec   Creates a new PowerPoint presentation and turns REC on.
+● REC    Click the dot: recording ON / OFF.
+         Red = ON: every PLOT and every Snap adds a slide, including when
+         you switch graph in the Graph combo (the graph name appears in the
+         slide header).
+         Green = OFF.</pre><h2>BACKGROUND — IMAGE</h2><pre>Overlay ...   Shows / hides the background image settings block:
+              W, H (export size), PNG (file), Zoom, X, Y (position)
+              and α (transparency).
+Save          Saves the MAIN graph&#x27;s curves alone as a PNG in overlays/
+              (reusable as a background on another query).
+Load          Loads a PNG and applies it as the MAIN graph background.
+Clear         Removes the background image from the MAIN graph.</pre><h2>AXES — STYLES</h2><pre>X: Top     Also shows the X axis at the top of the graph.
+X: Y=0     Draws a horizontal line at Y = 0.
+Y: right   Also shows the Y tick labels on the right.</pre><pre> POLAR — SETTINGS (shown in polar mode)</pre><pre>Tx / Ty   Minor angular (Tx) and radial (Ty) grids.
+X0        Start of the polar window (slider + entry field).
+X360      End of the polar window.
+          Right-click on the X360 label: sets the window length
+          (1 year, 6 months, 1 month, 7 days, 1 day, hours…).
+Disk      Horizontal position of the disk: Legend editor ▸ Disk
+          (0 = left, 0.5 = centred, 1 = right).
+Ymin      Minimum radius (centre of the graph).
+Ymax      Maximum radius (edge of the graph).
+Synchronised with the Series palette: X0/X360 = X Min/Max and
+Ymin/Ymax = Y Min/Max. Any change in the remote (slider, field, X &gt;&gt;,
+wheel zoom) is shown at once in the Series palette; Return / PLOT in
+the Series palette applies its values to the polar window.
+Clicking the X0 or X360 label opens a calendar when the X axis is a date.
+Ymin / Ymax (radius) are numeric: their label opens a calendar only if the
+field contains a date. The calendar opens beside the remote, at the height of
+the clicked field. Hovering a label shows what it does (📅 = date picker).
+Enter or leaving the field validates the value.</pre><h2>GRAPH LINK — VIEW SYNCHRONISATION</h2><pre>ON   Turns synchronisation on between the graphs ticked in the list.
+X    Synchronises the X axis.
+Y    Synchronises the Y axis.
+The MAIN graph (green dot) leads: ticked graphs follow its zooms, scrolls, Home
+and replots.
+The propagation delay is configurable in Settings &gt; Globals &gt; Display &gt; Linked &amp; transparent graphs &gt; Link delay (ms). Default: 50 ms; 0 = immediate synchronization.
+In polar mode, hold « &lt;&lt; X » or « X &gt;&gt; » to scroll continuously; auto-repeat uses the same delay.</pre><pre>LINK only works between graphs of the same type:
+  line with line     X and Y synchronise the axes (zoom, scrolling).
+  polar with polar   X synchronises the X0/X360 window, the rotation and the
+                     angular pan; Y synchronises the radial zoom (Ymin/Ymax).
+A line graph and a polar graph are never linked together (the polar X axis
+is an angle and its Y axis a radius). In polar mode the GRAPH LINK section
+is shown below the POLAR section.</pre><pre>Tip: right-click on the Graph combo of a graph header ▸ Duplicate graph = same
+query in a 2nd window on another graph; with LINK X both views move together.
+▸ Detach graph = the displayed graph is computed in parallel in another process
+(P2 · …). ▸ Detach area = in LINE mode, opens the current Area in another
+process using its X/Y bounds.</pre><h2>OPEN GRAPHS LIST</h2><pre>One row per graph window:
+  ☐       LINK box: this graph follows the MAIN graph when LINK is ON
+  name    query name and displayed graph, e.g. &quot;PPE · Graph 2&quot;
+          (click: makes this graph active and expands the list of its
+          plotted series; double-click: makes it active). Long name: the
+          end stays visible, the mouse wheel scrolls the name, hovering
+          shows the full name.
+  nS      number of plotted series
+  ●       green dot = MAIN graph (LINK leader); click a grey dot to make
+          that graph MAIN
+In the expanded list, a click (left or right) on a series opens its style
+window.</pre><h2>PREP — 📦 BUTTON</h2><pre>The 📦 button prepares the active graph in share/outbox/graphs/.
+Nothing is sent until you use
+Main window → Share → Share Center, Send tab.</pre><pre>  Left-click    Opens the Prep window:
+                  • optional voice recorder (● Rec / ■ Stop / ▶ Play / Erase)
+                  • 📦 Prep → writes the HTML (+ optional WAV) to share/outbox/graphs/;
+                    a &quot;Staged in share/outbox/graphs/&quot; confirmation offers
+                    Open Share (opens the Share Center) or OK
+                  • Cancel → closes without writing anything
+  Right-click   Quick contacts / channels toggle: double-click a row to
+                switch it On / Off, Close to close.</pre><pre>Sending: Share Center ▸ Send tab (files, recipients, channel Email / Telegram / Both).
+Contacts and channels setup: Share Center ▸ Advanced ▸ Setup.</pre><h2>SCREEN 2</h2><pre>The Screen2 button is in each graph&#x27;s header (no longer in the remote).
+Left-click: sends the graph to the secondary screen or brings it back.
+Right-click: recentres all windows.
+Setup: Params → Globals → Screen.</pre><pre> TIPS</pre><pre>• The remote stays visible even if the main window is minimised.
+• LINK X compares two graphs over the same period while keeping independent
+  Y scales.
+• Snap is faster than Print for a capture without a dialog.
+• When zoomed in on hours, the info bar still shows the full date.</pre><pre>  Display first row: Link (ms) = Link delay, Zoom (%) = Zoom step, Pan (%) = Pan step, Arrows (ms) = Arrow repeat.
+  Display &gt; Linked &amp; transparent graphs: Link delay (ms) controls LINKED graph synchronization latency (0 = immediate, default 50 ms);
+  Zoom step (%) sets the Graph Remote keyboard zoom step (default 6%, range 1–50%), independently of Link delay;
+  Arrow repeat (ms) (default 30 ms, range 15-250 ms) repeats Pan/Zoom arrows and POLAR &lt;&lt; X / X &gt;&gt; immediately on press, separately from Link delay;
+  Pan step (%) (default 2%, range 1–20%) sets each Pan arrow&#x27;s movement distance;</pre></main></body></html>

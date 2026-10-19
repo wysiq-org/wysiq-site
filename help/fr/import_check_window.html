@@ -1,0 +1,73 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fenêtre Check file — Préparer un fichier avant import — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/import_check_window.txt</p><h1>Fenêtre Check file — Préparer un fichier avant import</h1><pre>Accès : Import files ▸ Fine load ; Live Sources (source fichier CSV, mode Live).</pre><pre>Check file (« Prepare file before import ») nettoie, recadre, type et
+sous-échantillonne un fichier (CSV, TXT, XLSX/XLS, Parquet) avant de le
+charger comme table DuckDB, de l&#x27;exporter vers un fichier ou de l&#x27;utiliser
+comme source Live.</pre><pre>Processus type :
+  File... → régler Separator / Sheet → Top / Bottom / Left / Right / Header
+  → Apply → choisir les colonnes, noms, types, politique NaN, formats de date
+  → Preview → (Save mask) → &gt;&gt; Table (ou &gt;&gt; File, ou &gt;&gt; Live).</pre><h2>BARRE SUPÉRIEURE</h2><pre>  File...     Choisir ou changer le fichier source.
+  First       Nombre de lignes lues pour l&#x27;aperçu (10 à 9 999 999 ; défaut :
+              paramètre « rows » des Globals). C&#x27;est une limite d&#x27;affichage
+              seulement : l&#x27;export relit TOUJOURS le fichier complet.
+  Mask        Masque enregistré à appliquer (noms, types, NaN, formats, trimming,
+              shrink). La liste contient les masques de ce fichier et du
+              workspace.
+  Sheet       (Excel uniquement) Feuille à traiter.
+  Separator   Séparateur CSV : Auto, ;  ,  Tab, Pipe.
+  Reload      Relit le fichier avec First / Sheet / Separator courants.
+  ?           Ouvre cette aide.</pre><pre>APERÇU BRUT (Raw preview)</pre><pre>Lignes du fichier tel que lu sur disque. Top, Prev, Next, Bottom déplacent
+uniquement cet aperçu (pas de modification des réglages). La largeur des
+colonnes est mémorisée.</pre><pre>PARAMÈTRES DE NETTOYAGE (« Cleaning parameters »)</pre><pre>  Top        Lignes supprimées en haut du fichier brut.
+  Bottom     Lignes supprimées en bas.
+  Left       Colonnes supprimées à gauche.
+  Right      Colonnes supprimées à droite.
+  Header     Index de la ligne d&#x27;en-tête dans la zone restante
+             (en mode Live, -1 = pas d&#x27;en-tête).
+  Shrink     Champ en lecture seule résumant le sous-échantillonnage ; un clic
+             ouvre la boîte Shrink.
+  Transpose  Permute lignes et colonnes ; nouveau clic = retour.
+  Apply      Reconstruit l&#x27;aperçu nettoyé avec les réglages courants.</pre><h2>BOÎTE SHRINK</h2><pre>  Enable shrink    Active le sous-échantillonnage.
+  Auto to N rows   Calcule le pas pour obtenir environ N lignes.
+  Every N row(s)   Garde 1 ligne sur N.
+  First rows       Ne garde que les N premières lignes (0 = toutes).
+  Apply            Valide ; Delete supprime le shrink ; Cancel ferme sans
+                   changer.
+Auto et Every sont exclusifs. Le shrink est appliqué à l&#x27;export (table ou
+fichier) et sauvegardé dans le masque.</pre><pre>APERÇU NETTOYÉ (Cleaned preview)</pre><pre>Résultat après trimming, en-tête, sélection des colonnes, types et
+transposition.</pre><pre>COLONNES DE SORTIE (Output columns)</pre><pre>  Sel        Inclure / exclure la colonne. Clic sur l&#x27;en-tête Sel : tout
+             cocher / tout décocher.
+  Name       Clic pour renommer (Entrée valide). Le nom est utilisé partout :
+             aperçu, masque, fichier exporté, table.
+  Type       Type appliqué au chargement :
+               Auto                — détection automatique ;
+               Text                — chaîne ;
+               Integer (nullable)  — entier nullable ;
+               Decimal             — flottant ;
+               Time HH:MM → h      — « 10:30 » devient 10,5 (vide → NaN) ;
+               Date/time           — date/heure.
+  Inferred   Lecture seule : type que WysiQ détecterait (échantillon de
+             200 valeurs au plus).
+  Empty/NaN  Remplacement des valeurs vides après conversion :
+               (keep) — laisser tel quel (défaut) ; &quot;&quot; empty — chaîne vide ;
+               NaN — flottant NaN ; 0 — entier 0 ; 0.0 — flottant 0,0.
+  Format     Colonnes Date/time : format de lecture. Liste de préréglages
+             (DD/MM/YYYY, YYYY-MM-DD…) ou saisie libre au format strptime
+             (ex. %d/%m/%Y %H:%M). OK valide, Échap annule.</pre><h2>BOUTONS DU BAS</h2><pre>  Save mask   Enregistre tous les réglages comme masque réutilisable (repris
+              par Reload selected dans Import files et par la liste Mask).
+  Preview     Applique types et politiques NaN et rafraîchit l&#x27;aperçu nettoyé
+              (rien n&#x27;est exporté).
+  &gt;&gt; File     Ouvre la boîte d&#x27;export fichier (CSV par défaut, XLSX possible ;
+              Parquet non proposé ici).
+  &gt;&gt; Table    Ouvre la boîte Copy Table avec le nom proposé ; le fichier complet
+              est chargé à l&#x27;EXEC, avec trimming, colonnes, types et shrink.
+              Le fichier source est ensuite listé dans Import files.
+  &gt;&gt; Live     (mode Live seulement) Valide la structure pour une source Live
+              CSV. Choisir d&#x27;abord la colonne « Date/time X: » ; elle doit être
+              cochée et au moins une autre série numérique doit être cochée,
+              sinon un avertissement s&#x27;affiche.
+  Cancel      Ferme sans rien créer (la croix de la fenêtre fait de même).</pre><pre>CHOIX DES COLONNES LIVE (« Use columns »)</pre><pre>Pour une source Live CSV sans en-tête exploitable, une boîte liste les
+colonnes : clic pour sélectionner, double-clic ou F2 pour renommer (Entrée
+valide, Échap annule), liste de numéros de colonne. Use columns valide,
+Cancel abandonne.</pre><h2>À SAVOIR</h2><pre>• Rien n&#x27;est écrit tant que &gt;&gt; Table, &gt;&gt; File, &gt;&gt; Live ou Save mask n&#x27;est pas
+  utilisé.
+• Si la table existe déjà, la boîte Copy Table / l&#x27;import demande s&#x27;il faut
+  l&#x27;écraser ou la renommer.</pre></main></body></html>

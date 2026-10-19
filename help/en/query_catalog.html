@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Query Catalog — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/query_catalog.txt</p><h1>Query Catalog</h1><pre>Access: Main ▸ Query ▸ Catalog.</pre><pre>The Query Catalog lists every Query saved in the current workspace. It
+lets you browse, filter, open, rename and delete Queries without going
+through the tree of the main window.</pre><pre>Text zoom: Ctrl + mouse wheel.</pre><h2>TOOLBAR</h2><pre>Refresh
+  Reloads the list from disk. Use it if Queries were saved or deleted
+  while the catalog was open.</pre><pre>Open
+  Opens the selected Query in a Graph window. Same as double-clicking the
+  row (outside the Sel column) or pressing Enter.</pre><pre>→ AI
+  Sends the definition of the selected Query (JSON structure, without
+  data) to the AI Feed Stack.</pre><pre>Rename
+  Opens a dialog to rename the Query (shortcut F2). The JSON file is
+  renamed and its internal query_name field updated.</pre><pre>Delete
+  Permanently deletes the selected Query (shortcut Del key).
+  A confirmation dialog is shown before any action.</pre><pre>JSON
+  Opens the raw JSON of the selected Query in a read-only text viewer.
+  Useful to inspect the full definition without opening a Graph window.
+  Supports Ctrl + wheel (zoom) and horizontal scrolling.
+  Search (bottom left): type a word, &lt;&lt; / &gt;&gt; (or Enter / Shift+Enter)
+  for the previous / next occurrence, n/N counter. Ctrl+F: search
+  field, Escape: clear.</pre><pre>?
+  Opens this help window.</pre><h2>LEFT PANEL: FILTERS AND QUERY LIST</h2><pre>Catalog filters
+  Query like
+    Filters the list on a substring of the Query name.</pre><pre>  Table like
+    Filters the list to queries referencing a table whose name contains
+    the typed text.</pre><pre>  Both filters can be combined.</pre><pre>Queries list
+  Sel column
+    ✓       = the Query is visible in the tree of the main window.
+    (empty) = the Query is hidden from the main window.</pre><pre>    Click a row of the Sel column to toggle visibility.
+    Click the Sel heading to enable all / hide all at once
+    (enable all if at least one query is hidden, otherwise hide all).</pre><pre>    The setting is saved to params.json immediately. The tree of the
+    main window is refreshed automatically after each toggle.</pre><pre>  Sorting
+    Click the heading label &quot;Queries [A-Z ▲]&quot; to cycle through four
+    sort modes: A-Z, Z-A, Date ascending, Date descending.</pre><pre>Table list (right of Queries)
+  Lists the distinct tables referenced by the loaded queries.
+  Click a table name to filter the Queries list on that table.
+  Click &quot;(all)&quot; to remove the table filter.</pre><pre>  Click the &quot;Table ▲&quot; heading to sort the table list.</pre><pre>CONTEXT MENU ON A QUERY (right-click)
+Right-clicking a query row opens a context menu:</pre><pre>  Open
+    Opens the query in a Graph window.</pre><pre>  → AI
+    Sends the query definition to the AI Feed Stack.</pre><pre>  Rename…
+    Renames the query.</pre><pre>  Save metrics to catalog
+    Scans the query JSON for virtual series (metrics / combo). Every
+    metric found that does not yet exist in the metrics catalog is
+    created (workspace/metrics/).
+    Metrics already present are skipped so that nothing is overwritten.
+    A summary dialog shows how many metrics were created or skipped.
+    Use it when a query contains metrics that were never explicitly saved
+    to the catalog.</pre><pre>  Delete
+    Permanently deletes the query.</pre><h2>RIGHT PANEL: QUERY DETAIL</h2><pre>Query header
+  Query     Name of the selected Query.
+  Owner     Owner stored in the JSON (if present).
+  Table     Reference table of the Query.
+  Modified  Last-modification timestamp stored in the JSON.</pre><pre>Series list
+  Shows the series (columns) defined in the selected Query.
+  For a multi-table Query, series are prefixed by their table
+  (Table.series).</pre><pre>  Columns:
+    @      Metric marker. Shown only for virtual series (non-empty
+           expr_type): @ for a standard metric, ❄ for a frozen metric.
+    Serie  Column or metric name.
+    Axe    Axis: X for the X axis, Yl or Yr for the left/right Y axis.
+           Yl/Yr is shown only for series with G (Graph) enabled.
+    G      ✓ if the series is plotted in the graph view.
+    T      ✓ if the series appears in the table view.
+    A      ✓ if the series is active in the area view.
+    Coeff  Scale coefficient applied to the series.</pre><pre>  Only series with at least one active flag (G, T or A) are shown,
+  plus every metric whatever its state.</pre><pre>  Click the &quot;Serie ▲&quot; heading to sort the series. The X row always
+  stays at the top of the list.</pre><pre>  Double-clicking a metric series (marker @ or ❄) opens the Combo Editor
+  directly for that metric, without opening the query in a Graph window.
+  Pressing Enter on a focused metric row has the same effect.</pre><pre>JSON viewer
+  Shows the raw JSON of the selected Query. Read-only; use Open to edit
+  the query through the Graph window.
+  Ctrl + wheel to zoom the text.</pre><pre>AI Answers
+  The AI exchanges of the selected query, newest first.
+  They come from the query&#x27;s AI Cases (AI Command Center), plus the
+  older HTML answers if any remain.</pre><pre>  Columns:
+    Date         Local date and time.
+    AI profile   Profile that answered.
+    Answer       Start of the answer, ⚠ + message for an error, or
+                 📄 for an HTML report.</pre><pre>  An answer and its HTML report share one row (📄 = report available).
+  Double-click (or Enter): 📄 rows open in the browser; the others open
+  the AI Case Center on their Case.
+  Open in browser  Same as double-click.
+  Open AI Case     Opens the AI Case Center on the Case of the chosen row.
+  The 🤖 icon in the query list marks queries that have an AI Case.</pre><pre>KEYBOARD SHORTCUTS (Queries list)
+  Enter = Open · F2 = Rename · Del = Delete · double-click = Open.</pre><h2>VISIBILITY IN THE MAIN WINDOW</h2><pre>The Sel flag of the Query Catalog controls which queries appear in the
+tree of the main window.</pre><pre>Queries with Sel = (empty) are hidden from the main window, even after a
+Refresh. Only queries with Sel = ✓ are listed.</pre><pre>This keeps the main window readable while keeping every query in the
+catalog for occasional access.</pre><pre>The setting is stored in params.json under the &quot;hidden_queries&quot; key.</pre></main></body></html>

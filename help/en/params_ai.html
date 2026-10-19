@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SETTINGS — AI Analyst profiles  (Settings ▸ Parameters… ▸ AI tab ▸ Profile) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/params_ai.txt</p><h1>SETTINGS — AI Analyst profiles  (Settings ▸ Parameters… ▸ AI tab ▸ Profile)</h1><pre>The AI tab of Parameters has four sub-tabs: Profile (this page),
+Observatory (opens the AI Observatory window; Observatory Settings… button;
+&quot;activity_tracking&quot; help), AI Folder (opens the AI folder) and
+Help (&quot;params_ai_knowledge&quot; help).</pre><pre>This window configures the AI profiles used by the AI Analyst button of
+the graph window. Each profile points to a specific provider and model.
+Several profiles can coexist; only one is active at a time in the
+AI Analyst window.</pre><h2>TYPE, PROFILE, NAME, MODEL — WHY SO MANY FIELDS?</h2><pre>Four levels, from general to precise:</pre><pre>  Type     HOW to talk to the provider (protocol, default URL, API key).
+           Reusable template — one Type serves several Profiles.
+           Examples: ollama_openai, openai_cloud, gemini_cloud.
+           Files in WysiQ/AI/types/.</pre><pre>  Profile  ONE configured connection used in WysiQ (your instance).
+           Picks a Type + Base URL + Model + timeout + key + options.
+           Files in WysiQ/AI/profiles/ (one JSON per profile).</pre><pre>  Name     Readable label for you — shown in the combo (with a badge).
+           May differ from Model: e.g. Name &quot;Ollama balanced&quot;, Model llama3.1:8b.
+           After Scan LLM…, Name often equals Model — you may rename it.</pre><pre>  Model    Exact identifier sent to the API — must match the provider.
+           Ollama: tag from &quot;ollama list&quot; (qwen3-coder:30b).
+           OpenAI: gpt-5.5, etc.</pre><pre>Why separate Type and Profile?
+  Same Type, several Profiles — e.g. three Ollama profiles:
+    • llama3.1:8b on localhost
+    • qwen3-coder:30b on 192.168.8.101
+    • same model, different timeout
+  Cloud: one openai_cloud Type, GPT-5.5 / GPT-5.4 mini profiles, different keys.</pre><pre>The combo entry [LAN 192.168.8.101] qwen3-coder:30b is NOT a 5th field:
+  badge [LAN …] + Name (or model name). The IP comes from the Base URL.</pre><pre>For a simple LAN Ollama, what matters:
+  Base URL, Model, Timeout.
+  The Type rarely changes. Name = Model after a scan is normal.</pre><pre>  &quot;Use server memory when available&quot; has no effect on Ollama /
+  LM Studio (no cloud cache API) — you can untick it locally.</pre><h2>LOCAL OLLAMA — INSTALLATION</h2><pre>Free local AI via Ollama (OpenAI-compatible endpoint). No API key,
+no internet. Runs on your machine — GPU strongly recommended for
+models &gt;= 8B.</pre><pre>Install / setup:</pre><pre>1. Install Ollama — https://ollama.com</pre><pre>2. Download a model (depending on size / RAM):
+     ollama pull llama3.2:3b       ~2 GB  fast, simple tasks
+     ollama pull llama3.1:8b       ~5 GB  good compromise ✓
+     ollama pull mistral:7b        ~4 GB  good analysis
+     ollama pull gemma2:9b         ~6 GB  very capable
+     ollama pull phi3:mini         ~2 GB  ultra-fast, light
+     ollama pull qwen2.5:7b        ~5 GB  excellent multilingual
+     ollama pull deepseek-r1:8b    ~5 GB  reasoning
+     ollama pull qwen3-coder:30b   ~18 GB advanced code (GPU / RAM, LAN OK)</pre><pre>3. Endpoint started automatically: http://localhost:11434/v1</pre><pre>4. In WysiQ Settings › AI:
+     Type    = Ollama local
+     Model   = llama3.1:8b  (exact tag from &quot;ollama list&quot;)
+     Timeout = 180 s</pre><pre>Note: the first call loads the model (~20 s cold). Later calls are fast.</pre><pre>Easier: Scan LLM… detects the models on this PC or on a LAN IP
+(e.g. 192.168.8.101) and creates the profiles automatically — see the section below.</pre><pre>Profile selection
+Profile combo   Lists every profile with a compact label:
+                  [Cloud] Gemini 3.5 Flash
+                  [Local Ollama] Ollama balanced
+                  [LAN 192.168.8.101] qwen3-coder:30b
+                The badge shows where the model runs — cloud API, this PC,
+                or another machine on the LAN. Selecting a profile loads
+                its values into the form below.</pre><pre>New blank…      Creates a profile from the current form (Type, URL,
+                model…). A box asks for a unique id (letters, digits,
+                underscores).</pre><pre>Duplicate…      Copies the JSON of the selected profile to a new id.</pre><pre>Delete          Permanently deletes the profile (JSON file removed).
+                Templates shipped with WysiQ (e.g. My Favorite Profile 1/2/3)
+                do not come back once deleted.</pre><pre>Refresh         Reloads the profile list from WysiQ/AI/profiles/.</pre><pre>Purge IP…       Deletes in one go every profile bound to an entered IP
+                address (LAN server removed or renumbered). Equivalent to
+                Purge… in the Scan LLM window for a given address.</pre><pre>Fields of the selected profile
+Enabled         Makes the profile visible in AI Analyst. Untick to hide it
+                without deleting it.</pre><pre>Name            Name stored in the profile JSON. Used to build the combo
+                label with the badge ([Local], [LAN…], [Cloud]).</pre><pre>Type            AI provider template. Defines protocol, URL and default
+                model. Changing the Type updates these values.
+                Available types:
+                  Ollama local      free local model via Ollama
+                  LM Studio         local alternative with a GUI
+                  OpenAI, Anthropic, Google Gemini, xAI Grok, DeepSeek…
+                  Cursor Agents     autonomous agent on a GitHub repository
+                  OpenAI-compatible any endpoint using the OpenAI protocol</pre><pre>Base URL        HTTP address of the AI server. Filled in by the Type.
+                  Ollama local   : http://localhost:11434/v1
+                  LM Studio      : http://localhost:1234/v1
+                  OpenAI         : https://api.openai.com/v1
+                  Claude         : https://api.anthropic.com/v1
+                  Gemini         : https://generativelanguage.googleapis.com/v1beta/openai
+                  Grok           : https://api.x.ai/v1
+                  DeepSeek       : https://api.deepseek.com/v1
+                  Cursor         : https://api.cursor.com/v1
+                For a remote Ollama PC on the LAN, e.g.
+                http://192.168.8.101:11434/v1 — or create the profile with
+                Scan LLM… (see below).</pre><pre>Model           Exact model identifier in the API call.
+                  Ollama   : llama3.1:8b  qwen3-coder:30b  mistral:7b …
+                  OpenAI   : gpt-5.5  gpt-5.4-mini
+                  Claude   : claude-sonnet-5  claude-opus-5
+                  Gemini   : gemini-3.5-flash  gemini-3.1-pro
+                  Grok     : grok-4.5  grok-4.20
+                  DeepSeek : deepseek-v4-flash  deepseek-v4-pro
+                  Cursor   : composer-2</pre><pre>Max tokens      Maximum answer length (≈ 0.75 word per token).
+                10000 is the recommended default.</pre><pre>Temperature     Randomness of answers.
+                0.0 = deterministic · 0.2 = recommended for analysis ✓
+                0.7 = creative · 1.0+ = very random (not advised here)</pre><pre>Timeout (s)     Maximum wait before giving up.
+                Ollama on CPU: 120–180 s (cold start ≈ 20 s).
+                Cloud: usually 60–90 s.
+                Cursor: at least 120 s.</pre><pre>Connection options (checkboxes at the top of the profile form)
+Enabled              Makes the profile selectable in AI connections.
+                     A disabled profile stays saved but does not appear
+                     in the connection lists.
+Default connection   Marks this profile as the default profile (saved in
+                     AI/session.json); the AI Setup / Bench assistant
+                     preselects it.
+Server memory
+Use server memory when available
+                     Uses server-side conversation memory when the
+                     provider supports it (persistent threads).
+Context              Context policy sent with each request.
+                     &quot;auto&quot; follows the memory flag of the profile.</pre><pre>API key
+Provider        Combo for cloud providers.
+Key             API key entry (encrypted in the JSON if Save key
+                is ticked when saving).
+Get ↗           Opens the provider page to obtain a key.</pre><pre>                Direct links:
+                  Gemini   https://aistudio.google.com/apikey
+                  DeepSeek https://platform.deepseek.com
+                  Grok     https://console.x.ai
+                  OpenAI   https://platform.openai.com/api-keys
+                  Claude   https://console.anthropic.com
+                  Cursor   https://www.cursor.com/settings</pre><pre>No API key is needed for Ollama or LM Studio on your machine.</pre><pre>Button bar
+Save            Saves the profile into its JSON.
+Save key 🔓     Include the key in the save (encrypted).
+🧭 Assistant…    Step-by-step setup: finds models on this PC, the
+                network and the cloud, tests them, creates the profiles
+                (help: ? in the assistant).
+Discover…       Queries the cloud APIs (keys required); one-click
+                profile creation.
+Scan LLM…       Detects Ollama / LM Studio / OpenAI-compatible servers
+                on this PC or the LAN and creates one profile per model.
+                Details: ? button in that window.
+Catalog…        Offline catalogue — no network. Creates profiles for
+                known cloud and local models.
+AI folder       Opens the WysiQ/AI/ folder.
+Test            Shows the runtime configuration without calling the AI.
+?               Opens this help page.</pre><h2>MY FAVORITE PROFILE 1 / 2 / 3</h2><pre>Three blank slots shipped with WysiQ to configure your own local
+OpenAI-compatible server (Base http://localhost:8000/v1,
+Model your-model-name). Disabled by default — no real service until
+you configure them.</pre><pre>Typical use:
+  • Duplicate an existing Ollama profile, or
+  • Fill in Type &quot;OpenAI-compatible&quot;, Base URL and Model of your server,
+  • Tick Enabled when the profile is ready.</pre><pre>You can remove them with Delete; they will not be recreated.</pre><pre>SCAN LOCAL LLMs… — SUMMARY</pre><pre>Opens a dedicated window to discover models without typing a URL.</pre><pre>  • Server types — tick Ollama (11434), LM Studio (1234), Other (8000).
+  • Hosts — 127.0.0.1, localhost, LAN IP (192.168.x.x) or PC name.
+    Cloud URLs (api.openai.com…) are rejected automatically.
+  • Scan LAN subnet — optional full sweep (slow); leave unticked
+    for a known IP.
+  • Progress bar — scan progress (host / subnet).
+  • Table — Location, Server, Model, Status.
+  • Apply selection — creates one enabled profile per ticked model.
+    LAN profiles get a suffix in their id and [LAN ip] in the combo.</pre><h2>ADDING AN AI ACCESS (JSON)</h2><pre>Level 1 — New profile on an existing type
+  Use New blank… or Duplicate…, or copy a JSON into WysiQ/AI/profiles/.</pre><pre>Level 2 — New OpenAI-compatible provider
+  Create a type in WysiQ/AI/types/ and a profile in WysiQ/AI/profiles/.
+  Add the provider to ai_catalog.json if needed.
+  Restart WysiQ — the type and the profile appear in the combos.</pre></main></body></html>

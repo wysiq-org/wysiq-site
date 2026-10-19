@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STATISTICAL TESTS — Reference guide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/area_tests_stats.txt</p><h1>STATISTICAL TESTS — Reference guide</h1><pre>This file covers the detailed documentation of each statistical
+test. The tests are run in the Statistical Tests window (opened
+from the toolbar); the panel formerly embedded in the Area palette
+has been removed. For the interface controls (Scope, pAdj, Mode,
+ReCalc…) see the stats_tests_window help.</pre><h2>SCOPE &amp; ALIGNMENT</h2><pre>Scope Area / All
+  Tests can run on the selection (Area) or on the whole
+  series (All).
+  • Area : only the points inside the rectangle (Xmin..Xmax).
+  • All  : the whole series, regardless of the rectangle.
+  Tip: compare Area vs All to know whether an effect is local
+  or global.
+  If a result surprises you, switch Area/All to understand the
+  impact of the selection.</pre><pre>Tol (alignment on X)
+  Tol defines the X alignment tolerance used by pairwise tests
+  (S1 vs S2).
+  formula: bucket(x) = round(x/tol)*tol  (approx.)
+  • tol = 0 : strict alignment (often by index if exact X values
+              are rare).
+  • tol &gt; 0 : aligns nearby X points — useful when series have
+              slightly shifted timestamps.
+  Always check n (paired points) in the Tests table.
+  Increase Tol if your series have the same shape but not
+  exactly the same timestamps.</pre><h2>PAIRWISE TESTS</h2><pre>Pearson  (linear correlation)
+  Measures the linear relationship between two paired series.
+  r ∈ [-1, +1]
+  r close to +1 → strong positive linear correlation.
+  r close to  0 → no linear relationship.
+  r close to -1 → strong negative linear correlation.
+  Relevant if the relationship is roughly linear and outliers are
+  limited.</pre><pre>Spearman  (rank correlation)
+  Measures the monotonic (not necessarily linear) relationship via
+  ranks.
+  ρ ∈ [-1, +1]
+  More robust to outliers and to non-linear monotonic
+  relationships.
+  Prefer it if the relationship is monotonic but not linear, or
+  when outliers are present.</pre><pre>t-test  (paired)
+  Parametric test on the mean of the differences d = S1 − S2.
+  H0: mean(d) = 0
+  small p → significant mean difference between the two paired
+  series.
+  Valid if the deltas are roughly normal (or n is large).</pre><pre>Wilcoxon  (paired)
+  Non-parametric alternative to the paired t-test (on the ranks of
+  the differences).
+  H0: median(d) = 0
+  More robust if the differences are not normal or with strong
+  outliers.
+  Prefer it if the distribution of deltas is skewed or has
+  outliers.</pre><pre>MAE / RMSE
+  Error metrics between S1 and S2 on the paired points.
+  MAE  = mean(|d|)
+  RMSE = sqrt(mean(d²))
+  RMSE penalises large errors more (sensitive to outliers).
+  Use them to measure forecast vs actual performance.</pre><pre>Cohen d  (paired effect size)
+  Effect size on the deltas, expressed in standard deviations.
+  d = mean(deltas) / std(deltas)
+  ≈ 0.2 small  |  0.5 medium  |  0.8 large  (rule of thumb)
+  Avoids the trap: &quot;very small p but practically no effect&quot;.</pre><pre>GROUP TESTS  (≥ 3 series)</pre><pre>ANOVA  (one-way)
+  Global parametric test (k series) of equal means.
+  H0: mean(S1) = mean(S2) = … = mean(Sk)
+  small p → at least one series differs from the others.
+  Complete with Tukey HSD to identify the pairs.
+  Use it if the residuals are roughly normal and the variances are
+  comparable between groups.</pre><pre>Kruskal-Wallis
+  Global non-parametric test (k series) of equal distributions
+  (rank based).
+  H0: identical distributions
+  small p → at least one series differs from the others.
+  Complete with Dunn to identify the pairs.
+  Use it if the distributions are skewed/with outliers or if
+  normality is doubtful.</pre><h2>POST-HOC TESTS</h2><pre>Tukey HSD  (post-hoc after ANOVA)
+  Pairwise comparisons after ANOVA; controls the type I error
+  over all pairs (family-wise).
+  Based on the studentised range distribution (q).
+  Procedure:
+    1. Run the ANOVA first.
+    2. If the ANOVA is significant, read the Tukey rows.
+    3. p_adj &lt; alpha → significant difference for that pair.
+  Prefer Kruskal+Dunn if variances differ strongly or with
+  large outliers.</pre><pre>Dunn  (post-hoc after Kruskal)
+  Pairwise comparisons on ranks, after Kruskal-Wallis.
+  z statistic on rank differences.
+  p_adj &lt; alpha → significant difference (non-parametric).
+  Use it when Kruskal is significant and/or the data are not
+  normal.</pre><h2>MULTIPLE-TESTING CORRECTION</h2><pre>p_adj  (multiple-testing correction)
+  Corrects p-values when several comparisons are made, to
+  control the false-positive rate.
+  • Bonf (Bonferroni): very conservative — multiplies each p
+    by the number of tests. Use it if a single false positive
+    is critical.
+  • Holm: step-down, less severe than Bonferroni.
+  • BH (Benjamini-Hochberg): controls the FDR — recommended by
+    default for exploratory analysis.
+  Always look at p_adj (not only p) when many pairs are
+  tested.</pre><h2>EFFECT SIZES</h2><pre>eta²  (ANOVA effect size)
+  Share of the total variance explained by the factor (which
+  series).
+  eta² = SS_between / SS_total
+  Useful to quantify the magnitude, not only the significance
+  (p).
+  Use it if p is very small but the practical effect could
+  remain weak.</pre><h2>GLOSSARY</h2><pre>paired      Test on the same X points; compares d = S1 − S2.
+one-way     One-factor ANOVA (k groups = k series).
+post-hoc    Tests after a global test (ANOVA/Kruskal) to
+            identify which pairs differ.
+HSD         Honestly Significant Difference (Tukey). p-values
+            already adjusted (family-wise control).
+FDR         False Discovery Rate — proportion of false positives
+            among the significant results.
+eta²        ANOVA effect size (share of explained variance).
+n           Number of paired points used in the test.
+stat        Value of the test statistic (r, t, W, F, H, z
+            depending on the test).
+p           Raw (unadjusted) p-value.
+p_adj       Adjusted p-value after multiple-testing correction.
+note        Additional tag: &quot;paired&quot;, &quot;non-param&quot;,
+            &quot;post-hoc&quot;, etc.</pre></main></body></html>

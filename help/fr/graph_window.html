@@ -1,0 +1,322 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fenêtre Graphique — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/graph_window.txt</p><h1>Fenêtre Graphique — Aide</h1><pre>La Fenêtre Graphique est la zone de tracé principale. Elle affiche une ou
+plusieurs séries Y sur un axe X commun. Une barre d&#x27;outils unique en haut
+donne accès à tous les contrôles ; tous les réglages détaillés vivent dans
+des palettes flottantes ouvertes depuis cette barre.</pre><pre> BARRE D&#x27;OUTILS (barre supérieure)</pre><pre>Table (côté gauche)
+  Table     Liste déroulante (lecture seule) : table principale de la query,
+            puis les tables secondaires d&#x27;une query multi-tables. Elle sert à
+            voir les tables utilisées ; l&#x27;affichage revient toujours sur la
+            table principale.
+  Live      Ouvre la fenêtre Live Sources de cette query (sources temps réel
+            LIVE1, LIVE2…). Voir l&#x27;aide « live_sources ».</pre><pre>Combo Rules &amp; params  (juste après Table, avant le sélecteur Graph)
+  Regroupe les paramètres de la query dans une liste compacte.
+  Fermé, affiche « Rules &amp; params » (et « · LOG » ou « · % » selon l’affichage).
+  Ouvrir la liste : infobulle « Click an option ».
+  rows      Nombre de lignes actuellement chargées (lecture seule).
+  X axis    Colonne X active (lecture seule ; la modifier dans Series).
+  Y unit    Choisir cette ligne puis saisir l’unité DIRECTEMENT dans le combo.
+  Y scale   Choisir cette ligne puis saisir le facteur DIRECTEMENT dans le combo.
+            Entrée valide, Échap annule. Aucun dialogue secondaire.
+  Display   Une lecture pour ce graphe : Normal, Percent ou Log.
+            Normal    Séries dans leur unité.
+            Percent   Chaque série en % de son propre maximum
+                      (colonnes, signaux, métriques). Le zéro et le signe
+                      restent. Area garde l’unité d’origine.
+            Log       Y logarithmique. En polaire, le rayon est logarithmique.
+            Fermé, le combo affiche « Rules &amp; params · % » ou « · LOG ».
+            Le choix est sauvé avec la query. Chaque graphe a le sien.
+            Values et Percent sont aussi les deux lignes du combo Graph.
+  Rules &amp; Vars…  Ouvre la fenêtre Rules &amp; Vars.
+  Thresholds…    Ouvre la fenêtre des seuils.</pre><pre>Sélecteur Graph  (Graph: [combo]  New  Del)
+  Plusieurs graphes par query : chaque graphe mémorise son propre jeu de
+  séries G (voir GRAPHES MULTIPLES ci-dessous).
+  Combo    Choisit le graphe affiché (Graph 1 par défaut).
+           Chaque graphe a deux lignes (ex. Graph 1 Values / Graph 1 Percent,
+           puis Graph 2 Values / Graph 2 Percent) :
+           ce sont deux lectures du MEME graphe, pas deux graphes distincts.
+             « Graph 1 Values »   Normal — la série dans son unité.
+             « Graph 1 Percent »  Percent — chaque série en % de son
+                                  propre maximum.
+           Percent = valeur × 100 / maximum de sa valeur absolue ;
+           chaque série est normalisée séparément, pas en % du total.
+           Les données originales et le nombre de graphes ne changent pas.
+           Choisir l’autre ligne du même graphe change la lecture.
+           L’échelle Y est recalculée (le rayon en polaire). La fenêtre X
+           reste (dates, ou l’angle en polaire).
+           Log se choisit dans Rules &amp; params ▸ Display, pas dans ce combo.
+           Le nom est modifiable directement dans le combo ; Entrée pour
+           valider. Values / Percent ne fait pas partie du nom.
+  New      Crée un nouveau graphe à partir des réglages du graphe courant.
+  Del      Supprime le graphe courant (confirmation ; le dernier est conservé).
+  Clic droit sur le combo : Duplicate graph / Detach graph / Detach area
+           (voir ci-dessous).</pre><pre>Boutons d&#x27;affichage (à droite de Del)
+  ▧        Fond transparent pour ce graphe (clic = active / désactive,
+           Windows) : courbes et textes restent visibles. Un graphe
+           transparent reste au-dessus des autres fenêtres (Params ▸ Keep on
+           top). Clic droit :
+             Bring forward / Send backward  avance / recule ce graphe d&#x27;un
+                            cran parmi les graphes transparents.
+             Hide grid / Hide legend / Hide scale  coché = masqué en
+                            transparence. Valeurs par défaut : Settings ▸
+                            Display ▸ Linked &amp; transparent graphs ; chaque
+                            changement est gardé pour ce graphe et enregistré
+                            dans la query.
+  ▯▯       Range toutes les fenêtres graphes côte à côte.
+  ⧉        Aligne exactement cette fenêtre sur le graphe situé dessous
+           (même taille, mêmes échelles) — à utiliser avec ▧ pour superposer.</pre><pre>Boutons palettes (côté droit)
+  PrtScr     Copie d&#x27;écran de toutes les fenêtres WysiQ visibles, sur tous
+             les écrans (graphe, palettes, tableaux, légendes, boutons).
+             Le PNG est enregistré dans snapshots/ puis ouvert dans la
+             visionneuse d&#x27;images (Photos sous Windows si elle est associée).
+             Clic droit : capture tout le bureau.
+  Graph      Ouvre la télécommande Graph (palettes, LINE / POLAR, navigation,
+             capture, image de fond, axes, lien entre graphes). La
+             télécommande est partagée entre tous les graphes ouverts.
+  Series     Ouvre la palette Séries (séries, styles, métriques, axes).
+  PCA        Ouvre l&#x27;atelier PCA (analyse en composantes principales).
+  Ask AI     Ouvre Ask AI (interface IA simple, avec votre assistant web) sur
+             ce graphe.
+  AI Center  Ouvre l&#x27;AI Command Center.
+  Table      Ouvre la palette Table (colonnes, tri, filtres, export).
+  Area       Ouvre la palette Area (rectangle, statistiques, PCA,
+             Identify/Fit).
+  Tests      Ouvre les tests statistiques du graphe courant (ou remet la
+             fenêtre au premier plan). Même fenêtre que le rond Te de la
+             télécommande Graph Remote.
+  Signals    Ouvre la palette Signal (rugosité / dynamique de variabilité).
+  Scenario   Ouvre la palette Scénario (courbes cibles tracées à la main).
+  Legend     Ouvre l&#x27;éditeur de légende.
+  Screen2    Envoie le graphe sur l&#x27;écran secondaire. Clic droit :
+               Share all graphs — Screen 1   répartit tous les graphes
+                          ouverts sur l&#x27;écran 1 ;
+               Share all graphs — Screen 2   idem sur l&#x27;écran 2 ;
+               Recenter all windows   ramène toutes les fenêtres WysiQ sur
+                          l&#x27;écran principal.
+  ?          Ouvre cette aide.</pre><h2>MODES D&#x27;AFFICHAGE</h2><pre>Line (défaut)
+  Tracé cartésien standard — X horizontal, Y vertical.
+  Les séries sont rendues en polylignes, barres, points de dispersion ou
+  zones remplies selon le style par série défini dans la palette Séries.
+  C&#x27;est le mode par défaut à l&#x27;ouverture d&#x27;une fenêtre graphique.</pre><pre>Polar
+  Tracé circulaire — X est converti en angle (thêta), Y en rayon.
+  Le mode polaire est activé depuis la télécommande Graph
+  (bouton LINE / POLAR).
+  En mode polaire, la télécommande affiche une section POLAR dédiée avec
+  les sliders X0/X360 et les contrôles de rotation.
+  Pour revenir au mode ligne, basculer de nouveau dans la télécommande.</pre><pre>Échelle  (Values, Percent, Log)
+  Deux combos règlent la même lecture.
+  Rules &amp; params ▸ Display : Normal, Percent ou Log.
+  Combo Graph : « Graph N Values » et « Graph N Percent ».
+  Normal / Values   Séries dans leur unité.
+  Percent           Chaque série ÷ son propre maximum × 100. Le zéro et
+                    le signe restent : une série négative reste négative.
+  Log               Y logarithmique (rayon logarithmique en polaire).
+  Le passage Values / Percent recalcule seulement Y. La fenêtre X reste.
+  La lecture est sauvée avec la query, une par graphe.</pre><pre>Formats de date
+  Les dates suivent Settings ▸ Globals ▸ Core, en LINE comme en POLAR :
+  « Date format (X axis) » pour les graduations X (pourtour du disque en
+  polaire) et « Date format (cursor) » pour le curseur. Un changement dans
+  Params est pris en compte au tracé suivant.</pre><pre> INTERACTIONS SOURIS (mode ligne)</pre><pre>Le mode d&#x27;interaction actif se choisit dans la télécommande (boutons Area / Pan / Zoom) :
+  Area    Clic-glisser pour tracer un rectangle de zoom/sélection (défaut).
+  Pan     Clic-glisser pour décaler la vue.
+          Souris sur le bouton Pan : flèche gauche / droite = pan gauche / droite,
+          flèche haut / bas = pan haut / bas,
+          répété au Link delay (Settings &gt; Globals &gt; Display, ms).
+  Zoom    Molette de la souris pour zoomer centré sur le curseur.
+          Souris sur le bouton Zoom : gauche = zoom moins, droite = zoom plus,
+          haut = zoom avant vertical, bas = zoom arrière vertical,
+          à la même cadence Link delay.
+          Barre d&#x27;espace, souris sur Pan ou Zoom : passe à l&#x27;autre mode.
+          Les flèches font alors cet autre mode sans déplacer le curseur.</pre><pre>Bulle du curseur
+  X / Y de la souris, puis la valeur de chaque série en ce X : « nom  valeur »,
+  dans l&#x27;ordre de la légende. Les séries sans valeur en ce X (NaN, hors de leur
+  table) ne sont pas listées. En multi-tables, les valeurs sont groupées par
+  table ([RTE2023]…) et une série « One per name » prend la valeur de la table
+  présente en ce X.</pre><pre>Clic droit sur le graphe
+  Ouvre un menu contextuel avec des options d&#x27;export et d&#x27;annotation.
+  Sur une Area sélectionnée :
+    📷  To AI (Area snapshot)   envoie une capture de l&#x27;Area dans l&#x27;AI Feed
+                                 Stack ;
+    📌  Post-it                  ouvre la palette Area (Post-it de l&#x27;Area).</pre><pre>Ctrl + molette
+  Modifie la taille de la police de l&#x27;interface.</pre><pre>Clavier ← / →
+  Décale les repères majeurs de l&#x27;axe X d&#x27;un pas mineur.</pre><pre> GRAPHES MULTIPLES (Graph 1, Graph 2, …)</pre><pre>Une query peut contenir plusieurs graphes. Ce ne sont pas des fenêtres
+séparées : c&#x27;est toujours le même graphe principal (pan, zoom, Area,
+recording, Scénario, export restent disponibles) ; seul le jeu de séries
+affichées change.</pre><pre>Mémorisé par graphe
+  G          Séries tracées.
+  Yr         Séries sur l&#x27;axe Y droit (une série peut être à gauche dans un
+             graphe et à droite dans un autre).
+  Légende    Séries masquées dans l&#x27;éditeur de légende. Les séries non
+             tracées n&#x27;apparaissent jamais dans la légende.
+  Y Min/Max  Y Min / Y Max / Yr Min / Yr Max de la palette Séries (vides =
+             échelle automatique).
+  Type       LINE ou POLAR : chaque graphe mémorise son propre type.
+  Lecture    Values ou Percent : les deux lignes du combo Graph
+             (« Graph 1 Values », « Graph 1 Percent »).
+             Save Query enregistre la ligne qui était affichée. C&#x27;est le
+             même graphe, pas un second : mêmes séries, mêmes Y Min/Max
+             saisis. Un zoom Percent séparé n&#x27;est pas enregistré.
+  Disque     Position horizontale et taille du disque polaire (Legend ▸ Disk).
+             En LINE, la même taille réduit le rectangle du graphe (Legend ▸
+             Plot ▸ Size), par ex. pour garder toutes les valeurs visibles.
+  Légende    Position du titre et de la liste des séries (Legend ▸ Position),
+             une pour LINE et une pour POLAR.
+  Tables     Requête multi-tables : mode séquence / superposé (↔↔↔ / ↔),
+             décalages des tables et X Min / X Max qui vont avec.
+  Transparence  Éléments masqués quand le graphe est transparent, s&#x27;ils
+             ont été réglés par clic droit sur ▧ (sinon valeurs de Params).</pre><pre>Commun à tous les graphes
+  Style des séries (couleur, marqueur…), X Min / X Max (sauf multi-tables),
+  WHERE, T / A,
+  texte du titre de la légende, Areas.</pre><pre>Fonctionnement
+  • Changer de graphe dans le combo : les coches en cours sont mémorisées
+    dans le graphe quitté, puis le graphe choisi est restitué et retracé
+    comme avec PLOT : les échelles Y et Yr s&#x27;ajustent automatiquement à ses
+    séries (sauf Y Min/Max saisis pour ce graphe). Le zoom en cours n&#x27;est
+    pas conservé. Son type LINE / POLAR et la position du disque sont aussi
+    restaurés (un graphe enregistré par une version antérieure, sans type,
+    garde le type courant).
+  • Les deux lignes d&#x27;un même graphe (« Graph N Values » et
+    « Graph N Percent ») restent sur ce graphe et changent la lecture.
+    Y est recalculé ; X reste. En Percent, un Y Min/Max d&#x27;échelle valeurs
+    n&#x27;est pas appliqué. Il s&#x27;applique de nouveau en Values.
+  • Recording PPT (REC) : il continue d&#x27;un graphe à l&#x27;autre ; chaque
+    changement de graphe ajoute une slide, avec le nom du graphe dans
+    l&#x27;en-tête ({graph_name} utilisable dans le modèle d&#x27;en-tête).
+  • Cocher / décocher G ou Yr ne modifie que le graphe sélectionné.
+  • New part des coches G / Yr / légende du graphe courant.
+  • Les graphes sont sauvegardés dans query.json avec le graphe actif.
+    Une query avec un seul graphe « Graph 1 » reste inchangée.</pre><pre>Duplicate graph — comparer deux graphes côte à côte
+  • Clic droit sur le combo Graph ▸ Duplicate graph
+    ouvre la même query (état en mémoire, même non sauvegardé) dans une
+    nouvelle fenêtre qui affiche une copie du graphe courant (lui seul), ou
+    un nouveau « Graph 2 » s&#x27;il n&#x27;y en a qu&#x27;un. La fenêtre d&#x27;origine garde
+    tous ses graphes dans son combo.
+  • Pour un pan / zoom synchronisé : télécommande Graph ▸ Link, de préférence
+    en X seul (chaque fenêtre garde son échelle Y). Le LINK ne fonctionne
+    qu&#x27;entre graphes de même type (line avec line, polar avec polar).
+  • Pour voir côte à côte un graphe en line et un autre en polar : donner à
+    chaque graphe son type (LINE / POLAR est mémorisé par graphe), puis Duplicate —
+    le clone s&#x27;ouvre directement dans le type du graphe qu&#x27;il affiche. Deux
+    fenêtres polar peuvent être linkées entre elles.
+  • Le clone est une copie : les données et calculs sont identiques au
+    moment du Duplicate, puis chaque fenêtre évolue séparément (métriques, WHERE…).
+  • Le clone garde le nom de la query ; le titre de chaque fenêtre et la
+    liste de la télécommande indiquent le graphe affiché (« … · Graph 1 »).
+  • Le clone n&#x27;est pas enregistré : son Save propose &lt;nom&gt;_G2 (&lt;nom&gt;_G2_2…
+    si ce nom existe déjà) et crée une nouvelle query, sans jamais écraser
+    l&#x27;originale.</pre><pre>Superposer deux graphes (transparence)
+  • Duplicate le graphe à superposer, puis dans la fenêtre du dessus :
+    ▧ (fond transparent) et ⧉ (alignement exact sur le graphe du dessous).
+  • Les deux fenêtres ont alors la même taille de zone graphe : avec les
+    mêmes X Min/Max et Y Min/Max, les échelles et les grilles coïncident,
+    en LINE comme en POLAR (en POLAR, le centre du disque suit Y Min même
+    si les séries affichées sont toutes positives).
+  • Pour ne garder que le tracé, la pastille Gr de la télécommande masque
+    l&#x27;en-tête du graphe courant (second clic : il revient).
+  • Ce qui est masqué en transparence (grille, légende, échelle) se règle
+    globalement dans Params, ou par graphe avec un clic droit sur ▧.
+  • Dans la télécommande, les graphes d&#x27;une même query gardent leur ordre
+    (Graph 1, Graph 2, puis les copies) ; le rond vert indique le MAIN.</pre><pre>Detach graph — calculer en parallèle
+  • Clic droit sur le combo Graph ▸ Detach graph : le graphe
+    affiché part dans un nouveau processus WysiQ (son propre cœur CPU, sa
+    propre mémoire), avec son état courant (même non sauvegardé), la
+    position de sa fenêtre, sa fenêtre polaire X0/X360 et son zoom.
+  • Fenêtre seule avec plusieurs graphes : le graphe affiché part à droite,
+    cette fenêtre reste à gauche sur le graphe suivant.
+  • Sinon (un seul graphe, ou la query a déjà une autre fenêtre, par ex.
+    après Duplicate) : la fenêtre entière est déplacée, à la même place.
+  • Le nouveau processus charge ses propres tables (splash affiché) et n&#x27;a
+    pas de main window ; il se ferme avec son dernier graphe, ou à la
+    fermeture de WysiQ.
+  • Une seule télécommande Graph pilote tous les processus ; sa liste
+    indique P1 · …, P2 · … Les règles de Save sont inchangées.</pre><pre>Detach area — ouvrir l’Area courante dans un autre processus
+  • Disponible uniquement en mode LINE et lorsqu’une Area courante complète
+    est définie (Xmin, Xmax, Ymin, Ymax).
+  • Clic droit sur le combo Graph ▸ Detach area : la query courante est copiée
+    dans un nouveau processus WysiQ, mais ses bornes X/Y initiales sont celles
+    de l’Area courante. Le graphe source reste ouvert.
+  • Les bornes transmises sont exactes (à la minute près) et l’Area détachée
+    reste fixe : elle ne suit pas la plage X de la palette Séries.
+  • Le zoom courant du graphe source n’écrase pas les bornes de l’Area dans le
+    nouveau processus. La copie est indépendante et son Save ne peut pas
+    écraser silencieusement la query source.
+  • En mode POLAR, Detach area est désactivé : il n’y a pas d’Area sélectionnable.</pre><h2>SÉRIES ET PALETTES</h2><pre>Seules les séries avec G (Graphe) coché dans la palette Séries sont tracées.
+T (Table) et A (Area) contrôlent quelles séries apparaissent dans la palette
+Table et sont incluses dans l&#x27;analyse Area/Signal.</pre><pre>Le jeu de coches G (et Yr) est propre au graphe sélectionné dans le combo
+Graph de la barre d&#x27;outils (voir GRAPHES MULTIPLES).</pre><pre>Les palettes (Séries, Table, Area, Signal, Scénario) sont des fenêtres
+flottantes repositionnables librement. Leur visibilité est contrôlée par les
+boutons de la barre d&#x27;outils et par les boutons ronds de la télécommande Graph.</pre><pre>Les positions des palettes sont sauvegardées automatiquement et restaurées
+à la prochaine ouverture.</pre><h2>ÉDITEUR DE LÉGENDE</h2><pre>Le bouton Legend ouvre l&#x27;éditeur de légende. Il reste au premier plan
+quand il a le focus (comme Settings).</pre><pre>Position
+  À gauche, les sliders horizontaux :
+    X Title / X Series   position horizontale du titre et de la liste des
+                         séries (coordonnées relatives aux axes, -1 à 3).
+    Disk X / Size        mode POLAR : position horizontale du disque (0 =
+                         à gauche, 0,5 = centré, 1 = à droite) et taille du
+                         disque. Les dates du pourtour restent visibles.
+    Plot Size            mode LINE : taille du rectangle du graphe.
+  À droite, deux sliders verticaux :
+    Y Title / Y Series   position verticale du titre et de la liste des
+                         séries (haut du slider = haut du graphe).
+  Chaque slider a ses flèches (clic = un pas, clic maintenu = défilement)
+  et un champ de saisie (Entrée pour appliquer).
+  Link Title / Series  coché : déplacer l&#x27;un déplace l&#x27;autre du même écart.
+Display     Deux bascules (écran et exports PNG/PDF) :
+            Series legend — afficher/masquer les séries numérotées.
+            Query variables — seconde liste avec chaque ref &amp; et sa valeur.
+            One per name — multi-tables : une seule entrée par nom de série
+            (RTE2022.Eolien, RTE2023.Eolien… → « Eolien ») dans la légende et
+            dans la liste ci-dessous ; ● agit sur tout le groupe.
+Title       Titre multi-ligne de la légende (champ avec ascenseur).
+Font sizes  Taille et couleur du titre et du texte ; taille des symboles ●/—.
+Series      ● pour afficher/masquer une série dans la légende ;
+            double-clic pour renommer son libellé (Entrée valide, Échap
+            annule).
+Full graph  (à côté des sliders) Étend le rectangle du graphe à toute la
+            fenêtre, dans la limite des marges de Params ; décoché = retour à
+            la taille précédente.
+Couleurs    Un clic sur la pastille de couleur du titre ou du texte ouvre le
+            sélecteur de couleur (More... = palette complète).
+Display ▸ Title  Afficher / masquer le titre de la légende.</pre><pre>Boutons du bas
+  Apply      Retrace le graphe avec les réglages.
+  Reload     Relit la liste des séries puis retrace.
+  Reset pos  Remet les positions par défaut (titre, séries, variables,
+             rectangle du graphe) et décoche Full graph.
+  Fit zones  Réajuste les zones du titre, des séries et des variables pour
+             réafficher tout leur texte, sans changer libellés ni positions.
+  Close      Ferme l&#x27;éditeur.</pre><pre>Positions, disque et taille sont sauvegardés dans query.json (par graphe,
+une position pour LINE et une pour POLAR).</pre><h2>VARIABLES DE LA QUERY</h2><pre>Rules &amp; params ▸ Rules &amp; Vars… ouvre la fenêtre Variables (le même sélecteur que
+le clic droit sur un champ de métrique) :
+  IN         ✓ = variable utilisée par les métriques de la query.
+  Value      Clic sur la valeur : édition directe (valeur simulée, « * »),
+             appliquée tout de suite aux métriques ; Save l&#x27;écrit dans le
+             thème du workspace.
+  Vars series  Mode simulation : uniquement les variables IN, avec un slider
+             par variable ; la fenêtre se réduit à son contenu et reprend sa
+             taille en revenant à la liste.
+  New…       Crée une variable (thème, nom, valeur, unité, description) sans
+             passer par le Variables Catalog ; un nouveau nom de thème crée
+             le thème. Si un champ est ciblé (métrique, WHERE…), la ref de la
+             nouvelle variable y est insérée.
+  PLOT       Retrace le graphe.
+  ?          Aide détaillée du sélecteur.</pre><pre>Dans la Composition d&#x27;une métrique, une variable s&#x27;affiche sous sa forme
+compacte &amp;x.y ; le survol du champ donne thème, nom, valeur et unité.</pre><h2>SAUVEGARDE / IMPORT</h2><pre>SaveQuery (palette Séries)
+  La query est enregistrée à sa place : si une query du même nom existe déjà
+  (quelle que soit l&#x27;écriture du dossier), elle est mise à jour, l&#x27;ancienne
+  version allant dans l&#x27;historique. Plus de doublon dans la main window.
+  La query enregistre aussi la définition des variables qu&#x27;elle utilise.</pre><pre>Import d&#x27;une query (Import from workspace / Import query)
+  Les variables manquantes sont recréées dans le workspace (celles qui
+  existent déjà sont conservées). Avec l&#x27;option Settings ▸ Core ▸ « Query
+  import: add its metrics &amp; scenarios to workspace catalogs » (cochée par
+  défaut), ses métriques et scénarios sont aussi ajoutés aux catalogues :
+  une définition identique est ignorée, une définition différente du même
+  nom est ajoutée comme doublon (nom_2).
+  À l&#x27;ouverture d&#x27;une query, les variables manquantes sont aussi recréées.</pre><h2>CONSEILS</h2><pre>• Utilisez la télécommande Graph (bouton Graph) pour basculer entre modes
+  ligne et polaire, naviguer dans l&#x27;historique, synchroniser plusieurs
+  graphes et capturer des copies d&#x27;écran.
+• La palette Signal analyse les séries cochées en A sur la plage X du
+  rectangle Area (ou tout X si aucun rectangle valide n&#x27;existe).
+• Ctrl + molette zoome la police de l&#x27;interface — utile sur les écrans
+  haute résolution.
+• Après un zoom ou un défilement, cliquer ⌂ Home dans la télécommande
+  pour revenir à la vue complète avec mise à l&#x27;échelle automatique.
+• PLOT force une ré-exécution complète du WysiQuery ; l&#x27;utiliser après
+  un changement de colonne X ou après une mise à jour des données.</pre></main></body></html>

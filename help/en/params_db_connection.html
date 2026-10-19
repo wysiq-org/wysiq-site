@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DB connections — profile JSON files (WysiQ) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/params_db_connection.txt</p><h1>DB connections — profile JSON files (WysiQ)</h1><pre>Access: ? button next to Catalog in the Data Sources window
+(Main ▸ Database ▸ DB Connection).</pre><pre>This page describes the files that the Data Sources window reads and writes,
+for anyone who wants to read or correct them directly with a text editor
+(WysiQ closed or followed by ⟳ Reload). There is no longer a &quot;DB connection&quot;
+tab in Parameters: all everyday input is done in Data Sources.</pre><pre>See also: help/en/datasource.txt (the Data Sources window)
+          help/en/db_connections_json.txt (full file reference)</pre><pre>What you can edit here
+data_sources.json
+  One object per connection profile. Each profile carries the identity of its
+  connector — family, provider, connector_service, connector_label,
+  engine_type — and the non-sensitive parameters (host, port, database, schema,
+  username, SSL mode, ...).</pre><pre>  Passwords are never to be typed into this file. Depending on the PWD box of
+  the Data Sources window, a profile may contain password_enc (scrambled
+  form); this value is produced by Data Sources, not by hand.</pre><pre>db_connection.json
+  Optional. Defines the connector types and the form fields.
+  Present only if your workspace overrides the bundled catalogue.</pre><pre>Optional SQL prefixes
+  sql_before_select and sql_before_create, used by the DuckDB flows and by
+  the creation scripts generated for the profile. They are described in
+  db_connections_json.txt.</pre><pre>The five identity fields
+Every saved profile keeps these keys explicitly. Do not remove them:
+this is how WysiQ finds the right connector and the right engine on
+reload.</pre><pre>  family              Local, Server, Cloud, API / NoSQL
+  provider            Generic, Microsoft, Azure, AWS, Google Cloud, ...
+  connector_service   internal connector identifier, e.g. aws_redshift
+  connector_label     the displayed label, e.g. &quot;Amazon Redshift&quot;
+  engine_type         the technical engine, e.g. postgresql</pre><pre>provider and engine_type answer two different questions: who operates the
+service, and which engine it speaks. Several providers share the same
+engine — this is normal and intended.</pre><pre>Manual editing
+Edit the files with a text editor, then ⟳ Reload in Data
+Sources. A malformed file is reported rather than silently ignored;
+on the other hand, a syntactically valid file with a wrong engine_type
+will simply fail at connection time. Only change this field if you know
+why.</pre><pre>Keys starting with an underscore are documentation and are ignored
+by WysiQ.</pre><pre>What is never saved
+access_token, refresh_token, client_secret, private_key, secret_access_key and
+service_account_private_key never reach any file, whatever you type
+in the form. When a secrets manager or an external identifier
+exists, WysiQ saves the reference, never the secret value.</pre><pre>Passwords follow the PWD box of Data Sources: unticked by
+default (session only), or written under the password_enc key in
+scrambled form. This scrambling prevents accidental reading; it is not
+strong encryption. See help/en/datasource.txt.</pre><pre>Full guide: help/en/db_connections_json.txt</pre></main></body></html>

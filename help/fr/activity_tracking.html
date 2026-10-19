@@ -1,0 +1,147 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Observatory — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/activity_tracking.txt</p><h1>AI Observatory</h1><pre>Accès : Parameters ▸ AI ▸ Observatory (la fenêtre s&#x27;ouvre à la sélection de
+l&#x27;onglet ; bouton Observatory Settings…) ; Main ▸ AI ▸ Observatory… ouvre la
+page web de l&#x27;observatoire.</pre><pre>FENÊTRE « AI Observatory » — CONTRÔLES
+  Enable activity tracking   active / désactive l&#x27;envoi des compteurs.
+  Preset:                    Local test, WysiQ cloud, Enterprise intranet,
+                             Custom (pré-remplit l&#x27;URL).
+  Activity URL:              adresse du serveur d&#x27;activité.
+  Mode:                      Anonymous counters (défaut : compteurs
+                             uniquement) ou Enterprise opt-in (champs
+                             supplémentaires, serveur d&#x27;entreprise).
+  Fields sent                liste Field / Send / Privacy ; double-clic sur
+                             une ligne optionnelle pour la passer ON / OFF.
+  JSON preview               aperçu exact de ce qui sera envoyé.
+  Privacy rule               rappel : aucune donnée, aucun SQL, aucun prompt,
+                             aucun nom de table ; le thème est détecté
+                             localement.
+  Open AI observatory / Open Share observatory   ouvrent les pages web.
+  Test local server          lance un serveur local de test (voir plus bas).
+  Save / Close / ?           enregistrer, fermer, aide.</pre><pre>Cette page configure l&#x27;AI Observatory de WysiQ : ce que WysiQ compte,
+ce qu&#x27;il n&#x27;envoie jamais, et comment alimenter soit l&#x27;observatoire public
+wysiq.org, soit un serveur d&#x27;activité interne à l&#x27;entreprise.</pre><pre>Portée de cette version</pre><pre>Cette version du WysiQ Observatory suit l&#x27;usage IA (fournisseur, modèle,
+tokens, langue, OS, version, identifiant d&#x27;instance anonyme) sur la page
+AI observatory, et est structurellement prête à suivre les partages
+réseau/sociaux et les exports (plateforme, type de contenu, format
+d&#x27;export) sur la page séparée Share observatory — mais aucune
+fonctionnalité WysiQ n&#x27;appelle encore le compteur de partage/export, donc
+le Share observatory affichera zéro jusqu&#x27;à ce que cette instrumentation
+soit ajoutée aux chemins de code de partage/export concernés dans une
+version future.</pre><pre>Objectif</pre><pre>WysiQ peut comptabiliser l&#x27;utilisation réelle des IA sans transmettre les
+données analysées. Le but est double :</pre><pre>1) www.wysiq.org / observatoire public WysiQ
+   - afficher les IA les plus utilisées par les analyses WysiQ
+   - compter les sessions IA, les modèles, les tokens et les versions WysiQ
+   - rester en mode compteurs anonymes uniquement</pre><pre>2) Serveur entreprise / intranet
+   - suivre la consommation IA interne de l&#x27;entreprise
+   - consolider les tokens par modèle, fournisseur, version ou utilisateur
+     si l&#x27;entreprise l&#x27;active
+   - garder toutes les données sur un serveur choisi par le client, sans
+     rien envoyer à wysiq.org</pre><pre>Mode public WysiQ</pre><pre>Le mode public doit rester minimal. Champs envoyés :</pre><pre>- version WysiQ
+- langue WysiQ
+- système d&#x27;exploitation
+- identifiant d&#x27;instance anonyme
+- fournisseur IA
+- modèle IA
+- nombre de requêtes
+- tokens entrée / sortie / total</pre><pre>Ne jamais envoyer en mode public :</pre><pre>- données brutes
+- noms de tables
+- requêtes SQL
+- prompts complets
+- résultats d&#x27;analyse
+- nom utilisateur Windows
+- nom de poste
+- email ou identité personnelle
+- géolocalisation IP</pre><pre>Mode entreprise opt-in</pre><pre>Le mode Enterprise opt-in permet à une entreprise d&#x27;ajouter des champs
+supplémentaires, mais uniquement sur SON propre serveur (jamais sur
+wysiq.org) :</pre><pre>- User / login
+- Query name
+- Table name
+- AI session id
+- Workspace id
+- Project / business unit</pre><pre>Ces champs sont des options explicites, à activer une par une dans la liste
+« Fields sent » de la fenêtre de configuration. Ils servent à une DSI ou une
+équipe data qui veut suivre la consommation IA interne par utilisateur ou
+par projet.</pre><pre>Fichiers de paramétrage WysiQ</pre><pre>La configuration locale est stockée dans le workspace :</pre><pre>   &lt;workspace&gt;/activity/activity_config.json</pre><pre>Ce fichier contient notamment :</pre><pre>- enabled : active/désactive le suivi
+- server_url : URL du serveur d&#x27;activité cible
+- instance_id : identifiant anonyme créé une seule fois par poste
+- tracking_mode : anonymous ou enterprise
+- fields : champs activés dans la liste de la fenêtre de configuration
+- send_errors_to_log : conserve les erreurs locales d&#x27;envoi</pre><pre>Les journaux locaux du poste WysiQ sont :</pre><pre>   &lt;workspace&gt;/activity/activity_sent.jsonl
+   &lt;workspace&gt;/activity/activity_errors.jsonl</pre><pre>activity_sent.jsonl permet de vérifier exactement ce que WysiQ a tenté
+d&#x27;envoyer (utile pour contrôler qu&#x27;aucune donnée sensible ne part).
+activity_errors.jsonl permet de diagnostiquer une URL serveur invalide ou
+un serveur arrêté.</pre><pre>Serveur local de test (sur ce poste)</pre><pre>Le bouton « Test local server » lance, dans une fenêtre CMD visible, le
+serveur de test local fourni avec WysiQ :</pre><pre>   py -m xiquery.activity.local_activity_server</pre><pre>Pages locales :</pre><pre>   http://127.0.0.1:8088/ai.html         AI observatory (compteurs d&#x27;usage IA)
+   http://127.0.0.1:8088/share.html      Share observatory (compteurs partages + exports)
+   http://127.0.0.1:8088/ping            test de disponibilité du serveur</pre><pre>Endpoint de réception des événements :</pre><pre>   http://127.0.0.1:8088/api/activity</pre><pre>Fichier de stockage du serveur local :</pre><pre>   &lt;workspace&gt;/activity/server_data/activity_events.jsonl</pre><pre>Ce serveur local est uniquement destiné aux tests sur le poste de
+développement : il s&#x27;arrête quand on ferme sa fenêtre CMD et ne doit pas
+être utilisé pour un suivi réel en production.</pre><pre>Serveur entreprise / intranet : activation détaillée</pre><pre>WysiQ fournit un serveur autonome clé en main pour une entreprise qui veut
+alimenter ses PROPRES compteurs d&#x27;activité IA WysiQ, sans rien envoyer à
+wysiq.org. C&#x27;est un fichier Python unique, sans dépendance au reste de
+WysiQ : il ne nécessite que Python 3 standard (aucune librairie à
+installer), ce qui permet de le copier et de le lancer sur n&#x27;importe quel
+poste ou serveur du réseau de l&#x27;entreprise.</pre><pre>Ce fichier est déjà fourni et copié automatiquement dans chaque workspace,
+sans action de votre part, sous :</pre><pre>   &lt;workspace&gt;/techroom/WYSIQ_ACTIVITY_SERVER.py
+   &lt;workspace&gt;/techroom/WYSIQ_ACTIVITY_SERVER.bat
+   &lt;workspace&gt;/techroom/WYSIQ_ACTIVITY_SERVER_README_FR_EN.txt</pre><pre>Étapes pour l&#x27;activer et alimenter les compteurs de l&#x27;entreprise :</pre><pre>1) Récupérer les fichiers dans le workspace :</pre><pre>      &lt;workspace&gt;/techroom/WYSIQ_ACTIVITY_SERVER.py
+      &lt;workspace&gt;/techroom/WYSIQ_ACTIVITY_SERVER.bat</pre><pre>2) Les copier ensemble sur la machine qui jouera le rôle de serveur
+   d&#x27;activité (un serveur intranet, ou simplement un poste toujours
+   allumé et accessible par les autres postes WysiQ pour un premier
+   essai).</pre><pre>3) Lancer le serveur sur cette machine. Sous Windows, le plus simple
+   est de double-cliquer sur WYSIQ_ACTIVITY_SERVER.bat : il détecte
+   automatiquement Python (py ou python), affiche un message clair s&#x27;il
+   n&#x27;est pas installé, et laisse la fenêtre ouverte pour suivre les
+   journaux d&#x27;activité. Sinon, en ligne de commande (Windows, Linux,
+   macOS) :</pre><pre>      py WYSIQ_ACTIVITY_SERVER.py</pre><pre>   ou :</pre><pre>      python WYSIQ_ACTIVITY_SERVER.py</pre><pre>   Note : le fichier .bat n&#x27;est copié automatiquement que dans les
+   nouveaux workspaces (ou les techroom existants qui ne l&#x27;ont pas
+   encore) ; un workspace déjà créé avant cette version ne le recevra
+   pas tout seul, il faut alors le recopier manuellement depuis
+   &lt;workspace&gt;/techroom/ ou depuis le dossier assets/techroom/ du
+   programme.</pre><pre>   Variables d&#x27;environnement optionnelles, à définir avant le lancement
+   si les valeurs par défaut ne conviennent pas :</pre><pre>      WYSIQ_ACTIVITY_HOST   défaut 0.0.0.0 (écoute sur toutes les interfaces)
+      WYSIQ_ACTIVITY_PORT   défaut 8088
+      WYSIQ_ACTIVITY_DATA   défaut ./server_data (dossier de stockage JSONL)</pre><pre>4) Vérifier depuis un navigateur, sur cette machine ou sur un autre poste
+   du réseau :</pre><pre>      http://NOM_DU_SERVEUR:8088/ping
+      http://NOM_DU_SERVEUR:8088/ai.html         AI observatory (compteurs IA)
+      http://NOM_DU_SERVEUR:8088/share.html      Share observatory (compteurs partages + exports)</pre><pre>5) Sur CHAQUE poste WysiQ qui doit alimenter ce serveur entreprise,
+   ouvrir :</pre><pre>      Settings ▸ Parameters… ▸ AI ▸ Observatory ▸ « Observatory Settings… »</pre><pre>6) Choisir le preset :</pre><pre>      Enterprise intranet</pre><pre>7) Renseigner l&#x27;URL d&#x27;activité avec le nom ou l&#x27;IP du serveur de
+   l&#x27;entreprise :</pre><pre>      http://NOM_DU_SERVEUR:8088/api/activity</pre><pre>À partir de cet instant, chaque session IA terminée sur ce poste WysiQ
+envoie ses compteurs (fournisseur, modèle, tokens, langue, OS, version)
+vers ce serveur d&#x27;entreprise. Les pages /ai.html et /share.html se
+rafraîchissent automatiquement toutes les 5 secondes : il suffit de les
+laisser ouvertes pour suivre l&#x27;activité en direct.</pre><pre>Stockage côté serveur entreprise :</pre><pre>   server_data/activity_events.jsonl</pre><pre>Chaque ligne est un événement JSON indépendant. Ce format est simple à
+relire avec Python, Excel/PowerQuery, DuckDB, SQLite, PostgreSQL ou un
+outil BI, pour une exploitation plus poussée que les deux pages HTML
+fournies.</pre><pre>Les deux points d&#x27;API consultables (utilisés par les pages HTML, mais
+aussi directement exploitables par un outil BI) renvoient le même type de
+réponse JSON :</pre><pre>   GET /api/stats/public   compteurs agrégés, sans détails d&#x27;événements
+   GET /api/stats/admin    mêmes compteurs, plus la liste des 50 derniers
+                           événements bruts (recent_events)</pre><pre>Réponse type :</pre><pre>   {
+     &quot;totals&quot;: {
+       &quot;active_instances&quot;: 12, &quot;ai_sessions&quot;: 340,
+       &quot;total_tokens&quot;: 512000, &quot;input_tokens&quot;: 410000,
+       &quot;output_tokens&quot;: 102000, &quot;events_count&quot;: 480
+     },
+     &quot;top_providers&quot;: [[&quot;anthropic&quot;, 300000], [&quot;openai&quot;, 212000]],
+     &quot;top_models&quot;:    [[&quot;claude-sonnet-4-6&quot;, 280000], [&quot;gpt-4o&quot;, 232000]],
+     &quot;languages&quot;:      [[&quot;fr&quot;, 300], [&quot;en&quot;, 40]],
+     &quot;os&quot;:             [[&quot;Windows&quot;, 320], [&quot;Linux&quot;, 20]],
+     &quot;versions&quot;:       [[&quot;1.2.4&quot;, 340]]
+   }</pre><pre>Le serveur entreprise réutilise exactement les mêmes fichiers HTML et le
+même calcul de compteurs que le serveur local de test : les deux
+implémentations sont maintenues identiques afin qu&#x27;un même tableau de
+bord se comporte de la même façon, que les données viennent d&#x27;un test
+local ou d&#x27;un vrai serveur d&#x27;entreprise.</pre><pre>Règle de confidentialité</pre><pre>Le serveur WysiQ public sait qu&#x27;une analyse IA a eu lieu, mais ne sait
+jamais de quoi elle parlait.</pre><pre>Les champs User, Query, Table, Project et Workspace sont réservés aux
+serveurs d&#x27;entreprise et doivent rester un choix explicite du client,
+jamais activés par défaut, et jamais envoyés vers www.wysiq.org.</pre><pre>Détection du thème d&#x27;activité
+WysiQ peut ajouter un thème d&#x27;activité compact aux compteurs d&#x27;usage IA, par
+exemple energy, finance_accounting ou manufacturing. Le thème est calculé en
+local à partir d&#x27;une liste plate de noms de tables et de colonnes avec :</pre><pre>  WysiQ/activity/domain_keywords.json       dictionnaire entreprise optionnel
+  activity/domain_keywords.json             dictionnaire standard livré
+                                            (dossier du programme)</pre><pre>Aucune ligne de données, aucune requête SQL, aucun prompt, aucun DDL, aucune clé,
+aucune relation, aucun index et aucune liste brute de colonnes ne sont transmis à
+l&#x27;Observatory WysiQ. Seuls le thème calculé, son libellé et son niveau de
+confiance sont envoyés avec les compteurs de tokens.</pre><pre>Lorsqu&#x27;une query est sauvegardée, WysiQ stocke aussi le thème détecté dans le
+JSON de la query. Lorsqu&#x27;une fenêtre AI Analyst est ouverte depuis une query ou
+un graphe, le thème est recalculé depuis le contexte courant afin que la page AI
+Activity puisse afficher les usages IA par domaine métier pratique.</pre></main></body></html>

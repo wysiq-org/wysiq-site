@@ -1,0 +1,45 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Export (PNG/PDF/HTML) — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/png_export_dialog.txt</p><h1>Export (PNG/PDF/HTML) — Aide</h1><pre>Accès : Graph Remote ▸ Print.</pre><pre>Génère des rendus haute résolution du graphique courant en PNG, PDF et/ou
+HTML interactif, avec contrôle complet sur la résolution, le style de grille,
+le format de date, le nombre de ticks et le placement des étiquettes.</pre><h2>BLOC OUTPUT</h2><pre>Format
+  PNG      Raster sans perte — fichier léger, universel.
+  PDF      Document vectoriel, qualité infinie — idéal impression/rapports.
+  PDF+PNG  Exporte PNG et PDF simultanément.
+  HTML     Fichier HTML interactif seul (zoom/pan).
+  HTML+PNG Fichier HTML interactif + PNG haute résolution.</pre><pre>Type HTML
+  Print quality (export res., zoom/pan)
+    PNG haute résolution intégré dans une page HTML avec zoom/pan tactile
+    (Panzoom). Rendu pixel-perfect identique à l&#x27;écran WysiQ. Recommandé
+    pour partage mobile et présentation.
+  Plotly hover/zoom (~3.5 MB lib., offline)
+    Graphe Plotly interactif autonome — hover, zoom, pan, bascule de séries.
+    Inclut la bibliothèque Plotly complète (~3.5 Mo). Fonctionne sans internet.
+  Plotly hover/zoom (~500 KB, needs internet)
+    Graphe Plotly interactif léger — bibliothèque chargée depuis CDN.
+    Nécessite une connexion internet à l&#x27;ouverture.</pre><pre>Transparent background
+  Fond du graphique transparent (PNG et HTML+PNG uniquement).
+  Utile pour insérer le graphique sur un fond coloré (diapo, web).</pre><pre>? (ce bouton)  Ouvre cette fenêtre d&#x27;aide.</pre><pre>TICKS DE GRILLE — Bouton Style et swatches couleur</pre><pre>Bouton [Style] (ou clic sur une pastille de couleur)
+  Ouvre une fenêtre 2×2 pour les quatre combinaisons de grille :
+    X axe Majeur  |  X axe Mineur
+    Y axe Majeur  |  Y axe Mineur
+  Chaque panneau : Couleur (pastilles, More... = palette complète), Taille,
+  Alpha ; les changements s&#x27;appliquent aussitôt ; Close ferme.</pre><pre>Tick size (pt)  Taille des graduations dans le fichier exporté.</pre><pre>TX  Nombre de ticks majeurs axe X
+  &quot;auto&quot; = matplotlib décide. Entier = valeur forcée (ex. 12 = mensuel).</pre><pre>tX  Subdivisions mineures X
+  Vide = désactivés. Entier = subdivisions par intervalle majeur.</pre><pre>TY / tY  Mêmes règles pour l&#x27;axe Y.</pre><pre>AXE X</pre><pre>Axe X (format date)
+  Format date/heure pour les étiquettes dans le fichier exporté (liste de
+  préréglages ou saisie, Entrée pour valider).
+  Indépendant du format affiché à l&#x27;écran.
+  JJ/MM → 31/12     JJ/MM HH:MM → 31/12 23:59     AAAA-MM-JJ → 2025-12-31</pre><pre>X labels (étiquettes X)
+  Bottom     Étiquettes sous le graphique (standard).
+  Zero (Y=0) Étiquettes supplémentaires sur la ligne Y=0.
+  Top        Deuxième rang d&#x27;étiquettes au-dessus du graphique.</pre><pre>Minor Grid lines (grille mineure)
+  X — lignes verticales mineures.   Y — lignes horizontales mineures.</pre><pre>RÉSOLUTION (« Resolution »)</pre><pre>Line (cartésien)  W px / H px — dimensions du graphique cartésien.
+Polar             W px / H px — dimensions du graphique polaire.
+  Link W &amp; H (square)  Force largeur = hauteur (graphe polaire carré).
+DPI               Points par pouce. 150 = usage courant. 300 = impression HQ.
+Tight layout (prevents cropped axes)
+                  Supprime les espaces blancs autour du graphique et évite
+                  les axes coupés.</pre><pre>Ligne de statut (colorée)
+  Vert &lt; 500 MP · Orange 500–2 000 MP (lent) · Rouge &gt; 2 000 MP (risque OOM).</pre><h2>BOUTONS</h2><pre>Cancel   (ou Échap) Ferme le dialogue — les valeurs sont sauvegardées pour la
+         prochaine fois.
+Print    Lance l&#x27;export (choix du fichier de destination).</pre><pre>Chaque réglage numérique a un curseur et un champ de saisie (Entrée pour
+valider). Après l&#x27;export, l&#x27;affichage du graphe est rétabli.</pre></main></body></html>

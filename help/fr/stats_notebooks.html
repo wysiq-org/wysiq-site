@@ -1,0 +1,90 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Notebooks de tests — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/stats_notebooks.txt</p><h1>Notebooks de tests — Aide</h1><pre>Les notebooks sont des tests statistiques autonomes, écrits en Python
+pur dans le dossier stats/notebooks/ du programme. Chaque fichier est lisible et
+auditable : formule, dépendances, conditions minimales et notes de
+résultat sont directement dans le code — aucune boîte noire.</pre><pre>Accès : bouton Params de la fenêtre Statistical Tests, ou Settings ▸
+Parameters… ▸ onglet Statistics.</pre><pre>L&#x27;onglet Statistics propose : cadre « Statistics execution parameters »
+(p-adjust par défaut : BH, Holm, Bonf, none), la liste des notebooks, le
+cadre « Per-test parameters » (paramètres du notebook sélectionné, listes
+déroulantes) et le bouton ? (cette aide).</pre><h2>1) CONCEPT</h2><pre>  Un notebook est un module Python avec deux éléments :
+    META  dict décrivant le test (clé, titre, description).
+    run(context)  fonction recevant les données et
+                  renvoyant {test, stat, p, effect, note}.</pre><pre>  Les notebooks sont intégrés dans le moteur de tests :
+  ils apparaissent dans la grille de résultats exactement
+  comme les tests natifs, avec les mêmes colonnes.</pre><pre>  context reçu par run() :
+    &quot;A&quot;      liste de valeurs (série A sélectionnée)
+    &quot;B&quot;      liste de valeurs (série B sélectionnée)
+    &quot;params&quot; dict des paramètres configurés dans Params</pre><h2>2) NOTEBOOKS DISPONIBLES</h2><pre>── Pearson
+  Corrélation linéaire entre deux séries alignées.
+  Fichier : notebooks/pearson.py
+  Entrée  : A et B (au moins 3 points communs finis).
+  Sortie  : r (stat), p-value (SciPy ou vide), r (effect).
+  Dépend  : NumPy. SciPy pour la p-value.</pre><pre>── ADF (Augmented Dickey-Fuller)
+  Test de stationnarité / racine unitaire sur la série A.
+  Fichier : notebooks/adf.py
+  Entrée  : A (au moins 8 points finis).
+  Sortie  : stat t, p-value, note &quot;lag=X method=...&quot;.
+  Dépend  : statsmodels (méthode principale).
+            Fallback NumPy si statsmodels absent
+            (régression manuelle sur les différences).
+  Params  : Autolag (AIC/BIC/t-stat/none),
+            Regression (c/ct/ctt/n),
+            Max lag.
+  Interpréter : p faible → rejet de la racine unitaire
+                → série probablement stationnaire.</pre><pre>── Granger causality
+  Test si les valeurs passées de B améliorent la
+  prédiction de A (causalité au sens de Granger).
+  Fichier : notebooks/granger.py
+  Entrée  : A et B (au moins 12 points communs finis).
+  Sortie  : F-stat, p-value, note &quot;best lag=X method=...&quot;.
+  Dépend  : statsmodels (requis — pas de fallback complet).
+  Params  : Max lag (défaut 5, max 8).
+  Important : &quot;Granger causality&quot; est une causalité
+              prédictive, pas causale au sens strict.
+              Résultat sensible au lag choisi.</pre><pre>── Change point
+  Détecte un changement de moyenne dans la série A par
+  scan de toutes les coupures possibles.
+  Fichier : notebooks/change_point.py
+  Entrée  : A (au moins 18 points finis).
+  Sortie  : t-stat à la meilleure coupure, Cohen d
+            (effect), note &quot;idx=X mean_before=... after=...&quot;.
+  Dépend  : NumPy uniquement.
+  Params  : Min size (taille minimale de chaque segment,
+            défaut 8).
+  Pas de p-value calculée.</pre><pre>── Mutual information
+  Mesure de dépendance non linéaire entre A et B.
+  Fichier : notebooks/mutual_info.py
+  Entrée  : A et B (au moins 8 points communs finis).
+  Sortie  : MI brute (stat), MI normalisée (effect),
+            note &quot;normalized=X method=...&quot;.
+  Dépend  : scikit-learn pour la méthode principale.
+            Fallback histogram 2D si sklearn absent.
+  Params  : Bins (défaut auto = sqrt(n), max 24).
+  0 = indépendance totale. Pas de p-value.</pre><pre>3) PARAMÈTRES FINS (Params)</pre><pre>  L&#x27;onglet Statistics de Parameters (bouton Params de
+  Statistical Tests) permet de configurer les paramètres de chaque test :</pre><pre>  ADF       Autolag, Regression, Max lag
+  KPSS      Regression, N lags
+  Granger   Max lag
+  Change pt Min size
+  Mutual info  Bins
+  ACF       Max lag
+  Rolling corr  Rolling window
+  Chi2      Bins
+  Shapiro   Warn above N (seuil d&#x27;avertissement)
+  Mann-Kendall  Alpha</pre><pre>  Ces paramètres sont persistés dans le workspace et
+  s&#x27;appliquent à tous les runs suivants.</pre><h2>4) TRANSPARENCE ET AUDIT</h2><pre>  Chaque fichier notebook est autonome et court
+  (&lt; 60 lignes en général). Il est conçu pour être lu
+  et vérifié sans outillage particulier.</pre><pre>  Pour auditer un test :
+  1. Ouvrir stats/notebooks/&lt;nom&gt;.py (dossier du programme)
+  2. Lire la fonction run(context) ligne par ligne
+  3. Vérifier META pour les métadonnées du test
+  4. Comparer avec la documentation de référence
+     (SciPy, statsmodels, sklearn selon le cas)</pre><pre>  En cas d&#x27;absence de dépendance (statsmodels, sklearn) :
+  - Granger et ADF (statsmodels) : résultat absent ou
+    fallback NumPy avec note &quot;method=fallback&quot;.
+  - Mutual info (sklearn) : fallback histogram 2D
+    avec note &quot;method=hist2d&quot;.
+  - Dans tous les cas, la note indique la méthode
+    effectivement utilisée.</pre><h2>5) DÉPENDANCES REQUISES</h2><pre>  NumPy      Requis pour tous les notebooks.
+  SciPy      p-values Pearson, certains fallbacks.
+  statsmodels  ADF (méthode principale), Granger (requis).
+  scikit-learn  Mutual info (méthode principale).</pre><pre>  Sans statsmodels : Granger ne produit pas de résultat.
+  Sans scikit-learn : Mutual info passe en fallback hist2d.</pre></main></body></html>

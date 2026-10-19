@@ -1,0 +1,245 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WysiQ — Fenêtre principale (Main) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/main_window.txt</p><h1>WysiQ — Fenêtre principale (Main)</h1><pre>La fenêtre principale est le point d&#x27;entrée de WysiQ. Elle liste les tables et
+les Queries du workspace courant et donne accès à toutes les fonctions par sept
+menus : In/Out Data, Database, Metric, Query, AI, Share, Settings.</pre><pre>Processus type :
+  Importer ou connecter des données (In/Out Data ou Database)
+  → la table apparaît dans la liste → clic sur son nom pour ouvrir le graphe
+  → construire et sauvegarder une Query → la rouvrir, l&#x27;exporter ou la partager.</pre><pre>Zoom du texte de cette aide : Ctrl + molette, ou boutons A− / A+.</pre><h2>BOUTONS EN HAUT À DROITE</h2><pre>  Refresh   Rescanne le workspace (registre, dossier tables/, définitions JSON,
+            dossier queries/) et reconstruit la liste. Les fichiers .parquet
+            déposés à la main dans tables/ sont enregistrés automatiquement.
+  ?         Ouvre cette aide.</pre><pre>MENU In/Out Data</pre><pre>  Import file
+      Ouvre la fenêtre Import files : gestion des fichiers sources (CSV, XLSX…)
+      et imports Bulk load (direct) ou Fine load (via Check file).
+      Voir l&#x27;aide « import_files ».
+  Import from workspace…
+      Importe des objets WysiQ natifs depuis un autre workspace (sélection
+      multiple, fichiers ou dossiers). Le type est reconnu d&#x27;après le dossier
+      d&#x27;origine : tables (.parquet ou .json, le fichier compagnon est récupéré
+      automatiquement), Queries, Metrics, Scenarios, Masks, Recipes, connexions DB
+      et profils/identités AI.
+      Ne sont pas importés : fichiers utilisateur (CSV/XLSX, PDF, documents,
+      images, vidéos…), Exchange, exports, présentations, snapshots, caches,
+      logs et dossiers techniques. Pour reprendre un workspace complet, copiez
+      simplement son répertoire.
+  Export
+      Exporte la table sélectionnée via la fenêtre Save As / Export Table
+      (CSV, XLSX, Parquet… voir l&#x27;aide « copy_table »). Sans sélection ou sur
+      une Query, un message indique que l&#x27;export est réservé aux tables.
+  Open workspace folder
+      Ouvre le dossier racine du workspace dans l&#x27;explorateur système.</pre><pre>MENU Database</pre><pre>  Table / View
+      Ouvre le SQL Assistant : créer ou modifier des tables et des vues DuckDB,
+      exécuter du SQL, pousser vers une base distante.
+  Catalog…
+      Ouvre le Table Catalog (tables locales et distantes, modes LO/RS/RL/WS/WL,
+      Rename…, Drop, Create DB Live…). Propriétés Static / Live : clic droit
+      sur la table dans cette fenêtre Main.
+  DB Connection
+      Ouvre la fenêtre Data Sources : profils de connexion (PostgreSQL, MySQL,
+      Oracle, SQL Server, DuckDB, OData, REST, MongoDB…), test, catalogue des
+      tables distantes. Exige un workspace ouvert.
+  WWW Connection
+      Ouvre les connecteurs vers les API publiques des fournisseurs de données
+      (RTE, ENTSO-E, INSEE, Eurostat, BCE, ONU, météo…) : recherche de datasets,
+      sélection des séries, test, prévisualisation, téléchargement en table WS
+      (statique) ou WL (Live). Voir l&#x27;aide « www_connection ».</pre><pre>MENU Metric</pre><pre>  Catalog
+      Ouvre le catalogue des métriques du workspace (création, édition,
+      recherche, import/export).
+  Variables…
+      Ouvre le Variables Catalog (variables globales &amp;x.y, seuils). Si un graphe
+      est actif, le catalogue est relié à sa Query. Une seule fenêtre est ouverte :
+      un second appel la ramène au premier plan et la recharge.
+  Import…
+      Importe des métriques depuis un fichier .zip ou .json dans
+      workspace/metrics/. Les métriques déjà présentes (même nom) ne sont pas
+      écrasées.
+  Export…
+      Regroupe tous les fichiers .json de workspace/metrics/ dans un .zip.</pre><pre>MENU Query</pre><pre>  Catalog
+      Ouvre le Query Catalog (toutes les Queries sauvegardées, recherche,
+      ouverture, export).
+  History
+      Pour la Query sélectionnée dans la liste : versions précédentes du
+      query.json (FILE, LAST MODIFIED, SIZE) avec Open, Delete, Refresh, Close.
+      Double-clic = Open. Exige une Query sélectionnée.
+  Autosave / SOS
+      Sélecteur de fichier ouvert sur workspace/autosave/ pour rouvrir un
+      query.json sauvegardé automatiquement (toutes les 3 minutes pour chaque
+      Query ouverte) après un crash ou une fermeture sans sauvegarde.
+  Import query…
+      Demande la source (Continue pour valider, Cancel pour abandonner) :
+        File (ZIP bundle or query JSON)   choisir un .zip ou un query.json.
+        Database (connected profile)      importer depuis le catalogue distant
+                                          WYSIQ_QUERY d&#x27;un profil connecté
+                                          (liste filtrable, Refresh list, Import,
+                                          double-clic = Import).
+      Pour un bundle .zip, une boîte d&#x27;options permet de renommer la Query
+      (Query name), de choisir la table à utiliser (Use table) et de cocher :
+        Import table data from bundle   recrée la table à partir des données
+                                        du bundle.
+        PNG / PPTX                      récupère les graphes et présentations
+                                        joints.
+        Keep a copy of the import bundle (.zip) in workspace/exchange/
+        Create query&#x27;s embedded metrics in workspace/metrics/
+      Les variables manquantes de la Query sont recréées dans le workspace ;
+      les variables existantes du workspace ne sont jamais écrasées.
+  Export query…
+      Exporte la Query sélectionnée. Destination (Continue / Cancel) :
+        File (ZIP bundle)   dossier, nom de fichier, description facultative,
+                            note vocale facultative (Rec / Stop / Play / Erase),
+                            Data (Parquet), Excel copy (XLSX), PNG, PPTX et
+                            Other files (bouton … pour choisir les fichiers).
+                            Export crée le .zip ; la fenêtre de résultat
+                            propose OK, 📂 Open folder et 📤 Share….
+        Database (remote catalog WYSIQ_QUERY)
+                            choisir le profil, le nom et la description ;
+                            Export écrit la Query dans le catalogue distant et
+                            garde une copie de traçabilité dans
+                            workspace/exchange/.
+  Graphs
+      Ouvre le dossier share/outbox/graphs (captures PNG des graphes).
+  Records
+      Ouvre le dossier presentations/ (enregistrements PPTX/PDF).
+  Share…
+      Ouvre le Share Center (identique au menu Share ▸ Share Center).</pre><h2>MENU AI</h2><pre>  Ask AI…
+      Interface IA simple : prépare un pack de contexte (graphe actif s&#x27;il y en
+      a un) pour votre assistant web personnel. Voir l&#x27;aide « ask_ai ».
+  AI Command Center (Expert)…
+      Hub IA expert. Exige un graphe ouvert ; sinon le message « Open a graph
+      first » s&#x27;affiche.
+  AI Cases…
+      Ouvre l&#x27;AI Case Center (via le Command Center ; exige un graphe ouvert).
+  Knowledge…
+      Ouvre la fenêtre AI Knowledge du workspace.
+  Answers…
+      Ouvre le visualiseur HTML sur l&#x27;historique des réponses (sans graphe).
+  Observatory…
+      Ouvre l&#x27;AI Observatory dans le navigateur (URL du serveur d&#x27;activité
+      définie dans Parameters ▸ AI).
+  Settings…
+      Ouvre Parameters sur l&#x27;onglet AI (profils, clés, suivi d&#x27;activité).
+  Help
+      Ouvre l&#x27;aide AI Knowledge.</pre><pre>MENU Share</pre><pre>  Share Center   Publier ou envoyer des Queries, graphes et rapports.
+  History        Ouvre le Share Catalog (historique des partages).</pre><pre>MENU Settings</pre><pre>  Manual…
+      Ouvre Parameters sur l&#x27;onglet Help Folder : tous les fichiers d&#x27;aide,
+      recherche plein texte, choix de la langue, captures d&#x27;écran.
+  Parameters…
+      Ouvre la fenêtre Parameters (Globals, Query, Statistics, Signal, AI…).
+  Clean workspace…
+      Nettoyage complet, après confirmation (Yes / No ; No annule tout) :
+        • retire du registre les fichiers liés dont la source n&#x27;existe plus ;
+        • retire les tables enregistrées dont le fichier source est manquant
+          (et les supprime de DuckDB) ;
+        • supprime TOUS les fichiers .json de workspace/autosave/ (et les
+          dossiers vides).
+      Un résumé liste les éléments retirés. Attention : après ce nettoyage,
+      Autosave / SOS ne peut plus récupérer les anciennes sessions.</pre><h2>LISTE PRINCIPALE — COLONNES</h2><pre>  TYPE          Mode de la table ou QUERY (voir ci-dessous).
+  DB            Numéro de la connexion : 0 = DuckDB local ; 1, 2, 3… = profil
+                de connexion distant dans l&#x27;ordre de création (Data Sources) ;
+                « ? » si le profil n&#x27;existe plus. Vide pour une Query.
+  ✓             ● table chargée dans DuckDB ; ○ table enregistrée mais non
+                chargée. Vide pour une Query.
+  NAME (double-click query)
+                Nom de la table ou de la Query.
+  LAST MODIFIED Date du fichier source ou du query.json, au format de date
+                défini dans Parameters ▸ Globals.
+  OWNER         Propriétaire (utilisateur à l&#x27;import ou dans la Query).</pre><pre>Clic sur un en-tête : tri croissant ; nouveau clic : tri décroissant.
+Barre d&#x27;état : à gauche « n TABLE, 0 VIEW, n QUERY » ; à droite, la taille des
+données du workspace et la mémoire DuckDB utilisée.
+Couleurs : vert = table chargée (●) ; gris = table non chargée (○).</pre><h2>VALEURS DE LA COLONNE TYPE</h2><pre>  LS     Table locale statique (mode LO enregistré) : fichier importé, table
+         créée par SQL ou Check file.
+  LL     Table locale Live (alimentée par une source Live du workspace).
+  RS     Remote Static : copie locale d&#x27;une table d&#x27;une base distante.
+  RL     Remote Live : table distante actualisée en continu.
+  WS     WWW Static : table téléchargée depuis un fournisseur WWW.
+  WL     WWW Live : table WWW mise à jour automatiquement.
+  QUERY  Query sauvegardée (query.json dans queries/).</pre><pre>Les Queries masquées (Settings) ne sont pas listées.</pre><h2>CLICS ET CLAVIER</h2><pre>  Clic sur la colonne TYPE d&#x27;une table
+      Charge la table dans DuckDB (○ devient ●) sans ouvrir de graphe.
+  Clic sur le NAME d&#x27;une table
+      Ouvre une fenêtre graphique sur la table (plein écran, séries de départ
+      cochées G/T/A et fenêtre Table ouverte, pour éviter un graphe vide).
+  Double-clic sur une Query (ou sur une table)
+      Ouvre le graphe avec toutes les séries et paramètres sauvegardés.
+      Si la table de la Query est introuvable, la boîte « Table not found »
+      propose les tables disponibles (suggestions en tête) : OK pour utiliser
+      celle choisie, Cancel pour abandonner.
+  Entrée
+      Ouvre la ligne sélectionnée.
+  Ctrl / Maj + clic
+      Sélection multiple (aucune ouverture).
+  Le pointeur devient une main au-dessus des zones cliquables.</pre><h2>MENU CLIC DROIT</h2><pre>Sur une table
+  Open WysiQuery Graph   Ouvre le graphe de la table.
+  Load in Workspace      Charge la table dans DuckDB.
+  Clear from Workspace   Retire la table de la mémoire DuckDB seulement ; les
+                         fichiers et le registre sont conservés.
+  RS — Load / Refresh snapshot        (table RS) recharge la copie depuis la
+                                      base distante.
+  RS/RL/WS/WL — Static / Live properties…
+                                      propriétés d&#x27;acquisition (statique ou
+                                      Live, fréquence…).
+  RL — Start / Resume                 (table RL) démarre l&#x27;actualisation Live.
+  RL — Stop (keep data)               (table RL) arrête le Live ; les données
+                                      déjà reçues sont conservées.</pre><pre>Sur une Query
+  Open                  Ouvre la Query.
+  Open in new process   Ouvre la Query dans un nouveau processus WysiQ (sans
+                        fenêtre Main) qui charge ses propres tables et calcule
+                        sur un autre cœur ; ses graphes apparaissent dans la
+                        Graph Remote unique (P2 · …).
+  Export query…         Voir menu Query.
+  Copy…                 Duplique la Query sous un nouveau nom (« … copy »
+                        proposé).
+  Rename…               Renomme la Query (fichier et dossier).
+  Delete                Supprime la Query après confirmation.
+  Refresh / Clean workspace…</pre><pre>Sur une zone vide
+  Refresh               Rescanne le workspace.
+  Clean workspace…      Retire les fichiers liés et les tables orphelins
+                        (sans purger les autosaves, contrairement à
+                        Settings ▸ Clean workspace…).</pre><pre>PROPRIÉTÉS STATIC / LIVE D&#x27;UNE TABLE (clic droit ▸ … — Static / Live
+properties…)</pre><pre>Table RS ou RL (base distante) : fenêtre « Workspace Table — &lt;nom&gt; » :
+  Timestamp / X        colonne date/heure de suivi (obligatoire, type date).
+  Primary key / PK     clé distincte de X (entier, texte ou UUID).
+  Start X (ISO)        début de l&#x27;acquisition.
+  End X (optional)     fin (vide = sans limite ; doit être &gt;= Start X).
+  Poll every (ms)      période d&#x27;interrogation.
+  Toutes les colonnes cochées dans le Table Catalog sont copiées ; le polling
+  suit les nouvelles lignes (X, PK) : les UPDATE / DELETE d&#x27;anciennes lignes
+  exigeraient un CDC.
+  Save RL        enregistre la table en mode RL (sans démarrer).
+  Save &amp; Start   enregistre et démarre l&#x27;acquisition.
+  Convert to RS  (table RL) arrête le Live et garde la copie locale comme RS
+                 (confirmation « Make Static »).
+  Cancel         ferme sans rien changer.
+Table WS ou WL (WWW) : une question propose de passer de WS à WL (Live, mise à
+jour toutes les 15 min par défaut) ou de WL à WS ; les données locales et le
+Parquet sont conservés. WL exige des horodatages UTC (sinon créer une nouvelle
+table UTC dans WWW Connection).
+Table locale LS : pas de propriétés Live (table indépendante).</pre><h2>SUPPRIMER OU RENOMMER UNE TABLE</h2><pre>La suppression définitive d&#x27;une table (DuckDB + .parquet + .json + registre)
+et son renommage se font dans Database ▸ Catalog… (boutons Drop, Rename…).
+Ces actions sont volontairement absentes du clic droit de la fenêtre Main.
+Le renommage depuis le Table Catalog met aussi à jour les Queries sauvegardées
+qui utilisent l&#x27;ancien nom (table source et FROM du SQL). Si une Query ne
+trouve pas sa table (par ex. copiée d&#x27;un autre workspace), la boîte « Table
+not found » permet d&#x27;en choisir une autre.</pre><h2>CHANGER DE WORKSPACE</h2><pre>Settings ▸ Parameters…, onglet Globals ▸ Core :
+  Browse…   choisir un workspace WysiQ existant ;
+  New…      créer un nouveau workspace dans un dossier parent.
+Une boîte propose Permanent / Temporary (mémorisé ou non au prochain démarrage)
+et Keep loaded tables / Clear all tables (DuckDB).</pre><pre>Premier lancement : la boîte « WysiQ — First launch » demande le dossier du
+workspace (Browse…), la langue d&#x27;aide, l&#x27;ordre des dates (DD/MM/YY ou
+MM/DD/YY) et le premier jour de la semaine (Monday / Sunday).
+Start WysiQ applique ces choix ; Later (ou Échap) les reporte. Ils restent
+modifiables dans Parameters.</pre><h2>TEMPORAIRE, PERSISTANT, REMPLACEMENT</h2><pre>  Temporaire   Load in Workspace / Clear from Workspace : mémoire DuckDB de la
+               session uniquement.
+  Persistant   Import, Export query, Copy…, Rename… : écrivent des fichiers du
+               workspace.
+  Destructif   Delete (Query), Drop (Table Catalog), Clean workspace… :
+               suppriment des fichiers ou des entrées ; pas d&#x27;annulation.</pre><pre>SÉLECTEUR DE FICHIERS WysiQ
+Les boîtes Open file / Save file / Select folder de WysiQ partagent la même
+fenêtre :
+  Up / Home / Refresh   dossier parent, dossier personnel, relecture.
+  Champ chemin          saisir un chemin puis Entrée pour y aller.
+  Open ZIP              ouvre le ZIP sélectionné comme un dossier virtuel
+                        (pour y choisir un JSON).
+  New folder            crée un sous-dossier dans le dossier courant.
+  Folders / Subfolders  emplacements favoris et sous-dossiers (double-clic ou
+                        Entrée pour entrer).
+  Liste des fichiers    clic sur un en-tête pour trier ; double-clic pour
+                        ouvrir.
+  File: / Folder:       nom saisi ou sélectionné ; Type: filtre les fichiers.
+  Open / Save / Select  valide (Entrée) ; Cancel (Échap) abandonne.</pre></main></body></html>

@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Knowledge Setup — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/ai_knowledge_window.txt</p><h1>AI Knowledge Setup</h1><pre>This standalone window manages the protocol/knowledge JSON files sent to
+the AI on connection (AI Connections). Open it from Main ▸ AI ▸
+Knowledge…, AI Command Center ▸ 📖 Knowledge Setup, or Parameters ▸ AI.
+It contains the &quot;Protocol schemas&quot; list; ? opens this help, Close
+closes the window (the Send selection is saved).</pre><h2>PROTOCOL SCHEMAS TAB</h2><pre>Knowledge files are JSON files sent to the AI on every connection. They
+give the AI the permanent context of your domain: business definitions,
+interpretation rules, nomenclatures, conventions, industry ontologies —
+in addition to the technical schemas specific to WysiQ (handshake, answer
+format, metric/PCA/signal/stat request schemas).</pre><pre>Single folder: WysiQ/AI/protocol/
+    The default WysiQ technical schemas (000_protocol_handshake_
+    generic…, 001_ai_response_required_format… etc., present from
+    installation) and your own business-context JSON files live side by
+    side in the same folder. Every JSON file found there is listed with
+    its own Send state.</pre><pre>Send column
+    Click the symbol to toggle the state of a file:
+    ✓ = sent on connection, ○ = ignored. The state of each file is
+    remembered between sessions in
+    WysiQ/AI/protocol_send_selection.json.
+    Only ✓ files are included in the WysiQ protocol handshake sent at the
+    start of each AI session.</pre><pre>★ CORE schemas (000, 001, 002)
+    The three files marked ★ are the minimal protocol vocabulary.
+    They are ✓ by default. For a simple chat outside the WysiQ protocol
+    (prompts and data only), untick all three (○) before Connect.
+    The &quot;Reset (recommended)&quot; button restores the advised values.</pre><pre>Other protocol files (010, 020, 040…)
+    Not sent on Connect. They go automatically with the AI Feed JSON
+    when the matching type is in the AI Feed Stack (e.g. Signals feed →
+    signal schemas). The Send column here only concerns Connect.</pre><pre>JSON button
+    Shows or hides the preview of the selected file (hidden by default).</pre><pre>Schema list (left) / JSON preview (right)
+    Select a file on the left to preview its content on the right.</pre><pre>Right-click a file: Edit, Duplicate, Rename, Delete
+    Double-click a row (outside the Send column): Edit. The JSON editor
+    offers Save and Cancel.
+    To import files shared by a colleague, copy them into
+    WysiQ/AI/protocol/ (Open protocol folder), then reopen the window.</pre><pre>→ AI Feed Stack
+    Drops the selected schema into the current AI Feed Stack.</pre><pre>Open protocol folder
+    Opens WysiQ/AI/protocol/ in the system file explorer — to add,
+    inspect or edit the knowledge JSON files directly with any editor.</pre><pre>Language of the knowledge files
+    Knowledge files have no predefined language: write them in the
+    working language of your domain. The default WysiQ schemas are in
+    English.</pre><pre>WORKSPACE LAYOUT  (AI/ folder)</pre><pre>AI/protocol/
+    Protocol + knowledge JSON files selectable with the Send column
+    above. Sent on connection.</pre><pre>AI/protocol_send_selection.json
+    Stores the Send toggles of each protocol/knowledge JSON file.</pre><pre>AI/Feed/&lt;lang&gt;/
+    Question dictionary (Requests Catalog of the Command Center;
+    Parameters ▸ AI).</pre><pre>AI/sessions/ and qai/cases/
+    Archived AI exchanges (former sessions and AI Cases; see AI Case
+    Center).</pre><pre>Metric definitions, series metadata, PCA results, correlations, tests
+and signals are sent with the query analysis JSON at question time, not
+from this Knowledge screen — this screen only controls the
+*protocol / business context* files sent once on connection.</pre><pre>PCA interpretation rules, or any other rule specific to your domain, can
+be added as a normal JSON file directly in AI/protocol/ — give it a
+descriptive file name and tick it in the Send column above.</pre></main></body></html>

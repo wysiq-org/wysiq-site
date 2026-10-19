@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Check file window — Preparing a file before import — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/import_check_window.txt</p><h1>Check file window — Preparing a file before import</h1><pre>Access: Import files ▸ Fine load; Live Sources (CSV file source, Live mode).</pre><pre>Check file (&quot;Prepare file before import&quot;) cleans, crops, types and
+subsamples a file (CSV, TXT, XLSX/XLS, Parquet) before loading it as a
+DuckDB table, exporting it to a file or using it as a Live source.</pre><pre>Typical workflow:
+  File... → set Separator / Sheet → Top / Bottom / Left / Right / Header
+  → Apply → choose columns, names, types, NaN policy, date formats
+  → Preview → (Save mask) → &gt;&gt; Table (or &gt;&gt; File, or &gt;&gt; Live).</pre><h2>TOP BAR</h2><pre>  File...     Choose or change the source file.
+  First       Number of rows read for the preview (10 to 9 999 999; default:
+              &quot;rows&quot; parameter of Globals). This is a display limit only:
+              the export ALWAYS rereads the full file.
+  Mask        Saved mask to apply (names, types, NaN, formats, trimming,
+              shrink). The list contains the masks of this file and of the
+              workspace.
+  Sheet       (Excel only) Sheet to process.
+  Separator   CSV separator: Auto, ;  ,  Tab, Pipe.
+  Reload      Rereads the file with the current First / Sheet / Separator.
+  ?           Opens this help.</pre><h2>RAW PREVIEW</h2><pre>Rows of the file as read from disk. Top, Prev, Next, Bottom only move this
+preview (no change to the settings). Column widths are remembered.</pre><h2>CLEANING PARAMETERS</h2><pre>  Top        Rows removed at the top of the raw file.
+  Bottom     Rows removed at the bottom.
+  Left       Columns removed on the left.
+  Right      Columns removed on the right.
+  Header     Index of the header row in the remaining area
+             (in Live mode, -1 = no header).
+  Shrink     Read-only field summarising the subsampling; a click opens the
+             Shrink box.
+  Transpose  Swaps rows and columns; click again = back.
+  Apply      Rebuilds the cleaned preview with the current settings.</pre><h2>SHRINK BOX</h2><pre>  Enable shrink    Enables subsampling.
+  Auto to N rows   Computes the step to get about N rows.
+  Every N row(s)   Keeps 1 row out of N.
+  First rows       Keeps only the first N rows (0 = all).
+  Apply            Confirms; Delete removes the shrink; Cancel closes
+                   without change.
+Auto and Every are exclusive. The shrink is applied on export (table or
+file) and saved in the mask.</pre><h2>CLEANED PREVIEW</h2><pre>Result after trimming, header, column selection, types and transposition.</pre><h2>OUTPUT COLUMNS</h2><pre>  Sel        Include / exclude the column. Click the Sel heading: tick all
+             / untick all.
+  Name       Click to rename (Enter confirms). The name is used everywhere:
+             preview, mask, exported file, table.
+  Type       Type applied on load:
+               Auto                — automatic detection;
+               Text                — string;
+               Integer (nullable)  — nullable integer;
+               Decimal             — float;
+               Time HH:MM → h      — &quot;10:30&quot; becomes 10.5 (empty → NaN);
+               Date/time           — date/time.
+  Inferred   Read-only: type WysiQ would detect (sample of at most 200
+             values).
+  Empty/NaN  Replacement of empty values after conversion:
+               (keep) — leave as is (default); &quot;&quot; empty — empty string;
+               NaN — float NaN; 0 — integer 0; 0.0 — float 0.0.
+  Format     Date/time columns: read format. List of presets
+             (DD/MM/YYYY, YYYY-MM-DD…) or free entry in strptime format
+             (e.g. %d/%m/%Y %H:%M). OK confirms, Escape cancels.</pre><h2>BOTTOM BUTTONS</h2><pre>  Save mask   Saves all settings as a reusable mask (used by Reload
+              selected in Import files and by the Mask list).
+  Preview     Applies types and NaN policies and refreshes the cleaned
+              preview (nothing is exported).
+  &gt;&gt; File     Opens the file export box (CSV by default, XLSX possible;
+              Parquet not offered here).
+  &gt;&gt; Table    Opens the Copy Table box with the proposed name; the full file
+              is loaded on EXEC, with trimming, columns, types and shrink.
+              The source file is then listed in Import files.
+  &gt;&gt; Live     (Live mode only) Validates the structure for a CSV Live
+              source. First choose the &quot;Date/time X:&quot; column; it must be
+              ticked and at least one other numeric series must be ticked,
+              otherwise a warning is shown.
+  Cancel      Closes without creating anything (the window&#x27;s close box does
+              the same).</pre><pre>CHOOSING LIVE COLUMNS (&quot;Use columns&quot;)</pre><pre>For a CSV Live source without a usable header, a box lists the columns:
+click to select, double-click or F2 to rename (Enter confirms, Escape
+cancels), list of column numbers. Use columns confirms, Cancel aborts.</pre><h2>GOOD TO KNOW</h2><pre>• Nothing is written until &gt;&gt; Table, &gt;&gt; File, &gt;&gt; Live or Save mask is
+  used.
+• If the table already exists, the Copy Table box / the import asks whether
+  to overwrite or rename it.</pre></main></body></html>

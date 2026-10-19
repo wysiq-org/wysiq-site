@@ -1,0 +1,34 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QUERY — Last PCA / Axes — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/query_pca.txt</p><h1>QUERY — Last PCA / Axes</h1><pre>Rôle
+Cette zone documente le dernier calcul PCA/ACP réalisé depuis Area.
+Elle ne remplace pas Area : Area calcule, Query documente.</pre><pre>La Query comme recette ACP
+Le fichier query.json garde le processus qui a permis d&#x27;obtenir la dernière ACP :
+- table de travail,
+- colonnes source,
+- Metrics définis dans la Query,
+- séries cochées A dans la palette Series,
+- bornes X/Y utilisées,
+- nombre de PC,
+- variance expliquée,
+- coefficients et contributions.</pre><pre>La Query est donc une recette analytique ACP, pas seulement une requête SQL.</pre><pre>Ce qui est mémorisé
+WysiQ garde seulement un résumé compact du dernier calcul PCA :
+- nombre de lignes utilisées,
+- nombre de séries d&#x27;entrée,
+- bornes Area utilisées,
+- PC calculées,
+- pourcentage expliqué par chaque PC,
+- pourcentage cumulé,
+- principales séries contributrices,
+- coefficients et contributions.</pre><pre>Ce qui n&#x27;est pas mémorisé
+Les valeurs des séries AXIS_* ne sont pas écrites dans query.json :
+- AXIS_PC1, AXIS_PC2, ...
+- AXIS_RECONSTRUCTION_ERROR
+- AXIS_DIST_PCA</pre><pre>Pour les utiliser dans Metrics, Signals ou Table, créez-les depuis Area avec le bouton PCA→Series.
+Pour les conserver définitivement, exportez/materialisez une table de travail.</pre><pre>Affichage
+La table de variance montre PC1, PC2, etc. et le cumul.
+La table des coefficients affiche les principales séries contributrices de chaque PC pour éviter de noyer l&#x27;utilisateur avec toutes les séries.</pre><pre>P1%, P2%, ... indiquent la contribution relative de la série dans la PC correspondante.
+Dom.PC indique la PC dominante pour cette série.
+Σ|coef| donne une indication d&#x27;importance globale.</pre><pre>Règle WysiQ
+Area produit le calcul.
+Query garde le dernier résumé.
+Post-it/PPTX gardent plusieurs états.
+Une table matérialisée garde les valeurs PC dans le temps.</pre></main></body></html>

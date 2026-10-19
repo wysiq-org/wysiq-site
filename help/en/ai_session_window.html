@@ -1,0 +1,127 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI SESSION CENTER — WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/ai_session_window.txt</p><h1>AI SESSION CENTER — WysiQ</h1><pre>Note (current version): the historical AI Session window is no longer opened
+by any menu — sessions have been replaced by AI Cases (AI Command
+Center ▸ 🗂 AI Case Center, Main ▸ AI ▸ AI Cases…). This page remains the
+reference for sessions created with previous versions.</pre><h2>PURPOSE</h2><pre>AI Session Center is the archive and replay tool for AI Analyst
+conversations. It does not talk to the AI directly: AI Analyst sends
+questions and receives answers, and every exchange is archived here
+automatically.</pre><pre>AI Session Center lets you:
+  - browse sessions and their full event history
+  - inspect the Query Core snapshot and any archived AI answer
+  - build a replay queue from past questions, across any session
+  - replay selected questions on the current query/table in AI Analyst</pre><pre>Philosophy: DATA → QUERY → AI SESSION → KNOWLEDGE</pre><h2>ONE SESSION SHARED BY ALL PROFILES</h2><pre>A WysiQ session is unique and shared among all AI profiles that participate
+in it. There is no separate session per profile.</pre><pre>  Session structure
+    The session holds a sequential history of all events regardless of
+    which profile produced them. Each event is timestamped and tagged with
+    its profile_id.</pre><pre>  Main profile
+    The first profile connected to the session is the main profile. Its
+    questions (JSON AI Feed, Data AI Feed, AI_Query) form the reference
+    timeline of the session. These events are automatically replayed on
+    secondary profiles when they connect.</pre><pre>  Secondary profiles
+    Any profile connected to the same session after the main profile is
+    secondary. On connection it receives an automatic replay of all main-
+    profile questions already archived, in their original order. Its own
+    answers are archived in the same session.</pre><pre>  Replay freedom
+    Each profile can also have its own manual replay queue (for additional
+    or profile-specific questions). Only the main profile&#x27;s questions are
+    automatically duplicated to secondary profiles; questions asked
+    directly on a secondary profile stay private to that profile.</pre><pre>  Threads in the history
+    Each profile connection creates a distinct thread in the Threads /
+    History tree. The thread row shows the profile, the connection status,
+    and the total tokens in/out consumed by that thread.
+    Replayed events carry a replay_of_index field in their detail,
+    indicating the original event&#x27;s index in the session.</pre><h2>AUTOMATIC ARCHIVING</h2><pre>Every time you Connect, send a JSON AI Feed, send a Data AI Feed, or Send
+a question in AI Analyst, the exchange is archived automatically in the
+shared session:
+  - the Connect handshake (with the relevant profile)
+  - the full analysis JSON (JSON AI Feed)
+  - the raw data sample sent on its own (Data AI Feed) — only the
+    sampling recipe is archived, never the row values, so data is never
+    written to disk here
+  - the follow-up question (Send)
+  - the AI answer received
+  - a query_core snapshot when relevant</pre><pre>You do not need to enter anything manually.</pre><h2>TOOLBAR</h2><pre>In/out Session
+    Import..., Import ZIP..., Export..., Open sessions folder.
+    Use these to move a session between machines or share it. A session
+    is a self-contained portable folder. Since row values from Data AI
+    Feed are never archived, exporting never includes raw data samples.</pre><pre>Query Core
+    Open the query_core JSON editor for the active session, or save a
+    new snapshot of the current analytical state.</pre><pre>Answer HTML
+    Open the AI Answer Viewer on the last archived answer of the active
+    session.</pre><pre>Replay (n)
+    Send the queued steps to AI Analyst as a replay plan. (n) shows how
+    many steps are queued. AI Analyst will offer a Next button to step
+    through them one by one.</pre><pre>Clear queue
+    Empty the replay queue and reset the selection numbering (column Sel).</pre><pre>⧉ Open Nav
+    Tab-button (ghost) to the right of the detail panel: opens the HTML
+    navigator (AI Answer / reports) in a dedicated window.</pre><pre>?   Open this help page.</pre><pre>SESSIONS LIST (left)</pre><pre>Lists all AI sessions found in the workspace.
+Double-click a session to jump to its Manifest tab.
+Right-click a session for: Rename..., Duplicate..., Queue session for
+replay, Set active in Analyst, Delete.</pre><pre>QUERIES (middle)</pre><pre>Shows the query (or queries) linked to the selected session, with the
+table name. A session remembers which query it was created from, so it
+can be replayed on the same query later, or on a different compatible
+query/table.</pre><pre>THREADS / HISTORY (right, top)</pre><pre>A tree of all archived events for the selected session, grouped by thread.
+Each thread corresponds to one profile connection and groups the questions
+and answers that followed.</pre><pre>  Thread row
+    Shows: Thread N — profile (status), with in the Cost column the
+    total tokens in/out consumed by that thread across the session.
+    Example: Thread 4 — openrouter_claude_sonnet (connect ✓)  ↑1,234 ↓567</pre><pre>  Event columns:
+    Sel    Selection number for the replay queue.
+    Type   The kind of event:
+             Connect     protocol handshake sent
+             Disconnect  profile disconnected
+             AI_JSON     full analysis JSON sent (JSON AI Feed)
+             AI_Data     raw data sample sent on its own
+                         (recipe + count only, never the values)
+             AI_Query    follow-up question sent (Send)
+             AI_Answer   response received from the AI
+    Cost   Tokens ↑in ↓out for AI_Answer events (and their paired
+           outbound event by display convention).
+    When   Timestamp of the event.</pre><pre>  Resizing columns
+    All columns are freely resizable by dragging the header separator.
+    Right-click any column header to reset all column widths to default.</pre><pre>  Adjusting history height
+    The split between the event list and the Detail area (bottom panel)
+    can be resized by dragging the horizontal divider.</pre><pre>  replay_of_index
+    Events replayed on a secondary profile (from the main profile) show
+    a replay_of_index field in their detail, pointing to the original
+    event&#x27;s index in the session.</pre><h2>SELECTING STEPS FOR REPLAY</h2><pre>Click the Sel cell of any Connect, AI_JSON, AI_Data or AI_Query event to
+add it to the replay queue. A number appears showing its position in the
+queue. Click again to remove it.</pre><pre>The numbering is not reused immediately: small gaps are normal and
+harmless. Switching to another session keeps the numbering: you can pick
+steps from the whole history across multiple sessions before clicking
+Replay.</pre><pre>Right-click on the Sel header: All on (select every AI_Query) selects all
+the AI_Query events of the session; All off (deselect this session) clears
+the selection of this session.</pre><pre>DETAIL (right, bottom)</pre><pre>Selected item tab
+    Raw content of the file for the selected event (JSON sent or HTML
+    answer received). For AI_Data events this is the recipe and counts
+    only — the row values actually sent are not stored anywhere.</pre><pre>Session info tab
+    Content of the session manifest (ai_session.json): session name,
+    main profile, secondary profiles, linked query/table, creation date,
+    index of all archived files, and per-profile token totals.</pre><h2>REPLAY</h2><pre>Build a queue (column Sel, possibly across several sessions), then click
+Replay. The steps are sent to AI Analyst in the order of their selection
+numbers. In AI Analyst, the Next button prepares the next queued step
+matching its original kind on the currently open query/table:</pre><pre>  Connect / AI_JSON  Rebuilt fresh from whatever is open now, ready to
+                     send with one more click.
+  AI_Data            The archived sampling recipe is reapplied to data
+                     open now, producing a fresh sample — never the old
+                     frozen rows, since they were never kept.
+  AI_Query           The question text is resent automatically.</pre><pre>Automatic replay for secondary profiles
+  When a secondary profile connects to an existing session, the main
+  profile&#x27;s already-archived questions are replayed automatically in
+  order, with no manual action in AI Session Center. This automatic queue
+  is independent of the manual queue you can build here for specific needs.</pre><h2>SESSION FOLDER STRUCTURE</h2><pre>  &lt;workspace&gt;/AI/sessions/&lt;session_name&gt;/
+      ai_session.json                       manifest (all profiles)
+      history/
+          001_query_core.json
+          002_ai_protocol_connect_sent.json  (main profile)
+          003_ai_answer.html
+          004_ai_json_feed_sent.json
+          005_ai_query_sent.json
+          006_ai_answer.html
+          ...
+          018_ai_protocol_connect_sent.json  (secondary profile)
+          019_ai_answer.html
+          020_ai_json_feed_sent.json         (auto-replay from 004)
+          021_ai_query_sent.json             (auto-replay from 005)
+          ...</pre><pre>Each file is numbered sequentially in the global timeline of the session,
+across all profiles. The session is portable: it can be copied, archived
+or shared as a ZIP — without ever carrying raw data sample values.</pre></main></body></html>

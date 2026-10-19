@@ -1,0 +1,48 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI FEED STACK — préparer les blocs analytiques du prochain prompt — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/ai_feed_stack.txt</p><h1>AI FEED STACK — préparer les blocs analytiques du prochain prompt</h1><pre>L&#x27;AI Feed Stack est la fenêtre dédiée où vous assemblez les blocs analytiques
+qui accompagnent votre prochain prompt IA. Ouvrez-la depuis le AI Command
+Center (panneau AI Feed Stack). Chaque feed est une
+description JSON compacte d&#x27;une partie du graphe actif — jamais un dump de
+données brutes.</pre><h2>BARRE D&#x27;OUTILS</h2><pre>+ Add feed ▾
+    Menu : Table Feed, Area (stats JSON), Area graph (PNG crop), PCA report,
+    Signals, Stats / tests, Correlations, Current scenario ; puis Rebuild
+    handshake (Feed 0) — recrée le feed de protocole (utile si le niveau
+    Expert AI a changé pendant que la Stack était fermée). Select Data… n&#x27;apparaît que si Expert Studio est ouvert
+    (fenêtre qui n&#x27;est plus accessible dans cette version).
+    Le handshake (Feed 0) est créé et rafraîchi automatiquement.</pre><pre>Empty
+    Retire tous les feeds de la Stack, sauf le handshake Feed 0.</pre><pre>Refresh
+    Recharge la liste depuis le panier courant.</pre><pre>Preview
+    Affiche ou masque l&#x27;aperçu du feed sélectionné (JSON, ou image pour un
+    feed Area graph ; clic sur l&#x27;image pour l&#x27;agrandir). Masqué par défaut pour
+    garder la fenêtre compacte. Sert à vérifier exactement ce qui sera envoyé
+    avant de dépenser des jetons.</pre><pre>?
+    Cette aide.</pre><pre>Close
+    Ferme la fenêtre (la Stack est conservée).</pre><pre>LISTE STACK
+    Colonnes : Send #, When, Kind, Name, Size. Survol : détail du feed.
+    Sélection multiple + touche Suppr : supprimer les feeds sélectionnés.
+    Les feeds numérotés sont parcourus par &gt;&gt;AI Next dans le Command Center.</pre><h2>COLONNE SEND #</h2><pre>    Clic gauche sur une cellule : attribue le prochain numéro ; reclic enlève
+    le numéro.
+    Clic droit sur Send # : « Send with step #n » joint un numéro déjà
+    attribué (même groupe = envoi groupé — utile pour les profils sans
+    mémoire devant comparer plusieurs Areas dans un seul message) ;
+    « New step (send alone) » crée une étape à part ; Disable retire le
+    numéro.
+    Clic sur l&#x27;en-tête Send # : tout cocher / tout décocher.
+    Clic droit ailleurs sur la ligne : Delete (ou « Delete n feeds » en
+    sélection multiple).</pre><pre>PROTOCOLE vs STACK</pre><pre>    Seuls les trois schémas CORE (000-002) partent à Connect (Knowledge Setup).
+    Les autres fichiers protocol (PCA, signals, stats...) sont envoyés
+    automatiquement avec le JSON AI Feed lorsque le type correspondant est
+    présent ici — par exemple, un feed Signals envoie aussi les schémas signal.
+    Vous ne gérez jamais les fichiers protocol à la main ; le Stack le fait
+    pour vous.</pre><pre>DONNÉES ORIGINALES vs ACTUELLES</pre><pre>    Un feed rejoué depuis un AI Case peut être envoyé sur les données envoyées
+    à l&#x27;origine, ou reconstruit sur les données actuelles avec la même recette
+    (mêmes bornes et shrink). Clic droit sur la colonne Send # d&#x27;un feed issu
+    d&#x27;un AI Case pour basculer Original data / Current data ; un tooltip indique
+    le mode courant. Clic droit sur la colonne Feed pour Delete ou Duplicate.
+    Duplicate ajoute une 2e entrée dans le mode OPPOSÉ, pour envoyer côte à
+    côte la version originale et la version actuelle (par exemple comparer deux
+    années). Les feeds ajoutés via le bouton AI d&#x27;une window sont toujours sur
+    les données actuelles et n&#x27;ont pas ce choix.</pre><pre>BOUTON → AI DES FENÊTRES (Area, Table, Signals…)
+    Clic gauche : envoie l&#x27;élément dans la Stack selon le mode choisi.
+    Clic droit : menu « Left-click sends: » avec les modes Area data (JSON),
+    Area graph capture (PNG), Both (data + graph) (✓ = mode actif), puis
+    « Send now (current mode) » pour envoyer immédiatement.</pre></main></body></html>

@@ -1,0 +1,102 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GLOBALS — Paramètres WysiQ — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/params_globals.txt</p><h1>GLOBALS — Paramètres WysiQ</h1><pre>Sous-onglets : Core | Display | Output | Style | List values | Screens | Help</pre><pre>Ces réglages s&#x27;appliquent à tout le workspace (params.json).
+Scr2 ne déplace que le graphe — palettes et tables restent sur l&#x27;écran principal.</pre><pre>Fermez avec [X] — sauvegarde automatique.</pre><pre>CORE</pre><pre>Workspace (Espace de travail)
+  Root directory (WysiQuery)   Dossier racine WysiQ (toujours nommé WysiQ).
+  Browse… / New…   Ouvrir ou créer un workspace (New… avertit si un
+                   workspace existe déjà dans le dossier choisi).
+  Switch           Boîte de changement de workspace :
+                     Permanent — remember this workspace on next startup
+                     Temporary — after quit, restore the previous workspace
+                     Keep loaded tables (T MEM stays available)
+                     Clear all tables — fresh DuckDB for the new workspace
+  Personal settings: &lt;utilisateur&gt;_params.json · factory: params_ORI.json
+                   Fichier des réglages personnels et fichier d&#x27;usine.
+  Restore defaults (ORI)…   Remplace vos réglages personnels par ceux de
+                   params_ORI.json (confirmation « Personal settings were
+                   restored »).
+  Query import: add its metrics &amp; scenarios to workspace catalogs
+                   (coché par défaut) À l&#x27;import d&#x27;une query, ses métriques
+                   et scénarios sont ajoutés aux catalogues du workspace ;
+                   une définition identique est ignorée.</pre><pre>Dates &amp; numbers
+  Date format (Min Max)    Champs X Min / X Max des palettes Series, Area,
+                           Signal et fenêtres qui saisissent une limite date.
+  Date format (cursor)     Bulle du curseur sur le graphe : date/heure affichée
+                           avec les valeurs des séries.
+  Date format (X axis)     Graduations de l&#x27;axe X des graphes. Les seuils de
+                           zoom date peuvent choisir un format plus fin selon
+                           la plage visible.
+  Date format (tables)     Cellules date des Table windows, Main window
+                           (LAST MODIFIED, tables et queries chargées ou non),
+                           Area, Signal, catalogues et previews/export tables.
+  Week 1st day             Lun=0 … Dim=6.
+    start X axis           Les graduations hebdomadaires de l&#x27;axe X
+                           commencent ce jour-là.
+    auto                   Choix automatique des graduations semaine.
+  Day abbr. (Mo→Su)        Abréviations des 7 jours (3 caractères max,
+                           infobulle = nom du jour) utilisées par les
+                           graduations et Sort X ▸ Weekday.
+  Unit text / Scale (x) / Decimal / Period factor
+                           Valeurs par défaut des axes d&#x27;une nouvelle query
+                           (voir l&#x27;onglet Query).
+  Nb digits for Exp notation  Nombre de chiffres à partir duquel les
+                           valeurs passent en notation exponentielle.
+  Decimals (default)       Décimales Table / Area.</pre><pre>Table
+  Table display rows       Lignes max dans la palette Table (nombre ou ALL).</pre><pre>Help language
+  Language                 Langue d&#x27;aide : EN / FR / DE / ES / IT.
+  Text size                Police des fenêtres d&#x27;aide (A− / A+).</pre><h2>DISPLAY</h2><pre>Plot defaults — type, render, line width, marker, alpha pour nouveaux graphes.
+  En polaire, bar forme des secteurs angulaires remplis de rayon Y, sans transformer les données en pourcentages.
+  Valeurs render : line, point, both, fill, bar. « bar » trace une barre depuis Y=0 jusqu&#x27;à chaque valeur, d&#x27;épaisseur réglable par Line width. « fill » remplit de 0 jusqu&#x27;à
+  chaque valeur en gardant l&#x27;épaisseur et la couleur de la ligne comme
+  contour (le render par série reste modifiable dans le popup de style série).
+Linked, transparent &amp; large graphs — réglages des graphes superposés.
+  Link delay (ms)  délai de synchronisation des graphes LINKED après pan, zoom
+                   ou rotation polaire, également utilisé pour la répétition
+                   par maintien de « &lt;&lt; X » / « X &gt;&gt; ». 0 = immédiat ; défaut = 50 ms.
+  Hide when transparent  ce qu&#x27;un graphe masque quand son fond est
+                   transparent (bouton ▧ de la fenêtre graphe) :
+                   Grid (grille, coché par défaut), Legend (légende, titre,
+                   commentaire), Scale (valeurs d&#x27;axes, dates, cadre / cercle
+                   polaire). Valeurs par défaut de tous les graphes ; chaque
+                   graphe peut avoir son propre réglage (clic droit sur ▧),
+                   enregistré dans la query. Un changement s&#x27;applique tout de
+                   suite aux graphes transparents.
+  Keep on top (even without focus)
+                   un graphe transparent reste au-dessus des autres fenêtres,
+                   même sans le focus (coché par défaut). Ses zones
+                   transparentes laissent voir et cliquer ce qui est dessous.
+  Large graphs     Fast drawing (only the points visible on screen)
+                   (coché par défaut) : un nuage de plusieurs
+                   milliers de points ne dessine que les points visibles dans
+                   la vue, un par case d&#x27;écran de la taille du marqueur. Pan,
+                   zoom et redimensionnement deviennent plus rapides ; l&#x27;image
+                   reste la même. Données, curseur, Table, Area et
+                   statistiques utilisent toujours tous les points. Décocher
+                   pour dessiner chaque point.
+Graph margins — marges matplotlib (left/right/bottom/top).</pre><pre>Zoom date thresholds
+  Six zones selon la plage visible (jours) : threshold, Auto switch,
+  format, X ticks, X minor, else format.
+  Guide complet : bouton ? sur ce panneau (topic params_zoom_display).</pre><pre>SCREENS (Scr2)</pre><pre>Sous-onglet secondaire de Globals, à droite de List values et juste avant Help.
+La capture d’image s’effectue via PrtScr dans le graphe ; ici, seul le placement des fenêtres est configuré.</pre><pre>Déplace uniquement la fenêtre graphe active vers un 2ᵉ écran (HDMI, Miracast, bureau étendu).
+Palettes, tables, Paramètres et autres fenêtres restent sur l&#x27;écran principal.</pre><pre>  Mode
+    auto     Premier moniteur secondaire détecté par Windows.
+    monitor  Choisir dans la liste (Refresh displays).
+    custom   Géométrie WxH+X+Y (saisie directe ou boutons ci-dessous).</pre><pre>  Monitor → geom — reprend la taille et la position du moniteur choisi.
+  Graph → geom   — reprend la taille et la position du graphe actif ;
+                   ne produit aucune image. Positionner d’abord le graphe
+                   à l’endroit souhaité. En mode Custom, décocher « Maximise
+                   on target » pour conserver exactement sa taille.</pre><pre>  Maximise graph on target screen
+    Maximise le graphe sur la cible.</pre><pre>  Refresh displays
+    Re-scanne les écrans. Windows doit être en mode Étendre (Win+P), pas Dupliquer seul.</pre><pre>  Test Scr2 — teste sur le graphe actif.
+  En-tête du graphe : bouton Screen2 = même bascule.</pre><h2>OUTPUT</h2><pre>Export graph (format, taille, Transparent bg = fond transparent),
+Snapshot (Footer: texte de pied de capture), Overlay size, PPT record
+(slides PowerPoint après SHOT ; « Create PPT on first SHOT » crée la
+présentation au premier SHOT).</pre><pre>PrtScr — Choisir l’application qui ouvre automatiquement les PNG des captures. Windows default conserve l’association Windows actuelle. La liste détecte les logiciels déclarés compatibles PNG ; Refresh actualise la liste, Browse… permet de choisir un .exe. Le choix est enregistré dans les paramètres, sans modifier l’association Windows ni le dossier snapshots/. Le clic droit PrtScr capture toujours tout le bureau.</pre><pre>STYLE</pre><pre>Color panel — grille 4×8 de couleurs ; More… ouvre le sélecteur complet,
+  Reset colors rétablit la palette d&#x27;origine.
+Axes — Font (police), Style (Bold / Italic), couleurs et visibilité X/Y ;
+  Reset rétablit la couleur par défaut d&#x27;une ligne.
+Grid line colors — grilles majeures/mineures X/Y.
+UI — fond, boutons, thème ttk, style modern/classic.</pre><h2>LIST VALUES</h2><pre>Polar step menus (CSV) — pas X / X360 polaire (1y, 7d, 1h …).
+Sort X — modes CSV pour le tri X (raw, dow, dom, month, year …).</pre><pre>Enregistré globalement dans params.json.</pre><pre>  Première ligne Display : Link (ms) = Link delay, Zoom (%) = Zoom step, Pan (%) = Pan step, Arrows (ms) = Arrow repeat.
+  Display &gt; Linked &amp; transparent graphs : Link delay (ms) règle la latence de synchronisation des graphes LINKED (0 = immédiat, défaut 50 ms) ;
+  Zoom step (%) définit le pas de zoom par flèche de Graph Remote (défaut 6 %, plage 1–50 %), indépendant du Link delay ;
+  Arrow repeat (ms) (défaut 30 ms, plage 15-250 ms) règle les flèches Pan/Zoom et POLAR &lt;&lt; X / X &gt;&gt; dès l’appui, séparément de Link delay ;
+  Pan step (%) (défaut 2 %, plage 1–20 %) règle la distance des déplacements Pan par flèche ;</pre></main></body></html>

@@ -1,0 +1,185 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>METRIC EDITOR — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/combo_editor.txt</p><h1>METRIC EDITOR — Help</h1><pre>Access: Series palette ▸ click the @ of a metric, right-click ▸
+Composition…, &quot;Create Metric from &quot;In&quot;&quot; header; metrics catalog.</pre><pre>Typical workflow:
+  tick In on the source series → Create Metric from &quot;In&quot; → choose Agg and
+  Post → set each component (Transform, k, +/-, Where…) → Group by X if
+  needed → Apply → the metric appears in the Series palette (@).</pre><pre>The Metric Editor (Composition window) builds a metric computed from
+several series with per-series transformations, an aggregation, a
+post-processing step and windowing on X.</pre><pre>The metric is saved with the query and can be saved in the catalog
+workspace/metrics/&lt;name&gt;.json. It is identified by its name only (the
+table is not part of the identity) and can be reused by other queries
+whose tables have the same columns.</pre><pre>HEADER
+  Name      Name of the metric (read-only here; rename it from the Series
+            palette, right-click ▸ Rename…).
+  Alias     Short label shown in the legend.
+  Output    Result type: auto, datetime, float, int, str (datetime for a
+            metric used as X axis).
+  Description  Free text saved with the metric.</pre><h2>TOP BAR</h2><pre>Agg  [SUM | AVG | MIN | MAX | RANGE | MEDIAN | * | / | PROD | NORM-L1 |
+      NORM-L2 | RMS | STDDEV | VARIANCE | SUM-SQ | SUM-SQRT | ENTROPY]
+  How the active components are combined into a single value, row by row
+  (step 4 of the order of application). Group Agg (step 6) is applied
+  AFTERWARDS to the combined, post-transformed result. The two settings
+  are independent.</pre><pre>  Standard: SUM  AVG  MIN  MAX  RANGE  MEDIAN  *  /
+  Norm: NORM-L1 (S|xi|)  NORM-L2 (sqrt(S xi^2))  RMS (sqrt(mean(xi^2)))
+  Statistics: STDDEV  VARIANCE
+    Note: STDDEV and VARIANCE only make sense with at least 3 to 5
+    components. With 1 or 2 components, the result is trivial (0 or
+    sqrt(diff/2)).
+  Non-linear: PROD  SUM-SQ  SUM-SQRT
+  Information: ENTROPY (Shannon entropy: -S(pi * log2 pi))</pre><pre>Post  [none | √ | ² | ³ | ABS | LOG | LN | 100× | %]
+  Transformation of the final aggregation result (after Agg).
+  none   None (default).
+  √ / ² / ³ / ABS / LOG / LN   Classic mathematical functions.
+  100×   Multiplies by 100 (e.g. 0.42 → 42%).
+  %      Normalises so that the total sum equals 100%.</pre><pre>Add [drop-down list]
+  Double-click to insert the selected series as a component.</pre><pre>Export   Exports the full metric definition (JSON file).
+JSON     JSON window of the metric: Copy, Paste, Apply (applies the edited
+         JSON), Export, Import (loads a file into the editor), Close.
+SQL      Shows the SQL equivalent of the computation (Copy, Close) —
+         informative.
+?        This help.</pre><h2>COMPONENT GRID</h2><pre>  Column     Name of the source series.
+  Where      Filter indicator (green = active). Click to open.
+  Sc         Join mode (AND / OR) for the global filters.
+  Transform  Transformation applied BEFORE the multiplier k.
+    √ SQRT, ² square, ³ cube, |·| ABS, LOG₁₀, LN, EXP eˣ, 1/x inv, — none,
+    % of sum, Z-score, RANK
+  k          Multiplier AFTER the transformation (default 1.0).
+             Constant or &amp;1.4 reference — right-click the field.
+  +/-        Constant offset AFTER k (default 0.0). Right-click → variables.
+  Min / Max  Value bounds after transformation, k and offset.
+  Delta      Shift in points on X.
+  Fill       Fill value. Right-click → variables (&amp;1.4).</pre><pre>Group by X — Lag, Size, Step: right-click to insert a variable.
+X0 Free: right-click for a variable.</pre><pre>Left-click the name → WHERE popup (see below).
+Right-click → context menu: Where / Duplicate / Delete.</pre><h2>PER-COMPONENT WHERE POPUP</h2><pre>Left-click the name of a component to open its WHERE popup.
+The filter applies BEFORE the transformation and the multiplier k.</pre><pre>  Where ON   Switch. ON = active. OFF = suspended.</pre><pre>  With other cols [NONE | AND | OR]
+    NONE   Local mode. Values failing the filter become 0 (or the offset
+           value). Other rows are not affected. The metric runs on all
+           rows.
+    AND    Global mask. Rows failing the combined AND/OR mask are set to
+           NaN on ALL components before aggregation. Use AND to exclude
+           whole rows (e.g. negative export on any component).
+    OR     Like AND but with OR logic. A row survives if it passes at
+           least one OR filter.</pre><pre>  c1   First condition (always visible): operator + value.
+  join [AND | OR]   Logic between c1 and c2.
+  c2   Second condition.
+  + button   Shows or hides c3 (third condition).
+             When c3 is visible, it takes part in the join logic.
+             Click again to hide c3 and clear its value.
+  c3   Third condition (visible after clicking +).</pre><pre>  Operators: =  !=  &lt;  &lt;=  &gt;  &gt;=  ~ (contains)  ^ (starts with)  $ (ends with)  in</pre><pre>Common examples:
+  c1: &gt; 0                 Only positive values enter the aggregation.
+  c1: &gt;= 10, join: AND, c2: &lt;= 100   Value bounded between 10 and 100.
+  c1: != 0                Exclude exact zeros (missing data).
+  With other cols: AND, c1: &lt;= 0      Exclude from the metric the rows
+                                       where this series is &lt;= 0.</pre><pre>The WHERE filter applies BEFORE the transformation and the multiplier k.
+To filter on the final computed result, see the Order of application
+section.</pre><pre>GROUP BY X (windowing)</pre><pre>Windows the combined result (after Agg, step 4, and Post, step 5) over a
+window on X (step 6).</pre><pre>Group by X   Off (no windowing), Moving or Fixed.
+Moving       Sliding window of Size points.
+Fixed        Non-overlapping blocks of Size points.
+Lag          Initial points forced to zero.
+Size         Window size in points.
+Step         Gap between blocks (Fixed mode only).</pre><pre>Group Agg  [AVG | SUM | CUM | MIN | MAX | Δ | ABS(Δ) | RANGE | MEDIAN | STDVAR]
+  Reduction inside the X window, applied to the combined series.
+  Independent of the Agg of the top bar (cross-series combination).</pre><h2>ORDER OF APPLICATION</h2><pre>  1. Metric Scope on X     Restriction to a range of the X axis.
+  2. WHERE filter          Per-component value filtering.
+  3. Transform, k, offset, Min/Max, Delta   Per component.
+  4. Agg (top bar)         Combination of all components (cross-series).
+  5. Post-transformation   Applied right after Agg, BEFORE windowing.
+                           Example: Agg=SUM-SQ + Post=sqrt → Euclidean norm.
+  6. Group Agg             Aggregation of the post-transformed result in the
+                           X windows.
+  7. Table palette WHERE   Global filter on the final result.</pre><pre>The three aggregation/transformation steps in detail:</pre><pre>  Agg (step 4)
+    CROSS-SERIES operation. Combines the N transformed series row by row.
+    Examples: SUM of three energy series, NORM-L2 of the components.</pre><pre>  Post-transformation (step 5)
+    Applied to the combined series produced by Agg.
+    Runs BEFORE Group Agg so that windowing works on the final unit.
+    Example: Agg=SUM-SQ + Post=√ → Euclidean norm (L2).
+    Example: Agg=SUM + Post=100x → conversion to percentage.</pre><pre>  Group Agg (step 6)
+    TIME operation. Applies a sliding or fixed window to the already
+    aggregated and post-transformed series.
+    Example: 48-point moving average of the Euclidean norm.
+    Group Agg is optional (disabled when Size = 0).</pre><pre>Applying a WHERE AFTER the metric (post-filtering):
+  Per-component WHERE filters act BEFORE the aggregation. To filter on the
+  final computed result, create a second metric that includes this metric
+  as its only component, and add a WHERE on that component.
+  Example: metric A computes a moving norm; metric B includes A with
+  WHERE &gt; 100 to keep only the instants where the norm exceeds 100.</pre><h2>SERIE WHERE</h2><pre>Master switch for all per-component WHERE filters.
+ON (default)  All filters active.
+OFF           All suspended without being deleted (handy for a quick
+              comparison).</pre><h2>PERSISTENCE</h2><pre>All parameters are saved in the JSON and restored on reload:
+  Agg, Post, Transform, k, +/-, Min, Max, Delta, Fill, Where filters,
+  Group by X parameters, Alias, Output type.
+  The k, +/- and Fill fields can hold a &amp;theme_id.var_id reference
+  (e.g. &amp;1.4) in the editor; on Apply/Save, the metric JSON stores the
+  portable &amp;theme.var form (e.g. &amp;energie.seuil_kwh). The value is read at
+  plot time.
+  In the picker, double-click Value simulates in session (*); Save writes
+  the workspace JSON.
+  Variables window (right-click on k, Min, Max, Δ, Fill…): keep it open
+  (Stay open) to simulate the whole query graph (sliders, Vars series mode,
+  Min/Max/Δ).
+  Vars button in the Scenario palette to test extremes during DRAW/MOVE.
+  The Freeze state is session-only (not saved).</pre><pre>BOTTOM OF THE WINDOW
+  Metric Scope on X   Restricts the computation to an X range (see the
+                      &quot;metric_scope&quot; help, ? button of the Where Series
+                      bar).
+  X0  Table / Free    Origin of the metric&#x27;s X positions: Table (start of
+                      the table) or Free (typed value, variable possible by
+                      right-click); the two boxes are exclusive.
+  Freeze              &quot;Freeze&quot;: freezes the result (❄ Frozen cache);
+                      &quot;⚠ Refreeze&quot; if a source has changed; untick to
+                      unfreeze.
+  Apply               Computes and applies the metric to the graph (the
+                      window stays open).
+  Close               Closes the editor.</pre><pre>Where Series and NaN Policy</pre><pre>Where Series enables the Where conditions carried by the series of the composition. These conditions are often used to detect a business event: for example PROD-CONSO &lt; -15000 AND Solar &lt;= 0.</pre><pre>NaN Policy controls what happens when a condition series filters a point and produces a NaN in the final computation.</pre><pre>NaN+x=x: permissive mode. NaN values are ignored in the sum; a condition series with k=0 can therefore create points at 0. Useful for ordinary sums of partially empty series.</pre><pre>NaN+x=NaN: strict mode. If a condition series is filtered or is NaN, the final point stays absent. Recommended for AND filters, helper series with k=0 and event searches.</pre><pre>Special NaN value in WHERE clauses
+  = NaN    Selects the positions with a missing value (NaN / NULL / NaT).
+  != NaN   Selects the positions with a present value, zero included.
+  = 0      Selects the real zeros; 0 and NaN are different.
+  Case is ignored (NaN, nan, NAN).
+  Only = and != are accepted with NaN; &lt; NaN or &gt; NaN match nothing.
+  The Nb of each component shows how many positions pass its WHERE.
+  With With other cols = AND/OR, a WHERE = NaN on one component can limit
+  the computation of another component to those positions.
+  No NaN is replaced by a zero and no missing row is created.</pre><pre>AGGREGATE DETAIL (Agg)
+  SUM       Sum of the active components.
+  AVG       Arithmetic mean.
+  MIN / MAX Minimum / maximum across components.
+  RANGE     Max minus Min (amplitude).
+  MEDIAN    Median across components (see below).
+  *         Product S1 × S2 — uses the first 2 components.
+  /         Quotient S1 / S2 — uses the first 2 components; a division by
+            0 gives NaN. When / is chosen, a small +/- of 0.001 is
+            pre-filled on the denominator if it is empty.
+  PROD      Product of the N components: x1 × x2 × … × xn.
+  SUM-SQ    Sum of squares: S xi².
+  SUM-SQRT  Sum of square roots: S sqrt(|xi|).
+  STDDEV / VARIANCE   Cross-component standard deviation / variance
+            (population, ddof=0).
+  ENTROPY   -S(pi × log2 pi) with pi = |xi| / S|xi|.
+The Add list contains all the series of the query (columns and other
+metrics); the same series can be added several times with different
+parameters.</pre><pre>RESULT LINE (⟹ Metric)
+Below the grid, &quot;⟹ Metric nb=… [0]: … [N]: …&quot; shows the number of values
+and the result on the first and the last row; it updates when a parameter
+changes. &quot;(no data …)&quot;: run a PLOT or open the Table so that data are
+available.</pre><pre>FREEZE (detail)
+  Freeze (unticked)  live computation on every plot.
+  ❄ Frozen           result kept in cache, reused as is.
+  ⚠ Refreeze         a source has changed: the cache is stale; Apply
+                     recomputes it.
+The Freeze state is not saved: after reload, the metric is computed live.</pre><pre>NaN POLICY BY AGGREGATE
+NaN+x=x (permissive): NaN components are ignored, only present values
+count; a point is absent only if ALL components are NaN on the row.
+  SUM x+y · AVG (x+y)/2 · MIN/MAX/MEDIAN/RANGE/STDDEV/VARIANCE/ENTROPY on
+  the present values · NORM-L1 |x|+|y| · NORM-L2 sqrt(x²+y²) ·
+  RMS sqrt((x²+y²)/2).
+NaN+x=NaN (strict): if at least one component is NaN on a row, the result
+is NaN whatever the aggregate.
+Proposed value: NaN+x=x for a new metric; NaN+x=NaN for an existing metric
+saved without a NaN Policy (that is how it is computed), so that a plain
+Apply does not change its values.</pre><pre>MEDIAN COMPUTATION
+MEDIAN sorts the present values of each row and returns the middle value;
+with an even number of values, the mean of the two central values.
+  [10, 20, NaN, 40]: NaN+x=x → median of [10, 20, 40] = 20;
+                     NaN+x=NaN → NaN.
+  [10, 20, 30, 40]:  (20 + 30) / 2 = 25 in both modes.
+MEDIAN is not very sensitive to outliers (unlike AVG).</pre></main></body></html>

@@ -1,0 +1,214 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STATISTICAL TESTS — Help (Statistical Tests window) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/stats_tests_window.txt</p><h1>STATISTICAL TESTS — Help (Statistical Tests window)</h1><pre>Access: Tests button in the Graph window header (between Area and
+Signals), or the Te dot in the Graph Remote. Both open the same Statistical
+Tests window for the current graph, separate from the Area palette.</pre><h2>1. PURPOSE</h2><pre>Statistical workbench for the numeric series of the current graph:
+- pair tests (series A and B),
+- multi-series tests (G selection, Group box),
+- time-series diagnostics (each ticked series).</pre><pre>Typical process:
+  Selection (Area or All) → tick A / B / G in the series list →
+  choose the tests (Quick tests, themes, boxes) → Run (or Auto insight)
+  → read / sort the results → Export or → AI.</pre><pre>1.1 Data frame
+- Selection: Area (points of the Area rectangle) or All (all the data).
+- Refresh: re-reads the list of the graph&#x27;s series.
+- Clear: unticks all the series.
+- Series / A / B / G list: click on a box to tick it; click on the A, B or
+  G header to tick / untick the whole column; click on the Series header to
+  sort.</pre><pre>1.2 Test selection frame
+- p-adjust: BH, Holm or Bonf (see §4).
+- Quick tests: ticks the quick tests (slow tests are excluded, §9);
+  unticked = untick everything.
+- Group: enables the multi-series tests (restores the default quick group
+  tests); unticked = group tests disabled.
+- Theme on / Theme off: ticks or unticks all the tests of the theme chosen
+  in &quot;Themes / subgroups&quot;.
+- All on / Clear: all tests ticked / none.
+- The detail area describes the selected theme or test; one box per test.</pre><pre>1.3 Results bar
+- Run: runs the ticked tests (waiting window during the computation).
+- Auto insight: runs the same tests and adds an interpreted summary.
+- Best corr: opens the Find Best Correlation window (help
+  &quot;stats_best_correlation_window&quot;).
+- Clear: empties the results.
+- Export: saves the results as .xlsx or .txt.
+- → AI: sends the results (without raw data) to the AI Feed Stack.
+- Params: opens Parameters ▸ Statistics (test notebooks, help
+  &quot;stats_notebooks&quot;).
+- ?: this help.
+- Table: click on a header to sort; Ctrl+C copies the selected rows.
+- The settings (selection, tests, p-adjust, decimals) are saved with the
+  query.</pre><h2>2. DATA SELECTION</h2><pre>2.1 Scope = Area
+- uses only points remaining inside the stored area / rectangle filter.
+- if the area is empty, no usable series is returned.</pre><pre>2.2 Scope = All
+- uses the full available data range;
+- series eligibility still depends on the series list exposed by the
+  graph context.</pre><pre>2.3 Cleaning and alignment
+- values are converted to float;
+- NaN / +inf / -inf are removed;
+- paired tests align A and B to the same usable length;
+- the displayed n is the effective usable sample size after filtering
+  and alignment.</pre><h2>3. UI DEFAULTS</h2><pre>Default values on open:
+- Scope: Area
+- p-adjust: BH
+- Decimals: 3
+- max lag sent to the engine: 30</pre><pre>Quick tests:
+- intended for rapid exploration;
+- slow tests are intentionally excluded from the quick preset.</pre><h2>4. P-VALUE ADJUSTMENT</h2><pre>Applied to all numeric p-values returned by the run.
+Available methods:
+- BH   = Benjamini-Hochberg FDR control
+- Holm = step-down family-wise adjustment
+- Bonf = Bonferroni correction</pre><pre>If a test does not produce a p-value, p_adj stays blank.</pre><h2>5. ANNOTATIONS USED IN THE NOTE FIELD</h2><pre>5.1 p_note(p, n)
+- p &lt;= 0.05 -&gt; Significant
+- p &gt; 0.05  -&gt; Not significant
+- if n &gt;= 1000, suffix: &quot;large sample&quot;</pre><pre>5.2 effect_strength(d)
+- |d| &gt;= 0.8 -&gt; Large
+- |d| &gt;= 0.5 -&gt; Medium
+- |d| &gt;= 0.2 -&gt; Small
+- otherwise   -&gt; Negligible</pre><pre>5.3 eta_strength(eta²)
+- &gt;= 0.14 -&gt; Large
+- &gt;= 0.06 -&gt; Medium
+- &gt;= 0.01 -&gt; Small
+- otherwise -&gt; Negligible</pre><pre>5.4 dw_note(dw)
+- dw &lt; 1.0  -&gt; Strong positive autocorr
+- dw &lt; 1.5  -&gt; Positive autocorr
+- 1.5..2.5  -&gt; No autocorr (OK)
+- 2.5..3.0  -&gt; Negative autocorr
+- &gt; 3.0     -&gt; Strong negative autocorr</pre><h2>6. PAIR TESTS (A/B)</h2><pre>6.1 Pearson
+- linear correlation coefficient r in [-1, 1]
+- SciPy pearsonr when available, otherwise NumPy corrcoef fallback</pre><pre>6.2 Spearman
+- rank-based monotonic correlation
+- robust to monotonic non-linearity and outliers</pre><pre>6.3 Kendall
+- concordance measure on ranks
+- often useful on short samples or many ties</pre><pre>6.4 Linear regression
+- model: y ~= intercept + slope * x
+- displayed stat = r
+- effect = r²
+- note also contains slope, intercept, stderr when available, and
+  adjusted R²</pre><pre>6.5 t-test paired
+- paired mean comparison on aligned A/B values</pre><pre>6.6 t-test independent
+- classical independent-sample t-test</pre><pre>6.7 Welch t-test
+- independent-sample t-test without equal-variance assumption</pre><pre>6.8 Wilcoxon
+- non-parametric paired comparison</pre><pre>6.9 Mann-Whitney
+- non-parametric independent comparison</pre><pre>6.10 Cohen d
+- pooled effect size for independent groups
+- formula:
+  d = (mean(A) - mean(B)) / pooled_sd</pre><pre>6.11 Cohen d paired
+- paired effect size on differences
+- formula:
+  d = mean(A - B) / sd(A - B)</pre><pre>6.12 Best lag
+- scans integer lags in [-max_lag, +max_lag]
+- returns the lag with the strongest absolute Pearson relation
+- note includes best lag and number of scanned lags</pre><pre>6.13 Variation corr
+- correlation on first differences: diff(A), diff(B)
+- useful when raw levels drift but local co-movements matter
+- WysiQ computes both:
+  - Variation Pearson
+  - Variation Spearman</pre><pre>6.14 Partial corr
+- correlation between A and B while controlling a 3rd selected series
+- requires at least 3 selected series
+- formula:
+  r_xy.z = (r_xy - r_xz*r_yz) / sqrt((1-r_xz²)(1-r_yz²))</pre><pre>6.15 Chi2 contingency
+- A and B are automatically binned into a contingency table
+- chi-square independence test is then applied
+- note contains number of bins and degrees of freedom</pre><pre>6.16 Distance corr (dCor)
+- detects linear and non-linear dependence
+- exact implementation is O(n²)
+- stat = distance correlation
+- note reminds the qualitative meaning</pre><pre>6.17 Mutual information
+- histogram-based dependency measure
+- captures non-linear relations even when Pearson is near zero
+- stat = MI in nats
+- effect = normalized MI (when entropies are positive)
+- note contains bin count and normalized MI</pre><pre>6.18 Rolling corr
+- rolling-window Pearson correlation between A and B
+- stat   = mean rolling correlation across windows
+- effect = strongest absolute rolling correlation observed
+- n      = number of windows used
+- note contains window size, number of windows, best absolute rolling
+  corr, last rolling corr</pre><pre>6.19 Granger causality
+- lagged predictability screening, reported in both directions:
+  - A -&gt; B
+  - B -&gt; A
+- stat   = best F statistic found across scanned lags
+- p      = corresponding F-test p-value when SciPy is available
+- effect = relative SSE improvement of unrestricted vs restricted model
+- note   = best lag
+- interpretation: this is predictive lead/lag evidence, not proof of
+  real-world causality</pre><pre>6.20 Durbin-Watson
+- applied on residuals of the A/B linear regression
+- formula:
+  DW = sum((e_t - e_{t-1})²) / sum(e_t²)
+- target value around 2</pre><h2>7. GROUP / MULTI-SERIES TESTS (G)</h2><pre>7.1 Shapiro
+- normality test per selected series
+- if a series has more than 5000 points, WysiQ samples 5000 values
+  with fixed RNG seed 42
+- note states the sampling when this happens</pre><pre>7.2 Anderson-Darling
+- normality test with critical values
+- note contains the reference significance level and critical value used</pre><pre>7.3 Jarque-Bera
+- normality from skewness and kurtosis
+- formula:
+  JB = n/6 * (S² + (K-3)²/4)
+- note contains skewness and excess kurtosis</pre><pre>7.4 Levene
+- variance homogeneity test, relatively robust to non-normality</pre><pre>7.5 Bartlett
+- variance homogeneity test under stronger normality assumptions</pre><pre>7.6 ANOVA
+- one-way parametric multi-group test
+- effect = eta² computed from between-group vs total sum of squares</pre><pre>7.7 Kruskal-Wallis
+- non-parametric alternative to ANOVA</pre><pre>7.8 Friedman
+- repeated-measures non-parametric comparison
+- WysiQ truncates all groups to the shortest usable length
+- note explicitly states the truncation</pre><pre>7.9 KS 2-sample
+- distribution equality test between A and B style samples
+- for group runs, this is still driven by the selected series values
+  used by the engine
+- note: H0 = same distribution</pre><h2>8. TIME-SERIES TESTS ON INDIVIDUAL SERIES</h2><pre>8.1 ACF
+- autocorrelation function for lags 1..min(20, max_lag)
+- stat = strongest absolute autocorrelation found
+- p    = approximate normal p-value when available
+- effect = best lag
+- n    = number of lags evaluated
+- note contains IC95 and significant lags</pre><pre>8.2 Mann-Kendall
+- monotonic trend test
+- stat = z-score
+- note contains S and the trend direction</pre><pre>8.3 ADF stationarity
+- minimal Augmented Dickey-Fuller style regression
+- H0: unit root / non-stationary
+- stat = t statistic of the lagged level term
+- p    = two-sided t approximation when SciPy is available
+- note contains the lag used</pre><pre>8.4 KPSS stationarity
+- KPSS level-stationarity test
+- H0: stationary
+- stat = KPSS statistic
+- p    = approximate p-value from common KPSS critical values
+- note contains the Newey-West lag used
+- practical use: complementary to ADF</pre><pre>8.5 Change point
+- scans one split point across the series
+- stat   = strongest standardized mean shift
+- p      = Welch-like split p-value when available
+- effect = split index
+- note   = left and right segment means
+- this is a screening indicator for a single dominant break, not a full
+  segmentation framework</pre><h2>9. SLOW TESTS</h2><pre>WysiQ flags these tests as slow and excludes them from Quick tests:
+- Best lag
+- Partial corr
+- Chi2 contingency
+- Distance corr
+- Rolling corr
+- Mutual information
+- Granger causality
+- Change point</pre><pre>Main reason:
+- repeated lag scans;
+- O(n²) distance-style computations;
+- repeated regressions;
+- many split candidates.</pre><h2>10. LIMITS AND AUDIT NOTES</h2><pre>- correlation is not causation;
+- Granger is predictive, not structural causality;
+- ADF and KPSS are simplified in-software implementations, not a full
+  econometric package replacement;
+- mutual information depends on automatic binning;
+- change-point screening assumes one dominant split;
+- group tests can compare series of different meanings if the user
+  selects heterogeneous signals;
+- all results depend on the currently filtered and cleaned data only.</pre><h2>11. REPRODUCIBILITY</h2><pre>Results are deterministic for the same:
+- input data,
+- scope,
+- selected series,
+- selected tests,
+- p-adjust setting,
+- max lag.</pre><pre>The only explicit sampling rule is Shapiro &gt; 5000, which still stays
+  reproducible because WysiQ uses a fixed RNG seed.</pre><pre>Open tests from the Tests button in Graph or the Te dot in Graph Remote.</pre></main></body></html>

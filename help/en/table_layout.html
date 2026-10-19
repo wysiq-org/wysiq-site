@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TABLE LAYOUT - SETTINGS &gt; QUERY — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/table_layout.txt</p><h1>TABLE LAYOUT - SETTINGS &gt; QUERY</h1><pre>Graph axes and table layout now share ONE Query page. Table settings belong
+to the current query; they do not change the physical DuckDB source tables.
+Two instances of one source table can have independent settings.</pre><pre>1. X AXIS - BOUNDS BY TABLE
+Table    Query instance name. Adding the same source twice creates separate
+         instances, for example spot2225 and spot2225_2.
+X min    First date/time included in this instance.
+X max    Last date/time included in this instance.
+         Format DD/MM/YYYY [HH:MM] or ISO date. A date-only upper bound
+         includes the ENTIRE final day. Empty means no bound.
+Rows     Selected source rows BEFORE Shrink / Expand. A limited selection
+         is shown as selected/total.
+Start    First resulting position on the composite X axis.
+End      Last resulting position on the composite X axis.</pre><pre>Press Enter to apply a bound, or move focus out of BOTH X fields.
+Editing query bounds never changes the physical table. Automatic calendar
+offsets may be recalculated; manually chosen offsets stay unchanged.</pre><pre>2. MULTI-TABLE - TABLE OFFSETS
+One row per table instance in Series tab order. The main table provides the
+reference X axis. Custom offsets must not be reset when tabs are reordered.</pre><pre>X offset (rows)  Start position on the composite axis, in ROWS, not time.
+                 0 = align with the start of the main table (overlay).
+                 Auto (calendar) = position suggested from actual X values
+                 of the available reference tables, when dates are present.
+                 A table preset places this instance after the named table;
+                 cumulative presets place it after preceding tables.
+                 You can type a row number and press Enter.
+Y offset         Constant added to the instance&#x27;s Y values.
+Coeff            Multiplier applied to Y values (1.0 = unchanged).
+Mode             Resampling method for selected rows.
+Target rows      FINAL row count after Shrink or Expand; when blank, the
+                 main table count is the default for an active mode.
+Every N          Keep one in N rows. Blank disables it. A nonblank value
+                 takes PRIORITY over Mode and Target rows.
+Exec             Apply this row and replot the graph.</pre><pre>3. RESAMPLING METHODS
+As is (all rows)      Do not change the selected rows.
+Shrink                Downsample by selecting rows.
+Shrink AVG            Average values within each destination bin.
+Shrink SUM            Sum values (appropriate for additive quantities).
+Shrink MIN / Shrink MAX      Minimum / maximum within each bin.
+Expand - Interpolate  Linear interpolation between samples.
+Expand - Step (last) Hold the most recent known value until the next one.
+Expand - Next        Use the next known value.
+Expand - Smooth      Interpolate then smooth.
+Expand - Spline      Spline interpolation when enough values exist.
+Expand - Zero-fill   Fill unmeasured slots with zero.
+Expand - NaN-fill    Keep unmeasured slots missing (NaN).</pre><pre>AVG/SUM/MIN/MAX use all selected measurements and calendar bins whenever
+valid timestamps are available. A missing bin remains NaN, not an invented
+zero. Without valid timestamps, bins follow row order. Use AVG rather than
+SUM for electricity prices (EUR/MWh).</pre><pre>4. RESET AND LAYOUTS
+Reset ▾ (menu)
+  X offsets → ↔↔↔ Sequential (restore)   return to the remembered sequential
+                                         layout.
+  X offsets → ↔ Overlay (restore)        return to the remembered overlay
+                                         layout.
+  Y offsets = 0, Coeffs = 1              Y offset = 0, Coeff = 1.
+  Mode = As is (all rows), Every N cleared
+                                         clears Shrink/Expand and Every N.
+  X min/max = full physical table        uses the entire physical source
+                                         table.
+  Reset all (Sequential + Y/Coeff + Mode)
+                                         restores the sequential layout
+                                         and the other table settings,
+                                         including the bounds.
+Layout: Custom      At least some offsets are customised.</pre><pre>Switching Sequential -&gt; Overlay -&gt; Sequential restores manual offsets
+(e.g. SPOT at X0), per-instance Shrink/Expand, Every, Target rows and
+X bounds. Each layout remembers its own edits. Only Reset &gt; Mode or
+Reset all deliberately clears resampling settings. SaveQuery stores
+both layouts, including the current one.</pre><pre>5. RTE + SPOT EXAMPLE, 2022-2025
+RTE2022/23/24/25: four consecutive 30-minute tables.
+spot2225 (instance 1): 01 Jan 2022 to 30 Sep 2025; hourly prices,
+  row offset 0, Expand - Step (last), target the corresponding RTE slots.
+spot2225_2 (instance 2): 01 Oct 2025 to 31 Dec 2025; quarter-hour prices,
+  Auto (calendar) offset, Shrink AVG, target the corresponding RTE slots.
+Both instances read the SAME source table without duplicating it.</pre><pre>IMPORTANT: X offset is always a ROW position. Expand and Shrink alone do
+not constitute a universal time-based join. For financial calculations,
+check actual sampling, missing measurements and daylight-saving changes.
+SaveQuery persists each instance&#x27;s bounds, offsets and resampling mode.</pre><pre>FIX24 — DURATION IN EVERY, COMBINED SHRINK + EXPAND
+  Bare number in Every keeps its original row-based meaning:
+  2 = keep every second row. Blank = Target rows as before.
+  An explicit duration (30s, 30mn, 30min, 1h, 1d) enables time Adjust.
+  Target rows is ignored while a duration is present: real timestamps define bins.
+  Click Mode and SINGLE-CLICK one Shrink method and one Expand method.
+  Both active choices appear in BOLD. A single click toggles a method; another
+  method in the same family replaces the previous one. The movable window does not block Settings. OK applies the choices.
+  Shrink AVG = time-weighted average; SUM = sum; MIN/MAX = extrema.
+  Expand Step (last) holds the previous value across its own time interval.
+  Example SPOT: hourly -&gt; two 30-minute prices, then two 15-minute prices -&gt;
+  one 30-minute averaged price, automatically in the SAME instance.
+  Missing observations result in NaN, not zero. Source tables are unchanged.
+  X offsets remain independent: Adjust never rewrites them.
+  A datetime X is required; numerical X cannot be used with duration mode.
+  For daylight-saving transitions, prefer consistent UTC timestamps.</pre></main></body></html>

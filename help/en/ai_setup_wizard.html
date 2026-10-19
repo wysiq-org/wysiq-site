@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Setup / Bench — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/ai_setup_wizard.txt</p><h1>AI Setup / Bench — Help</h1><pre>The assistant finds the usable AI models — on this PC, on the other
+computers of the network and in the cloud —, tests them with a real
+question and creates the profiles. Choose one model, or several to compare
+them side by side (bench).</pre><pre>It opens with the AI Command Center (untick &quot;Open this assistant when
+the AI Command Center opens&quot; to avoid it), from the sidebar
+(🧭 AI Setup / Bench), from Parameters ▸ AI (🧭 Assistant…) and from
+⚡ Analyze graph when no profile is usable yet.</pre><pre>1 · WHERE ARE YOUR AIs?
+  This PC
+    Discover Ollama / LM Studio on this computer
+                 Looks for Ollama (port 11434) and LM Studio (port 1234) on
+                 this computer. The Ollama models folder (&quot;Ollama data&quot;)
+                 is recalled below.
+    Start Ollama automatically if it is installed but not running
+                 If nothing answers on port 11434, the assistant runs an
+                 *ollama*.bat start script it finds (workspace, WysiQ
+                 folder, home folder, Desktop, Documents) or
+                 &quot;ollama serve&quot;, then waits up to 30 s.
+  Local network
+    Other computers (e.g. a Mac running Ollama or LM Studio)
+                 The other computers; type their IPs or names in
+                 Hosts / IPs (e.g. MacBook-Pro.local), separated by
+                 commas. They are remembered.
+    Scan the whole subnet (≈ 10 s)
+                 Queries every address of the subnet.
+  Cloud APIs
+    Providers with an API key
+                 The providers whose key is already saved (or in an
+                 environment variable), listed below.
+    Add a key:   choose the provider (or let it be recognised from the
+                 prefix: sk-ant- → Anthropic, sk-or- → OpenRouter, AIza →
+                 Gemini, xai- → Grok), paste the key, then Add.
+  Open this assistant when the AI Command Center opens
+                 Opens the assistant every time the Command Center opens
+                 as long as no model is connected.
+  ?              This help.   Close   Closes the assistant.
+  Search →       Starts the search and goes to screen 2.
+  ↻ Last selection (n) — test →
+                 Skips the search and retests the models of the last bench.</pre><pre>2 · CHOOSING THE MODELS
+  Models are grouped by location (This PC, LAN &lt;host&gt;, Cloud —
+  provider). Clicking a row (or Space) ticks it. Several ticked
+  models = a bench. Columns Model, Size, Profile (the existing profile
+  reused, or &quot;new profile&quot;). The last selection is ticked again
+  automatically. None unticks everything; &quot;n selected&quot; counts the
+  selection; ← Back returns to screen 1; Test selected → runs the tests.</pre><pre>3 · TEST &amp; CONNECTION
+  Each model receives a small real question, in parallel. ✔ = it
+  answered (time shown), ✖ = failure, with a hint. Double-click a row
+  for the full error.
+  Fixed automatically (🔧): missing /v1 (Anthropic, OpenAI, Ollama…),
+  OpenRouter&#x27;s /api/v1, Gemini&#x27;s /v1beta/openai, a URL ending in
+  /chat/completions, &quot;Bearer&quot; or quotes pasted with the key.
+  Connect       Saves and enables the profiles that answered, connects
+                them (one tab each) and makes the first one the default
+                profile.
+  ⚡ Connect &amp; analyze graph
+                Same, then sends the Analyze graph question to each
+                connected model: each answer arrives in its own tab.
+                Later Sends go to the active tab only.
+  Retry failed  Retests the failed models (a local model loading for the
+                first time can be slow).</pre><pre>FREQUENT FAILURES
+  Nothing answers on this PC   Ollama / LM Studio is not started.
+  LAN computer unreachable     On that computer, Ollama must listen on the
+                               network: OLLAMA_HOST=0.0.0.0 (Mac:
+                               launchctl setenv OLLAMA_HOST 0.0.0.0, then
+                               restart Ollama), and the firewall must
+                               accept incoming connections.
+  API key refused (401/403)    Copy the whole key again; check the
+                               provider.
+  Quota / credit (429)         Check the billing at the provider.
+  Model not found (404)        This model name no longer exists for your
+                               account — choose another one.</pre></main></body></html>

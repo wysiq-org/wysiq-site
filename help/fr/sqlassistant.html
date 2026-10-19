@@ -1,0 +1,87 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Assistant SQL — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/sqlassistant.txt</p><h1>Assistant SQL — Aide</h1><pre>Accès : Main ▸ Database ▸ Table / View.</pre><pre>L&#x27;Assistant SQL crée des tables de travail DuckDB sans écrire de SQL.
+Il permet de sélectionner, renommer, filtrer, formater, joindre ou
+empiler des colonnes, puis de matérialiser le résultat en TABLE (les vues
+ne sont plus créées : une table peut contenir des métriques calculées).</pre><pre>Processus type :
+  Connection → Mode → choisir la ou les tables → cocher les colonnes, WHERE,
+  formats, séries calculées → EXEC (aperçu) → CREATE (fenêtre Export Table)
+  → la table apparaît dans Main ; Create (recipe) pour la refaire plus tard.</pre><pre>EN-TÊTE
+  Mode :         Single table ou GRID JOIN / UNION.
+  Connection:    Local (DuckDB) ou un profil connecté ; le point ● indique
+                 l&#x27;état de la connexion. ↺ relit la liste des tables.
+  ?              Cette aide.
+  Shrink to:     Auto N / Every N (réduction des lignes, voir SHRINK).
+  Rows max       Nombre de lignes de l&#x27;aperçu (Entrée pour appliquer).
+  ◄ 100 / 100 ►  Page précédente / suivante de l&#x27;aperçu.</pre><pre>MODES</pre><pre>Single table
+  Travail sur une seule table : sélection de colonnes, filtres WHERE,
+  renommage, formats de dates et séries calculées.
+  Sort…          tri sur plusieurs colonnes (case ASC par niveau ; Apply,
+                 Clear, Cancel).
+  GLOBAL WHERE   active / désactive l&#x27;ensemble des WHERE de colonnes.
+  Add row nb     ajoute une colonne de numéro de ligne.
+  Liste des colonnes : double-clic = propriétés ; clic droit = WHERE…,
+                 Compose metric… (nouvelle série calculée à partir de la
+                 colonne), Edit metric… (série calculée existante).
+  Liste des valeurs : double-clic pour éditer (Entrée valide, Échap
+                 annule) ; ◀ 100 / 100 ▶ font défiler les lignes.</pre><pre>GRID JOIN / UNION
+  Travail multi-tables. Ajoutez des tables avec Add → (← Remove les
+  retire), choisissez JOIN ou UNION, cochez Sel pour
+  les colonnes à sortir, Join pour les clés de jointure, puis choisissez
+  LEFT ou FULL et la table Base.</pre><pre>  LEFT  conserve toutes les lignes de la table Base et ajoute les
+        valeurs correspondantes des autres tables. Chaque table
+        supplémentaire se joint directement à la clé de Base, sans
+        COALESCE en cascade.</pre><pre>  FULL  conserve toutes les lignes de toutes les tables. Les clés de
+        jointure sont fusionnées avec COALESCE sur toutes les tables.</pre><pre>  Le SQL généré utilise un CTE par table (nommé TABLE_j) qui renomme
+  les colonnes avec un préfixe table (RTE13_Consommation, …), puis
+  un SELECT propre avec des LEFT JOIN explicites. Cliquez sur Edit SQL
+  pour inspecter ou copier la requête générée.</pre><h2>FORMATS ET RENOMMAGE</h2><pre>Double-cliquez sur une ligne de colonne ou clic-droit pour ouvrir les
+propriétés de colonne. Vous pouvez y changer le nom de sortie et le
+format de date (liste de préréglages ou saisie) dans le même dialogue ;
+Apply valide, Clear all efface les réglages de la colonne, Cancel ferme.</pre><pre>Pour comparer plusieurs années sur un même axe calendaire, mappez les
+dates réelles vers une année de référence commune :</pre><pre>  Format : %d/%m/2000 %H:%M
+  Effet :  2013-07-15 08:30  →  2000-07-15 08:30
+           2024-07-15 08:30  →  2000-07-15 08:30</pre><pre>L&#x27;année 2000 maintient le résultat en TIMESTAMP valide, utilisable
+comme axe datetime dans les graphes. En appliquant ce format à la
+colonne de jointure dans un GRID JOIN, vous superposez plusieurs
+années sur le même axe X.</pre><pre>Quand un format est défini sur une colonne dans un panel, il se propage
+automatiquement à la même colonne dans tous les autres panels.</pre><h2>HARMONISATION DES TYPES</h2><pre>En mode GRID JOIN, si une colonne numérique existe en BIGINT dans la
+table Base et en DOUBLE dans une autre table (même famille numérique),
+le SQL généré ajoute un CAST pour correspondre au type du Base. Les
+colonnes de types vraiment différents (ex. INTEGER vs VARCHAR) sont
+laissées telles quelles.</pre><h2>ADD SERIE</h2><pre>+ Add Serie ouvre l&#x27;éditeur de composition. Il crée une colonne
+calculée à partir de colonnes numériques : somme, différence, ratio,
+combinaison pondérée, coefficients, etc. Le résultat est propagé à
+tous les panels en mode GRID.</pre><pre>SHRINK (mode UNION)</pre><pre>Chaque panel de table dispose de ses propres contrôles Shrink :
+  Auto N   — conserver approximativement N lignes (une ligne sur k)
+  Every N  — conserver exactement une ligne toutes les N lignes</pre><pre>Cela permet d&#x27;équilibrer des tables de volumes très différents en UNION.</pre><h2>RECIPES</h2><pre>Les recipes sauvegardent et restaurent la configuration complète de
+l&#x27;Assistant SQL. Elles sont stockées comme fichiers JSON individuels
+dans le dossier recipes/ du workspace. Le SQL généré n&#x27;est PAS
+stocké — il est toujours régénéré depuis les définitions de tables
+courantes lors de l&#x27;application d&#x27;une recipe.</pre><pre>Boutons (grille 2×2) :
+  Create  enregistre la configuration actuelle comme nouvelle recipe.
+  Delete  supprime la recipe sélectionnée.
+  Load    rafraîchit la liste des recipes depuis le disque.
+  Apply   restaure la recipe sélectionnée et régénère le SQL.</pre><pre>Double-cliquez sur une recipe pour l&#x27;appliquer immédiatement.</pre><pre>Clic-droit sur une recipe pour plus d&#x27;options :
+  → AI        envoyer la recipe dans l&#x27;AI Feed Stack
+  Apply       appliquer la recipe
+  Rename…     renommer le fichier recipe
+  Duplicate…  créer une copie sous un nouveau nom
+  Delete      supprimer la recipe</pre><pre>Survolez un nom de recipe pour voir un tooltip avec son mode, ses
+tables et sa date de dernière modification.</pre><pre>Format JSON de recipe (mode GRID, version 2) :
+  mode, operation, join_type, base_table, global_where
+  tables[]  — par table : selected_cols, join_cols, formats,
+              aliases, where, computed_cols, shrink
+  restore_policy — ignore_missing_columns: true par défaut
+  output    — suggested_name, default_kind</pre><pre>A l&#x27;Apply, le nom de sortie proposé est pré-rempli avec le nom de la recipe.</pre><h2>GLOBAL WHERE</h2><pre>Cochez GLOBAL WHERE pour appliquer les filtres de colonnes à toutes les
+tables en mode GRID. Chaque table garde sa propre définition WHERE ;
+la case active ou désactive l&#x27;ensemble.</pre><h2>PREVIEW ET CREATE</h2><pre>EXEC       exécute le SQL et affiche l&#x27;aperçu des données.
+■          interrompt une requête en cours.
+CREATE     ouvre la fenêtre Export Table (aide « copy_table ») pour
+           matérialiser le résultat en TABLE WysiQ (DuckDB + Parquet), et
+           éventuellement le pousser vers une base distante.
+Close      ferme l&#x27;Assistant SQL.
+Edit SQL   ouvre le SQL complet dans une popup éditable (police Courier).
+           Export (copy) copie la requête, Import (paste) colle une requête
+           du presse-papiers, Apply &amp; Run l&#x27;exécute, Close ferme.
+Show Table passe du constructeur GRID à la vue Single table du résultat
+           combiné (toutes les colonnes sélectionnées par défaut).
+← Grid     retourne au constructeur GRID et supprime la vue temporaire.</pre></main></body></html>

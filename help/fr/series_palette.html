@@ -1,0 +1,138 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PALETTE SÉRIES — Aide — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/series_palette.txt</p><h1>PALETTE SÉRIES — Aide</h1><pre>La palette Séries pilote le graphe : choix des tables et de l&#x27;axe X, plages
+des axes, visibilité de chaque série (graphe, table, Area), style des points,
+métriques (séries calculées) et alertes de seuils.</pre><pre>Mots-clés recherche : sort, tri → Sort X · yr, axe droit, jumelle → Yr ·
+alerte, seuil, threshold, blink → ALERTES · style, marker, below, above →
+STYLE D&#x27;UNE SÉRIE · multi-tables, onglet, propagate → ONGLETS DE TABLES.</pre><h2>BARRE DU HAUT</h2><pre>  Défilement de la liste des séries : molette ou deux doigts sur le pavé
+  tactile, au-dessus des lignes ou des cases à cocher.</pre><pre>SaveQuery  Sauvegarde la query (séries, styles Normal / Below / Above,
+           métriques, onglets, réglages de la palette).
+Params     Ouvre les réglages globaux (Globaux ▸ Core).
+≡ / ─      Liste complète (≡) ou Mini (─) : la liste compacte masque les
+           séries dont In, G, T et A sont tous décochés (les métriques
+           restent visibles).
+Auto / Man Auto : le graphe se retrace dès qu&#x27;une ligne change (In, G, T, A,
+           *X, Yr). Man : ces changements attendent PLOT (la Table se met
+           quand même à jour). X / Y Min-Max, ticks, axe X, styles et
+           métriques retracent toujours. Sauvegardé avec la query.
+△ ⚠ ⚠•     Alertes de seuils de CE graphe (toutes ses tables), clic = mode
+           suivant : △ désactivées · ⚠ points en alerte affichés · ⚠• seuls
+           les points en alerte, les autres atténués, et l&#x27;Area calcule sur
+           les alertes. Pur affichage (ni replot ni mouvement d&#x27;axes).
+           Voir ALERTES.
+PLOT       Recalcule et redessine le graphe.</pre><h2>TABLE ET AXE X</h2><pre>Table      Combo des tables du workspace. Choisir une table l&#x27;ajoute comme
+           onglet (requête multi-tables) ; la rechoisir alors qu&#x27;elle est
+           déjà en onglet crée une 2e instance (RTE2023_2, renommable), vue
+           sur la même table sans copie des données, avec ses propres
+           séries, coeff et offsets. Retirer une table : clic droit sur son
+           onglet ▸ Remove table. Clic droit (ou Maj+clic) sur « Table » ou
+           le combo : menu des tables (✓ = dans la query ; un clic ajoute ou
+           retire).
+rows: N    Nombre de lignes de la table active.
+X Axis     Axe horizontal : colonne date / numérique, ou métrique (série
+           virtuelle). Clic droit sur le combo : catalogue des métriques X.
+           Un onglet peut avoir sa propre métrique date (ex. JourHeure + 1096
+           jours → dates 2026) : ses lignes sont placées sur ces dates.
+Sort X     Tri multi-clés de l&#x27;ordre des points en X (entrées de la métrique
+           X + valeur X composée). Modes : Réglages ▸ Globaux ▸ List values ▸
+           Sort X ; début de semaine : Globaux ▸ Core.
+?          Ouvre cette aide.</pre><h2>CONTRÔLES DE VUE</h2><pre>Champs vides = échelle automatique. Entrée ou sortie du champ = replot.
+Clic sur un libellé Min / Max : calendrier (pour X si l&#x27;axe est une date ;
+pour Y / Yr si le champ contient une date).</pre><pre>X Min / Max      Plage visible de l&#x27;axe X.
+Y Min / Max      Plage de l&#x27;axe Y gauche.
+Yr Min / Max     Plage de l&#x27;axe Y droit (séries cochées Yr).
+Tick X / Tick Y  Graduations : « auto » ou un nombre.
+Tx / Ty          Grille mineure X / Y : case + nombre de subdivisions.
+X0 : ↔           Overlay : toutes les tables démarrent au même X0
+                 (superposition calendaire).
+X0 : ↔↔↔         Sequential : les tables se suivent dans l&#x27;ordre des onglets.
+                 Le mode actif est en vert ; les offsets sont recalculés à
+                 chaque ajout, retrait ou déplacement d&#x27;onglet.</pre><pre> ONGLETS DE TABLES (requête multi-tables)</pre><pre>Un onglet par table ; la table principale est le 1er onglet. La grille
+affiche les séries de l&#x27;onglet actif.
+Rond vert / gris  Table dessinée ou non dans le graphe courant. Clic sur le
+                  rond : bascule sans changer d&#x27;onglet. Mémorisé par graphe
+                  (Graph 1, Graph 2…) et dans la query. Table et Area ne sont
+                  pas concernées.
+◀ ▶ / molette     Font défiler les onglets quand ils dépassent la largeur.
+Clic droit (ou Ctrl+clic) sur un onglet :
+  Set as main           En fait la table principale.
+  Propagate UI          (onglet principal) copie In/G/T/A, Yr, coeff et style
+                        de ses séries vers les séries de même nom des autres
+                        tables ; les copies de métriques suivent aussi.
+  Propagate metrics     copie ses métriques dans chaque autre table
+                        (« RTE2023.&lt;métrique&gt; », ingrédients repointés ; une
+                        table sans une colonne utilisée est sautée).
+  Propagate thresholds  copie ses règles d&#x27;alerte et styles Below / Above.
+  Propagate All         les trois à la fois.
+  Shown in this graph   comme le rond vert / gris.
+  &lt;&lt; Move left / &gt;&gt; Move right, Rename…, Remove table.</pre><h2>EN-TÊTES DE COLONNES</h2><pre>Create Metric from &quot;In&quot;  Clic : nouvelle métrique à partir des séries
+                         cochées In. Clic droit : importer une métrique
+                         (catalogue).
+@                        Clic : sauvegarder toutes les métriques. Clic droit :
+                         ❄ geler / ⚠ dégeler toutes les métriques.
+In / G / T / A           Clic : toute la colonne ON / OFF.
+*X                       Coefficient multiplicateur de chaque série.
+Yr                       Clic : toutes les séries sur l&#x27;axe Y droit / gauche.</pre><h2>LIGNES DE SÉRIES</h2><pre>Nom          Couleur = couleur de la série (gris si G décoché). Survol :
+             nom complet. Clic : fenêtre Style. Clic droit : menu.
+@            (métriques) @ live · ❄ gelée · ⚠ cache périmé. Clic : éditeur
+             de composition ; clic droit : geler / dégeler cette métrique ;
+             survol : ingrédients.
+In           Source pour une nouvelle métrique (ne trace pas seule).
+G            Tracer dans le graphe (mémorisé par graphe).
+T            Afficher dans la fenêtre Table.
+A            Afficher dans la palette Area.
+*X           Coefficient (ex. -1 pour inverser, 1.2 pour +20 %).
+Yr           Utiliser l&#x27;axe Y droit.</pre><pre>Menu clic droit sur le nom
+  Set alert thresholds…  Catalogue des variables en mode seuil pour cette
+                         série : sélectionner une variable puis Set Low,
+                         puis Set High.
+  Duplicate              Copie virtuelle de la série (nom demandé).
+  Rename…                Métrique : renommer ; série multi-tables : alias
+                         court (légende, infobulle).
+  Composition…           (métrique) ingrédients, WHERE, fenêtrage.
+  Delete                 (séries virtuelles uniquement).</pre><pre> STYLE D&#x27;UNE SÉRIE (clic sur le nom)</pre><pre>Plusieurs fenêtres Style peuvent être ouvertes (une par série) ; la
+nouvelle s&#x27;ouvre par-dessus, légèrement décalée, chacune se déplace seule.
+Les changements s&#x27;appliquent en direct.</pre><pre>Point state  Normal  style de la série ;
+             Below   points sous le seuil bas ;
+             Above   points au-dessus du seuil haut (et mode inside).
+Color        Palette ou More… .
+Depth (z)    Profondeur de dessin (devant / derrière).
+Position     Normal : ordre de la série dans la liste. Below / Above :
+             décalage avant / arrière des points d&#x27;alerte.
+Type         Inherit, Line, Point, Both, Fill, Bar.
+             Bar : barres verticales en ligne, secteurs remplis en polaire.
+             Déplacer la fenêtre : glisser depuis une zone libre ou un libellé.
+Marker       Inherit, Circle, Square, Tri ▲, Tri ▼, Diamond, X, Plus.
+Size         Normal : épaisseur de ligne ou aire du point. Below / Above :
+             multiplicateur de la taille de la série (1 = identique).
+Alpha        Opacité 0.05 – 1.
+Blink        (Below / Above) clignotement des seuls points en alerte.
+Par défaut Below / Above : Inherit, taille 1, Blink activé, orange (Below),
+rouge (Above). Les 3 états sont sauvegardés avec la query.</pre><h2>MÉTRIQUES</h2><pre>Une métrique est une série calculée à partir de plusieurs colonnes, avec
+WHERE et fenêtrage X optionnels ; sauvegarde JSON, réutilisable entre
+queries, utilisable en Y ou comme axe X.
+• Métriques et scénarios commités en haut de la liste, colonnes ensuite.
+• Filtrage global : palette Table (WHERE) comme une série réelle.
+• Gel (❄) : cache non recalculé ; modifier une source passe les métriques
+  gelées dépendantes en ⚠ (Apply dans l&#x27;éditeur pour regeler).</pre><pre> ALERTES (seuils)</pre><pre>Règles globales au workspace (workspace_alerts.json), identifiées par
+Table + Série ; Low / High = nombre, variable (&amp;1.4) ou variable-formule
+avec [Série]. Aucune donnée, SQL ou métrique n&#x27;est modifié : seule une
+surcouche graphique est ajoutée.</pre><pre>Poser un seuil : clic droit sur le nom ▸ Set alert thresholds…, choisir une
+variable, Set Low puis Set High (un seul seuil suffit) ; le graphe passe
+en ⚠. Gérer toutes les règles : Variables ▸ Thresholds.</pre><pre>Multi-tables : le bouton △ ⚠ ⚠• agit sur tout le graphe, quel que soit
+l&#x27;onglet actif. Une série sans règle propre utilise celle de la série
+homonyme d&#x27;une autre table (onglet actif, puis table principale), avec son
+style Below / Above si elle n&#x27;en a pas. Une règle propre à la table
+(Propagate thresholds, fenêtre Thresholds) est prioritaire.</pre><pre>Évaluation : valeurs réelles (coeff compris) ; marqueurs dessinés sur la
+courbe affichée (Cum / Norm, axe Yr). Identité de série exacte
+(« Solaire » ≠ « SolaireThermique »). [Consommation] désigne la série de la
+MÊME table que la série testée, même non tracée ; [RTE2023.Consommation]
+désigne toujours cette table. Valeur de référence manquante = pas d&#x27;alerte
+à ce X. Seules les séries tracées (G) sont évaluées. Barre d&#x27;état du
+graphe : « Alerts … : N points (série : n…) ».</pre><pre>Table en ⚠• : la Table ne garde que les instants d&#x27;alerte (lignes où une
+série de la même table est en alerte, toutes colonnes) ; les stats d&#x27;en-tête
+et l&#x27;Export portent sur ces lignes. Changer de mode rafraîchit la Table.</pre><pre>Area en ⚠• : les séries en alerte rejoignent l&#x27;Area (même A décoché) et
+ne comptent que leurs points en alerte ; les autres séries A sont
+calculées aux instants d&#x27;alerte de leur table. Changer de mode rafraîchit
+l&#x27;Area. Le rectangle Area peut commencer / finir sur les échelles : il est
+ramené au bord (X0, Y0…).</pre><h2>GRAPHES MULTIPLES</h2><pre>Les coches G et Yr, Y Min / Max, Yr Min / Max et les ronds d&#x27;onglets sont
+mémorisés par graphe (combo Graph de la fenêtre graphique) : changer de
+graphe les restitue, les modifier n&#x27;affecte que le graphe sélectionné.</pre></main></body></html>

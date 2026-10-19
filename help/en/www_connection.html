@@ -1,0 +1,213 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WysiQ — WWW Connection | Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/www_connection.txt</p><h1>WysiQ — WWW Connection | Help</h1><pre>Access: Main ▸ Database ▸ WWW Connection.</pre><pre>PURPOSE
+WWW Connection discovers datasets published on the Internet (RTE, ENTSO-E,
+INSEE, Eurostat, ECB, OECD, UN, Open-Meteo, SDMX worldwide…), selects series,
+tests them, then builds a dated WysiQ table: WS (WWW Static, snapshot) or WL
+(WWW Live, refreshed periodically). The tables are then used in Query, Graph,
+Table, Metrics, Rules &amp; Vars, Area and Scenario.
+The usage rights remain those of the provider.</pre><pre>Typical process:
+  choose the site → choose the dataset (Discover datasets) → select the
+  dimensions / codes (Discover series, Select values…, Choose series…)
+  → Test connection (status ✓ ready) → Download selection (list preview,
+  From / To dates, table name) → Load → the WS/WL table appears in Main.</pre><pre>Do not confuse: site (provider), dataset / dataflow (published structure),
+series key (selection of codes), connection (saved settings) and WysiQ table
+(downloaded data). Discovering a dataflow tells its structure, not that
+observations are guaranteed to exist.</pre><pre>Dates displayed and entered follow the format of Parameters ▸ Globals ▸ Core
+(&quot;Date format (tables)&quot;), as in the other windows.</pre><h2>MAIN WINDOW — TOP BAR</h2><pre>  New                Creates a connector (&quot;New WWW connector&quot;): existing Site
+                     or New site, existing Data or New data (URL, Query).
+                     Create saves it; Test then shows what the site returns.
+  Add URL…           Analyses a provider or dataset URL (Analyze URL), shows
+                     the provider, datasets and limits found; &quot;Create a
+                     connection when a usable dataset was identified&quot; also
+                     creates the connection; Add to catalog saves, Cancel
+                     abandons.
+  SDMX worldwide…    Official SDMX directory (Global Discovery Service):
+                     Refresh agencies, Explore dataflows, Filter flows, Add
+                     selected dataset (adds the dataflow to the catalogue),
+                     Copy service URL, Close.
+  Test All…          Tests the connections one by one: &quot;Selected site&quot; or &quot;All
+                     sites&quot;. Start tests starts, Cancel stops, Close closes. A
+                     test only succeeds with real numeric observations.
+  ?                  This help.
+  Folder             Opens the workspace/WWW folder (connectors, profiles).
+  Updates…           &quot;Site updates&quot;: Check reads the signed WysiQ catalogue,
+                     Install selected installs the verified definitions,
+                     Restore previous goes back to the previous version.</pre><pre>SEARCH (&quot;Search worldwide catalogue&quot;)</pre><pre>  Search        Local search in all known sites, datasets and resources (no
+                Internet request while typing).
+  Where         AND: every word must match; OR: at least one.
+  All sites     Removes the site filter.
+  Include sites without datasets   Also shows reference sites without a
+                loadable dataset.
+Themes [A-Z] and Sites lists: click to filter.</pre><pre>SITE CONNECTIONS (&quot;Connections of selected site&quot;)</pre><pre>Columns: Connector, Site, Theme, Table, Rows, Last load, Account.
+Click on a header: sort. Double-click: opens the connection editor.
+Statuses of the Account column:
+  ✓ ready          last test successful with dated numeric data;
+  ● key saved      key saved, test to be done;
+  ○ no key         public site without a key;
+  ○ sign up        registration needed;
+  · catalogue      catalogue entry without a loadable definition;
+  ○ test required  not tested yet (Not tested);
+  ○ no data        test finished but without observations;
+  ✗ test failed    last test failed;
+  ◌ testing… / ◌ cancelling…   test running / cancellation requested;
+  ○ cancelled      last test cancelled (this is not a failure).
+A Ready status is only granted after dated numeric data have been received
+for this exact selection; a change of parameters calls it into question.</pre><pre>Buttons under the list:
+  Account          Opens the site account window (see below).
+  Test connection  Tests exactly the selected connection and its parameters.
+  Cancel test      Stops the running test (including on another site); it is
+                   disabled as soon as the stop is requested.
+Right-click on a connection: New, ▶ Load, ⟳ Update to today (if a history
+exists), Rename…, Delete (deletes the connector; the table stays in the
+workspace), Site account….</pre><pre>Frequency-aware Tests: for annual, quarterly, monthly and weekly data,
+WysiQ uses the observation frequency declared by the connector. With no saved
+dates, it checks 3 complete years, 8 quarters, 12 months or 12 weeks.
+For full historical files (such as annual DWD CSV), one request validates
+all dated observations within the selected From / To range. An HTTP 200
+response without dated numeric values never makes a connection Ready.
+Between requests controls network spacing only, not the Test date range.</pre><h2>DATA / RESOURCES</h2><pre>  Show                All items, Datasets, Parameters, Series, Fields.
+  Discover datasets   Retrieves the provider&#x27;s official list of datasets /
+                      dataflows (metadata only, no table created).
+  Discover series     Reads the dimensions, codes or series of the selected
+                      dataset. For INSEE BDM, the DSD (structure) is read
+                      first; a DSD error is not a key error.
+  Download selection  Opens the Download / Live tab of the editor with the
+                      current selection (no request when it opens).
+Tree: columns Name, Code, Type; tick the codes directly (☑ / ☐) or double-click
+a parameter to open the picker. The &quot;Selected item&quot; frame details the item
+(Description / Source).
+  Select values…  Common value picker for any parameter; several values
+                  possible.
+  Fit names       Widens the Name column to the longest label (760 px max).</pre><pre>Multiple selections: if the API accepts only one code per call, WysiQ makes
+several requests then merges the series on Date. A combination that is too
+large is refused before downloading. An existing connection can be downloaded
+as soon as a dataset or one of its codes is displayed; to combine several
+datasets, explicitly tick their Dataset rows.</pre><pre>&quot;Messages / trace&quot; area (bottom of the catalogue and of the editor): messages
+and errors, kept after a trace is closed. Right-click: Copy all, Clear
+messages.</pre><pre>VALUE PICKER (published codes)</pre><pre>Search filters the list, All / None tick or untick everything, the counter
+shows the selection; OK confirms, Cancel abandons. The window is resizable
+(2 columns, 1 column when narrow); the full text and the code are in the
+tooltip.</pre><pre>SDMX SERIES PICKER (Dimensions / Choose series…)</pre><pre>One row per dimension (start with Frequency). For each dimension: Choose
+values… (published codes), free entry in Codes then Set, or Clear. Tick
+several values to get several series.
+  One series     builds the SDMX key of ONE precise series (recommended).
+  Apply filter   applies the filter (may give several series).
+  Cancel         abandons.
+&quot;All series&quot; / &quot;All series (large)&quot; downloads the whole dataflow: it asks for
+an explicit confirmation and may be refused by the provider (HTTP 413);
+prefer Choose series…. WysiQ never invents a filter and refuses an
+unconfirmed massive load. UNData accepts a request without a key (segment
+omitted); INSEE BDM uses its /all syntax. An INSEE series can also be chosen
+directly by its IDBANK.</pre><pre>CONNECTION EDITOR — TABS AND COMMON BUTTONS
+Tabs: Download / Live, Connection / Test, History, Columns. Changing tab keeps
+the window size. At the bottom: Messages / trace, Close (closes the editor)
+and ? (this help, in a separate window).</pre><pre>1. DOWNLOAD / LIVE (SINGLE DATA / LIVE)
+&quot;Build and download ONE WysiQ table&quot;.</pre><pre>&quot;Selected datasets / series (uncheck to exclude)&quot; frame (after Download
+selection): columns Use / Series, Provider / Dataset, Codes / Filter;
+unticking a row excludes it. Choose series… opens the SDMX picker; All series
+(large) takes the whole dataset after confirmation. Dataflows without a filter
+are marked ALL.</pre><pre>&quot;Data to download&quot; frame:
+  From / To        Requested period.
+  Time             Local (provider&#x27;s time zone; the hour of the autumn clock
+                   change appears twice) or UTC.
+  Update to today  Load adds from the last loaded date up to today (From / To
+                   not used).
+  Parameters       Connector values (countries, variables, keys); ☰ opens the
+                   value picker.</pre><pre>&quot;Table / Live options&quot; frame:
+  Table            Name of the WysiQ table to create or update.
+  Replace / Append Replace replaces the content; Append adds the dates and
+                   series (historical values missing from the new batch are
+                   kept).
+  Data mode        WS = static snapshot; WL = incremental WWW acquisition.
+  Live             Ticked = WL table in UTC, new dates added at every period
+                   while WysiQ is running; unticked = WS.
+  Polling every    Period in minutes (WL only); 0 = stopped.
+  Between requests Delay in WHOLE SECONDS between two HTTP calls; the
+                   provider&#x27;s minimum is still enforced (Background and Test
+                   included). Default restores the recommended value.
+  Provider quotas  Known quotas; Docs opens the provider&#x27;s quota page (absent
+                   if not published).
+  Load             Downloads the period into the table (created if needed).
+  Clear            Empties the table (definition kept) after &quot;Confirm clear&quot;.
+  Drop             Deletes the table (DuckDB, .parquet, definition) after
+                   &quot;Confirm drop&quot;; the connector is kept. The graphs that use
+                   it are reported.
+  Stop             Stops the running download.
+  Background       Loads the period in chunks in the background: each chunk
+                   is written at once (table usable while it fills), the
+                   window can be closed, loading resumes after a restart.
+                   Useful for sites that refuse large downloads (HTTP 429).</pre><pre>Load rules:
+  • A table must be named (&quot;Enter a table name&quot;).
+  • A discovered SDMX dataflow must have passed Test for this exact selection
+    before creation or update (&quot;Test required&quot;).
+  • WL requires Time = UTC and an initial Load.
+  • Replacing a table that does not come from this WWW source asks for a
+    confirmation (protection of foreign tables).
+  • Several sources: outer join on Date; missing dates stay empty (neither
+    invented nor replaced by zero). If a source fails, no partial table is
+    created. A multi-dataset selection is always WS (no Live, no resumed
+    Background).
+  • Statistical periods (year, quarter, month) are kept as period start
+    dates, without UTC shift (2024-Q1 = 2024-01-01).</pre><pre>2. CONNECTION / TEST
+&quot;Connection settings&quot; frame:
+  New       Creates a new connection from ALL the displayed values
+            (parameters, dimensions, periods, series), with a new table name;
+            no data, no history and no Ready status are copied.
+  Name      Name of the connection.
+  Site      Provider (account status shown on the right).
+  Data      Resource / dataset of the site.
+  Series…   Reads one day of data then chooses the series to keep (empty =
+            all).
+  Links     Buttons to the documentation and pages of the site.
+  Account…  API key, login and proxy of this site.
+SDMX dataflows often require a selection in Dimensions; the series key is
+built from the DSD. Use Test connection under the list to check the real
+observations before any load.</pre><pre>3. HISTORY
+&quot;History of this connector&quot;: When, Period, Rows, Mode of the loads of the
+active connection. Double-click on a row: reuses its period in Download /
+Live. The history concerns the connector, not the temporary selection.</pre><pre>4. COLUMNS
+List of the series / columns of the connection. Read series reads a short
+sample from the provider to list the series of a dataset without a chosen
+series (no table modified).</pre><pre>5. HELP (? button)
+The ? button (top bar, or next to Close in the editor) opens this help in the
+standard help window: language choice, A− / A+, ↺. There is no Help tab in
+the editor. A single www_connection.txt file per language describes the whole
+WWW window.</pre><pre>SITE ACCOUNT (&quot;WWW — Site account&quot;)</pre><pre>  Site                    Choice of the provider and status.
+  Links                   Registration, documentation, account.
+  How to get the key…     Procedure to obtain the key (and e-mail template:
+                          Write e-mail, Copy text).
+  Check links             Tests the documentation and account links.
+  Test                    Tests the provider; the detail is shown below
+                          (Show log ▾ / Hide log ▴).
+  API credentials         API key(s) requested by the site.
+  Account details ▸       Login / e-mail, Password, Registered, Note
+                          (optional).
+  Save secrets            Passwords and keys saved in scrambled form in
+                          WWW/profiles (as for DB connections); otherwise
+                          kept for the session.
+  Show                    Shows the secrets entered.
+  Proxy                   Empty = system proxy (e.g. http://proxy.company:8080).
+  Verify SSL              Certificate verification (leave ticked).
+The settings are saved automatically, and on closing.</pre><pre>TEST AND CANCELLATION
+During a test, the Account column shows &quot;testing&quot;, then &quot;cancelling&quot; if
+Cancel test is requested. The trace window of a test offers Copy, Cancel test
+and Close. Pauses due to quotas stop immediately; an HTTPS request already
+sent may wait for its timeout (20 s maximum in Test). A cancelled test
+modifies no table and frees the engine for another test.</pre><pre>ERRORS AND LIMITS
+  HTTP 404   wrong resource or key: check the dataset and the codes.
+  HTTP 413   scope too wide: reduce the dimensions or the period.
+  HTTP 429   too many requests: increase Between requests, use Background,
+             try again later.
+  HTTP 400   request refused: the provider&#x27;s message is shown as readable
+             text.
+  no data    the request succeeded without observations: change the period
+             or the codes.
+A failure or a timeout does not prove that the dataset is empty. Sources may
+have different frequencies and units: check their consistency before
+comparing the columns.</pre><pre>SECURITY AND PROVENANCE
+Do not share API keys. Respect the reuse licences. The provenance of each
+table (connector, resource) is kept in tables/&lt;table&gt;.json and visible in the
+Table Catalog (Import source). The connectors are in workspace/WWW/connectors/.</pre><pre>DATES AND RATE LIMITS
+From / To define the exact range of the next Load/Download (unless Update to today is selected). “Last background load” refers to a previous transfer; it does not override the current dates. Test samples within the selected range; full historical files are checked over the entire saved range in one request. Between requests is adjustable, while published API quotas stay enforced even at 0 seconds.</pre><pre>WEBSITES AND HISTORICAL DATES
+Right-click a site in Sites: Open website in browser uses the homepage declared in its JSON; Open API documentation opens the provider documentation if supplied. Show site information writes the known description, topics, coverage, licence and available WysiQ datasets to Messages / trace at the lower right.
+Fetch additional website information explicitly downloads public HTML page metadata in the background (title, description, optional keywords, publisher and language). It is stored in the local WWW/www_type/&lt;site&gt;.json and preserved through official catalogue updates. Website metadata is NOT proof of an API&#x27;s available numeric datasets or reuse rights. Selecting a site does not perform a network request.
+Dates before 1678 remain calendar dates without UTC conversion. WysiQ uses microsecond precision rather than silently removing them due to the TIMESTAMP_NS limit. This behavior is provider-independent.</pre></main></body></html>

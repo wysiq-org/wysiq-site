@@ -1,0 +1,72 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Catalogue Variables — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/variables_catalog.txt</p><h1>Catalogue Variables</h1><pre>Le catalogue Variables liste les packs de constantes du workspace, regroupés
+par thème (énergie, finance, custom…). Utilisez-les dans les champs numériques
+des metrics avec la syntaxe compacte &amp;theme_id.var_id (ex. &amp;1.4).</pre><pre>Même disposition que le catalogue Tables : thèmes à gauche, variables à droite.</pre><pre>Ouverture : menu Metric → Variables…</pre><h2>BARRE D&#x27;OUTILS</h2><pre>Create / Duplicate / Delete
+  Sous les listes thèmes et variables.</pre><pre>Thresholds
+  Ouvre la fenêtre Thresholds (règles d&#x27;alerte du workspace, voir l&#x27;aide
+  « thresholds »).</pre><pre>Set Low / Set High
+  (mode seuil, ouvert par Set alert thresholds… dans la palette Series ; la
+  barre affiche « Alert: Table.Série — select one variable, then Set Low /
+  Set High ») : sélectionner une variable puis Set Low ; le même bouton
+  devient Set High pour le seuil haut.</pre><pre>Import / Export
+  Importe ou exporte un thème en fichier JSON portable (noms de thème et de
+  variables, sans IDs workspace). À l&#x27;import, de nouveaux IDs sont assignés ;
+  les noms restent stables pour les metrics (&amp;energie.seuil_kwh).</pre><pre>Refresh
+  Recharge depuis le disque, assigne les IDs manquants, vide le cache.</pre><pre>JSON
+  Affiche le JSON brut du thème workspace (avec IDs).</pre><pre>Search theme / Search variable
+  Filtre la liste des thèmes et la grille des variables.</pre><pre>Close / ?
+  Fermer ou cette aide.</pre><h2>PANNEAU GAUCHE : THÈMES</h2><pre>Sel
+  Active le thème pour la résolution &amp;…</pre><pre>ID
+  Identifiant numérique du thème (workspace). Utilisé dans &amp;1.4.</pre><pre>Theme
+  Nom technique du pack (nom de fichier, ex. energie).</pre><pre>Description
+  Texte libre.</pre><h2>PANNEAU DROIT : DÉFINITION + VARIABLES</h2><pre>Definition
+  Theme (nom), ID thème, Ref prefix (&amp;1.), description, date de modification.</pre><pre>Grille Variables :
+  Sel, Display, Style, ID, Variable (nom technique), Value, Unit, Description, Ref (&amp;1.4)
+  Double-clic sur une ligne pour éditer ; F2 = renommer ; Suppr = supprimer.</pre><pre>Clic droit sur un thème : Create variable, Rename…, Duplicate, Export theme…,
+Import theme…, Delete (F2 = renommer le thème).
+Clic droit sur une variable : Edit…, Style…, Toggle Display/Show, Duplicate,
+Rename…, Delete.</pre><pre>Boîte Edit / Create d&#x27;une variable : Theme, nom, Value (formule possible ;
+Insert ajoute une référence de série [Table.Série] ou de variable), Unit,
+Description ; OK (Entrée) valide, Cancel (Échap) annule.</pre><pre>SÉLECTEUR COMPACT (pendant l&#x27;édition metric / WHERE)</pre><pre>Ce catalogue n&#x27;affiche PAS « utilisées dans la query » — c&#x27;est le rôle du
+sélecteur compact Variables, ouvert par clic droit sur un champ numérique lié
+(k, +/-, Min, Max, Δ, Fill, Lag, valeur WHERE…).</pre><pre>Le sélecteur affiche :
+  ● noir si la variable est utilisée dans la query ouverte (lecture seule)
+  Legend pour le texte de la légende (variables ●)
+  Vars series avec sliders
+  Simulation inline (* jusqu&#x27;au Save)</pre><pre>Voir l&#x27;aide du sélecteur (?) pour le détail.</pre><pre>IDS NUMÉRIQUES (UI) vs NOMS (PERSISTANCE)</pre><pre>Chaque thème et chaque variable possède un label numérique incrémental
+(unique dans tout le workspace). Dans l&#x27;UI (catalogue, picker, champs metric) :</pre><pre>  &amp;1.4     thème id=1, variable id=4
+  &amp;1.&amp;4    forme acceptée (équivalente)
+  &amp;4       variable id=4 seule, si unique dans le workspace</pre><pre>Dans le JSON metric / query enregistré sur disque, les refs sont converties
+en noms stables :</pre><pre>  &amp;energie.seuil_kwh</pre><pre>Les deux formes sont résolues à l&#x27;exécution. L&#x27;import/export de thèmes ne
+transporte que les noms (pas les IDs).</pre><h2>USAGE DANS LE METRIC EDITOR</h2><pre>Champs k, +/- (offset), Min, Max, Δ et Fill de chaque composante :
+  • Saisir directement &amp;1.4 ou choisir via clic droit → sélecteur compact
+  • « Keep open » garde la fenêtre ouverte pendant l&#x27;édition
+  • Valeurs simulées (*) appliquées tout de suite ; Save écrit le JSON thème</pre><pre>À l&#x27;Apply/Save, la metric enregistre &amp;energie.seuil_kwh (nom stable).
+L&#x27;éditeur réaffiche &amp;1.4 à la réouverture si le thème existe toujours.</pre><pre>Même principe sur Lag, Size, Step (Group by X) et Free (X0).</pre><pre>Référence introuvable (thème ou variable supprimé) → valeur par défaut du champ :
+  k / transform_k = 1.0 · offset / fill = 0 · lag / size / step / free = 0.
+La ref reste dans le JSON metric (à corriger ou valider plus tard).</pre><h2>USAGE DANS LES CLAUSES WHERE</h2><pre>Les variables s&#x27;utilisent aussi dans les champs Value des WHERE (palette
+Table/Area, WHERE série, WHERE composition metric).</pre><pre>Champ Value
+  • Ref simple (&amp;1.4) ou expression arithmétique :
+    &amp;a.x + &amp;b.y · &amp;energie.seuil * 1.1 · (&amp;a.min + &amp;a.max) / 2
+  • Clic droit → sélecteur compact pour insérer une ref.</pre><pre>Opérateurs : = != &lt; &lt;= &gt; &gt;= ~ ^ $ in
+Plusieurs lignes : AND / OR entre c1, c2, c3.</pre><pre>Persistance en noms stables dans le JSON query ; l&#x27;UI réaffiche &amp;1.4 si le
+thème existe. Modifier une valeur ici met à jour metrics et WHERE après refresh.</pre><h2>DISPLAY SUR LE GRAPHE / STYLE</h2><pre>Legend = texte des variables utilisées dans la query, dans le panneau Legend.
+Display = uniquement un repère graphique. Jamais de nom, valeur ou unité
+écrit sur le graphe. La variable ne devient pas une Series ni une Metric.
+Display reste possible pour une constante non utilisée dans la query.</pre><pre>Pour une constante numérique, un seul repère couvre toute la largeur :
+  Line : ligne horizontale à Y = valeur.
+  Fill : bande horizontale fine autour du seuil + ligne de niveau.
+  Bar  : bande horizontale sur TOUTE la largeur, de Y = 0 au seuil,
+         avec une ligne de contour. Size règle l&#x27;épaisseur du contour,
+         Alpha la transparence de la bande.
+  Point : un seul marqueur au niveau du seuil.
+  Both : ligne entière + un seul marqueur.
+Une expression variant selon X peut tracer une courbe; en Bar, une seule aire
+continue relie la courbe à zéro au lieu d&#x27;une barre par échantillon.
+En polaire, Line produit un cercle; Bar remplit le disque jusqu&#x27;au rayon
+seuil sur 360 degrés, sans parts de camembert.</pre><pre>Si le seuil est hors de la plage Y visible, il reste à sa vraie valeur
+(et redevient visible après zoom). Aucune étiquette ni ligne de bord
+artificielle ne lui est substituée. Les axes et les données sont inchangés.
+Les seuils sont reconstruits lors des exports PNG/PDF, sans texte graphique.</pre><pre>Style : mêmes contrôles que Series, sauf Position : couleur, Depth (z),
+Type, Marker, Size, Alpha et Blink. Valeurs initiales : Z = 0,
+Type = Inherit, Marker = Inherit. Normal / Below / Above sont indépendants.
+Legend, Display et styles sont enregistrés dans le JSON du thème.</pre></main></body></html>

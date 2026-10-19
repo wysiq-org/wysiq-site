@@ -1,0 +1,127 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>METRICS WINDOW — Help — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/metrics_catalog.txt</p><h1>METRICS WINDOW — Help</h1><pre>Access: Main ▸ Metric ▸ Catalog; Series palette (right-click on the header
+« Create Metric from &quot;In&quot; »); right-click on the X Axis combo (X metrics).</pre><pre>The Metrics window manages the catalogue of WysiQ metrics.
+A metric is a virtual series, usually a combination of existing series with
+coefficients, offsets, shifts and aggregations. It is stored in the
+workspace under:</pre><pre>  workspace/metrics/&lt;metric_name&gt;.json</pre><pre>A metric is identified by its NAME only: the source table is kept as
+metadata but is not part of its identity (several tables share the same
+columns). The catalogue therefore never contains two metrics with the same
+name.</pre><pre>This window is used to create, edit, find, import and check these metrics
+without opening the JSON files directly.</pre><pre>Text zoom (help): Ctrl + mouse wheel or A− / A+ buttons</pre><pre>TWO TABS: METRICS AND SCENARIOS
+The window is a notebook with two tabs.</pre><pre>Metrics tab
+  The catalogue of metrics described below (filters, Metrics / Series used
+  lists, detail, Metric Editor).</pre><pre>Scenarios tab
+  Lists the scenarios saved in the workspace. Columns: Name, Created,
+  Sample from (reference series), Points (number of control points), Source,
+  Description. A &quot;Points (X | Y)&quot; preview shows the points of the selected
+  scenario. Bar: Refresh, Search, Delete, JSON, → AI (drops the scenario
+  JSON into the AI Feed Stack). A &quot;Name like&quot; filter narrows the list.</pre><h2>TOOLBAR</h2><pre>Refresh
+  Reloads the catalogue from disk. Use it if files were added, deleted or
+  modified outside the window.</pre><pre>Purge All
+  Deletes all the duplicates detected in the metric catalogue (keeps one
+  copy of each). A confirmation shows the number of files to delete before
+  the action.</pre><pre>Search
+  Searches for metrics in existing query JSON files. WysiQ opens a folder
+  picker, then scans the .json files recursively and extracts the combined
+  series found.</pre><pre>Create Metric
+  Opens an empty Metric Editor to create a new metric. The series already
+  known by the catalogue are offered as possible components.</pre><pre>JSON
+  Shows / edits the JSON of the selected metric.</pre><pre>→ AI
+  Drops the definition of the selected metric into the AI Feed Stack.</pre><pre>?
+  Opens this help in the standard WysiQ help window.</pre><h2>LEFT PANEL: FILTERS AND LISTS</h2><pre>Catalog filters
+  Metric like
+    Filters the list of metrics on part of the name.</pre><pre>  Series like
+    Filters the metrics that use at least one series whose name contains
+    the text entered.</pre><pre>  Both filters can be used together.</pre><pre>Metrics list
+  Shows the metrics matching the active filters.
+  Single click   → selects and shows the detail on the right.
+  Double-click   → opens the metric in the Metric Editor.
+  Right-click    → context menu: → AI | Rename… | Duplicate… |
+                   Purge duplicates (keep this one) | Delete.</pre><pre>  Sort:
+    Left-click on the &quot;Metrics&quot; header   → alphabetical sort (A-Z / Z-A).
+    Right-click on the &quot;Metrics&quot; header  → sort by date (newest/oldest).</pre><pre>  Purge rule:
+    Duplicates are evaluated on the metric NAME only (the table is
+    ignored): Purge All keeps the most recent entry of each name;
+    &quot;Purge duplicates (keep this one)&quot; keeps the selected row.</pre><pre>  Rename…
+    Changes the name of the metric. The JSON file is renamed; if a metric
+    with that name already exists, WysiQ asks whether to overwrite it.</pre><pre>Series used list
+  Shows the available series and those already used by metrics.</pre><pre>  Columns:
+    Serie  column name or series name.
+    In     presence dot if the series is used in at least one metric.</pre><pre>  The series come from the JSON definitions of the local and remote
+  tables, as well as from the metrics already in the catalogue.</pre><pre>  Clicking a series automatically fills the Series like filter so that you
+  see the metrics that use it.</pre><h2>RIGHT PANEL: METRIC INFORMATION</h2><pre>Metric block
+  Metric   name of the selected metric.
+  Created  creation date read from the JSON, or the file modification date
+           if there is no creation date.
+  Table    source table (metadata).</pre><pre>Find Queries
+  Expands an area that searches for the queries using the selected
+  metric.</pre><pre>  include history
+    Also includes the query archives and the history subfolders.</pre><pre>  Queries
+    List of the queries that reference the metric.</pre><pre>  Tables
+    Tables associated with the queries found.</pre><pre>  → Use Find Queries before renaming or deleting a metric to check the
+    impact.</pre><pre>Metric detail
+  Shows a structured reading of the metric content: name, table, date,
+  number of components, list of the series used and detail of each
+  component.
+  Also includes:
+  - a Group by X line (ON/OFF, mode, window size, aggregate, lag/step when
+    present)
+  - a Where indicator per component (● if a series WHERE is active).</pre><pre>JSON
+  Shows the raw JSON of the selected metric. Diagnostic area; changes must
+  be made through the Metric Editor.</pre><h2>METRIC EDITOR</h2><pre>Window for creating and editing metrics.
+Opened by Create Metric or by double-clicking an existing metric.</pre><pre>Each component can carry:
+  - a source series;
+  - a coefficient;
+  - an offset;
+  - a shift;
+  - an aggregation;
+  - a WHERE filter per component (operators + conditions);
+  - an active/inactive status depending on the available options.</pre><pre>Behaviour of the WHEREs in the Metric Editor:
+  - The per-component WHERE is set on each component row.
+  - &quot;Serie Where&quot; is the global ON/OFF switch of all the component WHEREs.
+  - &quot;Metric Scope on X&quot; adds WHERE conditions on the X axis for the
+    computation.
+  - The final global filtering of the metric is done in the WHERE of the
+    Table palette.</pre><pre>Apply
+  Saves the metric. A Save dialog confirms the name.</pre><pre>Save dialog
+  Metric name
+    Final name of the metric (Enter = Save).</pre><pre>  Source table kept as metadata
+    Reminder of the source table (information only).</pre><pre>  Hint
+    Tells whether the action will overwrite the existing file or create a
+    new one.</pre><pre>  Save    Confirms writing the JSON.
+  Cancel  Cancels the save.</pre><pre>If the name changes, WysiQ creates a new &lt;name&gt;.json file. If the name stays
+the same and overwriting is confirmed, the existing file is replaced.</pre><h2>SEARCH: IMPORT METRICS FROM QUERIES</h2><pre>The Search button is used to retrieve metrics already present in existing
+queries.</pre><pre>Process:
+  1. Click Search.
+  2. Choose a folder, typically workspace/queries.
+  3. WysiQ goes through all the .json files of the folder and its
+     subfolders.
+  4. The combined series found are converted into metric files.
+  5. The catalogue is refreshed.</pre><pre>WysiQ looks in particular for:
+  - y_cfg blocks with expr_type=&quot;combo&quot;;
+  - blocks containing combo_items;
+  - series keys containing combo_items;
+  - combo_items present at the root of a JSON.</pre><pre>The files created are written in workspace/metrics.
+Existing duplicates are ignored to avoid overwriting a metric without
+confirmation.</pre><h2>ACCESS FROM THE MAIN WINDOW</h2><pre>Metric menu → Catalog           opens this window.
+Metric menu → Import…           imports metrics from a ZIP or .json
+                                 (duplicates are ignored).
+Metric menu → Export…           exports all the metrics of the workspace
+                                 into a timestamped ZIP.</pre><pre>TIPS</pre><pre>- Use short but explicit metric names.
+- Keep series names consistent across tables to reuse a metric.
+- Use Find Queries before renaming or deleting a metric.
+- Use Refresh after an external change to the metrics folder.
+- Avoid editing the JSON by hand, except for occasional diagnosis.
+- The JSON file name follows the pattern: &lt;name&gt;.json
+  → changing the name in the Save dialog therefore creates a new file.</pre><pre>RECENT METRIC X0 OPTIONS
+The Metric Editor now saves the X0 position settings with each metric.</pre><pre>Default
+  Keeps the normal position of the metric on the graph.</pre><pre>Table X0
+  Aligns the first non-null point of the metric with the X0 of its source
+  table/query. In a multi-table query, sequential tables keep their offset;
+  overlaid tables share the global X0.</pre><pre>Free X0
+  Places the first non-null point of the metric at the X position entered.
+  This is useful to compare quarters, campaigns, scenarios or time slices.</pre><pre>Metric Scope on X still defines the selected time range. X0 only
+repositions the result of that range. A scenario can be shifted by using its
+series in a metric and then applying the metric&#x27;s X0 settings.</pre><h2>METRIC COPIED INTO A MULTI-TABLE QUERY</h2><pre>From a query, Apply in the editor copies the metric into the query and saves
+it in the catalogue (the tooltips remind you). In multi-table, it goes into
+the active tab: its simple columns (&quot;Nucleaire&quot;) become those of that tab
+(&quot;RTE2023_2.Nucleaire&quot;).</pre></main></body></html>

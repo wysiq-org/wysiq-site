@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Export Table — what happens when you click EXEC (technical reference) — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/en/save_dialog_create.txt</p><h1>Export Table — what happens when you click EXEC (technical reference)</h1><pre>Companion page of the &quot;copy_table&quot; help (? button of the Export Table
+window). It describes the order of operations, for anyone who wants to
+understand the files written in the workspace.</pre><pre>1) Before EXEC (preparation)
+• Target table, Owner and Target connection are read from the window.
+• For a remote connection, the profile dialect (data_sources.json,
+  engine_type) is used to build the CREATE TABLE script shown by the SQL
+  button. This script is informative: it is not executed by the SQL button.
+• The SQL templates of connection_type/&lt;connector&gt;/ (list_tables.sql…) are
+  used for catalog discovery; they are not executed by EXEC.</pre><pre>2) When EXEC is clicked (order of operations)
+• Name check; if the table exists: &quot;Overwrite it?&quot; (Yes = replace).
+• Full read of the source: file reread in full (Check file mask and
+  shrink applied), table or SQL result.
+• DROP TABLE IF EXISTS then CREATE TABLE in the workspace DuckDB session.
+  WysiQ always creates a TABLE (views are no longer created here).
+• Writing of the .parquet file and of the tables/&lt;name&gt;.json definition
+  (table_mode, source, columns, owner), update of the registry
+  tables/_registry.json and of the Main list.
+• Remote connection chosen: rows written to the server according to
+  Remote push (Create / recreate, Append, Delete all rows then insert).</pre><pre>3) After EXEC
+• The table is available to Queries, the Table Catalog and the SQL
+  Assistant.
+• From the SQL Assistant, a recipe can be saved under recipes/ to
+  recreate the table later; it is independent of EXEC.</pre><pre>See also: copy_table (Export Table window), db_connections_json (connection
+files and dialects).</pre></main></body></html>

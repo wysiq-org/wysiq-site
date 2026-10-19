@@ -1,0 +1,34 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QUERY - AXES ET DISPOSITION DES TABLES — WysiQ</title><style>body{margin:0;background:#081422;color:#e8f2fb;font:16px/1.72 system-ui,Segoe UI,sans-serif}a{color:#54d4c8}header{padding:14px 5%;background:#112439;position:sticky;top:0;border-bottom:1px solid #264158}main{max-width:1050px;margin:auto;padding:28px 26px 90px}h1{font-size:36px;line-height:1.2}h2{margin-top:32px;color:#54d4c8;font-size:22px}p{line-height:1.75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;background:#112439;padding:18px;border-radius:12px}section{padding:8px 0;border-bottom:1px solid #264158}input{background:#112439;color:white;padding:12px;border:1px solid #264158;border-radius:8px;width:100%;max-width:600px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}.item{display:block;background:#112439;padding:15px;border:1px solid #264158;border-radius:11px;text-decoration:none}.muted{color:#a6bbce}.nav{display:flex;gap:16px;flex-wrap:wrap}</style></head><body><header><nav class="nav"><a href="../../fr.html">WysiQ FR</a><a href="../../en.html">WysiQ EN</a><a href="../../help/index.html">Help</a><a href="../../how-to-use/index.html">How to Use</a><a href="../../videos.html">WysiQ in 1 minute</a></nav></header><main><p class="muted">Aide intégrée WysiQ · Source : xiquery/help/fr/query_params.txt</p><h1>QUERY - AXES ET DISPOSITION DES TABLES</h1><pre>Settings &gt; Query présente sur UNE page les paramètres du graphe actif
+et la disposition de ses tables. Sans graphe actif, les champs d&#x27;axes
+utilisent les valeurs par défaut prévues par WysiQ.</pre><pre>AXES / Y AXIS
+  Unit text      Libellé de l&#x27;unité verticale (MW, EUR, etc.).
+  Scale (x)      Coefficient de conversion verticale ; 1 = inchangé.
+  Decimal        Nombre de décimales d&#x27;affichage.
+  Period factor  Facteur utilisé pour les calculs tenant compte de la période.
+  X min / X max    Bornes de l&#x27;axe X affiché (vue globale), pas une coupe
+                 dans une table particulière. Vide = automatique.
+  Y min / Y max    Bornes de l&#x27;axe Y. Vide = automatique.
+  X/Y ticks      Graduations principales ; auto = calcul automatique.
+  x/y minor      Subdivisions mineures (0 = aucune).
+Les libellés X min et X max donnent accès au choix de date.
+Valider les champs d&#x27;axes par Entrée ou en quittant le champ.</pre><pre>X AXIS - BOUNDS BY TABLE
+  X min / X max  Période de chaque INSTANCE de table dans cette query.
+  Rows           Nombre de lignes de la période, avant adaptation.
+  Start / End    Première / dernière position sur l&#x27;axe composite.
+  Une même table peut être ajoutée deux fois (ex. spot2225_2).
+  Modifier les bornes d&#x27;une instance ne modifie pas la table source.</pre><pre>MULTI-TABLE - TABLE OFFSETS
+  X offset       Décalage en LIGNES ; 0 = superposition ;
+                 Auto (calendar) = proposition basée sur les dates.
+  Y offset       Constante ajoutée à Y.
+  Coeff          Multiplicateur de Y.
+  Mode           As is, Shrink, Shrink AVG/SUM/MIN/MAX ou Expand.
+  Target rows    Nombre final de lignes souhaité.
+  Every N        Une ligne sur N, prioritaire sur Mode.
+  Exec           Applique et retrace la query.
+  Reset          Sequential, Overlay ou restauration sélective.</pre><pre>Pour chaque bouton ?, WysiQ ouvre une aide détaillée ; le ? du
+bloc Multi-table ouvre table_layout.txt avec les presets, les modes,
+les exemples RTE/SPOT et les limites des offsets en lignes.
+Les réglages propres à la query sont conservés via SaveQuery.</pre><pre>Every accepte 2 (lignes) ou 30mn (cadence). Mode permet un Shrink et un Expand par un clic.</pre><pre>LAST PCA SUMMARY
+  Bloc du dernier calcul PCA (onglets Summary / loadings, Scores / datasets,
+  PCA guide, Multi-table PCA ; bouton Refresh PCA). Le bouton ? de ce bloc
+  ouvre l&#x27;aide détaillée « query_window ».</pre></main></body></html>
