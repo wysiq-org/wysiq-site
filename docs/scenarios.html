@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scenarios — WysiQ Help</title><link rel="stylesheet" href="../assets/style.css"></head><body><div class="doc-page"><p><a href="../en.html#help">← WysiQ Help</a> · <a href="../fr.html#help">FR accueil</a></p><div class="note">Repository documentation (English). Content may describe planned features.</div><h1>Scenarios</h1>
+<p>In WysiQ, scenarios are handled as a subtype of metrics.</p>
+<p>A scenario is a metric whose values are defined by human-drawn or AI-proposed X/Y points.</p>
+<p>WysiQ transforms those points into a graph-ready analytical series.</p>
+<h2>Sources</h2>
+<p>A scenario may come from manual drawing on the graph, imported JSON, AI-generated hypotheses, copied metric catalogs or another WysiQuery.</p>
+<h2>Example JSON</h2>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;scenario_high_ev_2035&quot;,
+  &quot;name&quot;: &quot;High EV Adoption 2035&quot;,
+  &quot;kind&quot;: &quot;metric&quot;,
+  &quot;metric_type&quot;: &quot;scenario&quot;,
+  &quot;origin&quot;: &quot;ai&quot;,
+  &quot;provider&quot;: &quot;Claude&quot;,
+  &quot;x_column&quot;: &quot;year&quot;,
+  &quot;y_unit&quot;: &quot;TWh&quot;,
+  &quot;interpolation&quot;: &quot;linear&quot;,
+  &quot;points&quot;: [
+    { &quot;x&quot;: 2028, &quot;y&quot;: 102 },
+    { &quot;x&quot;: 2030, &quot;y&quot;: 108 },
+    { &quot;x&quot;: 2035, &quot;y&quot;: 125 }
+  ]
+}
+</code></pre>
+</div></body></html>
