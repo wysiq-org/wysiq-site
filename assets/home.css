@@ -90,6 +90,7 @@ p{color:var(--muted);margin:0}
 .steps li:nth-child(n+5) .dot{border-color:var(--violet);color:#b59cff}
 .steps li:nth-child(n+7) .dot{border-color:var(--warm);color:var(--warm)}
 .steps strong{display:block;font-family:var(--f-head);font-size:16px;color:var(--ink);margin-top:14px}
+.steps small{display:block;color:var(--muted);font-size:13px;line-height:1.45;margin-top:4px}
 
 /* ---------- Pillars ---------- */
 .pillars{padding:20px 0 70px}
