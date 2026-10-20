@@ -1,0 +1,5 @@
+Suivre des données en direct dans un graphe
+
+Une source Live alimente le graphe point par point : ici, les fichiers quotidiens RTE 2025 arrivent en temps réel, superposés à l'année 2024.
+
+Le travail continue pendant la réception : on change le style d'une série sans interrompre le flux.

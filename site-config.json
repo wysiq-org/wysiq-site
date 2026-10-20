@@ -3,5 +3,7 @@
   "community_ready": false,
   "releases_ready": false,
   "beta_expires": "2026-12-31",
-  "notes": "Set community_ready / releases_ready true only after the PUBLIC community repository and release assets exist. The private wysiq repository must not be exposed."
+  "notes": "Set community_ready / releases_ready true only after the PUBLIC community repository and release assets exist. The private wysiq repository must not be exposed.",
+  "site_repo": "wysiq-org/wysiq-site",
+  "site_branch": "main"
 }

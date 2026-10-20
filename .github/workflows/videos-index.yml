@@ -1,0 +1,27 @@
+# Génère videos/index.json (liste des fichiers du dossier videos/) à chaque push qui touche ce dossier.
+# Secours de la page Vidéos si l'API GitHub n'est pas joignable (dépôt privé, limite de requêtes).
+name: videos-index
+on:
+  push:
+    paths: ['videos/**', '!videos/index.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build videos/index.json
+        run: |
+          python3 - <<'PY'
+          import json, os
+          files = sorted(f for f in os.listdir('videos') if os.path.isfile(os.path.join('videos', f)) and f != 'index.json')
+          json.dump({'files': files}, open('videos/index.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+          PY
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git add videos/index.json
+          git diff --cached --quiet || (git commit -m "videos: update index.json [skip ci]" && git push)

@@ -1,0 +1,5 @@
+Follow live data in a graph
+
+A Live source feeds the graph point by point: here, daily RTE 2025 files arrive in real time, overlaid on the year 2024.
+
+Work goes on while data streams in: a series' style is changed without interrupting the feed.
